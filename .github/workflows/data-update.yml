@@ -1,0 +1,56 @@
+name: Data update
+
+# Once a day, look for a new F1DB release or Jolpica dump. When there is one, bump
+# data/sources.json, check the site still builds and passes its tests with the new data,
+# and commit the bump; the deployment rebuilds from that commit. No data is stored in git.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-update
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Check for new data
+        id: check
+        run: node scripts/check-data-updates.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: steps.check.outputs.changed == 'true'
+        run: pnpm install --frozen-lockfile
+      - name: Build the dataset
+        if: steps.check.outputs.changed == 'true'
+        run: node scripts/prepare-data.mjs --force
+      - if: steps.check.outputs.changed == 'true'
+        run: pnpm typecheck
+      - if: steps.check.outputs.changed == 'true'
+        run: pnpm test
+      - name: Build the site
+        if: steps.check.outputs.changed == 'true'
+        run: pnpm exec next build
+
+      - name: Commit the new pins
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add data/sources.json
+          git commit -m "Data: ${{ steps.check.outputs.summary }}"
+          git push
