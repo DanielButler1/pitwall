@@ -12,3 +12,5 @@ f1db/
 jolpica/
 # per-race lap files written by scripts/build-data.mjs
 data/laps/
+
+.vercel

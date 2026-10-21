@@ -1,0 +1,8 @@
+# The build downloads its own data (scripts/prepare-data.mjs)
+f1db
+jolpica
+data/f1.json
+data/laps
+public/data
+.next
+node_modules
