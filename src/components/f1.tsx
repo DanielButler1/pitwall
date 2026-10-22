@@ -46,13 +46,16 @@ export function Flag({ code, className, title }: { code: string | null | undefin
 
 // only the name underlines on hover, not the flag or the gap beside it
 const entityLink = "group/link inline-flex min-w-0 items-center gap-2";
-const linkName = "truncate underline-offset-4 group-hover/link:underline";
+const linkName = "truncate underline-offset-4 group-hover/link:underline max-sm:whitespace-normal";
+
+/** "Carlos Sainz Jr." never leaves "Jr." alone on a line. */
+const keepSuffix = (name: string) => name.replace(/ (Jr\.|Sr\.|II|III)$/, "\u00a0$1");
 
 export function DriverLink({ driver, className, flag = true }: { driver: DriverRef; className?: string; flag?: boolean }) {
 	return (
 		<ULink href={href.driver(driver.id)} className={cn(entityLink, className)} data-card={`driver:${driver.id}`}>
 			{flag && <Flag code={driver.country} />}
-			<span className={linkName}>{driver.name}</span>
+			<span className={linkName}>{keepSuffix(driver.name)}</span>
 		</ULink>
 	);
 }
@@ -146,19 +149,27 @@ export function YearRange({ from, to, className }: { from: number | null | undef
 export function Join<T>({ items, render, sep = ", " }: { items: T[]; render: (item: T) => React.ReactNode; sep?: string }) {
 	return (
 		<>
-			{items.map((item, i) => (
-				<Fragment key={i}>
-					{i > 0 && sep}
-					{render(item)}
-				</Fragment>
-			))}
+			{items.map((item, i) => {
+				// the separator stays on the line of the item before it ("Ferrari," never leaves its comma behind)
+				const last = i === items.length - 1;
+				const glued = sep.trimEnd();
+				return (
+					<Fragment key={i}>
+						<span className="whitespace-nowrap">
+							{render(item)}
+							{!last && glued}
+						</span>
+						{!last && sep.slice(glued.length)}
+					</Fragment>
+				);
+			})}
 		</>
 	);
 }
 
 /** Full-width page container. */
 export function Page({ children, className }: { children: React.ReactNode; className?: string }) {
-	return <main className={cn("mx-auto w-full max-w-[1680px] space-y-12 px-4 py-8 sm:px-6 lg:px-10", className)}>{children}</main>;
+	return <main className={cn("mx-auto w-full max-w-[1680px] space-y-10 px-4 py-6 sm:space-y-12 sm:px-6 sm:py-8 lg:px-10", className)}>{children}</main>;
 }
 
 export function PageHeader({
@@ -176,7 +187,7 @@ export function PageHeader({
 		<header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
 			<div className="min-w-0 space-y-1.5">
 				{eyebrow && <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">{eyebrow}</div>}
-				<h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
+				<h1 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">{title}</h1>
 				{children && <div className="text-muted-foreground max-w-3xl text-sm">{children}</div>}
 			</div>
 			{actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
@@ -199,12 +210,12 @@ export function Section({
 }) {
 	return (
 		<section className={cn("min-w-0 space-y-4", className)}>
-			<div className="flex items-end justify-between gap-3">
-				<div className="space-y-0.5">
-					<h2 className="text-xl font-semibold leading-8">{title}</h2>
+			<div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
+				<div className="min-w-0 space-y-0.5">
+					<h2 className="text-lg leading-7 font-semibold sm:text-xl sm:leading-8">{title}</h2>
 					{description && <p className="text-muted-foreground max-w-3xl text-sm">{description}</p>}
 				</div>
-				{action}
+				{action && <div className="ml-auto">{action}</div>}
 			</div>
 			{children}
 		</section>
@@ -226,7 +237,10 @@ export function TableCard({
 	const table = (
 		<Table
 			wrapInContainer={!maxHeight}
-			className={cn("[&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4", tableClassName)}
+			className={cn(
+				"max-sm:[&_td]:px-1.5 max-sm:[&_th]:px-1.5 max-sm:[&_tr>:nth-last-child(1_of_:not(.hidden))]:pr-4 [&_td:first-child]:pl-4 [&_td:last-child]:pr-4 [&_th:first-child]:pl-4 [&_th:last-child]:pr-4",
+				tableClassName,
+			)}
 		>
 			{children}
 		</Table>
@@ -247,9 +261,10 @@ export function TableCard({
 export function StatCard({ label, value, real, className }: { label: string; value: React.ReactNode; real?: React.ReactNode; className?: string }) {
 	return (
 		<Card size="sm" className={className}>
-			<CardHeader>
+			{/* values sit on the card's bottom edge, so a two-line label beside a one-line one doesn't stagger them */}
+			<CardHeader className="flex h-full flex-col">
 				<CardDescription>{label}</CardDescription>
-				<CardTitle className="truncate text-2xl font-semibold tabular-nums">{value}</CardTitle>
+				<CardTitle className="mt-auto text-xl font-semibold tabular-nums break-words sm:text-2xl [&_.truncate]:overflow-visible [&_.truncate]:whitespace-normal">{value}</CardTitle>
 				{real != null && (
 					<Badge variant="outline" className="border-universe/30 text-universe mt-1">
 						<Sparkles /> Reality: {real}
@@ -318,12 +333,11 @@ export function DateLink({ date, className }: { date: string; className?: string
 	);
 }
 
-export const fmtDate = (iso: string) =>
-	new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", {
-		day: "numeric",
-		month: "short",
-		year: "numeric",
-		timeZone: "UTC",
-	});
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** "3 Sep 2023": three-letter months everywhere (en-GB formatting says "Sept"). */
+export const fmtDate = (iso: string) => {
+	const [y, m, d] = iso.slice(0, 10).split("-").map(Number);
+	return `${d} ${MON[m - 1]} ${y}`;
+};
 
 export const num = (n: number) => (Number.isInteger(n) ? n.toLocaleString("en-GB") : n.toLocaleString("en-GB", { maximumFractionDigits: 2 }));

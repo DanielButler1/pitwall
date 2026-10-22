@@ -18,12 +18,13 @@ const HEIGHT = 384;
 const MARGIN = { top: 12, right: 96, bottom: 4, left: -8 };
 const X_AXIS = 30;
 const PLOT = HEIGHT - MARGIN.top - MARGIN.bottom - X_AXIS;
-const LABEL_GAP = 13;
+const LABEL_GAP = 16;
 
 type Mode = "points" | "gap" | "position";
 type Row = { i: number } & Record<string, number | null>;
 type Rounds = SeasonProgression["rounds"];
 
+const clip = (t: string) => (t.length > 14 ? t.slice(0, 13) + "…" : t);
 const signed = (n: number) => (n === 0 ? "0" : `−${num(-n)}`);
 
 function valueOf(t: ProgressionTable, s: ProgressionSeries, i: number, mode: Mode) {
@@ -101,6 +102,13 @@ function ProgressionChart({ table, rounds, mode, team }: { table: ProgressionTab
 	const domain: [number, number] =
 		mode === "position" ? [1, Math.max(table.series.length, ...values)] : mode === "gap" ? [Math.min(0, ...values), 0] : [0, Math.max(1, ...values)];
 	const span = domain[1] - domain[0] || 1;
+
+	// surnames, with an initial where two drivers share one (the Schumachers)
+	const shortOf = useMemo(() => {
+		const count = new Map<string, number>();
+		for (const s of table.series) count.set(s.short, (count.get(s.short) ?? 0) + 1);
+		return new Map(table.series.map((s) => [s.key, s.driver && (count.get(s.short) ?? 0) > 1 ? `${s.label[0]}. ${s.short}` : s.short]));
+	}, [table]);
 
 	const colorOf = (key: string) => {
 		const i = slots.indexOf(key);
@@ -204,7 +212,7 @@ function ProgressionChart({ table, rounds, mode, team }: { table: ProgressionTab
 															fontWeight={500}
 															fill="var(--foreground)"
 														>
-															{s.short.length > 14 ? s.short.slice(0, 13) + "…" : s.short}
+															{clip(shortOf.get(s.key) ?? s.short)}
 														</text>
 													) : (
 														<g key={`${s.key}-${p.index}`} />
@@ -222,14 +230,14 @@ function ProgressionChart({ table, rounds, mode, team }: { table: ProgressionTab
 					{mode === "points" && "Championship points after each round, as the table stood then (dropped scores applied)."}
 					{mode === "gap" && "Points behind the championship leader after each round."}
 					{mode === "position" && "Championship position after each round."} Select up to {HIGHLIGHT.length} {team ? "teams" : "drivers"} to
-					highlight them; hover the chart for the table at each round.
+					highlight them; hover or tap the chart for the table at each round.
 				</p>
-				<ul className="flex flex-wrap gap-x-3 gap-y-1.5">
+				<ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 max-sm:[&_.fi]:hidden! sm:flex sm:flex-wrap">
 					{table.series.map((s) => {
 						const i = slots.indexOf(s.key);
 						const color = i >= 0 ? HIGHLIGHT[i] : null;
 						return (
-							<li key={s.key} className="flex items-center gap-1" onMouseEnter={() => setHovered(s.key)} onMouseLeave={() => setHovered(null)}>
+							<li key={s.key} className="flex min-w-0 items-center gap-1" onMouseEnter={() => setHovered(s.key)} onMouseLeave={() => setHovered(null)}>
 								<Toggle
 									size="sm"
 									variant="outline"
@@ -241,11 +249,17 @@ function ProgressionChart({ table, rounds, mode, team }: { table: ProgressionTab
 									<span className="inline-block h-1 w-4 rounded-full" style={{ background: color ?? "var(--muted-foreground)", opacity: color ? 1 : 0.4 }} />
 								</Toggle>
 								{s.driver ? (
-									<DriverLink driver={s.driver} className={cn("text-sm", color ? "font-medium" : "text-muted-foreground")} />
+									<>
+										<DriverLink
+											driver={{ ...s.driver, name: shortOf.get(s.key) ?? s.short }}
+											className={cn("text-sm sm:hidden [&>span]:whitespace-nowrap", color ? "font-medium" : "text-muted-foreground")}
+										/>
+										<DriverLink driver={s.driver} className={cn("text-sm max-sm:hidden", color ? "font-medium" : "text-muted-foreground")} />
+									</>
 								) : s.team ? (
-									<span className={cn("inline-flex items-center gap-1 text-sm", color ? "font-medium" : "text-muted-foreground")}>
-										<TeamLink team={s.team} flag />
-										{s.label !== s.team.name && s.engine && <span className="text-muted-foreground text-xs">{s.engine.name}</span>}
+									<span className={cn("inline-flex min-w-0 items-center gap-1 text-sm", color ? "font-medium" : "text-muted-foreground")}>
+										<TeamLink team={s.team} flag className="max-sm:[&>span]:whitespace-nowrap" />
+										{s.label !== s.team.name && s.engine && <span className="text-muted-foreground truncate text-xs">{s.engine.name}</span>}
 									</span>
 								) : (
 									<span className="text-sm">{s.label}</span>

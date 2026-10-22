@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const data = join(root, "data", "f1.json");
-const outputs = ["search-index.json", "cards.json", "race-cards.json", "more-cards.json", "guess.json", "fantasy.json"].map((f) => join(root, "public", "data", f));
+const outputs = ["search-index.json", "cards.json", "race-cards.json", "more-cards.json", "guess.json", "fantasy.json", "career.json", "higher-lower.json", "constructor-guess.json", "circuit-guess.json", "chain.json", "grid.json", "race-entries.json", "race-guess.json", "lap-chart.json", "season-guess.json"].map((f) => join(root, "public", "data", f));
 const stale = (f) => !existsSync(f) || statSync(f).mtimeMs < statSync(data).mtimeMs;
 
 if (existsSync(data) && outputs.some(stale)) {

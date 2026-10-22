@@ -30,12 +30,15 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "../ui/empty";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Spinner } from "../ui/spinner";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 
 type Kind = "driver" | "team";
+// half-width stat cards on phones: no flag and a smaller value, so "Schumacher −1" fits
+const PHONE_COMPACT = "max-sm:[&_.fi]:hidden! max-sm:[&_[data-slot=card-title]]:text-lg";
 const DEFAULT_SYSTEM = "2010";
 
 /** How a system scores, in words. */
@@ -86,6 +89,29 @@ function useCustomView(view: PointsCompareView, db: Db | undefined, custom: Poin
 		};
 	}, [key, view, db]);
 	return { valid, view: out?.view ?? null, pending: !!key && out?.key !== key, error };
+}
+
+/** Systems the current universe already scores with across the page's whole span (a custom one by its encoding). */
+function useUniverseSystems(view: PointsCompareView) {
+	const current = useUniverse();
+	const [systems, setSystems] = useState<Set<string>>(() => new Set());
+	useEffect(() => {
+		if (!current) return;
+		let live = true;
+		getUniverse(current.id).then((u) => {
+			if (!live || !u) return;
+			const own = u.changes.flatMap((c) => {
+				if (c.kind !== "points" || c.fromYear > view.firstYear || c.toYear < view.lastYear) return [];
+				const custom = c.custom && sanitizePointsSystem(c.custom);
+				return [custom ? encodePointsSystem(custom) : c.system];
+			});
+			setSystems(new Set(own));
+		});
+		return () => {
+			live = false;
+		};
+	}, [current, view.firstYear, view.lastYear]);
+	return systems;
 }
 
 export function PointsPage({ view, db }: { view: PointsCompareView; db?: Db }) {
@@ -140,6 +166,10 @@ export function PointsPage({ view, db }: { view: PointsCompareView; db?: Db }) {
 	const winner = [...diffs].sort((a, b) => b.diff - a.diff || b.titles - a.titles)[0];
 	const loser = [...diffs].sort((a, b) => a.diff - b.diff || b.actual - a.actual)[0];
 	const leader = summary?.drivers[0];
+	const universeSystems = useUniverseSystems(view);
+	const unchanged = !!summary && !summary.driverFlips.length && !summary.teamFlips.length;
+	// the universe already applies this system: re-scoring it again changes nothing
+	const already = unchanged && universeSystems.has(isCustom ? (computed.valid ? encodePointsSystem(computed.valid) : "") : system);
 
 	return (
 		<Page>
@@ -150,14 +180,31 @@ export function PointsPage({ view, db }: { view: PointsCompareView; db?: Db }) {
 					</span>
 				}
 				title="What if the points were different?"
-				actions={<ExploreButton view={view} system={system} custom={isCustom ? computed.valid : null} />}
+				actions={!already && <ExploreButton view={view} system={system} custom={isCustom ? computed.valid : null} />}
 			>
 				Every championship from {view.firstYear} to {view.lastYear} re-scored under each points system, from the 1950s&apos; 8-6-4-3-2 to today&apos;s 25-18-15, or one
 				you build yourself. The same race results, a different table: these are the champions the Lab produces for the same change.
 			</PageHeader>
 
 			<div className="space-y-3">
-				<ToggleGroup variant="outline" size="sm" value={system} onValueChange={choose} className="flex-wrap">
+				<Select
+					items={[...view.systems.map((s) => ({ value: s.id, label: s.name })), { value: CUSTOM_SYSTEM, label: "Custom…" }]}
+					value={system}
+					onValueChange={(v) => choose(v as string)}
+				>
+					<SelectTrigger className="w-full sm:hidden" aria-label="Points system">
+						<SelectValue />
+					</SelectTrigger>
+					<SelectContent>
+						{view.systems.map((s) => (
+							<SelectItem key={s.id} value={s.id}>
+								{s.name}
+							</SelectItem>
+						))}
+						<SelectItem value={CUSTOM_SYSTEM}>Custom…</SelectItem>
+					</SelectContent>
+				</Select>
+				<ToggleGroup variant="outline" size="sm" value={system} onValueChange={choose} className="flex-wrap max-sm:hidden">
 					{view.systems.map((s) => (
 						<ToggleGroupItem key={s.id} value={s.id}>
 							{s.name}
@@ -204,31 +251,54 @@ export function PointsPage({ view, db }: { view: PointsCompareView; db?: Db }) {
 				</Empty>
 			) : (
 				<>
-					<div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
-						<StatCard label="Drivers' titles changing hands" value={num(summary.driverFlips.length)} />
-						<StatCard label="Constructors' titles changing hands" value={num(summary.teamFlips.length)} />
-						<StatCard label={`Most titles under ${sys.name}`} value={leader ? <ShortDriver view={v} id={leader.id} suffix={` ${leader.titles}`} /> : "None"} />
-						<StatCard label="Biggest winner" value={winner && winner.diff > 0 ? <ShortDriver view={v} id={winner.id} suffix={` +${winner.diff}`} /> : "Nobody"} />
-						<StatCard label="Biggest loser" value={loser && loser.diff < 0 ? <ShortDriver view={v} id={loser.id} suffix={` −${-loser.diff}`} /> : "Nobody"} />
-					</div>
+					{unchanged ? (
+						<p className="bg-muted/50 text-muted-foreground flex items-start gap-2 rounded-lg border px-4 py-3 text-sm max-sm:-mt-4">
+							<Trophy className="text-foreground mt-0.5 size-4 shrink-0" />
+							<span>
+								{already ? (
+									<>
+										This universe already scores with <span className="text-foreground font-medium">{sys.name}</span>, so every champion stays the same.
+									</>
+								) : (
+									<>
+										Every drivers&apos; and constructors&apos; champion is the same under <span className="text-foreground font-medium">{sys.name}</span>.
+									</>
+								)}
+							</span>
+						</p>
+					) : (
+						<div className="grid grid-cols-2 gap-4 max-sm:-mt-4 md:grid-cols-3 xl:grid-cols-5 max-sm:[&>*:last-child:nth-child(even)]:col-span-2">
+							<StatCard
+								label={`Most titles under ${sys.name}`}
+								value={leader ? <ShortDriver view={v} id={leader.id} suffix={` ${leader.titles}`} /> : "None"}
+								className="max-sm:col-span-2 sm:order-3"
+							/>
+							<StatCard label="Drivers' titles changing hands" value={num(summary.driverFlips.length)} className="sm:order-1" />
+							<StatCard label="Constructors' titles changing hands" value={num(summary.teamFlips.length)} className="sm:order-2" />
+							{winner && winner.diff > 0 && <StatCard label="Biggest winner" value={<ShortDriver view={v} id={winner.id} suffix={` +${winner.diff}`} />} className={cn(PHONE_COMPACT, "sm:order-4")} />}
+							{loser && loser.diff < 0 && <StatCard label="Biggest loser" value={<ShortDriver view={v} id={loser.id} suffix={` −${-loser.diff}`} />} className={cn(PHONE_COMPACT, "sm:order-5")} />}
+						</div>
+					)}
 
-					<Section title="Titles that change hands" description={`Seasons whose champion would be different under ${sys.name} scoring.`}>
-						<Tabs defaultValue="driver" className="gap-4">
-							<TabsList variant="line">
-								<TabsTrigger value="driver">Drivers ({summary.driverFlips.length})</TabsTrigger>
-								<TabsTrigger value="team">Constructors ({summary.teamFlips.length})</TabsTrigger>
-							</TabsList>
-							<TabsContent value="driver">
-								<FlipTable view={v} flips={summary.driverFlips} kind="driver" />
-							</TabsContent>
-							<TabsContent value="team">
-								<FlipTable view={v} flips={summary.teamFlips} kind="team" />
-							</TabsContent>
-						</Tabs>
-					</Section>
+					{!unchanged && (
+						<Section title="Titles that change hands" description={`Seasons whose champion would be different under ${sys.name} scoring.`}>
+							<Tabs defaultValue="driver" className="gap-4">
+								<TabsList variant="line">
+									<TabsTrigger value="driver">Drivers ({summary.driverFlips.length})</TabsTrigger>
+									<TabsTrigger value="team">Constructors ({summary.teamFlips.length})</TabsTrigger>
+								</TabsList>
+								<TabsContent value="driver">
+									<FlipTable view={v} flips={summary.driverFlips} kind="driver" />
+								</TabsContent>
+								<TabsContent value="team">
+									<FlipTable view={v} flips={summary.teamFlips} kind="team" />
+								</TabsContent>
+							</Tabs>
+						</Section>
+					)}
 
 					<Section title="Title count" description={`Championships won under ${sys.name} scoring, against the actual count.`}>
-						<div className="grid gap-6 lg:grid-cols-2">
+						<div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 							<TotalsTable view={v} totals={summary.drivers} kind="driver" />
 							<TotalsTable view={v} totals={summary.teams} kind="team" />
 						</div>
@@ -316,11 +386,14 @@ function FlipTable({ view, flips, kind }: { view: PointsCompareView; flips: Titl
 			<TableHeader>
 				<TableRow>
 					<TableHead className="w-16">Season</TableHead>
-					<TableHead>Actual champion</TableHead>
-					<TableHead className="text-right">Points</TableHead>
-					<TableHead className="w-8" />
-					<TableHead>New champion</TableHead>
-					<TableHead className="text-right">Points</TableHead>
+					<TableHead className="hidden sm:table-cell">Actual champion</TableHead>
+					<TableHead className="hidden text-right sm:table-cell">Points</TableHead>
+					<TableHead className="hidden w-8 sm:table-cell" />
+					<TableHead>
+						<span className="sm:hidden">Actual → new champion</span>
+						<span className="hidden sm:inline">New champion</span>
+					</TableHead>
+					<TableHead className="hidden text-right sm:table-cell">Points</TableHead>
 					<TableHead className="text-right">Margin</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -332,17 +405,22 @@ function FlipTable({ view, flips, kind }: { view: PointsCompareView; flips: Titl
 							<TableCell className="font-semibold">
 								<SeasonLink year={f.year} />
 							</TableCell>
-							<TableCell className="text-muted-foreground">
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
 								<Entity view={view} id={f.from} kind={kind} />
 							</TableCell>
-							<TableCell className="text-muted-foreground text-right tabular-nums">{num(real.points)}</TableCell>
-							<TableCell className="text-muted-foreground">
+							<TableCell className="text-muted-foreground hidden text-right tabular-nums sm:table-cell">{num(real.points)}</TableCell>
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
 								<ArrowRight className="size-4" />
 							</TableCell>
-							<TableCell>
-								<Entity view={view} id={f.to.id} kind={kind} className="font-medium" />
+							<TableCell className="max-sm:max-w-0">
+								<div className="text-muted-foreground flex min-w-0 line-through decoration-1 sm:hidden">
+									<Entity view={view} id={f.from} kind={kind} short />
+								</div>
+								<div className="flex min-w-0">
+									<Entity view={view} id={f.to.id} kind={kind} className="font-medium" />
+								</div>
 							</TableCell>
-							<TableCell className="text-right font-medium tabular-nums">{num(f.to.points)}</TableCell>
+							<TableCell className="hidden text-right font-medium tabular-nums sm:table-cell">{num(f.to.points)}</TableCell>
 							<TableCell className="text-right">
 								<Margin c={f.to} />
 							</TableCell>
@@ -365,7 +443,10 @@ function TotalsTable({ view, totals, kind }: { view: PointsCompareView; totals: 
 						<TableHead>{kind === "driver" ? "Driver" : "Constructor"}</TableHead>
 						<TableHead className="text-right">Titles</TableHead>
 						<TableHead className="text-right">Actual</TableHead>
-						<TableHead className="text-right">Change</TableHead>
+						<TableHead className="text-right">
+							<span className="sm:hidden">+/−</span>
+							<span className="hidden sm:inline">Change</span>
+						</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -373,11 +454,12 @@ function TotalsTable({ view, totals, kind }: { view: PointsCompareView; totals: 
 						const diff = t.titles - t.actual;
 						return (
 							<TableRow key={t.id}>
-								<TableCell>
-									<Entity view={view} id={t.id} kind={kind} className={cn(t.titles > 0 && "font-medium")} />
+								<TableCell className="max-sm:max-w-40">
+									{kind === "driver" && <Entity view={view} id={t.id} kind={kind} short className={cn("sm:hidden", t.titles > 0 && "font-medium")} />}
+									<Entity view={view} id={t.id} kind={kind} className={cn(kind === "driver" && "max-sm:hidden", t.titles > 0 && "font-medium")} />
 								</TableCell>
 								<TableCell className="text-right font-semibold tabular-nums">{t.titles}</TableCell>
-								<TableCell className="text-muted-foreground text-right tabular-nums">{t.actual}</TableCell>
+								<TableCell className="text-muted-foreground text-right font-medium tabular-nums">{t.actual}</TableCell>
 								<TableCell className={cn("text-right tabular-nums", diff > 0 && "text-emerald-600 dark:text-emerald-400", diff < 0 && "text-destructive", !diff && "text-muted-foreground")}>
 									{diff > 0 ? `+${diff}` : diff < 0 ? diff : "–"}
 								</TableCell>
@@ -390,24 +472,44 @@ function TotalsTable({ view, totals, kind }: { view: PointsCompareView; totals: 
 	);
 }
 
+/** Column headers short enough for a phone: "1950–59", "2025+", "Wins only". */
+function shortName(s: CompareSystem) {
+	if (s.id === ERA_SYSTEM) return "No drops";
+	const short: Record<string, string> = { winner: "Wins only", indycar: "IndyCar", deep: "Top 15" };
+	return short[s.id] ?? s.name.replace(/^(\d{4})–\d\d(\d\d)$/, "$1–$2").replace(/ onwards$/, "+");
+}
+
+function SystemHead({ s, selected, className }: { s: CompareSystem; selected: boolean; className?: string }) {
+	const name = shortName(s);
+	return (
+		<TableHead className={cn(selected && "bg-muted text-foreground", className)}>
+			<Hint label={s.id === ERA_SYSTEM ? "Own points, all count: each season's own points, no dropped scores" : `${s.name}: ${s.description}`}>
+				<span className="cursor-default">
+					<span className="sm:hidden">{name}</span>
+					<span className="hidden sm:inline">{s.name}</span>
+				</span>
+			</Hint>
+		</TableHead>
+	);
+}
+
 function Matrix({ view, system, kind }: { view: PointsCompareView; system: string; kind: Kind }) {
 	const seasons = kind === "team" ? view.seasons.filter((s) => s.team) : view.seasons;
+	const selected = view.systems.find((s) => s.id === system);
 	return (
-		<TableCard tableClassName="text-xs">
+		<TableCard tableClassName="text-xs max-sm:[&_td_*]:whitespace-nowrap">
 			<TableHeader>
 				<TableRow>
-					<TableHead className="bg-card sticky left-0 z-10 w-14">Season</TableHead>
+					<TableHead className="bg-card sticky left-0 z-10 w-14 shadow-[inset_-1px_0_0_var(--color-border)]">Season</TableHead>
 					<TableHead>
 						<span className="inline-flex items-center gap-1">
 							<Trophy className="text-gold size-3.5" /> Actual
 						</span>
 					</TableHead>
+					{/* on phones the selected system sits right after Actual, in view without scrolling */}
+					{selected && <SystemHead s={selected} selected className="sm:hidden" />}
 					{view.systems.map((s) => (
-						<TableHead key={s.id} className={cn(s.id === system && "bg-muted text-foreground")}>
-							<Hint label={s.id === ERA_SYSTEM ? "Each season's own points, no dropped scores" : s.description}>
-								<span className="cursor-default">{s.name}</span>
-							</Hint>
-						</TableHead>
+						<SystemHead key={s.id} s={s} selected={s.id === system} className={cn(s.id === system && "max-sm:hidden")} />
 					))}
 				</TableRow>
 			</TableHeader>
@@ -425,36 +527,45 @@ function MatrixRow({ view, season, system, kind }: { view: PointsCompareView; se
 	const reality = kind === "driver" ? season.realityDriver : season.realityTeam;
 	return (
 		<TableRow>
-			<TableCell className="bg-card sticky left-0 z-10 font-semibold">
+			<TableCell className="bg-card sticky left-0 z-10 font-semibold shadow-[inset_-1px_0_0_var(--color-border)]">
 				<SeasonLink year={season.year} />
 			</TableCell>
 			<TableCell className="bg-gold/10 font-medium">
-				{real ? <Entity view={view} id={real.id} kind={kind} short /> : "–"}
-				{reality && (
-					<Hint label="Champion in reality" className="ml-1.5">
-						<Badge variant="outline" className="border-universe/30 text-universe h-4 px-1 text-[10px]">
-							<Orbit /> {kind === "driver" ? view.drivers[reality]?.short : view.teams[reality]?.name}
-						</Badge>
-					</Hint>
-				)}
+				<span className="inline-flex items-center gap-1.5">
+					{real ? <Entity view={view} id={real.id} kind={kind} short /> : "–"}
+					{reality && (
+						<Hint label={`Champion in reality: ${kind === "driver" ? view.drivers[reality]?.name : view.teams[reality]?.name}`}>
+							<Orbit className="text-universe size-3 sm:hidden" aria-label="Different champion in reality" />
+							<Badge variant="outline" className="border-universe/30 text-universe h-4 px-1 text-[10px] max-sm:hidden">
+								<Orbit /> {kind === "driver" ? view.drivers[reality]?.short : view.teams[reality]?.name}
+							</Badge>
+						</Hint>
+					)}
+				</span>
 			</TableCell>
-			{view.systems.map((sys) => {
-				const c = champOf(season.bySystem[sys.id], kind);
-				const differs = !!c && !!real && c.id !== real.id;
-				return (
-					<TableCell
-						key={sys.id}
-						className={cn(
-							sys.id === system && "bg-muted/60",
-							differs ? "bg-universe/10 text-universe font-medium" : "text-muted-foreground",
-							differs && sys.id === system && "bg-universe/20",
-						)}
-					>
-						{c ? <Entity view={view} id={c.id} kind={kind} short /> : "–"}
-					</TableCell>
-				);
-			})}
+			{view.systems.some((s) => s.id === system) && <SystemCell view={view} season={season} sys={system} selected kind={kind} className="sm:hidden" />}
+			{view.systems.map((s) => (
+				<SystemCell key={s.id} view={view} season={season} sys={s.id} selected={s.id === system} kind={kind} className={cn(s.id === system && "max-sm:hidden")} />
+			))}
 		</TableRow>
+	);
+}
+
+function SystemCell({ view, season, sys, selected, kind, className }: { view: PointsCompareView; season: CompareSeason; sys: string; selected: boolean; kind: Kind; className?: string }) {
+	const real = champOf(season, kind);
+	const c = champOf(season.bySystem[sys], kind);
+	const differs = !!c && !!real && c.id !== real.id;
+	return (
+		<TableCell
+			className={cn(
+				selected && "bg-muted/60",
+				differs ? "bg-universe/10 text-universe font-medium" : "text-muted-foreground",
+				differs && selected && "bg-universe/20",
+				className,
+			)}
+		>
+			{c ? <Entity view={view} id={c.id} kind={kind} short /> : "–"}
+		</TableCell>
 	);
 }
 
@@ -483,7 +594,7 @@ function ExploreButton({ view, system, custom }: { view: PointsCompareView; syst
 	const button = (
 		<Button onClick={explore} disabled={busy || !sys.explorable}>
 			<Orbit data-icon="inline-start" />
-			Explore this as a universe
+			{current ? "Explore as a new universe" : "Explore this as a universe"}
 		</Button>
 	);
 	if (sys.explorable) return button;

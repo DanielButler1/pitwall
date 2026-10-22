@@ -215,14 +215,14 @@ export function FantasyGame() {
 					</CardContent>
 				</Card>
 			) : !pool || !challenge ? (
-				<div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+				<div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
 					<Skeleton className="h-[640px] rounded-3xl" />
 					<Skeleton className="h-[480px] rounded-3xl" />
 				</div>
 			) : (
 				<>
 					<ChallengeCard challenge={challenge} pool={pool} mode={mode} best={best[challenge.id]} />
-					<div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+					<div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
 						<div className="min-w-0 lg:order-1">
 							{saved.locked ? (
 								<Results pool={pool} challenge={challenge} team={saved.team} benchmark={benchmark} />
@@ -288,8 +288,8 @@ function ChallengeCard({ challenge, pool, mode, best }: { challenge: Challenge; 
 
 type Sort = "price" | "price-asc" | "year" | "year-asc" | "name";
 const SORTS: { value: Sort; label: string }[] = [
-	{ value: "price", label: "Price, high to low" },
-	{ value: "price-asc", label: "Price, low to high" },
+	{ value: "price", label: "Priciest first" },
+	{ value: "price-asc", label: "Cheapest first" },
 	{ value: "year", label: "Newest first" },
 	{ value: "year-asc", label: "Oldest first" },
 	{ value: "name", label: "Name" },
@@ -484,47 +484,65 @@ function PickButton({ picked, blocker, onToggle, label }: { picked: boolean; blo
 		<Button
 			variant={picked ? "secondary" : "outline"}
 			size="sm"
-			className="w-[4.75rem]"
+			className="w-[4.75rem] max-[379px]:w-8 max-[379px]:px-0"
 			disabled={!picked && !!blocker}
 			onClick={onToggle}
 			aria-pressed={picked}
 			aria-label={picked ? `Remove ${label}` : blocker ? `${label}: ${blocker}` : `Add ${label}`}
 		>
 			{picked ? <Check /> : <Plus />}
-			{picked ? "Picked" : "Add"}
+			<span className="max-[379px]:hidden">{picked ? "Picked" : "Add"}</span>
 		</Button>
 	);
 	return blocker && !picked ? <Hint label={blocker}>{button}</Hint> : button;
 }
 
-const statLine = (parts: (string | false | null | undefined)[]) => parts.filter(Boolean).join(" · ");
+/** "1st · 300 pts · 22 starts". Each item carries its separator in a clipped gutter, so a wrapped line never starts with one. */
+function StatLine({ parts, className }: { parts: (string | false | null | undefined)[]; className?: string }) {
+	return (
+		<div className={cn("text-muted-foreground overflow-hidden text-xs tabular-nums", className)}>
+			<div className="-ml-3 flex flex-wrap">
+				{parts.filter(Boolean).map((p, i) => (
+					<span key={i} className="relative pl-3 whitespace-nowrap before:absolute before:left-1 before:content-['·']">
+						{p}
+					</span>
+				))}
+			</div>
+		</div>
+	);
+}
 
 function DriverRow({ pool, s, picked, blocker, onToggle }: { pool: Pool; s: DriverSeason; picked: boolean; blocker: string | null; onToggle: () => void }) {
 	const { data } = pool;
 	const [name, nation] = data.drivers[s.d];
 	const label = `${name} ${s.y}`;
 	return (
-		<li className={cn("flex items-center gap-3 px-4 py-2.5", picked && "bg-primary/5")}>
-			<div className="min-w-0 flex-1 space-y-1">
-				<div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
-					<Flag code={data.nations[nation]?.[1]} title={data.nations[nation]?.[0]} />
-					<ULink href={href.driver(s.d)} className="truncate font-medium underline-offset-4 hover:underline" data-card={`driver:${s.d}`}>
-						{name}
-					</ULink>
-					<span className="text-muted-foreground tabular-nums">{s.y}</span>
-					{s.cp === 1 && (
-						<Badge variant="secondary" className="bg-gold/25 h-4 px-1.5 text-[10px]">
-							Champion
-						</Badge>
-					)}
-					<span className="text-muted-foreground truncate text-xs">{s.t.map((t) => data.teams[t]?.[0]).join(", ")}</span>
+		<li className={cn("flex items-center gap-3 px-4 py-2.5 max-sm:flex-wrap max-sm:gap-y-1", picked && "bg-primary/5")}>
+			<div className="min-w-0 flex-1 space-y-1 max-sm:contents">
+				<div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 max-sm:flex-1">
+					<span className="flex min-w-0 items-center gap-2 max-sm:items-start max-sm:[&>.fi]:mt-1">
+						<Flag code={data.nations[nation]?.[1]} title={data.nations[nation]?.[0]} />
+						<ULink href={href.driver(s.d)} className="truncate font-medium underline-offset-4 hover:underline max-sm:whitespace-normal" data-card={`driver:${s.d}`}>
+							{name}
+						</ULink>
+					</span>
+					<span className="flex min-w-0 items-center gap-2 max-sm:basis-full">
+						<span className="text-muted-foreground tabular-nums">{s.y}</span>
+						{s.cp === 1 && (
+							<Badge variant="secondary" className="bg-gold/25 h-4 shrink-0 px-1.5 text-[10px]">
+								Champion
+							</Badge>
+						)}
+						<span className="text-muted-foreground truncate text-xs max-sm:whitespace-normal">{s.t.map((t) => data.teams[t]?.[0]).join(", ")}</span>
+					</span>
 				</div>
-				<div className="text-muted-foreground text-xs tabular-nums">
-					{statLine([s.cp ? `${ordinal(s.cp)} in the championship` : "Unclassified", `${num(s.pts)} pts`, `${s.st} starts`, s.w > 0 && `${s.w} win${s.w === 1 ? "" : "s"}`, s.pod > 0 && `${s.pod} podium${s.pod === 1 ? "" : "s"}`, s.pl > 0 && `${s.pl} pole${s.pl === 1 ? "" : "s"}`])}
-				</div>
-				<FormLine pool={pool} year={s.y} finishes={new Map(s.r.map((r) => [r[0], r[1]]))} />
+				<StatLine
+					className="max-sm:order-1 max-sm:w-full"
+					parts={[s.cp ? `${ordinal(s.cp)} in the championship` : "Unclassified", `${num(s.pts)} pts`, `${s.st} starts`, s.w > 0 && `${s.w} win${s.w === 1 ? "" : "s"}`, s.pod > 0 && `${s.pod} podium${s.pod === 1 ? "" : "s"}`, s.pl > 0 && `${s.pl} pole${s.pl === 1 ? "" : "s"}`]}
+				/>
+				<FormLine pool={pool} year={s.y} finishes={new Map(s.r.map((r) => [r[0], r[1]]))} className="max-sm:order-1 max-sm:w-full" />
 			</div>
-			<div className="w-14 text-right font-semibold tabular-nums">{money(s.p)}</div>
+			<div className="text-right font-semibold tabular-nums sm:w-14">{money(s.p)}</div>
 			<PickButton picked={picked} blocker={blocker} onToggle={onToggle} label={label} />
 		</li>
 	);
@@ -535,27 +553,32 @@ function TeamRow({ pool, s, picked, blocker, onToggle }: { pool: Pool; s: TeamSe
 	const [name, nation] = data.teams[s.t];
 	const best = (a: number, b: number) => (a >= 1 && (b < 1 || a < b) ? a : b >= 1 ? b : a);
 	return (
-		<li className={cn("flex items-center gap-3 px-4 py-2.5", picked && "bg-primary/5")}>
-			<div className="min-w-0 flex-1 space-y-1">
-				<div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
-					<Flag code={data.nations[nation]?.[1]} title={data.nations[nation]?.[0]} />
-					<ULink href={href.team(s.t)} className="truncate font-medium underline-offset-4 hover:underline" data-card={`team:${s.t}`}>
-						{name}
-					</ULink>
-					<span className="text-muted-foreground tabular-nums">{s.y}</span>
-					{s.cp === 1 && s.y >= 1958 && (
-						<Badge variant="secondary" className="bg-gold/25 h-4 px-1.5 text-[10px]">
-							Champion
-						</Badge>
-					)}
-					<span className="text-muted-foreground truncate text-xs">{s.ds.map((d) => data.drivers[d]?.[0]).join(", ")}</span>
+		<li className={cn("flex items-center gap-3 px-4 py-2.5 max-sm:flex-wrap max-sm:gap-y-1", picked && "bg-primary/5")}>
+			<div className="min-w-0 flex-1 space-y-1 max-sm:contents">
+				<div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 max-sm:flex-1">
+					<span className="flex min-w-0 items-center gap-2 max-sm:items-start max-sm:[&>.fi]:mt-1">
+						<Flag code={data.nations[nation]?.[1]} title={data.nations[nation]?.[0]} />
+						<ULink href={href.team(s.t)} className="truncate font-medium underline-offset-4 hover:underline max-sm:whitespace-normal" data-card={`team:${s.t}`}>
+							{name}
+						</ULink>
+					</span>
+					<span className="flex min-w-0 items-center gap-2 max-sm:basis-full">
+						<span className="text-muted-foreground tabular-nums">{s.y}</span>
+						{s.cp === 1 && s.y >= 1958 && (
+							<Badge variant="secondary" className="bg-gold/25 h-4 shrink-0 px-1.5 text-[10px]">
+								Champion
+							</Badge>
+						)}
+						<span className="text-muted-foreground truncate text-xs max-sm:whitespace-normal">{s.ds.map((d) => data.drivers[d]?.[0]).join(", ")}</span>
+					</span>
 				</div>
-				<div className="text-muted-foreground text-xs tabular-nums">
-					{statLine([s.cp ? `${ordinal(s.cp)} among constructors` : "Unranked", `${num(s.pts)} pts`, `${s.st} races`, s.w > 0 && `${s.w} win${s.w === 1 ? "" : "s"}`, s.pod > 0 && `${s.pod} podium${s.pod === 1 ? "" : "s"}`])}
-				</div>
-				<FormLine pool={pool} year={s.y} finishes={new Map(s.r.map((r) => [r[0], best(r[1], r[2])]))} />
+				<StatLine
+					className="max-sm:order-1 max-sm:w-full"
+					parts={[s.cp ? `${ordinal(s.cp)} among constructors` : "Unranked", `${num(s.pts)} pts`, `${s.st} races`, s.w > 0 && `${s.w} win${s.w === 1 ? "" : "s"}`, s.pod > 0 && `${s.pod} podium${s.pod === 1 ? "" : "s"}`]}
+				/>
+				<FormLine pool={pool} year={s.y} finishes={new Map(s.r.map((r) => [r[0], best(r[1], r[2])]))} className="max-sm:order-1 max-sm:w-full" />
 			</div>
-			<div className="w-14 text-right font-semibold tabular-nums">{money(s.p)}</div>
+			<div className="text-right font-semibold tabular-nums sm:w-14">{money(s.p)}</div>
 			<PickButton picked={picked} blocker={blocker} onToggle={onToggle} label={`${name} ${s.y}`} />
 		</li>
 	);
@@ -578,10 +601,10 @@ const finishTone = (f: number | undefined) =>
 							: "text-muted-foreground";
 
 /** One chip per round of the season: finishing position, R = retired, NS = didn't start, – = not entered. */
-function FormLine({ pool, year, finishes }: { pool: Pool; year: number; finishes: Map<number, number> }) {
+function FormLine({ pool, year, finishes, className }: { pool: Pool; year: number; finishes: Map<number, number>; className?: string }) {
 	const rounds = pool.data.races[year] ?? [];
 	return (
-		<div className="flex flex-wrap gap-0.5" aria-label={`Form: ${rounds.map(([r]) => finishText(finishes.get(r))).join(", ")}`}>
+		<div className={cn("flex flex-wrap gap-0.5", className)} aria-label={`Form: ${rounds.map(([r]) => finishText(finishes.get(r))).join(", ")}`}>
 			{rounds.map(([round]) => {
 				const f = finishes.get(round);
 				return (
@@ -1023,7 +1046,7 @@ function DreamRace({ pool, team, seedKey }: { pool: Pool; team: Team; seedKey: s
 				</CardContent>
 			</Card>
 			{result && (
-				<div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+				<div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
 					<TableCard>
 						<TableHeader>
 							<TableRow>
@@ -1112,7 +1135,7 @@ function Scoring() {
 		<Section title="How scoring works" description="Prices come from where a season finished in the championship, its share of the leader's points, wins and podiums, not from fantasy points, so some seasons are bargains.">
 			<Card size="sm">
 				<CardContent>
-					<dl className="grid gap-x-8 gap-y-2 text-sm md:grid-cols-2">
+					<dl className="grid grid-cols-1 gap-x-8 gap-y-2 text-sm md:grid-cols-2">
 						{rows.map(([k, v]) => (
 							<div key={k} className="flex gap-3">
 								<dt className="w-48 shrink-0 font-medium">{k}</dt>

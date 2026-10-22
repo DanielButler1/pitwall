@@ -178,7 +178,7 @@ export function HistorySimEditor({ base, current, changes, onAdd }: EditorProps)
 
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
 				<Field label="How">
 					<Choice
 						value={mode}
@@ -231,7 +231,7 @@ export function HistorySimEditor({ base, current, changes, onAdd }: EditorProps)
 						)}
 						<Checks db={preview} />
 					</div>
-					<div className="grid gap-6 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+					<div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
 						<PreviewCard
 							title="Champions"
 							description="Each season's drivers' champion, against reality."
@@ -245,7 +245,7 @@ export function HistorySimEditor({ base, current, changes, onAdd }: EditorProps)
 										<TableRow>
 											<TableHead className="w-16">Year</TableHead>
 											<TableHead>Champion</TableHead>
-											<TableHead>In reality</TableHead>
+											<TableHead className="hidden sm:table-cell">In reality</TableHead>
 										</TableRow>
 									</TableHeader>
 									<TableBody>
@@ -263,12 +263,17 @@ export function HistorySimEditor({ base, current, changes, onAdd }: EditorProps)
 																	<TeamLink team={teamRef(preview, r.team)} />
 																</div>
 															)}
+															{r.real && r.real !== r.now && (
+																<div className="text-muted-foreground text-xs sm:hidden">
+																	In reality: <DriverLink driver={driverRef(base, r.real)} flag={false} />
+																</div>
+															)}
 														</div>
 													) : (
 														<span className="text-muted-foreground">Season in progress</span>
 													)}
 												</TableCell>
-												<TableCell className="text-muted-foreground">
+												<TableCell className="text-muted-foreground hidden sm:table-cell">
 													{r.real ? (
 														r.real === r.now ? (
 															<span className="text-xs">Same</span>
@@ -363,7 +368,7 @@ function SeasonCompare({
 	const rows = range(from, to).filter((y) => after.racesByYear.has(y));
 	return (
 		<PreviewCard title={title} description="Championship position and points, before and after.">
-			<ScrollArea viewportClassName="max-h-96">
+			<ScrollArea viewportClassName="sm:max-h-96">
 				<Table className={tableEdges}>
 					<TableHeader>
 						<TableRow>
@@ -384,10 +389,26 @@ function SeasonCompare({
 										<SeasonLink year={y} />
 									</TableCell>
 									{!constructors && <TableCell>{team ? <TeamLink team={teamRef(after, team)} /> : <span className="text-muted-foreground">No seat</span>}</TableCell>}
-									<TableCell className="text-muted-foreground text-right tabular-nums">{b ? `P${b.positionText} · ${b.points}` : "–"}</TableCell>
+									<TableCell className="text-muted-foreground text-right whitespace-nowrap tabular-nums">
+										{b ? (
+											<>
+												P{b.positionText}
+												<span className="max-sm:hidden"> · {b.points}</span>
+											</>
+										) : (
+											"–"
+										)}
+									</TableCell>
 									<TableCell className="text-right">
-										<span className="inline-flex items-center gap-1.5 tabular-nums">
-											{a ? `P${a.positionText} · ${a.points}` : "–"}
+										<span className="inline-flex items-center gap-1.5 whitespace-nowrap tabular-nums">
+											{a ? (
+												<span>
+													P{a.positionText}
+													<span className="max-sm:hidden"> · {a.points}</span>
+												</span>
+											) : (
+												"–"
+											)}
 											<Delta by={a?.position && b?.position ? b.position - a.position : 0} />
 										</span>
 									</TableCell>
@@ -446,7 +467,7 @@ function PerformanceEditor({ base, current, changes, onAdd, target }: EditorProp
 
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
 				<Field label={target === "driver" ? "Driver" : "Team"}>
 					{target === "driver" ? <DriverCombobox db={base} value={id} onChange={pick} /> : <TeamCombobox db={base} value={id} onChange={pick} />}
 				</Field>
@@ -509,7 +530,7 @@ function PerformanceEditor({ base, current, changes, onAdd, target }: EditorProp
 				<Updating pending={pending} />
 			</Actions>
 			{preview && id && (
-				<div className="grid gap-6 xl:grid-cols-2">
+				<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 					<SeasonCompare title={target === "driver" ? "Their seasons" : "The team's seasons"} before={current} after={preview} id={id} from={lo} to={hi} constructors={target === "team"} />
 					<TitleFlips flips={flips} db={preview} />
 				</div>
@@ -548,7 +569,7 @@ function SwapEditor({ base, current, changes, onAdd }: EditorProps) {
 	const teamOf = (id: string | null) => (id ? mainTeam(current, id, year) : null);
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[140px_minmax(0,1fr)_minmax(0,1fr)]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[140px_minmax(0,1fr)_minmax(0,1fr)]">
 				<Field label="Season">
 					<Choice value={year} onChange={setYear} options={yearOptions(base)} />
 				</Field>
@@ -597,7 +618,7 @@ function MoveEditor({ base, current, changes, onAdd }: EditorProps) {
 	const [preview, pending] = usePreview(base, changes, candidate, "preview:move");
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_120px_120px]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_120px_120px]">
 				<Field label="Driver">
 					<DriverCombobox db={base} value={driverId} onChange={setDriverId} />
 				</Field>
@@ -659,7 +680,7 @@ function CareerEditor({ base, current, changes, onAdd }: EditorProps) {
 	];
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_200px_200px]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_200px_200px]">
 				<Field label="Driver">
 					<DriverCombobox db={base} value={driverId} onChange={pick} />
 				</Field>
@@ -690,7 +711,10 @@ export function SeatsEditor(props: EditorProps) {
 			<TabsList>
 				<TabsTrigger value="swap">Swap seats</TabsTrigger>
 				<TabsTrigger value="move">Move a driver</TabsTrigger>
-				<TabsTrigger value="career">Debut and retirement</TabsTrigger>
+				<TabsTrigger value="career">
+					<span className="sm:hidden">Career</span>
+					<span className="max-sm:hidden">Debut and retirement</span>
+				</TabsTrigger>
 			</TabsList>
 			<TabsContent value="swap">
 				<SwapEditor {...props} />

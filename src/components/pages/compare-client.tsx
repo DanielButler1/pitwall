@@ -201,7 +201,7 @@ function ChartTooltip({
 	const values = new Map(payload.map((p) => [String(p.dataKey), p.value]));
 	return (
 		<div className="bg-popover text-popover-foreground ring-foreground/10 rounded-lg px-3 py-2 text-xs shadow-md ring-1">
-			<div className="mb-1 font-medium tabular-nums">{axis === "starts" ? `After ${x} ${unit}${x === 1 ? "" : "s"}` : `Age ${ageLabel(x)}`}</div>
+			<div className="mb-1 font-medium tabular-nums">{axis === "starts" ? `After ${num(x)} ${unit}${x === 1 ? "" : "s"}` : `Age ${ageLabel(x)}`}</div>
 			<div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-2 gap-y-0.5">
 				{entities.map((e, i) => {
 					const v = values.get(e.id);
@@ -230,7 +230,8 @@ export function ProgressChart({ entities, kind }: { entities: CompareEntity[]; k
 		const lo = data[0].x;
 		const hi = data[data.length - 1].x;
 		const span = hi - lo;
-		const step = useAxis === "age" ? (span > 16 ? 4 : 2) : [10, 25, 50, 100, 200, 250, 500].find((s) => span / s <= 8) ?? 1000;
+		// Few enough ticks that all of them fit on a phone, so none get dropped and the spacing stays even.
+		const step = useAxis === "age" ? (span > 16 ? 4 : 2) : ([10, 25, 50, 100, 200, 250, 500].find((s) => span / s <= 6) ?? 1000);
 		const out: number[] = [];
 		for (let t = Math.ceil(lo / step) * step; t <= hi; t += step) out.push(t);
 		return out;
@@ -270,7 +271,8 @@ export function ProgressChart({ entities, kind }: { entities: CompareEntity[]; k
 							axisLine={false}
 							tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
 							ticks={ticks}
-							tickFormatter={(v: number) => String(v)}
+							interval={0}
+							tickFormatter={(v: number) => (useAxis === "age" ? String(v) : num(v))}
 						/>
 						<YAxis tickLine={false} axisLine={false} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} width={52} tickFormatter={(v: number) => num(v)} />
 						<Tooltip

@@ -51,7 +51,7 @@ export function PointsBuilder({ value, onChange, className }: { value: PointsSys
 
 	return (
 		<div className={cn("space-y-5", className)}>
-			<div className="grid gap-4 sm:grid-cols-2">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<div className="flex flex-col gap-2">
 					<Label htmlFor={`${id}-name`} className="text-muted-foreground text-xs">
 						Name
@@ -77,7 +77,7 @@ export function PointsBuilder({ value, onChange, className }: { value: PointsSys
 
 			<PositionGrid label="Race points" name="race" values={value.race} onChange={(race) => set({ race })} quickFills />
 
-			<div className="grid gap-x-6 gap-y-4 lg:grid-cols-2">
+			<div className="grid grid-cols-1 gap-x-6 gap-y-4 lg:grid-cols-2">
 				<Toggle label="Sprint points" checked={!!value.sprint} onChange={(on) => set({ sprint: on ? DEFAULT_SPRINT : undefined })} className="lg:col-span-2">
 					{value.sprint && <PositionGrid label="Sprint points" name="sprint" values={value.sprint} onChange={(sprint) => set({ sprint })} hideLabel />}
 				</Toggle>

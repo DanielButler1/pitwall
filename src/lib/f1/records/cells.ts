@@ -5,6 +5,8 @@ import { circuitRef, driverRef, engineRef, grandPrixRef, nationRef, raceRef, tea
 import type { Kind } from "./facts.ts";
 import type { Cell, RecordRow } from "./types.ts";
 
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 export const cDriver = (db: Db, id: string): Cell => ({ t: "driver", ref: driverRef(db, id) });
 export const cTeam = (db: Db, id: string): Cell => ({ t: "team", ref: teamRef(db, id) });
 export const cEngine = (db: Db, id: string): Cell => ({ t: "engine", ref: engineRef(db, id) });
@@ -37,7 +39,7 @@ export const fmt = (n: number, decimals = 2) =>
 export const pct = (a: number, b: number) => (b ? `${((a / b) * 100).toFixed(1)}%` : "");
 
 export const fmtDate = (iso: string) =>
-	new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+	`${Number(iso.slice(8, 10))} ${MON[Number(iso.slice(5, 7)) - 1]} ${iso.slice(0, 4)}`;
 
 export const plural = (n: number, noun: [string, string]) => `${fmt(n)} ${n === 1 ? noun[0] : noun[1]}`;
 

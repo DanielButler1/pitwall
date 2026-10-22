@@ -63,14 +63,17 @@ function ResultsTable({ rows, fastestLap, sprint }: { rows: ResultRow[]; fastest
 		<TableCard>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-16">Pos</TableHead>
-					<TableHead className="w-12">No</TableHead>
+					<TableHead className="w-12 sm:w-16">Pos</TableHead>
+					<TableHead className="hidden w-12 sm:table-cell">No</TableHead>
 					<TableHead>Driver</TableHead>
-					<TableHead>Constructor</TableHead>
-					<TableHead className="text-right">Laps</TableHead>
-					<TableHead>Time / Retired</TableHead>
-					<TableHead className="text-right">Grid</TableHead>
-					<TableHead className="text-right">Pts</TableHead>
+					<TableHead className="hidden sm:table-cell">Constructor</TableHead>
+					<TableHead className="hidden text-right sm:table-cell">Laps</TableHead>
+					<TableHead className="hidden sm:table-cell">Time / Retired</TableHead>
+					<TableHead className="hidden text-right sm:table-cell">Grid</TableHead>
+					<TableHead className="text-right">
+						<span className="sm:hidden">Pts / time</span>
+						<span className="hidden sm:inline">Pts</span>
+					</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -78,23 +81,42 @@ function ResultsTable({ rows, fastestLap, sprint }: { rows: ResultRow[]; fastest
 					<TableRow key={r.driver.id + i}>
 						<TableCell className="whitespace-nowrap">
 							<Pos text={r.position} />
-							<RealDiff real={r.realPosition !== r.position ? r.realPosition : null} />
-						</TableCell>
-						<TableCell className="text-muted-foreground tabular-nums">{r.number}</TableCell>
-						<TableCell>
-							<span className="inline-flex items-center gap-1.5">
-								<DriverLink driver={r.driver} className="font-medium" />
-								{r.fastestLap && <FastestLapMark lap={!sprint && fastestLap?.driver.id === r.driver.id ? fastestLap : null} sprint={sprint} />}
+							<span className="max-sm:hidden">
+								<RealDiff real={r.realPosition !== r.position ? r.realPosition : null} />
 							</span>
 						</TableCell>
+						<TableCell className="text-muted-foreground hidden tabular-nums sm:table-cell">{r.number}</TableCell>
 						<TableCell>
+							<span className="inline-flex max-w-full items-center gap-1.5">
+								<DriverLink driver={r.driver} className="font-medium" />
+								{r.fastestLap && (
+									<span className="max-sm:hidden">
+										<FastestLapMark lap={!sprint && fastestLap?.driver.id === r.driver.id ? fastestLap : null} sprint={sprint} />
+									</span>
+								)}
+							</span>
+							<div className="text-muted-foreground flex items-center gap-1 text-xs sm:hidden">
+								{r.fastestLap && <FastestLapMark lap={!sprint && fastestLap?.driver.id === r.driver.id ? fastestLap : null} sprint={sprint} />}
+								{r.realPosition != null && r.realPosition !== r.position && r.realPosition !== "–" && (
+									<span className="text-universe shrink-0 whitespace-nowrap">real {r.realPosition} ·</span>
+								)}
+								<span className="min-w-0 truncate">
+									<TeamLink team={r.team} />
+									{r.engine && r.engine.name !== r.team.name && <> · {r.engine.name}</>}
+								</span>
+							</div>
+						</TableCell>
+						<TableCell className="hidden whitespace-nowrap sm:table-cell">
 							<TeamLink team={r.team} />
 							{r.engine && r.engine.name !== r.team.name && <EngineLink engine={r.engine} className="text-muted-foreground ml-1.5 text-xs" />}
 						</TableCell>
-						<TableCell className="text-right tabular-nums">{r.laps}</TableCell>
-						<TableCell className="text-muted-foreground tabular-nums">{r.timeOrStatus}</TableCell>
-						<TableCell className="text-right tabular-nums">{r.grid ?? "–"}</TableCell>
-						<TableCell className="text-right font-semibold tabular-nums">{r.points ? num(r.points) : ""}</TableCell>
+						<TableCell className="hidden text-right tabular-nums sm:table-cell">{r.laps}</TableCell>
+						<TableCell className="text-muted-foreground hidden tabular-nums sm:table-cell">{r.timeOrStatus}</TableCell>
+						<TableCell className="hidden text-right tabular-nums sm:table-cell">{r.grid ?? "–"}</TableCell>
+						<TableCell className="text-right font-semibold tabular-nums">
+							{r.points ? num(r.points) : ""}
+							<div className="text-muted-foreground text-[11px] font-normal sm:hidden">{r.timeOrStatus}</div>
+						</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
@@ -108,9 +130,9 @@ function QualifyingTable({ view }: { view: RaceView }) {
 		<TableCard>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-16">Pos</TableHead>
+					<TableHead className="w-12 sm:w-16">Pos</TableHead>
 					<TableHead>Driver</TableHead>
-					<TableHead>Constructor</TableHead>
+					<TableHead className="hidden sm:table-cell">Constructor</TableHead>
 					{knockout ? (
 						<>
 							<TableHead>Q1</TableHead>
@@ -128,17 +150,20 @@ function QualifyingTable({ view }: { view: RaceView }) {
 						<TableCell>
 							<Pos text={q.position} />
 						</TableCell>
-						<TableCell>
+						<TableCell className="max-sm:max-w-36">
 							<DriverLink driver={q.driver} className="font-medium" />
+							<div className="text-muted-foreground truncate text-xs sm:hidden">
+								<TeamLink team={q.team} />
+							</div>
 						</TableCell>
-						<TableCell>
+						<TableCell className="hidden sm:table-cell">
 							<TeamLink team={q.team} />
 						</TableCell>
 						{knockout ? (
 							<>
-								<TableCell className="tabular-nums">{q.q1}</TableCell>
-								<TableCell className="tabular-nums">{q.q2}</TableCell>
-								<TableCell className="tabular-nums">{q.q3}</TableCell>
+								<TableCell className="tabular-nums max-sm:text-xs">{q.q1}</TableCell>
+								<TableCell className="tabular-nums max-sm:text-xs">{q.q2}</TableCell>
+								<TableCell className="tabular-nums max-sm:text-xs">{q.q3}</TableCell>
 							</>
 						) : (
 							<TableCell className="tabular-nums">{q.time}</TableCell>
@@ -267,14 +292,26 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 			</PageHeader>
 
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-				<StatCard label="Winner" value={winner ? <DriverLink driver={winner.driver} /> : "–"} />
+				<StatCard
+					label="Winner"
+					value={
+						winner ? (
+							<>
+								<DriverLink driver={winner.driver} flag={false} className="sm:hidden" />
+								<DriverLink driver={winner.driver} className="max-sm:hidden" />
+							</>
+						) : (
+							"–"
+						)
+					}
+				/>
 				<StatCard
 					label="Fastest lap"
 					value={
 						view.fastestLap ? (
-							<span className="flex min-w-0 items-baseline gap-2">
+							<span className="flex min-w-0 flex-wrap items-baseline gap-x-2">
 								<DriverLink driver={view.fastestLap.driver} flag={false} className="min-w-0" />
-								{view.fastestLap.time && <span className="text-muted-foreground text-base">{view.fastestLap.time}</span>}
+								{view.fastestLap.time && <span className="text-muted-foreground text-base whitespace-nowrap">{view.fastestLap.time}</span>}
 							</span>
 						) : (
 							"–"
@@ -288,14 +325,29 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 			{!view.completed ? (
 				<p className="text-muted-foreground text-sm">This race hasn&apos;t been run yet.</p>
 			) : (
-				<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
+				<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 					<Tabs defaultValue="race" className="min-w-0 gap-4">
 						<TabsList variant="line">
 							<TabsTrigger value="race">Race</TabsTrigger>
 							{view.sprint.length > 0 && <TabsTrigger value="sprint">Sprint</TabsTrigger>}
-							{view.qualifying.length > 0 && <TabsTrigger value="qualifying">Qualifying</TabsTrigger>}
-							{lapData?.chart && <TabsTrigger value="laps">Lap chart</TabsTrigger>}
-							{lapData?.pitStops && (laps === undefined || !!laps?.pitStops?.length) && <TabsTrigger value="pits">Pit stops</TabsTrigger>}
+							{view.qualifying.length > 0 && (
+								<TabsTrigger value="qualifying">
+									<span className="sm:hidden">Quali</span>
+									<span className="hidden sm:inline">Qualifying</span>
+								</TabsTrigger>
+							)}
+							{lapData?.chart && (
+								<TabsTrigger value="laps">
+									<span className="sm:hidden">Laps</span>
+									<span className="hidden sm:inline">Lap chart</span>
+								</TabsTrigger>
+							)}
+							{lapData?.pitStops && (laps === undefined || !!laps?.pitStops?.length) && (
+								<TabsTrigger value="pits">
+									<span className="sm:hidden">Pits</span>
+									<span className="hidden sm:inline">Pit stops</span>
+								</TabsTrigger>
+							)}
 						</TabsList>
 						<TabsContent value="race">
 							<ResultsTable rows={view.results} fastestLap={view.fastestLap} />
@@ -360,7 +412,7 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 													<Pos text={s.position} />
 												</TableCell>
 												<TableCell>
-													<TeamLink team={s.team} />
+													<TeamLink team={s.team} flag />
 												</TableCell>
 												<TableCell className="text-right font-semibold tabular-nums">{num(s.points)}</TableCell>
 											</TableRow>

@@ -45,6 +45,12 @@ export function ShareButton({ universe, className, ...props }: { universe: Pick<
 	);
 }
 
+/** Keeps a universe opened from someone's link in this browser's Lab. */
+export async function saveShared(universe: Universe) {
+	await keepShared(universe);
+	toast.success("Saved to your Lab", { description: "You can now edit it, and it's listed with your universes." });
+}
+
 /** Banner actions for a universe opened from someone's link: keep it, or throw it away. */
 export function SharedActions({ universe, onDiscard }: { universe: Universe; onDiscard: () => void }) {
 	return (
@@ -52,10 +58,7 @@ export function SharedActions({ universe, onDiscard }: { universe: Universe; onD
 			<Button
 				size="sm"
 				className="bg-universe hover:bg-universe/90 text-white"
-				onClick={async () => {
-					await keepShared(universe);
-					toast.success("Saved to your Lab", { description: "You can now edit it, and it's listed with your universes." });
-				}}
+				onClick={() => saveShared(universe)}
 			>
 				<BookmarkPlus data-icon="inline-start" />
 				Save to my Lab

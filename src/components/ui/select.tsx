@@ -4,7 +4,8 @@ import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 
 import { cn } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
+import { ScrollBar } from "@/components/ui/scroll-area"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
 type SelectProps<Value = string> = Omit<
@@ -105,14 +106,35 @@ function SelectContent({
         <SelectPrimitive.Popup
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
-          className={cn("relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-hidden rounded-md bg-popover p-1 text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn("relative isolate z-50 max-h-(--available-height) w-max max-w-[calc(100vw-1rem)] min-w-[max(var(--anchor-width),9rem)] origin-(--transform-origin) overflow-hidden rounded-md bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95", className )}
           {...props}
         >
-          <ScrollArea className="max-h-(--available-height)" viewportClassName="max-h-(--available-height) pr-2" keepScrollbarMounted>
-            <SelectScrollUpButton />
-            <SelectPrimitive.List>{children}</SelectPrimitive.List>
-            <SelectScrollDownButton />
-          </ScrollArea>
+          {/* The list itself is the scroll container (Base UI scrolls it to
+              align the selected item and drives the scroll arrows), so it is
+              rendered *as* the ScrollArea viewport: native scrollbar hidden,
+              site-styled thumb on top. */}
+          <ScrollAreaPrimitive.Root
+            data-slot="scroll-area"
+            className="relative h-full max-h-(--available-height) overflow-hidden rounded-[inherit]"
+          >
+            <SelectPrimitive.List
+              // constant longhands: Base UI adds/removes overflowX/Y when it
+              // aligns the item with the trigger, which React flags against
+              // the viewport's `overflow` shorthand
+              style={{ overflowX: "hidden", overflowY: "auto" }}
+              render={
+                <ScrollAreaPrimitive.Viewport
+                  data-slot="scroll-area-viewport"
+                  className="max-h-(--available-height) overscroll-contain p-1 outline-none"
+                />
+              }
+            >
+              {children}
+            </SelectPrimitive.List>
+            <ScrollBar />
+          </ScrollAreaPrimitive.Root>
+          <SelectScrollUpButton />
+          <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
     </SelectPrimitive.Portal>
@@ -146,7 +168,7 @@ function SelectItem({
       )}
       {...props}
     >
-      <SelectPrimitive.ItemText className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
+      <SelectPrimitive.ItemText className="flex min-w-0 flex-1 gap-2 break-words">
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator

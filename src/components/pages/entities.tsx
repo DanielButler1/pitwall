@@ -1,7 +1,9 @@
 // Grands Prix, engine and tyre suppliers, and nations: index + profile pages.
 // Server-safe; every entity reference links through ULink so universes stay inside themselves.
 
-import { Flag as FlagIcon, Globe, Trophy } from "lucide-react";
+import { Fragment } from "react";
+import { ChevronsDown, Flag as FlagIcon, Globe, Trophy } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { GrandPrixView, GrandsPrixView, NationView, NationsView, SupplierRef, SupplierView, SuppliersView } from "@/lib/f1/views";
 import {
 	CircuitLink,
@@ -9,7 +11,6 @@ import {
 	EngineLink,
 	Flag,
 	GrandPrixLink,
-	Join,
 	NationLink,
 	Page,
 	PageHeader,
@@ -27,10 +28,28 @@ import {
 	DateLink,
 } from "../f1";
 import { Badge } from "../ui/badge";
+import { buttonVariants } from "../ui/button";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "../ui/empty";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
 const blank = (n: number | null | undefined) => (n ? num(n) : "");
+
+/** Like Join, but each separator stays with the item before it so a comma never wraps onto its own line. */
+function List<T>({ items, render }: { items: T[]; render: (item: T) => React.ReactNode }) {
+	return items.map((item, i) => (
+		<Fragment key={i}>
+			{i > 0 && " "}
+			<span className="whitespace-nowrap">
+				{render(item)}
+				{i < items.length - 1 && ","}
+			</span>
+		</Fragment>
+	));
+}
+/** Name cells may wrap on phones so the numbers beside them stay in view. */
+const wrapName = "max-sm:whitespace-normal max-sm:[&_.truncate]:whitespace-normal";
+/** Long nation driver lists stop here on phones until "Show all" (a CSS checkbox toggle, so the page stays server-rendered). */
+const PHONE_ROWS = 20;
 const realOf = <T extends object>(real: T | null, key: keyof T, current: unknown) => (real && real[key] !== current ? num(Number(real[key])) : undefined);
 
 function Ranked<T>({ rows, render, value, empty }: { rows: T[]; render: (row: T) => React.ReactNode; value: (row: T) => React.ReactNode; empty?: string }) {
@@ -58,43 +77,48 @@ export function GrandsPrixPage({ view }: { view: GrandsPrixView }) {
 			<PageHeader title="Grands Prix" eyebrow={`${view.rows.length} events`}>
 				Every World Championship Grand Prix, how often it has been held and who has won it most.
 			</PageHeader>
-			<TableCard>
+			{/* the narrowest phones need slightly smaller text to fit GP, races and the winner without scrolling */}
+			<TableCard tableClassName="max-[379px]:text-[13px]">
 				<TableHeader>
 					<TableRow>
 						<TableHead>Grand Prix</TableHead>
-						<TableHead>Country</TableHead>
+						<TableHead className="hidden sm:table-cell">Country</TableHead>
 						<TableHead className="text-right">Races</TableHead>
-						<TableHead>Years</TableHead>
-						<TableHead className="text-right">Circuits</TableHead>
+						<TableHead className="hidden sm:table-cell">Years</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Circuits</TableHead>
 						<TableHead>Most wins</TableHead>
-						<TableHead>Last winner</TableHead>
+						<TableHead className="hidden sm:table-cell">Last winner</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{view.rows.map((r) => (
 						<TableRow key={r.gp.id}>
 							<TableCell>
-								<GrandPrixLink gp={r.gp} className="font-medium" />
+								<GrandPrixLink gp={r.gp} className="font-medium max-sm:hidden" />
+								<GrandPrixLink gp={{ ...r.gp, name: r.shortName.replace(/ GP$/, "") }} className="font-medium sm:hidden" />
+								<div className="text-muted-foreground text-xs sm:hidden">
+									<YearRange from={r.firstYear} to={r.lastYear} />
+								</div>
 							</TableCell>
-							<TableCell className="text-muted-foreground">
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
 								<NationLink nation={r.nation} flag={false} />
 							</TableCell>
 							<TableCell className="text-right tabular-nums">{r.races || <Badge variant="secondary">Upcoming</Badge>}</TableCell>
-							<TableCell className="text-muted-foreground">
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
 								<YearRange from={r.firstYear} to={r.lastYear} />
 							</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.circuits)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.circuits)}</TableCell>
 							<TableCell>
 								{r.topDriver && (
-									<span className="inline-flex items-center gap-2">
-										<DriverLink driver={r.topDriver.driver} />
+									<span className="inline-flex items-center gap-2 max-sm:flex max-sm:justify-between">
+										<DriverLink driver={r.topDriver.driver} className="max-sm:[&_.fi]:hidden!" />
 										<Badge variant="secondary" className="tabular-nums">
 											{r.topDriver.wins}
 										</Badge>
 									</span>
 								)}
 							</TableCell>
-							<TableCell>{r.lastWinner && <DriverLink driver={r.lastWinner} />}</TableCell>
+							<TableCell className="hidden sm:table-cell">{r.lastWinner && <DriverLink driver={r.lastWinner} />}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -131,7 +155,7 @@ export function GrandPrixPage({ view }: { view: GrandPrixView }) {
 					: "Not held yet."}
 			</PageHeader>
 
-			<div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+			<div className="grid grid-cols-2 gap-4 max-md:[&>*:last-child:nth-child(odd)]:col-span-2 md:grid-cols-3 xl:grid-cols-5">
 				<StatCard label="Races" value={t.races} />
 				<StatCard label="First held" value={t.firstYear ? <SeasonLink year={t.firstYear} /> : "–"} />
 				<StatCard label="Circuits" value={t.circuits} />
@@ -139,18 +163,18 @@ export function GrandPrixPage({ view }: { view: GrandPrixView }) {
 				<StatCard label={top ? `Most wins (${top.wins})` : "Most wins"} value={top ? <DriverLink driver={top.driver} /> : "–"} />
 			</div>
 
-			<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 				<Section title="Every edition">
 					<TableCard>
 						<TableHeader>
 							<TableRow>
 								<TableHead>Season</TableHead>
-								<TableHead>Race</TableHead>
-								<TableHead>Date</TableHead>
-								<TableHead>Circuit</TableHead>
-								<TableHead>Pole</TableHead>
+								<TableHead className="hidden sm:table-cell">Race</TableHead>
+								<TableHead className="hidden sm:table-cell">Date</TableHead>
+								<TableHead className="hidden sm:table-cell">Circuit</TableHead>
+								<TableHead className="hidden sm:table-cell">Pole</TableHead>
 								<TableHead>Winner</TableHead>
-								<TableHead>Team</TableHead>
+								<TableHead className="hidden sm:table-cell">Team</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
@@ -158,8 +182,11 @@ export function GrandPrixPage({ view }: { view: GrandPrixView }) {
 								<TableRow key={`${e.race.year}-${e.race.round}`} className={e.completed ? undefined : "text-muted-foreground"}>
 									<TableCell className="font-semibold">
 										<SeasonLink year={e.race.year} />
+										<div className="text-muted-foreground text-xs font-normal whitespace-normal sm:hidden">
+											<CircuitLink circuit={e.circuit} className="[&_.fi]:hidden!" />
+										</div>
 									</TableCell>
-									<TableCell>
+									<TableCell className="hidden sm:table-cell">
 										<RaceLink race={e.race} className="font-medium" />
 										{!e.completed && (
 											<Badge variant="secondary" className="ml-2">
@@ -167,13 +194,27 @@ export function GrandPrixPage({ view }: { view: GrandPrixView }) {
 											</Badge>
 										)}
 									</TableCell>
-									<TableCell className="text-muted-foreground whitespace-nowrap"><DateLink date={e.race.date} /></TableCell>
-									<TableCell>
+									<TableCell className="text-muted-foreground hidden whitespace-nowrap sm:table-cell">
+										<DateLink date={e.race.date} />
+									</TableCell>
+									<TableCell className="hidden sm:table-cell">
 										<CircuitLink circuit={e.circuit} />
 									</TableCell>
-									<TableCell>{e.pole && <DriverLink driver={e.pole} flag={false} />}</TableCell>
-									<TableCell>{e.winner && <DriverLink driver={e.winner} className="font-medium" />}</TableCell>
-									<TableCell>{e.team && <TeamLink team={e.team} />}</TableCell>
+									<TableCell className="hidden sm:table-cell">{e.pole && <DriverLink driver={e.pole} flag={false} />}</TableCell>
+									<TableCell>
+										{e.winner && <DriverLink driver={e.winner} className="font-medium" />}
+										{e.team && (
+											<div className="text-muted-foreground text-xs sm:hidden">
+												<TeamLink team={e.team} />
+											</div>
+										)}
+										{!e.completed && (
+											<Badge variant="secondary" className="sm:hidden">
+												Upcoming
+											</Badge>
+										)}
+									</TableCell>
+									<TableCell className="hidden sm:table-cell">{e.team && <TeamLink team={e.team} />}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
@@ -235,6 +276,33 @@ function SupplierLink({ kind, supplier, className, flag }: { kind: SupplierView[
 	);
 }
 
+/** Champion names stay on one line beside their flag, running on under the (top-aligned) Wins number on phones. */
+const oneLine = "max-sm:[&_.truncate]:overflow-visible max-sm:[&_.truncate]:whitespace-nowrap";
+
+function SupplierChampions({ season: x, className }: { season: SupplierView["seasons"][number]; className?: string }) {
+	if (!x.driversChampion && !x.constructorsChampion) return null;
+	return (
+		<div className={cn("flex flex-col gap-0.5", className)}>
+			{x.driversChampion && (
+				<span className="flex min-w-0 items-center gap-1.5">
+					<Hint label="Drivers' champion">
+						<Trophy className="text-gold size-3.5" />
+					</Hint>
+					<DriverLink driver={x.driversChampion} className={oneLine} />
+				</span>
+			)}
+			{x.constructorsChampion && (
+				<span className="flex min-w-0 items-center gap-1.5">
+					<Hint label="Constructors' champion">
+						<Trophy className="text-silver size-3.5" />
+					</Hint>
+					<TeamLink team={x.constructorsChampion} flag className={oneLine} />
+				</span>
+			)}
+		</div>
+	);
+}
+
 export function SuppliersPage({ view }: { view: SuppliersView }) {
 	const s = SUPPLIER[view.kind];
 	return (
@@ -242,40 +310,54 @@ export function SuppliersPage({ view }: { view: SuppliersView }) {
 			<PageHeader title={s.title} eyebrow={`${view.rows.length} ${view.kind === "engine" ? "manufacturers" : "suppliers"}`}>
 				{s.intro} Titles are credited to the engine and tyres of the champion&apos;s car.
 			</PageHeader>
-			<TableCard>
+			{/* five number columns must fit the narrowest phones: tighter text and padding below 380px */}
+			<TableCard tableClassName="max-[379px]:text-[13px] max-[379px]:[&_td:not(:first-child)]:px-1 max-[379px]:[&_th:not(:first-child)]:px-1 max-[379px]:[&_a]:gap-1.5">
 				<TableHeader>
 					<TableRow>
 						<TableHead>{s.one}</TableHead>
-						<TableHead>Country</TableHead>
-						<TableHead>Years</TableHead>
+						<TableHead className="hidden sm:table-cell">Country</TableHead>
+						<TableHead className="hidden sm:table-cell">Years</TableHead>
 						<TableHead className="text-right">Races</TableHead>
 						<TableHead className="text-right">Wins</TableHead>
-						<TableHead className="text-right">Poles</TableHead>
-						<TableHead className="text-right">Podiums</TableHead>
-						<TableHead className="text-right">Drivers&apos; titles</TableHead>
-						<TableHead className="text-right">Constructors&apos; titles</TableHead>
-						<TableHead className="text-right">Teams</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Poles</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Podiums</TableHead>
+						<TableHead className="text-right">
+							<Hint label="Drivers' titles" className="sm:hidden">
+								WDC
+							</Hint>
+							<span className="hidden sm:inline">Drivers&apos; titles</span>
+						</TableHead>
+						<TableHead className="text-right max-[379px]:pr-3!">
+							<Hint label="Constructors' titles" className="sm:hidden">
+								WCC
+							</Hint>
+							<span className="hidden sm:inline">Constructors&apos; titles</span>
+						</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Teams</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{view.rows.map((r) => (
 						<TableRow key={r.supplier.id}>
-							<TableCell>
+							<TableCell className={wrapName}>
 								<SupplierLink kind={view.kind} supplier={r.supplier} flag className="font-medium" />
+								<div className="text-muted-foreground text-xs sm:hidden">
+									<YearRange from={r.firstYear} to={r.lastYear} />
+								</div>
 							</TableCell>
-							<TableCell className="text-muted-foreground">
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
 								<NationLink nation={r.nation} flag={false} />
 							</TableCell>
-							<TableCell className="text-muted-foreground">
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
 								<YearRange from={r.firstYear} to={r.lastYear} />
 							</TableCell>
 							<TableCell className="text-right tabular-nums">{r.races}</TableCell>
 							<TableCell className="text-right tabular-nums">{blank(r.wins)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.poles)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.podiums)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.poles)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.podiums)}</TableCell>
 							<TableCell className="text-right tabular-nums">{blank(r.driversTitles)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.constructorsTitles)}</TableCell>
-							<TableCell className="text-right tabular-nums">{r.teams}</TableCell>
+							<TableCell className="text-right tabular-nums max-[379px]:pr-3!">{blank(r.constructorsTitles)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{r.teams}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -321,52 +403,38 @@ export function SupplierPage({ view }: { view: SupplierView }) {
 				<StatCard label="Teams" value={t.teams} />
 			</div>
 
-			<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 				<Section title="Season by season" description="Teams supplied each season. Champions listed when they won with this supplier.">
 					<TableCard>
 						<TableHeader>
 							<TableRow>
 								<TableHead>Season</TableHead>
 								<TableHead>Teams</TableHead>
-								<TableHead className="text-right">Races</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">Races</TableHead>
 								<TableHead className="text-right">Wins</TableHead>
-								<TableHead className="text-right">Poles</TableHead>
-								<TableHead className="text-right">Podiums</TableHead>
-								<TableHead>Champions</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">Poles</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">Podiums</TableHead>
+								<TableHead className="hidden sm:table-cell">Champions</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{view.seasons.map((x) => (
 								<TableRow key={x.year}>
-									<TableCell className="font-semibold">
+									<TableCell className="align-top font-semibold sm:align-middle">
 										<SeasonLink year={x.year} />
 									</TableCell>
-									<TableCell className="max-w-96 whitespace-normal">
-										<Join items={x.teams} render={(tm) => <TeamLink team={tm} />} />
-									</TableCell>
-									<TableCell className="text-right tabular-nums">{x.races}</TableCell>
-									<TableCell className="text-right tabular-nums">{blank(x.wins)}</TableCell>
-									<TableCell className="text-right tabular-nums">{blank(x.poles)}</TableCell>
-									<TableCell className="text-right tabular-nums">{blank(x.podiums)}</TableCell>
-									<TableCell>
-										<div className="flex flex-col gap-0.5">
-											{x.driversChampion && (
-												<span className="inline-flex items-center gap-1.5">
-													<Hint label="Drivers' champion">
-														<Trophy className="text-gold size-3.5" />
-													</Hint>
-													<DriverLink driver={x.driversChampion} />
-												</span>
-											)}
-											{x.constructorsChampion && (
-												<span className="inline-flex items-center gap-1.5">
-													<Hint label="Constructors' champion">
-														<Trophy className="text-silver size-3.5" />
-													</Hint>
-													<TeamLink team={x.constructorsChampion} flag />
-												</span>
-											)}
+									<TableCell className="whitespace-normal max-sm:w-full max-sm:max-w-0 sm:max-w-96">
+										<div className="text-muted-foreground text-xs sm:text-foreground sm:text-sm">
+											<List items={x.teams} render={(tm) => <TeamLink team={tm} />} />
 										</div>
+										<SupplierChampions season={x} className="mt-1 sm:hidden" />
+									</TableCell>
+									<TableCell className="hidden text-right tabular-nums sm:table-cell">{x.races}</TableCell>
+									<TableCell className="text-right align-top tabular-nums sm:align-middle">{blank(x.wins)}</TableCell>
+									<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(x.poles)}</TableCell>
+									<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(x.podiums)}</TableCell>
+									<TableCell className="hidden sm:table-cell">
+										<SupplierChampions season={x} />
 									</TableCell>
 								</TableRow>
 							))}
@@ -377,7 +445,7 @@ export function SupplierPage({ view }: { view: SupplierView }) {
 				<div className="space-y-12">
 					{view.titles.length > 0 && (
 						<Section title="Championships" action={<Badge variant="secondary">{view.titles.length}</Badge>}>
-							<TableCard maxHeight="max-h-[480px]">
+							<TableCard maxHeight="sm:max-h-[480px]">
 								<TableBody>
 									{view.titles.map((x) => (
 										<TableRow key={`${x.year}-${x.kind}`}>
@@ -385,7 +453,12 @@ export function SupplierPage({ view }: { view: SupplierView }) {
 												<SeasonLink year={x.year} />
 											</TableCell>
 											<TableCell>
-												<Badge variant="outline">{x.kind === "drivers" ? "Drivers" : "Constructors"}</Badge>
+												<Badge variant="outline" className="hidden sm:inline-flex">
+													{x.kind === "drivers" ? "Drivers" : "Constructors"}
+												</Badge>
+												<Hint label={x.kind === "drivers" ? "Drivers' championship" : "Constructors' championship"} className="sm:hidden">
+													<Badge variant="outline">{x.kind === "drivers" ? "WDC" : "WCC"}</Badge>
+												</Hint>
 											</TableCell>
 											<TableCell className="max-w-0 w-full">{x.driver ? <DriverLink driver={x.driver} /> : <TeamLink team={x.team} flag />}</TableCell>
 										</TableRow>
@@ -445,10 +518,11 @@ export function SupplierPage({ view }: { view: SupplierView }) {
 					</Section>
 					{view.wins.length > 0 && (
 						<Section title="Wins" action={<Badge variant="secondary">{view.wins.length}</Badge>}>
+							{/* hundreds of rows for the big suppliers: a scroll box even on phones beats a page 25,000px long */}
 							<TableCard maxHeight="max-h-[480px]">
 								<TableBody>
-									{view.wins.map((w) => (
-										<TableRow key={`${w.race.year}-${w.race.round}`}>
+									{view.wins.map((w, i) => (
+										<TableRow key={`${w.race.year}-${w.race.round}-${i}`}>
 											<TableCell>
 												<RaceLink race={w.race} year />
 											</TableCell>
@@ -483,15 +557,15 @@ export function NationsPage({ view }: { view: NationsView }) {
 					<TableRow>
 						<TableHead>Nation</TableHead>
 						<TableHead className="text-right">Drivers</TableHead>
-						<TableHead className="text-right">Champions</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Champions</TableHead>
 						<TableHead className="text-right">Titles</TableHead>
-						<TableHead className="text-right">Winners</TableHead>
-						<TableHead className="text-right">Wins</TableHead>
-						<TableHead className="text-right">Constructors</TableHead>
-						<TableHead className="text-right">Constructor wins</TableHead>
-						<TableHead className="text-right">Engines</TableHead>
-						<TableHead className="text-right">Races hosted</TableHead>
-						<TableHead className="text-right">Circuits</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Winners</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Wins</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Constructors</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Constructor wins</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Engines</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Races hosted</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Circuits</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -501,15 +575,15 @@ export function NationsPage({ view }: { view: NationsView }) {
 								<NationLink nation={r.nation} className="font-medium" />
 							</TableCell>
 							<TableCell className="text-right tabular-nums">{blank(r.drivers)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.champions)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.champions)}</TableCell>
 							<TableCell className="text-right font-semibold tabular-nums">{blank(r.titles)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.winners)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.wins)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.constructors)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.constructorWins)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.engines)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.racesHosted)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.circuits)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.winners)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.wins)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.constructors)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.constructorWins)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.engines)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.racesHosted)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.circuits)}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -550,41 +624,53 @@ export function NationPage({ view }: { view: NationView }) {
 				<StatCard label="Races hosted" value={t.racesHosted} />
 			</div>
 
-			<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 				<Section title={`${n.demonym ?? n.name} drivers`} description="Career totals, most successful first.">
 					{view.drivers.length ? (
-						<TableCard maxHeight="max-h-[720px]">
-							<TableHeader>
-								<TableRow>
-									<TableHead>Driver</TableHead>
-									<TableHead>Years</TableHead>
-									<TableHead className="text-right">Titles</TableHead>
-									<TableHead className="text-right">Starts</TableHead>
-									<TableHead className="text-right">Wins</TableHead>
-									<TableHead className="text-right">Podiums</TableHead>
-									<TableHead className="text-right">Poles</TableHead>
-									<TableHead className="text-right">Points</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-								{view.drivers.map((d) => (
-									<TableRow key={d.driver.id}>
-										<TableCell>
-											<DriverLink driver={d.driver} className="font-medium" />
-										</TableCell>
-										<TableCell className="text-muted-foreground">
-											<YearRange from={d.firstYear} to={d.lastYear} />
-										</TableCell>
-										<TableCell className="text-right tabular-nums">{blank(d.titles)}</TableCell>
-										<TableCell className="text-right tabular-nums">{d.starts}</TableCell>
-										<TableCell className="text-right tabular-nums">{blank(d.wins)}</TableCell>
-										<TableCell className="text-right tabular-nums">{blank(d.podiums)}</TableCell>
-										<TableCell className="text-right tabular-nums">{blank(d.poles)}</TableCell>
-										<TableCell className="text-right tabular-nums">{blank(d.points)}</TableCell>
+						<div className="group/more space-y-3">
+							<TableCard maxHeight="sm:max-h-[720px]">
+								<TableHeader>
+									<TableRow>
+										<TableHead>Driver</TableHead>
+										<TableHead className="hidden sm:table-cell">Years</TableHead>
+										<TableHead className="text-right">Titles</TableHead>
+										<TableHead className="text-right">Starts</TableHead>
+										<TableHead className="text-right">Wins</TableHead>
+										<TableHead className="hidden text-right sm:table-cell">Podiums</TableHead>
+										<TableHead className="hidden text-right sm:table-cell">Poles</TableHead>
+										<TableHead className="hidden text-right sm:table-cell">Points</TableHead>
 									</TableRow>
-								))}
-							</TableBody>
-						</TableCard>
+								</TableHeader>
+								<TableBody>
+									{view.drivers.map((d, i) => (
+										<TableRow key={d.driver.id} className={cn(i >= PHONE_ROWS && "max-sm:hidden max-sm:group-has-checked/more:table-row", i === PHONE_ROWS - 1 && "max-sm:border-b-0 max-sm:group-has-checked/more:border-b")}>
+											<TableCell className={wrapName}>
+												<DriverLink driver={d.driver} className="font-medium" />
+												<div className="text-muted-foreground text-xs sm:hidden">
+													<YearRange from={d.firstYear} to={d.lastYear} />
+												</div>
+											</TableCell>
+											<TableCell className="text-muted-foreground hidden sm:table-cell">
+												<YearRange from={d.firstYear} to={d.lastYear} />
+											</TableCell>
+											<TableCell className="text-right tabular-nums">{blank(d.titles)}</TableCell>
+											<TableCell className="text-right tabular-nums">{d.starts}</TableCell>
+											<TableCell className="text-right tabular-nums">{blank(d.wins)}</TableCell>
+											<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(d.podiums)}</TableCell>
+											<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(d.poles)}</TableCell>
+											<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(d.points)}</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</TableCard>
+							{view.drivers.length > PHONE_ROWS && (
+								<label className={cn(buttonVariants({ variant: "outline", size: "sm" }), "has-focus-visible:ring-ring/30 has-focus-visible:ring-3 group-has-checked/more:hidden sm:hidden")}>
+									<input type="checkbox" className="sr-only" />
+									<ChevronsDown data-icon="inline-start" />
+									Show all {view.drivers.length}
+								</label>
+							)}
+						</div>
 					) : (
 						<Empty className="border">
 							<EmptyHeader>
@@ -662,14 +748,14 @@ export function NationPage({ view }: { view: NationView }) {
 			</div>
 
 			{(view.constructors.length > 0 || view.engines.length > 0 || view.tyres.length > 0) && (
-				<div className="grid gap-12 xl:grid-cols-2 xl:gap-8">
+				<div className="grid grid-cols-1 gap-12 xl:grid-cols-2 xl:gap-8">
 					{view.constructors.length > 0 && (
 						<Section title="Constructors">
-							<TableCard maxHeight="max-h-[560px]">
+							<TableCard maxHeight="sm:max-h-[560px]">
 								<TableHeader>
 									<TableRow>
 										<TableHead>Constructor</TableHead>
-										<TableHead>Years</TableHead>
+										<TableHead className="hidden sm:table-cell">Years</TableHead>
 										<TableHead className="text-right">Races</TableHead>
 										<TableHead className="text-right">Wins</TableHead>
 										<TableHead className="text-right">Titles</TableHead>
@@ -678,10 +764,13 @@ export function NationPage({ view }: { view: NationView }) {
 								<TableBody>
 									{view.constructors.map((c) => (
 										<TableRow key={c.team.id}>
-											<TableCell>
+											<TableCell className={wrapName}>
 												<TeamLink team={c.team} className="font-medium" />
+												<div className="text-muted-foreground text-xs sm:hidden">
+													<YearRange from={c.firstYear} to={c.lastYear} />
+												</div>
 											</TableCell>
-											<TableCell className="text-muted-foreground">
+											<TableCell className="text-muted-foreground hidden sm:table-cell">
 												<YearRange from={c.firstYear} to={c.lastYear} />
 											</TableCell>
 											<TableCell className="text-right tabular-nums">{c.races}</TableCell>
@@ -695,11 +784,11 @@ export function NationPage({ view }: { view: NationView }) {
 					)}
 					{(view.engines.length > 0 || view.tyres.length > 0) && (
 						<Section title="Engines and tyres">
-							<TableCard maxHeight="max-h-[560px]">
+							<TableCard maxHeight="sm:max-h-[560px]">
 								<TableHeader>
 									<TableRow>
 										<TableHead>Supplier</TableHead>
-										<TableHead>Years</TableHead>
+										<TableHead className="hidden sm:table-cell">Years</TableHead>
 										<TableHead className="text-right">Races</TableHead>
 										<TableHead className="text-right">Wins</TableHead>
 									</TableRow>
@@ -707,13 +796,16 @@ export function NationPage({ view }: { view: NationView }) {
 								<TableBody>
 									{view.engines.map((e) => (
 										<TableRow key={`e-${e.engine.id}`}>
-											<TableCell>
-												<EngineLink engine={e.engine} className="font-medium" />
-												<Badge variant="outline" className="ml-2">
-													Engine
-												</Badge>
+											<TableCell className={wrapName}>
+												<div className="flex items-center gap-2">
+													<EngineLink engine={e.engine} className="font-medium" />
+													<Badge variant="outline">Engine</Badge>
+												</div>
+												<div className="text-muted-foreground text-xs sm:hidden">
+													<YearRange from={e.firstYear} to={e.lastYear} />
+												</div>
 											</TableCell>
-											<TableCell className="text-muted-foreground">
+											<TableCell className="text-muted-foreground hidden sm:table-cell">
 												<YearRange from={e.firstYear} to={e.lastYear} />
 											</TableCell>
 											<TableCell className="text-right tabular-nums">{e.races}</TableCell>
@@ -722,13 +814,16 @@ export function NationPage({ view }: { view: NationView }) {
 									))}
 									{view.tyres.map((e) => (
 										<TableRow key={`t-${e.tyre.id}`}>
-											<TableCell>
-												<TyreLink tyre={e.tyre} className="font-medium" />
-												<Badge variant="outline" className="ml-2">
-													Tyres
-												</Badge>
+											<TableCell className={wrapName}>
+												<div className="flex items-center gap-2">
+													<TyreLink tyre={e.tyre} className="font-medium" />
+													<Badge variant="outline">Tyres</Badge>
+												</div>
+												<div className="text-muted-foreground text-xs sm:hidden">
+													<YearRange from={e.firstYear} to={e.lastYear} />
+												</div>
 											</TableCell>
-											<TableCell className="text-muted-foreground">
+											<TableCell className="text-muted-foreground hidden sm:table-cell">
 												<YearRange from={e.firstYear} to={e.lastYear} />
 											</TableCell>
 											<TableCell className="text-right tabular-nums">{e.races}</TableCell>

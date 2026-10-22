@@ -123,10 +123,13 @@ export function UpcomingAnniversaries({
 	const items = upcomingAnniversaries(events, today, days).slice(0, limit);
 	if (!items.length) return null;
 	return (
-		<Section title={title} description={`Round-number anniversaries in the next ${days} days: titles, maiden wins, debuts and champions' birthdays.`} action={action} className={className}>
+		<Section title={title} description={`Round-number anniversaries in the next ${days} days: titles, maiden wins, debuts and champions' birthdays.`}
+			action={action && <div className="ml-auto">{action}</div>}
+			className={className}
+		>
 			<Card size="sm">
 				<CardContent>
-					<ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2 xl:grid-cols-3">
+					<ul className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 xl:grid-cols-3">
 						{items.map((a) => (
 							<AnniversaryItem key={`${a.kind}:${a.date}:${a.driver?.id ?? ""}:${a.team?.id ?? ""}`} a={a} />
 						))}

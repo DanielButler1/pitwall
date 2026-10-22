@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, Sparkles, Timer, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { MatrixCell, RaceRef, SeasonView, SeasonsView } from "@/lib/f1/views";
+import type { DriverRef, MatrixCell, RaceRef, SeasonView, SeasonsView } from "@/lib/f1/views";
 import type { SeasonProgression } from "@/lib/f1/progression";
 import {
 	CircuitLink,
@@ -42,11 +42,17 @@ export function SeasonsPage({ view }: { view: SeasonsView }) {
 				<TableHeader>
 					<TableRow>
 						<TableHead>Season</TableHead>
-						<TableHead className="text-right">Rounds</TableHead>
-						<TableHead>Drivers&apos; champion</TableHead>
-						<TableHead>Team</TableHead>
-						<TableHead className="text-right">Points</TableHead>
-						<TableHead>Constructors&apos; champion</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Rounds</TableHead>
+						<TableHead>
+							<span className="sm:hidden">Drivers</span>
+							<span className="hidden sm:inline">Drivers&apos; champion</span>
+						</TableHead>
+						<TableHead className="hidden sm:table-cell">Team</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Points</TableHead>
+						<TableHead>
+							<span className="sm:hidden">Teams</span>
+							<span className="hidden sm:inline">Constructors&apos; champion</span>
+						</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -62,21 +68,39 @@ export function SeasonsPage({ view }: { view: SeasonsView }) {
 									)}
 								</span>
 							</TableCell>
-							<TableCell className="text-right tabular-nums">{r.races}</TableCell>
-							<TableCell>
-								<span className="inline-flex items-center gap-2">
-									{r.champion ? <DriverLink driver={r.champion} className="font-medium" /> : <span className="text-muted-foreground">Not started</span>}
-									{r.inProgress && <Badge variant="secondary">Leader, in progress</Badge>}
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{r.races}</TableCell>
+							<TableCell className="max-sm:max-w-40">
+								<span className="inline-flex max-w-full items-center gap-2">
+									{r.champion ? <DriverLink driver={r.champion} className="max-w-full font-medium" /> : <span className="text-muted-foreground">Not started</span>}
+									{r.inProgress && (
+										<Badge variant="secondary" className="max-sm:hidden">
+											Leader, in progress
+										</Badge>
+									)}
 								</span>
 								{r.realChampion && (
-									<Badge variant="outline" className="border-universe/30 text-universe ml-2">
+									<Badge variant="outline" className="border-universe/30 text-universe max-sm:mt-1 max-sm:flex max-sm:w-fit sm:ml-2">
 										real: <DriverLink driver={r.realChampion} flag={false} />
 									</Badge>
 								)}
+								{(r.championTeam || r.championPoints != null) && (
+									<div className={cn("text-muted-foreground text-xs sm:hidden", !r.inProgress && "truncate")}>
+										{r.inProgress && (
+											<Badge variant="secondary" className="mr-1.5 h-4 px-1.5 text-[10px]">
+												Leader
+											</Badge>
+										)}
+										{r.championTeam && <TeamLink team={r.championTeam} />}
+										{r.championTeam && r.championPoints != null && " · "}
+										{r.championPoints != null && <span className="tabular-nums">{num(r.championPoints)} pts</span>}
+									</div>
+								)}
 							</TableCell>
-							<TableCell>{r.championTeam && <TeamLink team={r.championTeam} />}</TableCell>
-							<TableCell className="text-right tabular-nums">{r.championPoints != null ? num(r.championPoints) : ""}</TableCell>
-							<TableCell>{r.constructorChampion ? <TeamLink team={r.constructorChampion} /> : <span className="text-muted-foreground">–</span>}</TableCell>
+							<TableCell className="hidden sm:table-cell">{r.championTeam && <TeamLink team={r.championTeam} />}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{r.championPoints != null ? num(r.championPoints) : ""}</TableCell>
+							<TableCell className="max-sm:max-w-28 max-sm:whitespace-normal">
+								{r.constructorChampion ? <TeamLink team={r.constructorChampion} className="max-w-full" /> : <span className="text-muted-foreground">–</span>}
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -111,6 +135,49 @@ const CELL_TEXT: Record<string, string> = {
 };
 
 const ordinal = (n: number) => n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : (["th", "st", "nd", "rd"][n % 10] ?? "th"));
+
+const PARTICLES = new Set(["de", "da", "di", "del", "della", "dos", "du", "la", "le", "van", "von", "der", "den"]);
+
+/** Surname from a full name ("de la Rosa", "Sainz Jr."), for narrow phone columns. */
+export function surname(name: string) {
+	const w = name.split(" ");
+	let i = w.length - 1;
+	if (i > 1 && /^(jr\.?|sr\.?|ii|iii)$/i.test(w[i])) i--;
+	while (i > 1 && PARTICLES.has(w[i - 1].toLowerCase())) i--;
+	return i > 0 ? w.slice(i).join(" ") : name;
+}
+
+/** Phone names for a season's drivers: surnames, with an initial where two share one. */
+function shortNames(drivers: DriverRef[]) {
+	const sur = new Map(drivers.map((d) => [d.id, surname(d.name)]));
+	const count = new Map<string, number>();
+	for (const s of sur.values()) count.set(s, (count.get(s) ?? 0) + 1);
+	return (d: DriverRef) => {
+		const s = sur.get(d.id) ?? surname(d.name);
+		return { ...d, name: (count.get(s) ?? 0) > 1 ? `${d.name[0]}. ${s}` : s };
+	};
+}
+
+/** Driver link that shows the short name on phones and the full name from `sm` up. */
+function DriverName({ driver, short, className, flag = true }: { driver: DriverRef; short: DriverRef; className?: string; flag?: boolean }) {
+	return (
+		<>
+			<DriverLink driver={short} flag={flag} className={cn("sm:hidden", className)} />
+			<DriverLink driver={driver} flag={flag} className={cn("max-sm:hidden", className)} />
+		</>
+	);
+}
+
+/** The "real N" marker on phones, set in the subtitle line; left out when there was no real position. */
+function PhoneReal({ real, sep = true }: { real: string | null; sep?: boolean }) {
+	if (real == null || real === "–") return null;
+	return (
+		<span className="whitespace-nowrap sm:hidden">
+			<span className="text-universe">real {real}</span>
+			{sep && " · "}
+		</span>
+	);
+}
 
 /** A round's column heading; the hover card sums up the race. */
 function RoundHeader({ round: r }: { round: SeasonView["races"][number] }) {
@@ -174,6 +241,7 @@ function GridCell({ cell, race }: { cell: MatrixCell; race: RaceRef }) {
 		cellClass(cell),
 		cell?.pole && "underline decoration-2 underline-offset-2",
 		cell?.fastestLap && "italic",
+		cell && !Number(cell.text) && "max-sm:text-[10px]",
 	);
 	if (!cell) return <TableCell className={className} />;
 	const n = Number(cell.text);
@@ -220,6 +288,10 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 	const champion = view.driverStandings.find((d) => d.champion) ?? (view.inProgress ? view.driverStandings[0] : undefined);
 	const cChampion = view.constructorStandings.find((c) => c.champion) ?? (view.inProgress ? view.constructorStandings[0] : undefined);
 	const title = view.inProgress ? "leader" : "champion";
+	const short = shortNames([
+		...view.driverStandings.map((d) => d.driver),
+		...view.races.flatMap((r) => [r.winner, r.pole, r.fastestLap]).filter((d): d is DriverRef => d != null),
+	]);
 	return (
 		<Page>
 			<PageHeader
@@ -228,7 +300,8 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 						Formula 1 World Championship
 						{view.modified && (
 							<Badge variant="outline" className="border-universe/30 text-universe">
-								<Sparkles /> {view.simulated ? "Simulated" : "Altered"} · {view.pointsSystem}
+								<Sparkles /> {view.simulated ? "Simulated" : "Altered"}
+								{view.pointsSystem !== "Official" && `: ${view.pointsSystem} points system`}
 							</Badge>
 						)}
 					</>
@@ -261,7 +334,7 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 			</PageHeader>
 
 			{(champion || cChampion) && (
-				<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
 					{champion && (
 						<Card size="sm">
 							<CardHeader>
@@ -304,17 +377,17 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 			{view.completed && (
 				<Section
 					title="Drivers' championship"
-					description={`${view.inProgress ? `After ${done.length} of ${view.races.length} rounds. ` : ""}Each round's result. Underlined: pole position. Italic: fastest lap. Hover a cell for details.`}
+					description={`${view.inProgress ? `After ${done.length} of ${view.races.length} rounds. ` : ""}Each round's result. Underlined: pole position. Italic: fastest lap. Hover a cell for details, or tap it to open the race.`}
 				>
-					<TableCard tableClassName="[&_td]:py-1.5">
+					<TableCard tableClassName="[&_td]:py-1.5 max-sm:[&_td:nth-child(n+5)]:px-0 max-sm:[&_th:nth-child(n+5)]:px-0">
 						<TableHeader>
 							<TableRow>
 								<TableHead className="w-12">Pos</TableHead>
-								<TableHead>Driver</TableHead>
+								<TableHead className="max-sm:bg-card max-sm:sticky max-sm:left-0 max-sm:z-10 max-sm:shadow-[1px_0_0_var(--border)]">Driver</TableHead>
 								<TableHead className="text-right">Pts</TableHead>
-								<TableHead className="text-right">Wins</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">Wins</TableHead>
 								{done.map((r) => (
-									<TableHead key={r.race.round} className="px-0.5 text-center">
+									<TableHead key={r.race.round} className="px-0.5 text-center max-sm:w-9 max-sm:min-w-9">
 										<RoundHeader round={r} />
 									</TableHead>
 								))}
@@ -325,11 +398,13 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 								<TableRow key={d.driver.id}>
 									<TableCell className="whitespace-nowrap">
 										<Pos text={d.position} />
-										<RealDiff real={d.realPosition !== d.position ? d.realPosition : null} />
+										<span className="max-sm:hidden">
+											<RealDiff real={d.realPosition !== d.position ? d.realPosition : null} />
+										</span>
 									</TableCell>
-									<TableCell className="max-w-64">
+									<TableCell className="max-w-64 max-sm:bg-card max-sm:sticky max-sm:left-0 max-sm:z-10 max-sm:max-w-36 max-sm:shadow-[1px_0_0_var(--border)]">
 										<div className="flex items-center gap-1.5">
-											<DriverLink driver={d.driver} className="font-medium" />
+											<DriverName driver={d.driver} short={short(d.driver)} className="font-medium max-sm:[&>span]:whitespace-nowrap" />
 											{d.champion && (
 												<Hint label="Drivers' champion">
 													<Trophy className="text-gold size-3.5" />
@@ -337,11 +412,12 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 											)}
 										</div>
 										<div className="text-muted-foreground truncate text-xs">
+											<PhoneReal real={d.realPosition !== d.position ? d.realPosition : null} />
 											<Join items={d.teams} sep=" / " render={(t) => <TeamLink team={t} />} />
 										</div>
 									</TableCell>
 									<TableCell className="text-right font-semibold tabular-nums">{num(d.points)}</TableCell>
-									<TableCell className="text-right tabular-nums">{d.wins || ""}</TableCell>
+									<TableCell className="hidden text-right tabular-nums sm:table-cell">{d.wins || ""}</TableCell>
 									{d.cells.map((c, i) => (
 										<GridCell key={i} cell={c} race={done[i].race} />
 									))}
@@ -365,7 +441,7 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 				</Section>
 			)}
 
-			<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] 2xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] 2xl:gap-8">
 				{view.completed && view.constructorStandings.length > 0 && (
 					<Section title="Constructors' championship">
 						<TableCard>
@@ -373,7 +449,7 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 								<TableRow>
 									<TableHead className="w-12">Pos</TableHead>
 									<TableHead>Constructor</TableHead>
-									<TableHead>Engine</TableHead>
+									<TableHead className="hidden sm:table-cell">Engine</TableHead>
 									<TableHead className="text-right">Wins</TableHead>
 									<TableHead className="text-right">Pts</TableHead>
 								</TableRow>
@@ -383,7 +459,9 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 									<TableRow key={c.team.id + (c.engine?.id ?? "")}>
 										<TableCell className="whitespace-nowrap">
 											<Pos text={c.position} />
-											<RealDiff real={c.realPosition !== c.position ? c.realPosition : null} />
+											<span className="max-sm:hidden">
+												<RealDiff real={c.realPosition !== c.position ? c.realPosition : null} />
+											</span>
 										</TableCell>
 										<TableCell>
 											<div className="flex items-center gap-1.5">
@@ -394,8 +472,12 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 													</Hint>
 												)}
 											</div>
+											<div className="text-muted-foreground text-xs empty:hidden sm:hidden">
+												<PhoneReal real={c.realPosition !== c.position ? c.realPosition : null} sep={!!c.engine && c.engine.name !== c.team.name} />
+												{c.engine && c.engine.name !== c.team.name && <EngineLink engine={c.engine} />}
+											</div>
 										</TableCell>
-										<TableCell className="text-muted-foreground">{c.engine && <EngineLink engine={c.engine} />}</TableCell>
+										<TableCell className="text-muted-foreground hidden sm:table-cell">{c.engine && <EngineLink engine={c.engine} />}</TableCell>
 										<TableCell className="text-right tabular-nums">{c.wins || ""}</TableCell>
 										<TableCell className="text-right font-semibold tabular-nums">{num(c.points)}</TableCell>
 									</TableRow>
@@ -409,50 +491,65 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 					<TableCard>
 						<TableHeader>
 							<TableRow>
-								<TableHead className="w-10">Rd</TableHead>
-								<TableHead>Grand Prix</TableHead>
-								<TableHead>Date</TableHead>
-								<TableHead>Circuit</TableHead>
+								<TableHead className="hidden w-10 sm:table-cell">Rd</TableHead>
+								<TableHead className="max-sm:pl-4">Grand Prix</TableHead>
+								<TableHead className="sm:hidden">Winner</TableHead>
+								<TableHead className="hidden sm:table-cell">Date</TableHead>
+								<TableHead className="hidden sm:table-cell">Circuit</TableHead>
 								<TableHead>Pole</TableHead>
-								<TableHead>Winner</TableHead>
-								<TableHead>Fastest lap</TableHead>
+								<TableHead className="hidden sm:table-cell">Winner</TableHead>
+								<TableHead className="hidden sm:table-cell">Fastest lap</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{view.races.map((r) => (
-								<TableRow key={r.race.round} className={cn(!r.completed && "text-muted-foreground")}>
-									<TableCell className="tabular-nums">{r.race.round}</TableCell>
-									<TableCell>
-										<div className="flex items-center gap-2">
-											<RaceLink race={r.race} className="font-medium" />
-											{r.sprint && <Badge variant="secondary">Sprint</Badge>}
-										</div>
-									</TableCell>
-									<TableCell className="whitespace-nowrap">
-										<DateLink date={r.race.date} />
-									</TableCell>
-									<TableCell>
-										<CircuitLink circuit={r.circuit} />
-									</TableCell>
-									<TableCell>{r.pole && <DriverLink driver={r.pole} flag={false} />}</TableCell>
-									<TableCell>
-										{r.winner && <DriverLink driver={r.winner} className="font-medium" />}
+							{view.races.map((r) => {
+								const winner = (
+									<>
+										{r.winner && <DriverName driver={r.winner} short={short(r.winner)} className="max-w-full font-medium max-sm:[&>.fi]:hidden!" />}
 										{r.winnerTeam && (
-											<div className="text-muted-foreground text-xs">
+											<div className="text-muted-foreground truncate text-xs">
 												<TeamLink team={r.winnerTeam} />
 											</div>
 										)}
-									</TableCell>
-									<TableCell>
-										{r.fastestLap && (
-											<span className="inline-flex items-center gap-1.5">
-												<Timer className="text-muted-foreground size-3.5" />
-												<DriverLink driver={r.fastestLap} flag={false} />
-											</span>
-										)}
-									</TableCell>
-								</TableRow>
-							))}
+									</>
+								);
+								return (
+									<TableRow key={r.race.round} className={cn(!r.completed && "text-muted-foreground")}>
+										<TableCell className="hidden tabular-nums sm:table-cell">{r.race.round}</TableCell>
+										<TableCell className="max-sm:max-w-32 max-sm:pl-4">
+											<div className="flex items-center gap-2">
+												<RaceLink race={r.race} className="font-medium" />
+												{r.sprint && (
+													<Badge variant="secondary" className="max-sm:hidden">
+														Sprint
+													</Badge>
+												)}
+											</div>
+											<div className="text-muted-foreground truncate text-xs sm:hidden">
+												{r.sprint && "Sprint · "}
+												<DateLink date={r.race.date} />
+											</div>
+										</TableCell>
+										<TableCell className="max-w-28 sm:hidden">{winner}</TableCell>
+										<TableCell className="hidden whitespace-nowrap sm:table-cell">
+											<DateLink date={r.race.date} />
+										</TableCell>
+										<TableCell className="hidden sm:table-cell">
+											<CircuitLink circuit={r.circuit} />
+										</TableCell>
+										<TableCell className="max-sm:pr-4 max-sm:text-xs">{r.pole && <DriverName driver={r.pole} short={short(r.pole)} flag={false} className="max-sm:[&>span]:whitespace-nowrap" />}</TableCell>
+										<TableCell className="hidden sm:table-cell">{winner}</TableCell>
+										<TableCell className="hidden sm:table-cell">
+											{r.fastestLap && (
+												<span className="inline-flex items-center gap-1.5">
+													<Timer className="text-muted-foreground size-3.5" />
+													<DriverLink driver={r.fastestLap} flag={false} />
+												</span>
+											)}
+										</TableCell>
+									</TableRow>
+								);
+							})}
 						</TableBody>
 					</TableCard>
 				</Section>
@@ -460,7 +557,7 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 
 			{view.entrants.length > 0 && (
 				<Section title="Entry list">
-					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 						{view.entrants.map((e) => (
 							<Card key={e.team.id} size="sm">
 								<CardHeader>

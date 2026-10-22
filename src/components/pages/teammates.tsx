@@ -13,16 +13,31 @@ export const teammatesHref = (a: string, b: string) => `/teammates/${a}/${b}`;
 const QUALI_NOTE = "Better qualifying classification; grid position when either has none.";
 const RACE_NOTE = "Both started: better classified finish; a classified finisher beats a retirement; races where neither was classified don't count.";
 
-/** Split bar for a head-to-head: the driver's share in F1 red, the other side in muted ink. */
-export function DuelBar({ duel, label, className, decimals }: { duel: Duel; label: React.ReactNode; className?: string; decimals?: boolean }) {
+/**
+ * Split bar for a head-to-head: the driver's share in F1 red, the other side in muted ink.
+ * `numClassName` fixes the width of both number slots so bars line up across rows with differently sized numbers.
+ */
+export function DuelBar({
+	duel,
+	label,
+	className,
+	decimals,
+	numClassName = "min-w-7 sm:min-w-8",
+}: {
+	duel: Duel;
+	label: React.ReactNode;
+	className?: string;
+	decimals?: boolean;
+	numClassName?: string;
+}) {
 	const total = duel.a + duel.b;
 	const share = total ? duel.a / total : 0.5;
 	const fmt = (n: number) => (decimals ? num(n) : n);
 	return (
 		<Hint label={label} className={cn("w-full", className)}>
-			<span className="flex w-full items-center gap-2 text-xs tabular-nums">
-				<span className={cn("w-8 text-right", duel.a > duel.b && "font-semibold")}>{fmt(duel.a)}</span>
-				<span className="flex h-2 min-w-16 flex-1 gap-0.5" aria-hidden>
+			<span className="flex w-full items-center gap-1.5 text-xs sm:gap-2 tabular-nums">
+				<span className={cn("shrink-0 text-right", numClassName, duel.a > duel.b && "font-semibold")}>{fmt(duel.a)}</span>
+				<span className="flex h-2 min-w-6 flex-1 gap-0.5 sm:min-w-16" aria-hidden>
 					{total > 0 ? (
 						<>
 							{duel.a > 0 && <span className="bg-f1 h-full rounded-l-full" style={{ width: `${share * 100}%` }} />}
@@ -32,11 +47,14 @@ export function DuelBar({ duel, label, className, decimals }: { duel: Duel; labe
 						<span className="bg-muted h-full flex-1 rounded-full" />
 					)}
 				</span>
-				<span className={cn("w-8", duel.b > duel.a && "font-semibold")}>{fmt(duel.b)}</span>
+				<span className={cn("shrink-0", numClassName, duel.b > duel.a && "font-semibold")}>{fmt(duel.b)}</span>
 			</span>
 		</Hint>
 	);
 }
+
+// Tight number slots for the phone Q/R columns, where every pixel goes to the bars.
+const NARROW_NUMS = "min-w-5 sm:min-w-8";
 
 const pct = (d: Duel) => (d.a + d.b ? `${Math.round((100 * d.a) / (d.a + d.b))}%` : "–");
 
@@ -63,56 +81,72 @@ export function TeammatesSection({ view }: { view: DriverTeammatesView }) {
 				</div>
 			}
 		>
-			<TableCard maxHeight={view.rows.length > 12 ? "max-h-[560px]" : undefined}>
+			<TableCard maxHeight={view.rows.length > 12 ? "sm:max-h-[560px]" : undefined}>
 				<TableHeader>
 					<TableRow>
 						<TableHead>Team-mate</TableHead>
-						<TableHead>Team</TableHead>
-						<TableHead className="text-right">Races</TableHead>
-						<TableHead className="min-w-44">Qualifying</TableHead>
-						<TableHead className="min-w-44">Race</TableHead>
-						<TableHead className="text-right">Points share</TableHead>
+						<TableHead className="hidden sm:table-cell">Team</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Races</TableHead>
+						<TableHead className="hidden min-w-44 sm:table-cell">Qualifying</TableHead>
+						<TableHead className="hidden min-w-44 sm:table-cell">Race</TableHead>
+						<TableHead className="w-full sm:hidden">Quali / race</TableHead>
+						<TableHead className="text-right">
+							<span className="sm:hidden">Pts</span>
+							<span className="hidden sm:inline">Points share</span>
+						</TableHead>
 						<TableHead className="w-8" />
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{view.rows.map((r) => (
-						<TableRow key={r.driver.id}>
-							<TableCell>
-								<DriverLink driver={r.driver} className="font-medium" />
-								<div className="text-muted-foreground text-xs">
-									<YearRange from={r.firstYear} to={r.lastYear} />
-								</div>
-							</TableCell>
-							<TableCell className="text-muted-foreground">
-								<Join items={r.teams} render={(tm) => <TeamLink team={tm} />} />
-							</TableCell>
-							<TableCell className="text-right tabular-nums">{r.races}</TableCell>
-							<TableCell>
-								<DuelBar
-									duel={r.quali}
-									label={`Qualifying: ${view.driver.name} ${r.quali.a}, ${r.driver.name} ${r.quali.b}${r.gridDecided ? ` (${r.gridDecided} on grid position)` : ""}`}
-								/>
-							</TableCell>
-							<TableCell>
-								<DuelBar duel={r.race} label={`Finished ahead: ${view.driver.name} ${r.race.a}, ${r.driver.name} ${r.race.b}`} />
-							</TableCell>
-							<TableCell className="text-right tabular-nums">
-								<Hint label={`${num(r.points.a)} – ${num(r.points.b)} points (incl. sprints)`}>{pct(r.points)}</Hint>
-							</TableCell>
-							<TableCell>
-								<Hint label="Full head-to-head">
-									<ULink
-										href={teammatesHref(view.driver.id, r.driver.id)}
-										className={buttonVariants({ variant: "ghost", size: "icon-sm" })}
-										aria-label={`Head-to-head with ${r.driver.name}`}
-									>
-										<ChevronRight />
-									</ULink>
-								</Hint>
-							</TableCell>
-						</TableRow>
-					))}
+					{view.rows.map((r) => {
+						const quali = (
+							<DuelBar
+								duel={r.quali}
+								label={`Qualifying: ${view.driver.name} ${r.quali.a}, ${r.driver.name} ${r.quali.b}${r.gridDecided ? ` (${r.gridDecided} on grid position)` : ""}`}
+								numClassName={NARROW_NUMS}
+							/>
+						);
+						const race = <DuelBar duel={r.race} numClassName={NARROW_NUMS} label={`Finished ahead: ${view.driver.name} ${r.race.a}, ${r.driver.name} ${r.race.b}`} />;
+						return (
+							<TableRow key={r.driver.id}>
+								<TableCell className="max-sm:max-w-28 max-sm:[&_.fi]:hidden!">
+									<DriverLink driver={keepSuffix(r.driver)} className="max-w-full font-medium" />
+									<div className="text-muted-foreground text-xs whitespace-nowrap">
+										<YearRange from={r.firstYear} to={r.lastYear} />
+										<span className="sm:hidden"> · {r.races}</span>
+									</div>
+								</TableCell>
+								<TableCell className="text-muted-foreground hidden sm:table-cell">
+									<Join items={r.teams} render={(tm) => <TeamLink team={tm} />} />
+								</TableCell>
+								<TableCell className="hidden text-right tabular-nums sm:table-cell">{r.races}</TableCell>
+								<TableCell className="hidden sm:table-cell">{quali}</TableCell>
+								<TableCell className="hidden sm:table-cell">{race}</TableCell>
+								<TableCell className="sm:hidden">
+									<div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-1 gap-y-1.5">
+										<span className="text-muted-foreground text-[10px]">Q</span>
+										{quali}
+										<span className="text-muted-foreground text-[10px]">R</span>
+										{race}
+									</div>
+								</TableCell>
+								<TableCell className="text-right tabular-nums max-sm:pl-2!">
+									<Hint label={`${num(r.points.a)} – ${num(r.points.b)} points (incl. sprints)`}>{pct(r.points)}</Hint>
+								</TableCell>
+								<TableCell className="max-sm:pl-0">
+									<Hint label="Full head-to-head">
+										<ULink
+											href={teammatesHref(view.driver.id, r.driver.id)}
+											className={buttonVariants({ variant: "ghost", size: "icon-sm" })}
+											aria-label={`Head-to-head with ${r.driver.name}`}
+										>
+											<ChevronRight />
+										</ULink>
+									</Hint>
+								</TableCell>
+							</TableRow>
+						);
+					})}
 				</TableBody>
 			</TableCard>
 		</Section>
@@ -121,16 +155,20 @@ export function TeammatesSection({ view }: { view: DriverTeammatesView }) {
 
 /* --------------------------------------------------------- pairing page --- */
 
-function DuelRow({ label, duel, note, decimals }: { label: string; duel: Duel; note?: string; decimals?: boolean }) {
+function DuelRow({ label, duel, note, decimals, numClassName }: { label: string; duel: Duel; note?: string; decimals?: boolean; numClassName: string }) {
 	return (
 		<div className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-3 sm:grid-cols-[9rem_minmax(0,1fr)]">
 			<span className="text-muted-foreground text-sm">{label}</span>
-			<DuelBar duel={duel} decimals={decimals} label={note ?? label} />
+			<DuelBar duel={duel} decimals={decimals} label={note ?? label} numClassName={numClassName} />
 		</div>
 	);
 }
 
 function Duels({ t, a, b }: { t: PairTotals; a: string; b: string }) {
+	// One number width for every row, sized to the longest figure (usually points), so all bars start and end together.
+	const figures = [t.quali, t.race, t.wins, t.podiums, t.poles].flatMap((d) => [String(d.a), String(d.b)]);
+	const longest = Math.max(...figures.concat(num(t.points.a), num(t.points.b)).map((s) => s.length));
+	const w = longest <= 2 ? "w-6" : longest <= 3 ? "w-7" : longest <= 5 ? "w-10" : "w-12";
 	return (
 		<Card>
 			<CardContent className="space-y-3">
@@ -143,14 +181,15 @@ function Duels({ t, a, b }: { t: PairTotals; a: string; b: string }) {
 				</div>
 				<DuelRow
 					label="Qualifying"
+					numClassName={w}
 					duel={t.quali}
 					note={`${QUALI_NOTE}${t.gridDecided ? ` ${t.gridDecided} decided on grid position.` : ""}`}
 				/>
-				<DuelRow label="Finished ahead" duel={t.race} note={RACE_NOTE} />
-				<DuelRow label="Points" duel={t.points} decimals note="Race and sprint points at the shared weekends" />
-				<DuelRow label="Wins" duel={t.wins} />
-				<DuelRow label="Podiums" duel={t.podiums} />
-				<DuelRow label="Poles" duel={t.poles} />
+				<DuelRow label="Finished ahead" duel={t.race} note={RACE_NOTE} numClassName={w} />
+				<DuelRow label="Points" duel={t.points} decimals note="Race and sprint points at the shared weekends" numClassName={w} />
+				<DuelRow label="Wins" duel={t.wins} numClassName={w} />
+				<DuelRow label="Podiums" duel={t.podiums} numClassName={w} />
+				<DuelRow label="Poles" duel={t.poles} numClassName={w} />
 			</CardContent>
 		</Card>
 	);
@@ -160,6 +199,28 @@ function Cell({ s, won }: { s: PairSide; won: boolean }) {
 	return <span className={cn("tabular-nums", won ? "text-foreground font-semibold" : "text-muted-foreground")}>{s.text}</span>;
 }
 
+/** Glues a " Jr."/" Sr." suffix to the surname with a no-break space, so a wrapping name never leaves "Jr." alone on a line. */
+export const keepSuffix = <T extends { name: string }>(d: T): T => ({ ...d, name: d.name.replace(/ (Jr\.|Sr\.)$/, "\u00a0$1") });
+
+/** Last name for tight phone layouts: "Carlos Sainz Jr." -> "Sainz", "Elio de Angelis" -> "de Angelis". */
+export function surname(name: string) {
+	const words = name.replace(/ (Jr\.|Sr\.)$/, "").split(" ");
+	let i = words.length - 1;
+	while (i > 1 && /^(de|da|di|del|der|van|von|la|le|dos)$/.test(words[i - 1])) i--;
+	return words.slice(i).join(" ");
+}
+
+// Phones: the few long Grand Prix names, shortened so a race fits on one line beside its year.
+const PHONE_RACE: Record<string, string> = {
+	"United States": "USA",
+	"United States West": "USA West",
+	"70th Anniversary": "70th Anniv.",
+	"Barcelona-Catalunya": "Barcelona",
+	"Emilia Romagna": "Imola",
+	"Caesars Palace": "Caesars P.",
+};
+export const phoneRaceName = (name: string) => PHONE_RACE[name] ?? name.replace(/ Grand Prix$/, " GP");
+
 const qualiText = (s: PairSide, basis: "qualifying" | "grid" | null) => {
 	const v = basis === "grid" ? s.grid : (s.qualifying ?? s.grid);
 	return v != null ? `${basis === "grid" ? "G" : "Q"}${v}` : "–";
@@ -167,6 +228,7 @@ const qualiText = (s: PairSide, basis: "qualifying" | "grid" | null) => {
 
 export function TeammatePairPage({ view }: { view: TeammatePairView }) {
 	const { a, b, totals: t } = view;
+	const multiTeam = view.teams.length > 1;
 	return (
 		<Page>
 			<PageHeader
@@ -186,9 +248,9 @@ export function TeammatePairPage({ view }: { view: TeammatePairView }) {
 				}
 				title={
 					<span className="flex flex-wrap items-baseline gap-x-3">
-						<DriverLink driver={a} flag={false} />
+						<DriverLink driver={keepSuffix(a)} flag={false} />
 						<span className="text-muted-foreground text-xl font-normal">vs</span>
-						<DriverLink driver={b} flag={false} />
+						<DriverLink driver={keepSuffix(b)} flag={false} />
 					</span>
 				}
 				actions={
@@ -211,7 +273,7 @@ export function TeammatePairPage({ view }: { view: TeammatePairView }) {
 				)}
 			</PageHeader>
 
-			<div className="grid gap-12 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)] xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)] xl:gap-8">
 				<Section title="Head-to-head">
 					<Duels t={t} a={a.name} b={b.name} />
 				</Section>
@@ -220,38 +282,58 @@ export function TeammatePairPage({ view }: { view: TeammatePairView }) {
 						<TableHeader>
 							<TableRow>
 								<TableHead>Season</TableHead>
-								<TableHead>Team</TableHead>
-								<TableHead className="text-right">Races</TableHead>
-								<TableHead className="min-w-40">Qualifying</TableHead>
-								<TableHead className="min-w-40">Race</TableHead>
-								<TableHead className="text-right">Points</TableHead>
-								<TableHead className="text-right">Wins</TableHead>
+								{multiTeam && <TableHead className="hidden sm:table-cell">Team</TableHead>}
+								<TableHead className="hidden text-right sm:table-cell">Races</TableHead>
+								<TableHead className="hidden min-w-40 sm:table-cell">Qualifying</TableHead>
+								<TableHead className="hidden min-w-40 sm:table-cell">Race</TableHead>
+								<TableHead className="w-full sm:hidden">Quali / race</TableHead>
+								<TableHead className="text-right max-sm:pr-4!">
+									<span className="sm:hidden">Pts</span>
+									<span className="hidden sm:inline">Points</span>
+								</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">Wins</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{view.seasons.map((s) => (
-								<TableRow key={s.year}>
-									<TableCell className="font-semibold">
-										<SeasonLink year={s.year} />
-									</TableCell>
-									<TableCell className="text-muted-foreground">
-										<Join items={s.teams} render={(tm) => <TeamLink team={tm} />} />
-									</TableCell>
-									<TableCell className="text-right tabular-nums">{s.races}</TableCell>
-									<TableCell>
-										<DuelBar duel={s.quali} label={`Qualifying ${s.year}: ${a.name} ${s.quali.a}, ${b.name} ${s.quali.b}`} />
-									</TableCell>
-									<TableCell>
-										<DuelBar duel={s.race} label={`Finished ahead ${s.year}: ${a.name} ${s.race.a}, ${b.name} ${s.race.b}`} />
-									</TableCell>
-									<TableCell className="text-right whitespace-nowrap tabular-nums">
-										{num(s.points.a)} – {num(s.points.b)}
-									</TableCell>
-									<TableCell className="text-right whitespace-nowrap tabular-nums">
-										{s.wins.a} – {s.wins.b}
-									</TableCell>
-								</TableRow>
-							))}
+							{view.seasons.map((s) => {
+								const quali = <DuelBar duel={s.quali} numClassName={NARROW_NUMS} label={`Qualifying ${s.year}: ${a.name} ${s.quali.a}, ${b.name} ${s.quali.b}`} />;
+								const race = <DuelBar duel={s.race} numClassName={NARROW_NUMS} label={`Finished ahead ${s.year}: ${a.name} ${s.race.a}, ${b.name} ${s.race.b}`} />;
+								return (
+									<TableRow key={s.year}>
+										<TableCell>
+											<SeasonLink year={s.year} className="font-semibold" />
+											<div className="text-muted-foreground text-xs whitespace-nowrap sm:hidden">
+												{s.races} race{s.races === 1 ? "" : "s"}
+											</div>
+										</TableCell>
+										{multiTeam && (
+											<TableCell className="text-muted-foreground hidden sm:table-cell">
+												<Join items={s.teams} render={(tm) => <TeamLink team={tm} />} />
+											</TableCell>
+										)}
+										<TableCell className="hidden text-right tabular-nums sm:table-cell">{s.races}</TableCell>
+										<TableCell className="hidden sm:table-cell">{quali}</TableCell>
+										<TableCell className="hidden sm:table-cell">{race}</TableCell>
+										<TableCell className="sm:hidden">
+											<div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-1 gap-y-1.5">
+												<span className="text-muted-foreground text-[10px]">Q</span>
+												{quali}
+												<span className="text-muted-foreground text-[10px]">R</span>
+												{race}
+											</div>
+										</TableCell>
+										<TableCell className="text-right whitespace-nowrap tabular-nums max-sm:pr-4!">
+											{num(s.points.a)} – {num(s.points.b)}
+											<div className="text-muted-foreground text-xs sm:hidden">
+												{s.wins.a} – {s.wins.b} wins
+											</div>
+										</TableCell>
+										<TableCell className="hidden text-right whitespace-nowrap tabular-nums sm:table-cell">
+											{s.wins.a} – {s.wins.b}
+										</TableCell>
+									</TableRow>
+								);
+							})}
 						</TableBody>
 					</TableCard>
 				</Section>
@@ -262,44 +344,61 @@ export function TeammatePairPage({ view }: { view: TeammatePairView }) {
 					<TableHeader>
 						<TableRow>
 							<TableHead>Race</TableHead>
-							<TableHead>Team</TableHead>
-							<TableHead className="text-right">Qual.</TableHead>
-							<TableHead className="text-right">{a.name}</TableHead>
-							<TableHead className="text-right">Qual.</TableHead>
-							<TableHead className="text-right">{b.name}</TableHead>
-							<TableHead className="text-right">Points</TableHead>
+							{multiTeam && <TableHead className="hidden sm:table-cell">Team</TableHead>}
+							<TableHead className="hidden text-right sm:table-cell">Qual.</TableHead>
+							<TableHead className="text-right whitespace-nowrap">
+								<span className="sm:hidden">{surname(a.name)}</span>
+								<span className="hidden sm:inline">{a.name}</span>
+							</TableHead>
+							<TableHead className="hidden text-right sm:table-cell">Qual.</TableHead>
+							<TableHead className="text-right whitespace-nowrap">
+								<span className="sm:hidden">{surname(b.name)}</span>
+								<span className="hidden sm:inline">{b.name}</span>
+							</TableHead>
+							<TableHead className="text-right">
+								<span className="sm:hidden">Pts</span>
+								<span className="hidden sm:inline">Points</span>
+							</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{[...view.races].reverse().map((r) => (
-							<TableRow key={`${r.race.year}-${r.race.round}`}>
-								<TableCell>
-									<RaceLink race={r.race} year />
-								</TableCell>
-								<TableCell className="text-muted-foreground">
-									<TeamLink team={r.team} />
-								</TableCell>
-								<TableCell className="text-right">
-									<span className={cn("tabular-nums", r.quali === "a" ? "font-semibold" : "text-muted-foreground", r.qualiBasis === "grid" && "italic")}>
-										{qualiText(r.a, r.qualiBasis)}
-									</span>
-								</TableCell>
-								<TableCell className="text-right">
-									<Cell s={r.a} won={r.finish === "a"} />
-								</TableCell>
-								<TableCell className="text-right">
-									<span className={cn("tabular-nums", r.quali === "b" ? "font-semibold" : "text-muted-foreground", r.qualiBasis === "grid" && "italic")}>
-										{qualiText(r.b, r.qualiBasis)}
-									</span>
-								</TableCell>
-								<TableCell className="text-right">
-									<Cell s={r.b} won={r.finish === "b"} />
-								</TableCell>
-								<TableCell className="text-right whitespace-nowrap tabular-nums">
-									{num(r.a.points)} – {num(r.b.points)}
-								</TableCell>
-							</TableRow>
-						))}
+						{[...view.races].reverse().map((r) => {
+							const q = (side: "a" | "b") => (
+								<span className={cn("tabular-nums", r.quali === side ? "font-semibold" : "text-muted-foreground", r.qualiBasis === "grid" && "italic")}>
+									{qualiText(r[side], r.qualiBasis)}
+								</span>
+							);
+							return (
+								<TableRow key={`${r.race.year}-${r.race.round}`}>
+									<TableCell className="max-sm:whitespace-nowrap">
+										<RaceLink race={r.race} year className="hidden sm:inline-flex" />
+										<RaceLink race={{ ...r.race, name: phoneRaceName(r.race.name) }} className="max-w-full sm:hidden" />
+										<div className="text-muted-foreground pl-[26.6px] text-xs tabular-nums sm:hidden">
+											{r.race.year}
+											{multiTeam && <> · {r.team.name}</>}
+										</div>
+									</TableCell>
+									{multiTeam && (
+										<TableCell className="text-muted-foreground hidden sm:table-cell">
+											<TeamLink team={r.team} />
+										</TableCell>
+									)}
+									<TableCell className="hidden text-right sm:table-cell">{q("a")}</TableCell>
+									<TableCell className="text-right">
+										<Cell s={r.a} won={r.finish === "a"} />
+										<div className="text-xs sm:hidden">{q("a")}</div>
+									</TableCell>
+									<TableCell className="hidden text-right sm:table-cell">{q("b")}</TableCell>
+									<TableCell className="text-right">
+										<Cell s={r.b} won={r.finish === "b"} />
+										<div className="text-xs sm:hidden">{q("b")}</div>
+									</TableCell>
+									<TableCell className="text-right whitespace-nowrap tabular-nums max-sm:text-xs">
+										{num(r.a.points)} – {num(r.b.points)}
+									</TableCell>
+								</TableRow>
+							);
+						})}
 					</TableBody>
 				</TableCard>
 			</Section>

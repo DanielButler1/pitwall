@@ -7,7 +7,7 @@ import { use, useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CircleAlert, FlaskConical, GitCompareArrows, Orbit, Sparkles, X } from "lucide-react";
+import { BookmarkPlus, CircleAlert, Ellipsis, FlaskConical, GitCompareArrows, Link2, Orbit, Sparkles, Trash2, X } from "lucide-react";
 import { publishActiveUniverse, UniverseProvider, withdrawActiveUniverse } from "@/components/universe-link";
 import { HomePage } from "@/components/pages/home";
 import { SeasonPage, SeasonsPage } from "@/components/pages/season";
@@ -29,16 +29,17 @@ import { milestonesView, milestoneWatch } from "@/lib/f1/milestones";
 import { seasonProgression } from "@/lib/f1/progression";
 import { driverTeammatesView, teammatePairView } from "@/lib/f1/teammates";
 import { compareQuery, compareView } from "@/lib/f1/compare";
-import { ShareButton, SharedActions } from "@/components/lab/share-button";
+import { copyShareLink, saveShared, ShareButton, SharedActions } from "@/components/lab/share-button";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
 import type { Db } from "@/lib/f1/dataset";
 import * as v from "@/lib/f1/views";
 import { useUniverseDb } from "@/lib/universe/use-universe";
 import { universeDiff } from "@/lib/universe/diff";
-import { isShared } from "@/lib/universe/store";
+import { deleteUniverse, isShared } from "@/lib/universe/store";
 
 function render(db: Db, base: Db, path: string[], uid: string, name: string, searchParams: URLSearchParams): React.ReactNode | null {
 	const [section, a, b] = path;
@@ -187,7 +188,57 @@ export default function UniversePage({ params }: { params: Promise<{ uid: string
 	return (
 		<UniverseProvider universe={{ id: uid, name: state.universe.name }}>
 			<div className="bg-universe/8 border-universe/20 border-b">
-				<div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 text-sm sm:px-6 lg:px-10">
+				<div className="flex items-center gap-2 px-4 py-2 text-sm sm:hidden">
+					<div className="min-w-0 flex-1">
+						<div className="text-universe flex min-w-0 items-center gap-1.5 font-medium">
+							<Sparkles className="size-4 shrink-0" /> <span className="truncate">{state.universe.name}</span>
+						</div>
+						<div className="text-muted-foreground truncate text-xs">
+							{shared && <span className="text-universe max-[379px]:hidden">Shared · </span>}
+							{changes} change{changes === 1 ? "" : "s"} · {seasons} season{seasons === 1 ? "" : "s"} affected
+						</div>
+					</div>
+					{shared ? (
+						<Button size="sm" className="bg-universe hover:bg-universe/90 shrink-0 text-white" onClick={() => saveShared(state.universe)}>
+							<BookmarkPlus data-icon="inline-start" />
+							Save
+						</Button>
+					) : (
+						<Link href={`/lab?u=${uid}`} className={cn(buttonVariants({ variant: "ghost", size: "sm", className: "text-universe hover:text-universe shrink-0" }))}>
+							<FlaskConical data-icon="inline-start" />
+							Edit in Lab
+						</Link>
+					)}
+					<DropdownMenu>
+						<DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="shrink-0" aria-label="More universe actions" />}>
+							<Ellipsis />
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-52 [&_[role=menuitem]]:min-h-10">
+							<DropdownMenuItem render={<Link href={`/u/${uid}/changes`} />}>
+								<GitCompareArrows /> What changed
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => copyShareLink(state.universe)}>
+								<Link2 /> Share
+							</DropdownMenuItem>
+							{shared && (
+								<DropdownMenuItem
+									onClick={async () => {
+										setLeaving(true);
+										router.replace(realHref);
+										await deleteUniverse(state.universe.id);
+									}}
+								>
+									<Trash2 /> Discard
+								</DropdownMenuItem>
+							)}
+							<DropdownMenuSeparator />
+							<DropdownMenuItem render={<Link href={realHref} />}>
+								<X /> Back to reality
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
+				<div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 text-sm max-sm:hidden sm:px-6 lg:px-10">
 					<span className="text-universe flex items-center gap-1.5 font-medium">
 						<Sparkles className="size-4" /> {state.universe.name}
 					</span>

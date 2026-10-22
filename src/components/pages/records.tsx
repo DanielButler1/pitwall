@@ -3,7 +3,7 @@
 // Records: the catalogue (/records) and one category (/records/...).
 // Rendered the same way for reality and for any universe.
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { CalendarRange, ChevronLeft, ChevronRight, ChevronsDown, Search, Sparkles, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Cell, RecordMeta, RecordPageView, RecordRow } from "@/lib/f1/records";
@@ -77,8 +77,12 @@ function CellView({ cell, strong }: { cell: Cell; strong?: boolean }) {
 function Cells({ cells, strong, className }: { cells: Cell[]; strong?: boolean; className?: string }) {
 	return (
 		<div className={cn("flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1", className)}>
+			{/* the spaces are ignored by the flex layout but let the phone detail line wrap as text */}
 			{cells.map((c, i) => (
-				<CellView key={i} cell={c} strong={strong} />
+				<Fragment key={i}>
+					{i > 0 && " "}
+					<CellView cell={c} strong={strong} />
+				</Fragment>
 			))}
 		</div>
 	);
@@ -124,12 +128,27 @@ function CoverageBadge({ coverage, className }: { coverage: NonNullable<RecordMe
 function CategoryLink({ meta, showFamily }: { meta: RecordMeta; showFamily?: boolean }) {
 	const label = showFamily ? `${meta.family}: ${meta.title}` : meta.title;
 	return (
-		<li className="flex items-center gap-1.5 py-0.5 text-sm">
-			<ULink href={recordHref(meta.id)} className="min-w-0 truncate underline-offset-4 hover:underline">
+		<li className="flex items-center gap-1.5 py-0.5 text-sm max-sm:min-h-10 max-sm:py-0">
+			<ULink href={recordHref(meta.id)} className="min-w-0 underline-offset-4 hover:underline max-sm:flex-1 max-sm:py-2.5 sm:truncate">
 				{label}
 			</ULink>
 			{meta.coverage && <CoverageBadge coverage={meta.coverage} />}
 		</li>
+	);
+}
+
+/** Phones can't hover the coverage badges, so their notes are written out under the list there. */
+function CoverageNotes({ records }: { records: RecordMeta[] }) {
+	const notes = [...new Map(records.flatMap((r) => (r.coverage ? [[r.coverage.label, r.coverage] as const] : []))).values()];
+	if (!notes.length) return null;
+	return (
+		<div className="text-muted-foreground mt-2 space-y-1.5 border-t pt-2.5 text-xs leading-relaxed sm:hidden">
+			{notes.map((c) => (
+				<p key={c.label}>
+					<span className="text-foreground font-medium">{c.label}:</span> {c.note}
+				</p>
+			))}
+		</div>
 	);
 }
 
@@ -145,11 +164,12 @@ function FamilyCard({ family, records }: { family: string; records: RecordMeta[]
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<ul>
+				<ul className="max-sm:divide-y">
 					{records.map((m) => (
 						<CategoryLink key={m.id} meta={shared ? { ...m, coverage: undefined } : m} />
 					))}
 				</ul>
+				<CoverageNotes records={records} />
 			</CardContent>
 		</Card>
 	);
@@ -203,24 +223,33 @@ export function RecordsPage({ view }: { view: RecordsIndexView }) {
 				other lap-by-lap records from Jolpica since 1996.
 			</PageHeader>
 
-			<div className="grid gap-x-8 gap-y-12 md:grid-cols-2 xl:grid-cols-4">
+			<div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 xl:grid-cols-4">
 				{view.highlights.map((h) => (
 					<HighlightCard key={h.meta.id} view={h} />
 				))}
 			</div>
 
-			<Section title="All categories" description="Badges mark records whose data starts later than 1950; hover them for details.">
+			<Section
+				title="All categories"
+				description={
+					<>
+						Badges mark records whose data starts later than 1950
+						<span className="hidden sm:inline">; hover them for details</span>
+						<span className="sm:hidden">, explained under each list</span>.
+					</>
+				}
+			>
 				<InputGroup className="max-w-md">
 					<InputGroupAddon>
 						<Search />
 					</InputGroupAddon>
-					<InputGroupInput value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search records, e.g. youngest, consecutive, Monaco" />
+					<InputGroupInput value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search, e.g. youngest, Monaco" />
 					{q && <InputGroupAddon align="inline-end">{found} found</InputGroupAddon>}
 				</InputGroup>
 
 				{q ? (
 					found ? (
-						<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+						<div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 							{matches
 								.filter((s) => s.records.length)
 								.map((s) => (
@@ -229,11 +258,12 @@ export function RecordsPage({ view }: { view: RecordsIndexView }) {
 											<CardTitle className="font-semibold">{s.label}</CardTitle>
 										</CardHeader>
 										<CardContent>
-											<ul>
+											<ul className="max-sm:divide-y">
 												{s.records.map((m) => (
 													<CategoryLink key={m.id} meta={m} showFamily />
 												))}
 											</ul>
+											<CoverageNotes records={s.records} />
 										</CardContent>
 									</Card>
 								))}
@@ -250,7 +280,10 @@ export function RecordsPage({ view }: { view: RecordsIndexView }) {
 					)
 				) : (
 					<Tabs defaultValue={view.sections[0]?.entity} className="gap-6">
-						<TabsList variant="line" className="flex-wrap">
+						<TabsList
+							variant="line"
+							className="max-sm:h-10 max-sm:w-full max-sm:justify-start max-sm:overflow-x-auto max-sm:pb-2.5 max-sm:pr-10 max-sm:[mask-image:linear-gradient(to_right,black_calc(100%-3rem),transparent)] max-sm:[scrollbar-width:none] max-sm:[&>*]:flex-none sm:flex-wrap"
+						>
 							{view.sections.map((s) => (
 								<TabsTrigger key={s.entity} value={s.entity}>
 									{s.label}
@@ -274,9 +307,12 @@ export function RecordsPage({ view }: { view: RecordsIndexView }) {
 /* --------------------------------------------------------------- category --- */
 
 const PAGE = 50;
+/** Sibling-category chips shown on phones before "Show all". */
+const SIBLINGS = 8;
 
 export function RecordCategoryPage({ view }: { view: RecordCategoryView }) {
 	const [shown, setShown] = useState(PAGE);
+	const [allSiblings, setAllSiblings] = useState(false);
 	const { meta } = view;
 	const rows: (RecordRow & { real?: string | null })[] = view.rows.slice(0, shown);
 	const hasDetail = view.rows.some((r) => r.detail?.length);
@@ -339,25 +375,26 @@ export function RecordCategoryPage({ view }: { view: RecordCategoryView }) {
 					<TableCard>
 						<TableHeader>
 							<TableRow>
-								<TableHead className="w-12">#</TableHead>
+								<TableHead className="w-12 max-sm:w-8">#</TableHead>
 								<TableHead>{meta.columns.subject}</TableHead>
 								<TableHead className="text-right">{meta.columns.value}</TableHead>
-								{hasDetail && <TableHead>{meta.columns.detail ?? ""}</TableHead>}
+								{hasDetail && <TableHead className="hidden sm:table-cell">{meta.columns.detail ?? ""}</TableHead>}
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{rows.map((r) => (
 								<TableRow key={r.key}>
 									<TableCell className="text-muted-foreground tabular-nums">{r.rank}</TableCell>
-									<TableCell>
+									<TableCell className="max-sm:whitespace-normal">
 										<Cells cells={r.subject} strong />
+										{r.detail && <Cells cells={r.detail} className="mt-1 block text-xs leading-5 text-pretty [word-spacing:0.15em] sm:hidden" />}
 									</TableCell>
-									<TableCell className="text-right font-semibold whitespace-nowrap tabular-nums">
+									<TableCell className={cn("text-right font-semibold whitespace-nowrap tabular-nums", r.date && "max-sm:text-xs max-sm:font-medium")}>
 										{r.date ? <DateLink date={r.date} /> : r.display}
 										<RealDiff real={r.real} />
 									</TableCell>
 									{hasDetail && (
-										<TableCell className="max-w-[48rem] text-sm whitespace-normal">
+										<TableCell className="hidden max-w-[48rem] text-sm whitespace-normal sm:table-cell">
 											{r.detail && <Cells cells={r.detail} />}
 										</TableCell>
 									)}
@@ -365,21 +402,22 @@ export function RecordCategoryPage({ view }: { view: RecordCategoryView }) {
 							))}
 						</TableBody>
 					</TableCard>
-					<div className="flex flex-wrap items-center gap-3">
+					<div className="flex flex-wrap items-center gap-x-3 gap-y-2">
 						<span className="text-muted-foreground text-sm tabular-nums">
-							Showing {rows.length} of {view.total.toLocaleString("en-GB")}
+							<span className="hidden sm:inline">Showing </span>
+							{rows.length} of {view.total.toLocaleString("en-GB")}
 							{view.total > view.rows.length && ` (top ${view.rows.length} listed)`}
 						</span>
 						{shown < view.rows.length && (
-							<>
+							<div className="flex items-center gap-2">
 								<Button variant="outline" size="sm" onClick={() => setShown((n) => n + PAGE)}>
 									<ChevronsDown data-icon="inline-start" />
 									Show {Math.min(PAGE, view.rows.length - shown)} more
 								</Button>
-								<Button variant="ghost" size="sm" onClick={() => setShown(view.rows.length)}>
+								<Button variant="outline" size="sm" onClick={() => setShown(view.rows.length)}>
 									Show all
 								</Button>
-							</>
+							</div>
 						)}
 					</div>
 				</div>
@@ -388,16 +426,26 @@ export function RecordCategoryPage({ view }: { view: RecordCategoryView }) {
 			{view.siblings.length > 1 && (
 				<Section title={`More ${meta.family.toLowerCase()} records`}>
 					<div className="flex flex-wrap gap-2">
-						{view.siblings.map((s) =>
+						{view.siblings.map((s, i) =>
 							s.id === meta.id ? (
 								<Badge key={s.id} variant="secondary" className="h-7 px-3 text-sm">
 									{s.title}
 								</Badge>
 							) : (
-								<ULink key={s.id} href={recordHref(s.id)} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
+								<ULink
+									key={s.id}
+									href={recordHref(s.id)}
+									className={cn(buttonVariants({ variant: "outline", size: "sm" }), !allSiblings && i >= SIBLINGS && "max-sm:hidden")}
+								>
 									{s.title}
 								</ULink>
 							),
+						)}
+						{!allSiblings && view.siblings.some((s, i) => i >= SIBLINGS && s.id !== meta.id) && (
+							<Button variant="ghost" size="sm" className="text-muted-foreground sm:hidden" onClick={() => setAllSiblings(true)}>
+								<ChevronsDown data-icon="inline-start" />
+								Show all {view.siblings.length}
+							</Button>
 						)}
 					</div>
 				</Section>

@@ -1,4 +1,5 @@
 import { CalendarDays, Flag as FlagIcon, GitCompareArrows, MapPin, Sparkles, Trophy } from "lucide-react";
+import { Fragment } from "react";
 import { cn } from "@/lib/utils";
 import type { CircuitView, CircuitsView, ConstructorView, DriverView } from "@/lib/f1/views";
 import { ageOn } from "@/lib/f1/stats";
@@ -26,11 +27,12 @@ import {
 	href,
 	num,
 	DateLink,
+	Flag,
 } from "../f1";
 import { ULink } from "../universe-link";
 import { Badge } from "../ui/badge";
 import { buttonVariants } from "../ui/button";
-import { TeammatesSection } from "./teammates";
+import { TeammatesSection, keepSuffix, surname } from "./teammates";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
 const realOf = <T extends object>(real: T | null, key: keyof T, current: unknown) => (real && real[key] !== current ? num(Number(real[key])) : undefined);
@@ -100,7 +102,7 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 				)}
 			</PageHeader>
 
-			<div className={cn("grid grid-cols-2 gap-4 sm:grid-cols-4", view.lapsLed ? "xl:grid-cols-9" : "xl:grid-cols-8")}>
+			<div className={cn("grid grid-cols-2 gap-4 max-sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:grid-cols-4", view.lapsLed ? "xl:grid-cols-9" : "xl:grid-cols-8")}>
 				<StatCard label="Titles" value={t.titles} real={realOf(r, "titles", t.titles)} />
 				<StatCard label="Wins" value={t.wins} real={realOf(r, "wins", t.wins)} />
 				<StatCard label="Podiums" value={t.podiums} real={realOf(r, "podiums", t.podiums)} />
@@ -131,27 +133,43 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 			</div>
 
 			<div className={cn("grid gap-12", side && "2xl:grid-cols-[minmax(0,1fr)_340px] 2xl:gap-8")}>
-				<Section title="Season by season" description="Every result. Underlined: pole position.">
+				<Section
+					title="Season by season"
+					description={
+						<>
+							<span className="sm:hidden">Every race result is listed on a wider screen.</span>
+							<span className="hidden sm:inline">Every result. Underlined: pole position.</span>
+						</>
+					}
+				>
 					<TableCard>
 						<TableHeader>
 							<TableRow>
 								<TableHead>Season</TableHead>
-								<TableHead>Team</TableHead>
+								<TableHead className="hidden sm:table-cell">Team</TableHead>
 								<TableHead className="text-right">Pos</TableHead>
 								<TableHead className="text-right">Pts</TableHead>
 								<TableHead className="text-right">Wins</TableHead>
-								<TableHead className="text-right">Podiums</TableHead>
-								<TableHead className="text-right">Poles</TableHead>
-								<TableHead>Results</TableHead>
+								<TableHead className="text-right">
+									<span className="sm:hidden">Pod</span>
+									<span className="hidden sm:inline">Podiums</span>
+								</TableHead>
+								<TableHead className="text-right max-sm:pr-4!">Poles</TableHead>
+								<TableHead className="hidden sm:table-cell">Results</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{view.seasons.map((s) => (
 								<TableRow key={s.year}>
-									<TableCell className="font-semibold">
-										<SeasonLink year={s.year} />
+									<TableCell className="max-sm:max-w-28">
+										<SeasonLink year={s.year} className="font-semibold" />
+										<div className="text-muted-foreground flex flex-col text-xs sm:hidden">
+											{s.teams.map((tm) => (
+												<TeamLink key={tm.id} team={tm} className="max-w-full" />
+											))}
+										</div>
 									</TableCell>
-									<TableCell>
+									<TableCell className="hidden sm:table-cell">
 										<div className="flex flex-col">
 											{s.teams.map((tm) => (
 												<TeamLink key={tm.id} team={tm} />
@@ -167,13 +185,17 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 											)}
 											{s.position ?? "–"}
 										</span>
-										<RealDiff real={s.realPosition} />
+										{s.realPosition != null && (
+											<div className="flex justify-end [&>*]:ml-0! max-sm:[&>*>*]:px-0.5!">
+												<RealDiff real={s.realPosition} />
+											</div>
+										)}
 									</TableCell>
 									<TableCell className="text-right tabular-nums">{num(s.points)}</TableCell>
 									<TableCell className="text-right tabular-nums">{s.wins || ""}</TableCell>
 									<TableCell className="text-right tabular-nums">{s.podiums || ""}</TableCell>
-									<TableCell className="text-right tabular-nums">{s.poles || ""}</TableCell>
-									<TableCell>
+									<TableCell className="text-right tabular-nums max-sm:pr-4!">{s.poles || ""}</TableCell>
+									<TableCell className="hidden sm:table-cell">
 										<div className="flex flex-wrap gap-0.5">
 											{(byYear.get(s.year) ?? []).map((res) => (
 												<ULink
@@ -207,12 +229,13 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 							<Section title="Family">
 								<TableCard>
 									<TableBody>
+										{/* The relation describes this page's driver ("Uncle of"), so it reads before the relative's name. */}
 										{view.relatives.map((m) => (
 											<TableRow key={m.driver.id}>
+												<TableCell className="text-muted-foreground w-px whitespace-nowrap">{m.relation}</TableCell>
 												<TableCell>
-													<DriverLink driver={m.driver} />
+													<DriverLink driver={keepSuffix(m.driver)} />
 												</TableCell>
-												<TableCell className="text-muted-foreground text-right">{m.relation}</TableCell>
 											</TableRow>
 										))}
 									</TableBody>
@@ -226,7 +249,7 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 										{view.teammates.map((m) => (
 											<TableRow key={m.driver.id}>
 												<TableCell>
-													<DriverLink driver={m.driver} />
+													<DriverLink driver={keepSuffix(m.driver)} />
 												</TableCell>
 												<TableCell className="text-muted-foreground text-right tabular-nums">{m.races} races</TableCell>
 											</TableRow>
@@ -242,6 +265,9 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 		</Page>
 	);
 }
+
+// The 1950s teams ran a dozen drivers a season; phones list the first few and count the rest.
+const PHONE_DRIVERS = 4;
 
 export function ConstructorPage({ view }: { view: ConstructorView }) {
 	const t = view.totals;
@@ -271,7 +297,7 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 				<StatCard label="Races" value={t.entries} />
 				<StatCard label="Points" value={num(t.points)} real={realOf(r, "points", t.points)} />
 			</div>
-			<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 				<Section title="Season by season">
 					<TableCard>
 						<TableHeader>
@@ -279,9 +305,9 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 								<TableHead>Season</TableHead>
 								<TableHead className="text-right">Pos</TableHead>
 								<TableHead className="text-right">Pts</TableHead>
-								<TableHead className="text-right">Wins</TableHead>
-								<TableHead>Engine</TableHead>
-								<TableHead>Tyres</TableHead>
+								<TableHead className="text-right max-[379px]:hidden">Wins</TableHead>
+								<TableHead className="hidden sm:table-cell">Engine</TableHead>
+								<TableHead className="hidden sm:table-cell">Tyres</TableHead>
 								<TableHead>Drivers</TableHead>
 							</TableRow>
 						</TableHeader>
@@ -301,16 +327,36 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 											{s.position ?? "–"}
 										</span>
 									</TableCell>
-									<TableCell className="text-right tabular-nums">{num(s.points)}</TableCell>
-									<TableCell className="text-right tabular-nums">{s.wins || ""}</TableCell>
-									<TableCell className="text-muted-foreground">
+									{/* No constructors' championship before 1958: no position and no points to show. */}
+									<TableCell className="text-right tabular-nums">{s.position == null && !s.points ? "–" : num(s.points)}</TableCell>
+									<TableCell className="text-right tabular-nums max-[379px]:hidden">{s.wins || ""}</TableCell>
+									<TableCell className="text-muted-foreground hidden whitespace-nowrap sm:table-cell">
 										<Join items={s.engines} render={(e) => <EngineLink engine={e} />} />
 									</TableCell>
-									<TableCell className="text-muted-foreground">
+									<TableCell className="text-muted-foreground hidden whitespace-nowrap sm:table-cell">
 										<Join items={s.tyres} render={(ty) => <TyreLink tyre={ty} />} />
 									</TableCell>
-									<TableCell>
-										<div className="flex flex-wrap gap-x-4 gap-y-1">
+									<TableCell className="whitespace-normal">
+										<div className="text-xs leading-5 sm:hidden">
+											{s.drivers.slice(0, PHONE_DRIVERS).map((d, i, shown) => (
+												<Fragment key={d.id}>
+													{i > 0 && " "}
+													<span className="whitespace-nowrap">
+														<ULink href={href.driver(d.id)} className="underline-offset-4 hover:underline" data-card={`driver:${d.id}`}>
+															{surname(d.name)}
+														</ULink>
+														{i < shown.length - 1 && ","}
+													</span>
+												</Fragment>
+											))}
+											{s.drivers.length > PHONE_DRIVERS && (
+												<>
+													{" "}
+													<span className="text-muted-foreground whitespace-nowrap">+{s.drivers.length - PHONE_DRIVERS} more</span>
+												</>
+											)}
+										</div>
+										<div className="hidden flex-wrap gap-x-4 gap-y-1 sm:flex">
 											{s.drivers.map((d) => (
 												<DriverLink key={d.id} driver={d} />
 											))}
@@ -335,7 +381,7 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 								{view.topDrivers.map((d) => (
 									<TableRow key={d.driver.id}>
 										<TableCell>
-											<DriverLink driver={d.driver} />
+											<DriverLink driver={keepSuffix(d.driver)} />
 										</TableCell>
 										<TableCell className="text-right tabular-nums">{d.starts}</TableCell>
 										<TableCell className="text-right tabular-nums">{d.wins || ""}</TableCell>
@@ -346,15 +392,15 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 					</Section>
 					{view.wins.length > 0 && (
 						<Section title="Wins" action={<Badge variant="secondary">{view.wins.length}</Badge>}>
-							<TableCard maxHeight="max-h-[480px]">
+							<TableCard maxHeight="sm:max-h-[480px]">
 								<TableBody>
 									{view.wins.map((w) => (
-										<TableRow key={`${w.race.year}-${w.race.round}`}>
+										<TableRow key={`${w.race.year}-${w.race.round}-${w.driver.id}`}>
 											<TableCell>
 												<RaceLink race={w.race} year />
 											</TableCell>
 											<TableCell>
-												<DriverLink driver={w.driver} flag={false} />
+												<DriverLink driver={keepSuffix(w.driver)} flag={false} />
 											</TableCell>
 										</TableRow>
 									))}
@@ -368,6 +414,9 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 	);
 }
 
+const SHORT_COUNTRY: Record<string, string> = { "United States of America": "USA", "United Kingdom": "UK", "United Arab Emirates": "UAE" };
+const shortCountry = (name: string) => SHORT_COUNTRY[name] ?? name;
+
 export function CircuitsPage({ view }: { view: CircuitsView }) {
 	return (
 		<Page className="space-y-6">
@@ -378,29 +427,39 @@ export function CircuitsPage({ view }: { view: CircuitsView }) {
 				<TableHeader>
 					<TableRow>
 						<TableHead>Circuit</TableHead>
-						<TableHead>Location</TableHead>
-						<TableHead>Type</TableHead>
-						<TableHead className="text-right">Races</TableHead>
-						<TableHead>Years</TableHead>
+						<TableHead className="hidden sm:table-cell">Location</TableHead>
+						<TableHead className="hidden sm:table-cell">Type</TableHead>
+						<TableHead className="hidden text-right sm:table-cell">Races</TableHead>
+						<TableHead className="max-sm:text-right">Years</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{view.rows.map((c) => (
 						<TableRow key={c.id}>
-							<TableCell>
-								<CircuitLink circuit={c} className="font-medium" />
+							<TableCell className="max-sm:max-w-48 max-sm:py-2.5">
+								<CircuitLink circuit={{ ...c, name: c.name.replace(/-/g, "\u2011") }} className="max-w-full font-medium" />
+								<div className="text-muted-foreground pl-[26.6px] text-xs sm:hidden">{c.place === c.name ? shortCountry(c.nation.name) : c.place}</div>
 							</TableCell>
-							<TableCell className="text-muted-foreground">
-								{c.place}, <NationLink nation={c.nation} flag={false} />
+							<TableCell className="text-muted-foreground hidden sm:table-cell">
+								{c.place}
+								{c.place !== c.nation.name && (
+									<>
+										, <NationLink nation={c.nation} flag={false} />
+									</>
+								)}
 							</TableCell>
-							<TableCell>
+							<TableCell className="hidden sm:table-cell">
 								<Badge variant="secondary" className="capitalize">
 									{c.type.toLowerCase().replace("_", " ")}
 								</Badge>
 							</TableCell>
-							<TableCell className="text-right tabular-nums">{c.races}</TableCell>
-							<TableCell className="text-muted-foreground tabular-nums">
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{c.races}</TableCell>
+							<TableCell className="text-muted-foreground whitespace-nowrap tabular-nums max-sm:text-right max-sm:text-xs">
 								<YearRange from={c.firstYear} to={c.lastYear} />
+								{/* Phones fold the race count under the years to leave the name room for one line. */}
+								<div className="text-foreground sm:hidden">
+									{c.races} race{c.races === 1 ? "" : "s"}
+								</div>
 							</TableCell>
 						</TableRow>
 					))}
@@ -412,13 +471,22 @@ export function CircuitsPage({ view }: { view: CircuitsView }) {
 
 export function CircuitPage({ view }: { view: CircuitView }) {
 	const c = view.circuit;
+	const multiGp = view.grandsPrix.length > 1;
 	return (
 		<Page>
 			<PageHeader
 				eyebrow={
 					<>
 						<MapPin className="size-3.5" />
-						{c.place}, <NationLink nation={view.nation} />
+						<Flag code={view.nation.country} />
+						<span>
+							{c.place}
+							{c.place !== view.nation.name && (
+								<>
+									, <NationLink nation={view.nation} flag={false} />
+								</>
+							)}
+						</span>
 					</>
 				}
 				title={c.fullName}
@@ -429,28 +497,53 @@ export function CircuitPage({ view }: { view: CircuitView }) {
 				<StatCard label="Turns" value={c.turns} />
 				<StatCard label="Direction" value={<span className="capitalize">{c.direction.toLowerCase().replace("_", "-")}</span>} />
 			</div>
-			<div className="grid gap-12 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:gap-8">
 				<Section title="Races held">
 					<TableCard>
 						<TableHeader>
 							<TableRow>
-								<TableHead>Race</TableHead>
-								<TableHead>Date</TableHead>
-								<TableHead>Pole</TableHead>
+								<TableHead>
+									<span className="sm:hidden">Year</span>
+									<span className="hidden sm:inline">Race</span>
+								</TableHead>
+								<TableHead className="hidden sm:table-cell">Date</TableHead>
+								<TableHead className="hidden sm:table-cell">Pole</TableHead>
 								<TableHead>Winner</TableHead>
-								<TableHead>Team</TableHead>
+								<TableHead className="hidden sm:table-cell sm:pr-4">Team</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{view.races.map((r) => (
 								<TableRow key={`${r.race.year}-${r.race.round}`}>
 									<TableCell>
-										<RaceLink race={r.race} year className="font-medium" />
+										<RaceLink race={r.race} year className="hidden font-medium sm:inline-flex" />
+										<ULink href={href.race(r.race)} className="font-medium tabular-nums underline-offset-4 hover:underline sm:hidden" data-card={`race:${r.race.year}-${r.race.round}`}>
+											{r.race.year}
+										</ULink>
+										{multiGp && <div className="text-muted-foreground text-xs sm:hidden">{r.race.name}</div>}
 									</TableCell>
-									<TableCell className="text-muted-foreground whitespace-nowrap"><DateLink date={r.race.date} /></TableCell>
-									<TableCell>{r.pole && <DriverLink driver={r.pole} />}</TableCell>
-									<TableCell>{r.winner && <DriverLink driver={r.winner} className="font-medium" />}</TableCell>
-									<TableCell>{r.team && <TeamLink team={r.team} />}</TableCell>
+									<TableCell className="text-muted-foreground hidden whitespace-nowrap sm:table-cell">
+										<DateLink date={r.race.date} />
+									</TableCell>
+									<TableCell className="hidden sm:table-cell">{r.pole && <DriverLink driver={keepSuffix(r.pole)} />}</TableCell>
+									<TableCell className="max-sm:w-full">
+										{r.winner && <DriverLink driver={keepSuffix(r.winner)} className="max-w-full font-medium" />}
+										{/* Phones fold the team and the pole sitter into one line under the winner. */}
+										{(r.team || r.pole) && (
+											<div className="text-muted-foreground flex flex-wrap gap-x-1 text-xs sm:hidden">
+												{r.team && <TeamLink team={r.team} />}
+												{r.pole && (
+													<span className="whitespace-nowrap">
+														{r.team && "· "}Pole{" "}
+														<ULink href={href.driver(r.pole.id)} className="underline-offset-4 hover:underline" data-card={`driver:${r.pole.id}`}>
+															{surname(r.pole.name)}
+														</ULink>
+													</span>
+												)}
+											</div>
+										)}
+									</TableCell>
+									<TableCell className="hidden sm:table-cell sm:pr-4">{r.team && <TeamLink team={r.team} />}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
@@ -482,7 +575,7 @@ export function CircuitPage({ view }: { view: CircuitView }) {
 								{view.topDrivers.map((d) => (
 									<TableRow key={d.driver.id}>
 										<TableCell>
-											<DriverLink driver={d.driver} />
+											<DriverLink driver={keepSuffix(d.driver)} />
 										</TableCell>
 										<TableCell className="text-right font-semibold tabular-nums">{d.wins}</TableCell>
 									</TableRow>

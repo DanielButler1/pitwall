@@ -45,7 +45,8 @@ export function raceRef(db: Db, race: Race): RaceRef {
 		round: race.round,
 		name: gp?.name ?? race.officialName,
 		date: race.date,
-		country: (gp && db.countries.get(gp.country)?.alpha2) ?? null,
+		// European and Pacific Grands Prix have no nation: show where the race was held
+		country: (gp && db.countries.get(gp.country)?.alpha2) ?? db.countries.get(db.circuits.get(race.circuitId)?.country ?? "")?.alpha2 ?? null,
 	};
 }
 export function circuitRef(db: Db, id: string): CircuitRef {
@@ -69,7 +70,9 @@ const isSimulated = (db: Db, year: number) => Boolean((db as Db & { sim?: { year
 
 export function grandPrixRef(db: Db, id: string): GrandPrixRef {
 	const g = db.grandsPrix.get(id);
-	return { id, name: g?.fullName ?? id, country: (g && db.countries.get(g.country)?.alpha2) ?? null };
+	// the European Grand Prix flies the EU flag; other nationless ones (Pacific) take their venue's
+	const venue = () => db.countries.get(db.circuits.get(db.races.find((r) => r.grandPrixId === id)?.circuitId ?? "")?.country ?? "")?.alpha2 ?? null;
+	return { id, name: g?.fullName ?? id, country: (g && db.countries.get(g.country)?.alpha2) ?? (id === "europe" ? "EU" : venue()) };
 }
 const optEngine = (db: Db, id: string | null | undefined) => (id ? engineRef(db, id) : null);
 const optTyre = (db: Db, id: string | null | undefined) => (id ? tyreRef(db, id) : null);

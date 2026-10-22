@@ -76,7 +76,7 @@ function RacePicker({ db, raceId, onChange }: { db: Db; raceId: number; onChange
 	const year = db.raceById.get(raceId)?.year ?? db.meta.lastCompletedYear;
 	const races = completedRaces(db, year);
 	return (
-		<div className="grid gap-4 sm:grid-cols-[140px_minmax(0,1fr)]">
+		<div className="grid grid-cols-1 gap-4 sm:grid-cols-[140px_minmax(0,1fr)]">
 			<Field label="Season">
 				<Choice value={year} onChange={(y) => onChange(completedRaces(db, y)[0].id)} options={yearOptions(db)} />
 			</Field>
@@ -93,7 +93,7 @@ function RacePicker({ db, raceId, onChange }: { db: Db; raceId: number; onChange
 
 export function SimControls({ chaos, setChaos, reliability, setReliability }: { chaos: number; setChaos: (n: number) => void; reliability: number; setReliability: (n: number) => void }) {
 	return (
-		<div className="grid gap-6 sm:grid-cols-2">
+		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
 			<Field label="Unpredictability">
 				<Slider min={0.2} max={2} step={0.1} value={[chaos]} onValueChange={(v) => setChaos(v[0])} />
 				<span className="text-muted-foreground text-xs">{chaos < 0.6 ? "Form book" : chaos > 1.4 ? "Chaos" : "Normal race day"}</span>
@@ -211,8 +211,15 @@ export function StandingsPreview({ before, after, year }: { before: Db; after: D
 							</TableCell>
 							<TableCell className="text-right font-semibold tabular-nums">{s.points}</TableCell>
 							<TableCell className="text-right">
-								<span className="text-muted-foreground inline-flex items-center gap-1.5 tabular-nums">
-									{p ? `P${p.positionText} · ${p.points}` : "–"}
+								<span className="text-muted-foreground inline-flex items-center gap-1.5 whitespace-nowrap tabular-nums">
+									{p ? (
+										<span>
+											P{p.positionText}
+											<span className="max-sm:hidden"> · {p.points}</span>
+										</span>
+									) : (
+										"–"
+									)}
 									<Delta by={p?.position && s.position ? p.position - s.position : 0} />
 								</span>
 							</TableCell>
@@ -240,14 +247,19 @@ export function TitleFlips({ flips, db }: { flips: Flip[]; db: Db }) {
 					{flips.map((f) => (
 						<TableRow key={f.year}>
 							<TableCell className="w-16 font-semibold tabular-nums">{f.year}</TableCell>
-							<TableCell className="text-muted-foreground line-through">
+							<TableCell className="text-muted-foreground hidden line-through sm:table-cell">
 								<DriverLink driver={driverRef(db, f.before)} flag={false} />
 							</TableCell>
-							<TableCell className="w-6">
+							<TableCell className="hidden w-6 sm:table-cell">
 								<ArrowRight className="text-muted-foreground size-4" />
 							</TableCell>
-							<TableCell className="text-universe font-medium">
-								<DriverLink driver={driverRef(db, f.after)} />
+							<TableCell className="text-universe font-medium max-sm:max-w-0">
+								<div className="text-muted-foreground flex min-w-0 font-normal line-through sm:hidden">
+									<DriverLink driver={driverRef(db, f.before)} flag={false} />
+								</div>
+								<div className="flex min-w-0">
+									<DriverLink driver={driverRef(db, f.after)} />
+								</div>
 							</TableCell>
 						</TableRow>
 					))}
@@ -335,7 +347,7 @@ export function RaceSimEditor({ base, current, changes, onAdd, initialRaceId }: 
 				<Reroll seed={seed} onReroll={() => setSeed(randomSeed())} />
 			</Actions>
 			{preview && (
-				<div className="grid gap-6 xl:grid-cols-2">
+				<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 					<PreviewCard title="Simulated result" description="Same entry list and grid; pace from each car's real season form.">
 						<ResultPreview db={base} before={current.resultsByRace.get(raceId) ?? []} after={preview.resultsByRace.get(raceId) ?? []} />
 					</PreviewCard>
@@ -359,7 +371,7 @@ export function SeasonSimEditor({ base, current, changes, onAdd }: EditorProps) 
 	const [preview, pending] = usePreview(base, changes, candidate);
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[140px_minmax(0,1fr)]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[140px_minmax(0,1fr)]">
 				<Field label="Season">
 					<Choice
 						value={year}
@@ -432,7 +444,7 @@ export function RaceEditEditor({ base, current, changes, onAdd, initialRaceId }:
 					Reset
 				</Button>
 			</Actions>
-			<div className="grid gap-6 xl:grid-cols-2">
+			<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 				<PreviewCard title="Classification" description="Move drivers up or down, or retire them.">
 					<Table className={tableEdges}>
 						<TableBody>
@@ -450,9 +462,9 @@ export function RaceEditEditor({ base, current, changes, onAdd, initialRaceId }:
 										<Button variant="ghost" size="icon-sm" disabled={i === state.order.length - 1} onClick={() => move(i, 1)} aria-label="Move down">
 											<ArrowDown />
 										</Button>
-										<Button variant="ghost" size="sm" onClick={() => retire(id)}>
+										<Button variant="ghost" size="sm" onClick={() => retire(id)} aria-label="Retire" className="max-sm:w-7 max-sm:px-0">
 											<CircleSlash data-icon="inline-start" />
-											Retire
+											<span className="max-sm:hidden">Retire</span>
 										</Button>
 									</TableCell>
 								</TableRow>
@@ -506,7 +518,7 @@ export function PointsEditor({ base, current, changes, onAdd }: EditorProps) {
 	};
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
 				<Field label="Points system">
 					<Choice
 						value={system}
@@ -596,7 +608,7 @@ export function RemoveDriverEditor({ base, current, changes, onAdd }: EditorProp
 	const flips = useMemo(() => titleFlips(base, current, preview, preview?.modifiedYears ?? []), [base, current, preview]);
 	return (
 		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_140px_140px]">
 				<Field label="Driver">
 					<DriverCombobox db={base} value={driverId} onChange={pick} />
 				</Field>

@@ -3,7 +3,8 @@
 // Searchable, sortable driver and constructor indexes.
 
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Search, Trophy } from "lucide-react";
 import type { ConstructorsView, DriversView } from "@/lib/f1/views";
 import { DriverLink, Page, PageHeader, TableCard, TeamLink, YearRange, num } from "../f1";
 import { Checkbox } from "../ui/checkbox";
@@ -36,9 +37,9 @@ function useIndex<T extends { lastYear: number }>(rows: T[], name: (r: T) => str
 
 type Index = ReturnType<typeof useIndex<{ lastYear: number }>>;
 
-function SortHead({ k, label, t, end }: { k: SortKey; label: string; t: Pick<Index, "sort" | "toggle">; end?: boolean }) {
+function SortHead({ k, label, t, end, className }: { k: SortKey; label: string; t: Pick<Index, "sort" | "toggle">; end?: boolean; className?: string }) {
 	return (
-		<TableHead className={end ? "text-right" : undefined}>
+		<TableHead className={cn(end && "text-right", className)}>
 			<TableSortButton direction={t.sort.key === k ? t.sort.dir : null} onClick={() => t.toggle(k)} align={end ? "end" : "start"} className="-mx-2">
 				{label}
 			</TableSortButton>
@@ -68,6 +69,25 @@ const LIMIT = 300;
 
 const blank = (n: number) => (n ? num(n) : "");
 
+/** " Jr." stays with the surname when a name wraps. */
+const keepSuffix = <T extends { name: string }>(d: T): T => ({ ...d, name: d.name.replace(/ (Jr\.|Sr\.)$/, "\u00a0$1") });
+
+/** Phone line under the name: the years, plus a small trophy count standing in for the mostly-empty Titles column. */
+function PhoneMeta({ from, to, titles }: { from: number; to: number; titles: number }) {
+	return (
+		<div className="text-muted-foreground flex items-center gap-2 text-xs sm:hidden">
+			<YearRange from={from} to={to} />
+			{titles > 0 && (
+				<span className="text-gold inline-flex items-center gap-0.5 font-medium tabular-nums">
+					<Trophy className="size-3" aria-hidden />
+					{titles}
+					<span className="sr-only"> {titles === 1 ? "title" : "titles"}</span>
+				</span>
+			)}
+		</div>
+	);
+}
+
 export function DriversPage({ view }: { view: DriversView }) {
 	const t = useIndex(view.rows, (r) => r.driver.name);
 	return (
@@ -79,31 +99,32 @@ export function DriversPage({ view }: { view: DriversView }) {
 			<TableCard>
 				<TableHeader>
 					<TableRow>
-						<SortHead k="name" label="Driver" t={t} />
-						<SortHead k="lastYear" label="Years" t={t} />
-						<SortHead k="titles" label="Titles" t={t} end />
+						<SortHead k="name" label="Driver" t={t} className="max-sm:w-full" />
+						<SortHead k="lastYear" label="Years" t={t} className="hidden sm:table-cell" />
+						<SortHead k="titles" label="Titles" t={t} end className="hidden sm:table-cell" />
 						<SortHead k="starts" label="Starts" t={t} end />
-						<SortHead k="wins" label="Wins" t={t} end />
-						<SortHead k="podiums" label="Podiums" t={t} end />
-						<SortHead k="poles" label="Poles" t={t} end />
-						<SortHead k="points" label="Points" t={t} end />
+						<SortHead k="wins" label="Wins" t={t} end className="max-sm:pr-4!" />
+						<SortHead k="podiums" label="Podiums" t={t} end className="hidden sm:table-cell" />
+						<SortHead k="poles" label="Poles" t={t} end className="hidden sm:table-cell" />
+						<SortHead k="points" label="Points" t={t} end className="hidden sm:table-cell" />
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{t.filtered.slice(0, LIMIT).map((r) => (
 						<TableRow key={r.driver.id}>
 							<TableCell>
-								<DriverLink driver={r.driver} className="font-medium" />
+								<DriverLink driver={keepSuffix(r.driver)} className="font-medium" />
+								<PhoneMeta from={r.firstYear} to={r.lastYear} titles={r.titles} />
 							</TableCell>
-							<TableCell className="text-muted-foreground tabular-nums">
+							<TableCell className="text-muted-foreground hidden sm:table-cell tabular-nums">
 								<YearRange from={r.firstYear} to={r.lastYear} />
 							</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.titles)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.titles)}</TableCell>
 							<TableCell className="text-right tabular-nums">{r.starts}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.wins)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.podiums)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.poles)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.points)}</TableCell>
+							<TableCell className="text-right tabular-nums max-sm:pr-4!">{blank(r.wins)}</TableCell>
+							<TableCell className="hidden sm:table-cell text-right tabular-nums">{blank(r.podiums)}</TableCell>
+							<TableCell className="hidden sm:table-cell text-right tabular-nums">{blank(r.poles)}</TableCell>
+							<TableCell className="hidden sm:table-cell text-right tabular-nums">{blank(r.points)}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -124,31 +145,32 @@ export function ConstructorsPage({ view }: { view: ConstructorsView }) {
 			<TableCard>
 				<TableHeader>
 					<TableRow>
-						<SortHead k="name" label="Constructor" t={t} />
-						<SortHead k="lastYear" label="Years" t={t} />
-						<SortHead k="titles" label="Titles" t={t} end />
+						<SortHead k="name" label="Constructor" t={t} className="max-sm:w-full" />
+						<SortHead k="lastYear" label="Years" t={t} className="hidden sm:table-cell" />
+						<SortHead k="titles" label="Titles" t={t} end className="hidden sm:table-cell" />
 						<SortHead k="starts" label="Races" t={t} end />
-						<SortHead k="wins" label="Wins" t={t} end />
-						<SortHead k="podiums" label="Podiums" t={t} end />
-						<SortHead k="poles" label="Poles" t={t} end />
-						<SortHead k="points" label="Points" t={t} end />
+						<SortHead k="wins" label="Wins" t={t} end className="max-sm:pr-4!" />
+						<SortHead k="podiums" label="Podiums" t={t} end className="hidden sm:table-cell" />
+						<SortHead k="poles" label="Poles" t={t} end className="hidden sm:table-cell" />
+						<SortHead k="points" label="Points" t={t} end className="hidden sm:table-cell" />
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{t.filtered.slice(0, LIMIT).map((r) => (
 						<TableRow key={r.team.id}>
-							<TableCell>
-								<TeamLink team={r.team} flag className="font-medium" />
+							<TableCell className="max-sm:max-w-48">
+								<TeamLink team={r.team} flag className="max-w-full font-medium" />
+								<PhoneMeta from={r.firstYear} to={r.lastYear} titles={r.titles} />
 							</TableCell>
-							<TableCell className="text-muted-foreground tabular-nums">
+							<TableCell className="text-muted-foreground hidden sm:table-cell tabular-nums">
 								<YearRange from={r.firstYear} to={r.lastYear} />
 							</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.titles)}</TableCell>
+							<TableCell className="hidden text-right tabular-nums sm:table-cell">{blank(r.titles)}</TableCell>
 							<TableCell className="text-right tabular-nums">{r.starts}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.wins)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.podiums)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.poles)}</TableCell>
-							<TableCell className="text-right tabular-nums">{blank(r.points)}</TableCell>
+							<TableCell className="text-right tabular-nums max-sm:pr-4!">{blank(r.wins)}</TableCell>
+							<TableCell className="hidden sm:table-cell text-right tabular-nums">{blank(r.podiums)}</TableCell>
+							<TableCell className="hidden sm:table-cell text-right tabular-nums">{blank(r.poles)}</TableCell>
+							<TableCell className="hidden sm:table-cell text-right tabular-nums">{blank(r.points)}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

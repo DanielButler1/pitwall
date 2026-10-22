@@ -31,19 +31,36 @@ export function HomePage({ view, universeName, milestones }: { view: HomeView; u
 					</>
 				}
 			>
-				{num(view.totals.races)} Grands Prix, {num(view.totals.drivers)} drivers and {view.totals.constructors} constructors across{" "}
-				{view.totals.seasons} seasons. Browse the record books, or use the Lab to change results and see how history would have turned out.
+				{universeName ? (
+					<>
+						This universe&apos;s history: {num(view.totals.races)} Grands Prix, {num(view.totals.drivers)} drivers and {view.totals.constructors} constructors over{" "}
+						{view.totals.seasons} seasons in all. Browse its seasons and records as if it really happened.
+					</>
+				) : (
+					<>
+						{num(view.totals.races)} Grands Prix, {num(view.totals.drivers)} drivers and {view.totals.constructors} constructors across {view.totals.seasons} seasons.
+						Browse the record books, or use the Lab to change results and see how history would have turned out.
+					</>
+				)}
 			</PageHeader>
 
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
-				<StatCard label={`${view.lastYear} ${view.inProgress ? "drivers' leader" : "drivers' champion"}`} value={view.champion ? <DriverLink driver={view.champion.driver} /> : "–"} />
-				<StatCard label={`${view.lastYear} ${view.inProgress ? "constructors' leader" : "constructors' champion"}`} value={view.constructorChampion ? <TeamLink team={view.constructorChampion.team} flag /> : "–"} />
+				<StatCard
+					label={`${view.lastYear} ${view.inProgress ? "drivers' leader" : "drivers' champion"}`}
+					value={view.champion ? <DriverLink driver={view.champion.driver} /> : "–"}
+					className="max-sm:col-span-2"
+				/>
+				<StatCard
+					label={`${view.lastYear} ${view.inProgress ? "constructors' leader" : "constructors' champion"}`}
+					value={view.constructorChampion ? <TeamLink team={view.constructorChampion.team} flag /> : "–"}
+					className="max-sm:col-span-2"
+				/>
 				<StatCard label="Grands Prix" value={num(view.totals.races)} />
 				<StatCard label="Race winners" value={num(view.totals.winners)} />
-				<StatCard label="Drivers" value={num(view.totals.drivers)} />
+				<StatCard label="Drivers" value={num(view.totals.drivers)} className="max-sm:hidden" />
 			</div>
 
-			<div className="grid gap-12 xl:grid-cols-3 xl:gap-8">
+			<div className="grid grid-cols-1 gap-12 xl:grid-cols-3 xl:gap-8">
 				<Section
 					title={`${view.lastYear} standings`}
 					description={view.inProgress ? `After ${view.completedRounds} of ${view.totalRounds} rounds` : "Final standings"}

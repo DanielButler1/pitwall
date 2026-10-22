@@ -180,11 +180,11 @@ export function SiteSearch({ prefix }: { prefix: string }) {
 				onPointerEnter={load}
 				onFocus={load}
 				aria-label="Search"
-				className="text-muted-foreground w-9 justify-center px-0 sm:w-56 sm:justify-start sm:px-3"
+				className="text-muted-foreground w-8 justify-center px-0 sm:w-56 sm:justify-start sm:px-3 lg:w-8 lg:justify-center lg:px-0 xl:w-56 xl:justify-start xl:px-3"
 			>
-				<Search data-icon="inline-start" />
-				<span className="hidden sm:inline">Search</span>
-				<Kbd className="ml-auto hidden sm:inline-flex">{mac ? "⌘" : "Ctrl"} K</Kbd>
+				<Search />
+				<span className="hidden sm:inline lg:hidden xl:inline">Search</span>
+				<Kbd className="ml-auto hidden sm:inline-flex lg:hidden xl:inline-flex">{mac ? "⌘" : "Ctrl"} K</Kbd>
 			</Button>
 			<CommandDialog
 				open={open}
@@ -196,7 +196,7 @@ export function SiteSearch({ prefix }: { prefix: string }) {
 				description="Find drivers, constructors, circuits, Grands Prix, engines, nations and seasons"
 				commandProps={{ shouldFilter: false }}
 			>
-				<CommandInput value={query} onValueChange={setQuery} placeholder="Search drivers, teams, circuits, Grands Prix, engines, nations, seasons" />
+				<CommandInput value={query} onValueChange={setQuery} placeholder="Search drivers, teams, races, seasons…" />
 				<CommandList className="max-h-[min(60vh,28rem)]">
 					{!q ? (
 						<CommandGroup heading="Browse">

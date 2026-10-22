@@ -1,6 +1,7 @@
 import { CalendarDays, Target, TrendingUp } from "lucide-react";
 import type { Milestone, MilestoneStat, MilestoneWatch, MilestonesView, RecordChase, Subject } from "@/lib/f1/milestones";
 import { ordinal } from "@/lib/f1/anniversaries";
+import { cn } from "@/lib/utils";
 import { DateLink, DriverLink, Hint, MoreLink, Page, PageHeader, Section, TableCard, TeamLink, href, num } from "../f1";
 import { ULink } from "../universe-link";
 import { Badge } from "../ui/badge";
@@ -30,36 +31,68 @@ function markLabel(m: Pick<Milestone, "stat" | "target">) {
 	return m.stat === "points" ? `${num(m.target)} points` : `${ordinal(m.target)} ${STAT[m.stat].one}`;
 }
 
-function Eta({ eta, thisSeason, inProgress }: { eta: number | null; thisSeason: boolean; inProgress: boolean }) {
+const soon = (eta: number | null, thisSeason: boolean, inProgress: boolean) => inProgress && thisSeason && eta != null && eta > 1;
+const ETA_HINT = "At their rate over the last 22 races, less the rate of anyone they are chasing who is still racing";
+
+function SeasonBadge() {
+	return <Badge variant="secondary">This season</Badge>;
+}
+
+/** The soonest milestones get an accent pill, so they read as the most urgent. */
+function NextRaceBadge() {
+	return (
+		<Hint label={ETA_HINT}>
+			<Badge className="bg-primary/15 text-primary border-primary/25">Next race</Badge>
+		</Hint>
+	);
+}
+
+/** A name with, on phones, the "Next race" / "This season" pill in a fixed slot at the row's right edge. */
+function NameLine({ s, eta, badge }: { s: Subject; eta: number | null; badge: boolean }) {
+	return (
+		<div className="flex min-w-0 items-center gap-2">
+			<SubjectLink s={s} className="font-medium" />
+			{(badge || eta === 1) && <span className="ml-auto shrink-0 sm:hidden">{eta === 1 ? <NextRaceBadge /> : <SeasonBadge />}</span>}
+		</div>
+	);
+}
+
+function Eta({ eta, thisSeason, inProgress, badge = true }: { eta: number | null; thisSeason: boolean; inProgress: boolean; badge?: boolean }) {
 	if (eta == null) return <span className="text-muted-foreground">–</span>;
+	if (eta === 1) return badge ? <NextRaceBadge /> : null;
 	return (
 		<span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-			<Hint label="At their rate over the last 22 races, less the rate of anyone they are chasing who is still racing">
-				<span className="tabular-nums">{eta === 1 ? "Next race" : `~${eta} races`}</span>
+			<Hint label={ETA_HINT}>
+				<span className="tabular-nums">~{eta} races</span>
 			</Hint>
-			{inProgress && thisSeason && eta > 1 && <Badge variant="secondary">This season</Badge>}
+			{badge && soon(eta, thisSeason, inProgress) && <SeasonBadge />}
 		</span>
 	);
 }
 
 /** Who they'd pass: up to three names, the rest in a hint. */
-function Targets({ c }: { c: RecordChase }) {
+function Targets({ c, className }: { c: RecordChase; className?: string }) {
 	const shown = c.target.subjects.slice(0, c.target.subjects.length > 3 ? 2 : 3);
 	const rest = c.target.subjects.slice(shown.length);
+	// the figure rides with the last group, so "Lotus (7)" never splits
+	const value = <span className="text-muted-foreground ml-1.5 tabular-nums">({num(c.target.value)})</span>;
 	return (
-		<span className="inline-flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5">
+		<span className={cn("inline-flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5", className)}>
 			{shown.map((s, i) => (
-				<span key={subjectKey(s)} className="inline-flex items-center">
+				<span key={subjectKey(s)} className="inline-flex items-center whitespace-nowrap [&_*]:whitespace-nowrap">
 					<SubjectLink s={s} />
 					{i < shown.length - 1 || rest.length ? <span className="text-muted-foreground">,</span> : null}
+					{i === shown.length - 1 && !rest.length && value}
 				</span>
 			))}
 			{rest.length > 0 && (
-				<Hint label={rest.map((s) => (s.kind === "driver" ? s.driver.name : s.team.name)).join(", ")}>
-					<span className="text-muted-foreground underline decoration-dotted underline-offset-4">+{rest.length} more</span>
-				</Hint>
+				<span className="inline-flex items-center whitespace-nowrap">
+					<Hint label={rest.map((s) => (s.kind === "driver" ? s.driver.name : s.team.name)).join(", ")}>
+						<span className="text-muted-foreground underline decoration-dotted underline-offset-4">+{rest.length} more</span>
+					</Hint>
+					{value}
+				</span>
 			)}
-			<span className="text-muted-foreground tabular-nums">({num(c.target.value)})</span>
 		</span>
 	);
 }
@@ -115,22 +148,34 @@ export function MilestonesPage({ view }: { view: MilestonesView | null }) {
 						<TableHeader>
 							<TableRow>
 								<TableHead>Driver / team</TableHead>
-								<TableHead>Milestone</TableHead>
-								<TableHead className="text-right">Now</TableHead>
-								<TableHead className="text-right">To go</TableHead>
-								<TableHead>Expected</TableHead>
+								<TableHead className="hidden sm:table-cell">Milestone</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">Now</TableHead>
+								<TableHead className="hidden text-right sm:table-cell">To go</TableHead>
+								<TableHead className="hidden sm:table-cell">Expected</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{view.milestones.map((m) => (
 								<TableRow key={`${subjectKey(m.subject)}:${m.stat}`}>
-									<TableCell>
-										<SubjectLink s={m.subject} className="font-medium" />
+									<TableCell className="max-sm:max-w-0 max-sm:whitespace-normal">
+										<NameLine s={m.subject} eta={m.eta} badge={soon(m.eta, m.thisSeason, view.inProgress)} />
+										<div className="text-muted-foreground text-xs sm:hidden">
+											<span className="text-foreground font-medium">{markLabel(m)}</span> · {num(m.current)} now ·{" "}
+											<span className="text-foreground font-medium">{num(m.needed)} to go</span>
+											{m.eta != null && m.eta > 1 && (
+												<>
+													{" "}
+													<span className="whitespace-nowrap">
+														· <Eta eta={m.eta} thisSeason={m.thisSeason} inProgress={view.inProgress} badge={false} />
+													</span>
+												</>
+											)}
+										</div>
 									</TableCell>
-									<TableCell className="font-medium">{markLabel(m)}</TableCell>
-									<TableCell className="text-muted-foreground text-right tabular-nums">{num(m.current)}</TableCell>
-									<TableCell className="text-right font-semibold tabular-nums">{num(m.needed)}</TableCell>
-									<TableCell>
+									<TableCell className="hidden font-medium sm:table-cell">{markLabel(m)}</TableCell>
+									<TableCell className="text-muted-foreground hidden text-right tabular-nums sm:table-cell">{num(m.current)}</TableCell>
+									<TableCell className="hidden text-right font-semibold tabular-nums sm:table-cell">{num(m.needed)}</TableCell>
+									<TableCell className="hidden sm:table-cell">
 										<Eta eta={m.eta} thisSeason={m.thisSeason} inProgress={view.inProgress} />
 									</TableCell>
 								</TableRow>
@@ -147,7 +192,7 @@ export function MilestonesPage({ view }: { view: MilestonesView | null }) {
 				description="Who each driver and team on the grid passes next on the all-time lists, for climbs into the top 30."
 				action={<MoreLink href="/records">All records</MoreLink>}
 			>
-				<div className="grid gap-8 xl:grid-cols-2">
+				<div className="grid grid-cols-1 gap-8 min-[1800px]:grid-cols-2">
 					{[...byStat].map(([stat, chases]) => (
 						<div key={stat} className="min-w-0 space-y-3">
 							<h3 className="flex items-center gap-2 font-medium">
@@ -158,28 +203,37 @@ export function MilestonesPage({ view }: { view: MilestonesView | null }) {
 								<TableHeader>
 									<TableRow>
 										<TableHead>Driver / team</TableHead>
-										<TableHead className="text-right">Total</TableHead>
-										<TableHead>All-time</TableHead>
-										<TableHead>To pass</TableHead>
-										<TableHead className="text-right">Needs</TableHead>
-										<TableHead>Expected</TableHead>
+										<TableHead className="hidden text-right sm:table-cell">Total</TableHead>
+										<TableHead className="w-[110px] min-w-[110px] sm:w-28 sm:min-w-28">All-time</TableHead>
+										<TableHead className="hidden sm:table-cell">To pass</TableHead>
+										<TableHead className="hidden text-right sm:table-cell">Needs</TableHead>
+										<TableHead className="hidden sm:table-cell">Expected</TableHead>
 									</TableRow>
 								</TableHeader>
 								<TableBody>
 									{chases.map((c) => (
 										<TableRow key={`${subjectKey(c.subject)}:${c.stat}`}>
-											<TableCell>
+											<TableCell className="max-sm:w-full max-sm:max-w-0 max-sm:whitespace-normal max-sm:align-top">
 												<SubjectLink s={c.subject} className="font-medium" />
+												<div className="text-muted-foreground text-xs sm:hidden">
+													{c.stat === "points" ? needText(c) : `${needText(c)} to pass`} <Targets c={c} className="inline [&>span]:mr-1" />
+												</div>
 											</TableCell>
-											<TableCell className="text-right font-semibold tabular-nums">{num(c.current)}</TableCell>
-											<TableCell className="whitespace-nowrap tabular-nums">
+											<TableCell className="hidden text-right font-semibold tabular-nums sm:table-cell">{num(c.current)}</TableCell>
+											<TableCell className="w-[110px] min-w-[110px] whitespace-nowrap tabular-nums max-sm:align-top sm:w-28 sm:min-w-28">
 												{ordinal(c.rank)} <span className="text-muted-foreground">→</span> {ordinal(c.newRank)}
+												{c.eta != null && (
+													<div className="text-muted-foreground mt-1 flex flex-col items-start gap-1 text-xs sm:hidden">
+														{c.eta > 1 && <Eta eta={c.eta} thisSeason={c.thisSeason} inProgress={view.inProgress} badge={false} />}
+														{c.eta === 1 ? <NextRaceBadge /> : soon(c.eta, c.thisSeason, view.inProgress) && <SeasonBadge />}
+													</div>
+												)}
 											</TableCell>
-											<TableCell className="max-w-64">
+											<TableCell className="hidden max-w-64 sm:table-cell">
 												<Targets c={c} />
 											</TableCell>
-											<TableCell className="text-right whitespace-nowrap tabular-nums">{needText(c)}</TableCell>
-											<TableCell>
+											<TableCell className="hidden text-right whitespace-nowrap tabular-nums sm:table-cell">{needText(c)}</TableCell>
+											<TableCell className="hidden sm:table-cell">
 												<Eta eta={c.eta} thisSeason={c.thisSeason} inProgress={view.inProgress} />
 											</TableCell>
 										</TableRow>
@@ -202,8 +256,17 @@ export function MilestonesPage({ view }: { view: MilestonesView | null }) {
 export function MilestoneWatchPanel({ watch, className }: { watch: MilestoneWatch; className?: string }) {
 	if (!watch.milestones.length && !watch.chases.length) return null;
 	return (
-		<Section title="Milestone watch" description="Coming up for the current grid" action={<MoreLink href="/milestones">All milestones</MoreLink>} className={className}>
-			<div className="grid gap-4 lg:grid-cols-2">
+		<Section
+			title="Milestone watch"
+			description="Coming up for the current grid"
+			action={
+				<MoreLink href="/milestones">
+					All<span className="max-sm:hidden"> milestones</span>
+				</MoreLink>
+			}
+			className={className}
+		>
+			<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 				{watch.milestones.length > 0 && (
 					<Card size="sm">
 						<CardHeader>

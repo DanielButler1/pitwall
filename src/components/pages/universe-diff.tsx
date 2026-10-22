@@ -12,6 +12,7 @@ import type { DriverRef, TeamRef } from "@/lib/f1/views";
 import { DriverLink, EngineLink, GrandPrixLink, Hint, NationLink, num, Page, PageHeader, RaceLink, SeasonLink, Section, StatCard, TableCard, TeamLink } from "../f1";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { Card } from "../ui/card";
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "../ui/empty";
 import { Spinner } from "../ui/spinner";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
@@ -20,21 +21,39 @@ import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { ULink } from "../universe-link";
 
 const Was = ({ children }: { children: React.ReactNode }) => <span className="text-muted-foreground line-through decoration-1">{children}</span>;
+/** "M. Schumacher": struck-out names stay on one line on phones. */
+const shortRef = <R extends { name: string }>(r: R): R => {
+	const [first, ...rest] = r.name.split(" ");
+	return rest.length ? { ...r, name: `${first[0]}. ${rest.join(" ")}` } : r;
+};
 const Arrow = () => <ArrowRight className="text-muted-foreground size-3.5 shrink-0" />;
 const None = ({ children }: { children: React.ReactNode }) => <span className="text-muted-foreground text-xs">{children}</span>;
 
 /* ---------------------------------------------------------------- titles --- */
 
-function TitlesTable<R extends DriverRef | TeamRef>({ rows, render, empty }: { rows: TitleSwap<R>[]; render: (r: R, now: boolean) => React.ReactNode; empty: string }) {
+function TitlesTable<R extends DriverRef | TeamRef>({
+	rows,
+	render,
+	empty,
+	short = false,
+}: {
+	rows: TitleSwap<R>[];
+	render: (r: R, now: boolean) => React.ReactNode;
+	empty: string;
+	short?: boolean;
+}) {
 	if (!rows.length) return <p className="text-muted-foreground text-sm">{empty}</p>;
 	return (
 		<TableCard>
 			<TableHeader>
 				<TableRow>
 					<TableHead className="w-16">Season</TableHead>
-					<TableHead>Reality</TableHead>
-					<TableHead className="w-6" />
-					<TableHead>This universe</TableHead>
+					<TableHead className="hidden sm:table-cell">Reality</TableHead>
+					<TableHead className="hidden w-6 sm:table-cell" />
+					<TableHead>
+						<span className="sm:hidden">Reality → this universe</span>
+						<span className="hidden sm:inline">This universe</span>
+					</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -43,11 +62,16 @@ function TitlesTable<R extends DriverRef | TeamRef>({ rows, render, empty }: { r
 						<TableCell className="font-semibold">
 							<SeasonLink year={t.year} />
 						</TableCell>
-						<TableCell>{t.real ? <Was>{render(t.real, false)}</Was> : <None>{t.newSeason ? "Not raced yet" : "No champion"}</None>}</TableCell>
-						<TableCell>
+						<TableCell className="hidden sm:table-cell">{t.real ? <Was>{render(t.real, false)}</Was> : <None>{t.newSeason ? "Not raced yet" : "No champion"}</None>}</TableCell>
+						<TableCell className="hidden sm:table-cell">
 							<Arrow />
 						</TableCell>
-						<TableCell>{t.now ? render(t.now, true) : <None>In progress</None>}</TableCell>
+						<TableCell className="max-sm:max-w-0">
+							<div className="flex min-w-0 sm:hidden">
+								{t.real ? <Was>{render(short ? shortRef(t.real) : t.real, false)}</Was> : <None>{t.newSeason ? "Not raced yet" : "No champion"}</None>}
+							</div>
+							<div className="flex min-w-0">{t.now ? render(t.now, true) : <None>In progress</None>}</div>
+						</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
@@ -76,7 +100,7 @@ function MoverTable<R>({ title, rows, render }: { title: string; rows: Mover<R>[
 			<TableHeader>
 				<TableRow>
 					<TableHead>{title}</TableHead>
-					<TableHead className="text-right">Reality</TableHead>
+					<TableHead className="hidden text-right sm:table-cell">Reality</TableHead>
 					<TableHead className="text-right">Universe</TableHead>
 					<TableHead className="text-right">Change</TableHead>
 					<TableHead className="hidden text-right sm:table-cell">All-time</TableHead>
@@ -92,8 +116,8 @@ function MoverTable<R>({ title, rows, render }: { title: string; rows: Mover<R>[
 				) : (
 					rows.map((m, i) => (
 						<TableRow key={i}>
-							<TableCell className="max-w-56">{render(m.ref)}</TableCell>
-							<TableCell className="text-muted-foreground text-right tabular-nums">{num(m.real)}</TableCell>
+							<TableCell className="max-w-44 sm:max-w-56">{render(m.ref)}</TableCell>
+							<TableCell className="text-muted-foreground hidden text-right tabular-nums sm:table-cell">{num(m.real)}</TableCell>
 							<TableCell className="text-right font-medium tabular-nums">{num(m.now)}</TableCell>
 							<TableCell className={cn("text-right font-medium tabular-nums", m.delta > 0 ? "text-universe" : "text-destructive")}>{signed(m.delta)}</TableCell>
 							<TableCell className="hidden text-right sm:table-cell">
@@ -113,18 +137,21 @@ function MoversPanel<R>({ movers, render }: { movers: Movers<R>; render: (r: R) 
 	const m = movers[metric];
 	return (
 		<div className="space-y-4">
-			<ToggleGroup variant="outline" size="sm" value={metric} onValueChange={(v: string) => v && setMetric(v as MoverMetric)} className="flex-wrap">
-				{MOVER_METRICS.map((k) => (
-					<ToggleGroupItem key={k} value={k}>
-						{MOVER_LABELS[k]}
-						{movers[k].changed > 0 && <span className="text-muted-foreground tabular-nums">{movers[k].changed}</span>}
-					</ToggleGroupItem>
-				))}
-			</ToggleGroup>
+			<div className="relative max-sm:-mx-4">
+				<ToggleGroup variant="outline" size="sm" value={metric} onValueChange={(v: string) => v && setMetric(v as MoverMetric)} className="flex-wrap max-sm:w-auto max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:px-4 max-sm:[scrollbar-width:none]">
+					{MOVER_METRICS.map((k) => (
+						<ToggleGroupItem key={k} value={k}>
+							{MOVER_LABELS[k]}
+							{movers[k].changed > 0 && <span className="text-muted-foreground tabular-nums">{movers[k].changed}</span>}
+						</ToggleGroupItem>
+					))}
+				</ToggleGroup>
+				<div aria-hidden className="from-background via-background/70 pointer-events-none absolute inset-y-0 right-0 z-10 w-14 bg-linear-to-l sm:hidden" />
+			</div>
 			{m.changed === 0 ? (
 				<p className="text-muted-foreground text-sm">No career {MOVER_LABELS[metric].toLowerCase()} totals changed.</p>
 			) : (
-				<div className="grid gap-6 xl:grid-cols-2">
+				<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 					<MoverTable title="Biggest gains" rows={m.gains} render={render} />
 					<MoverTable title="Biggest losses" rows={m.losses} render={render} />
 				</div>
@@ -160,7 +187,8 @@ function WinnersTable({ winners }: { winners: UniverseDiff["winners"] }) {
 							<TableCell className="max-w-56">
 								{w.real ? (
 									<Was>
-										<DriverLink driver={w.real} flag={false} />
+										<DriverLink driver={w.real} flag={false} className="max-sm:hidden" />
+										<DriverLink driver={shortRef(w.real)} flag={false} className="sm:hidden" />
 									</Was>
 								) : (
 									<None>No winner</None>
@@ -323,7 +351,23 @@ function RecordsSection({ db, base }: { db: Db; base: Db }) {
 function RecordsTable({ changes }: { changes: RecordChange[] }) {
 	if (!changes.length) return <p className="text-muted-foreground text-sm">None.</p>;
 	return (
-		<TableCard>
+		<>
+			<Card className="gap-0 divide-y py-0 sm:hidden">
+				{changes.map((c) => (
+					<div key={c.meta.id} className="space-y-2 px-4 py-3 text-sm">
+						<ULink href={`/records/${c.meta.id}`} className="block font-medium underline-offset-4 hover:underline">
+							{ENTITY_LABELS[c.meta.entity]} · {c.meta.family} · {c.meta.title}
+						</ULink>
+						<div className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-3 gap-y-1.5">
+							<span className="text-muted-foreground text-xs leading-5">Reality</span>
+							<Holders holders={c.real} />
+							<span className="text-universe text-xs leading-5">Universe</span>
+							<Holders holders={c.now} now />
+						</div>
+					</div>
+				))}
+			</Card>
+			<TableCard className="max-sm:hidden">
 			<TableHeader>
 				<TableRow>
 					<TableHead>Record</TableHead>
@@ -348,17 +392,31 @@ function RecordsTable({ changes }: { changes: RecordChange[] }) {
 						</TableCell>
 					</TableRow>
 				))}
-			</TableBody>
-		</TableCard>
+				</TableBody>
+			</TableCard>
+		</>
 	);
 }
 
 /* ------------------------------------------------------------------ page --- */
 
+const STAT_COLS: Record<number, string> = { 3: "md:grid-cols-3", 4: "md:grid-cols-4", 5: "md:grid-cols-3 xl:grid-cols-5", 6: "md:grid-cols-3 xl:grid-cols-6" };
+
 export function UniverseDiffPage({ view, db, base, name }: { view: UniverseDiff; db: Db; base: Db; name: string }) {
 	const driver = (r: DriverRef, now = true) => <DriverLink driver={r} flag={now} className={now ? "text-universe font-medium" : undefined} />;
 	const team = (r: TeamRef, now = true) => <TeamLink team={r} flag={now} className={now ? "text-universe font-medium" : undefined} />;
 	const titles = view.driverTitles.length + view.constructorTitles.length;
+	const extra: [string, number][] = [
+		["Races with a new winner", view.winners.total],
+		["Races only in this universe", view.newRaces],
+		["New drivers", view.newDrivers],
+	];
+	const stats: [string, number][] = [
+		["Seasons affected", view.seasonsAffected],
+		["Drivers' titles changed", view.driverTitles.length],
+		["Constructors' titles changed", view.constructorTitles.length],
+		...extra.filter(([, n]) => n > 0),
+	];
 	return (
 		<Page>
 			<PageHeader
@@ -372,13 +430,10 @@ export function UniverseDiffPage({ view, db, base, name }: { view: UniverseDiff;
 				This universe compared with real history: titles that changed hands, career totals, race winners and records.
 			</PageHeader>
 
-			<div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
-				<StatCard label="Seasons affected" value={num(view.seasonsAffected)} />
-				<StatCard label="Drivers' titles changed" value={num(view.driverTitles.length)} />
-				<StatCard label="Constructors' titles changed" value={num(view.constructorTitles.length)} />
-				<StatCard label="Races with a new winner" value={num(view.winners.total)} />
-				<StatCard label="Races only in this universe" value={num(view.newRaces)} />
-				<StatCard label="New drivers" value={num(view.newDrivers)} />
+			<div className={cn("grid grid-cols-2 gap-4 max-sm:[&>*:last-child:nth-child(odd)]:col-span-2", STAT_COLS[stats.length])}>
+				{stats.map(([label, value]) => (
+					<StatCard key={label} label={label} value={num(value)} />
+				))}
 			</div>
 
 			{view.seasonsAffected === 0 && !view.newRaces ? (
@@ -394,10 +449,10 @@ export function UniverseDiffPage({ view, db, base, name }: { view: UniverseDiff;
 						title="Championships"
 						description={titles ? `${titles} title${titles === 1 ? "" : "s"} went to someone else.` : "Every champion is the real one."}
 					>
-						<div className="grid gap-6 xl:grid-cols-2">
+						<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 							<div className="space-y-2">
 								<h3 className="text-sm font-medium">Drivers&apos; champions</h3>
-								<TitlesTable rows={view.driverTitles} render={driver} empty="No drivers' title changed hands." />
+								<TitlesTable rows={view.driverTitles} render={driver} empty="No drivers' title changed hands." short />
 							</div>
 							<div className="space-y-2">
 								<h3 className="text-sm font-medium">Constructors&apos; champions</h3>
@@ -413,7 +468,15 @@ export function UniverseDiffPage({ view, db, base, name }: { view: UniverseDiff;
 								<TabsTrigger value="constructors">Constructors</TabsTrigger>
 							</TabsList>
 							<TabsContent value="drivers">
-								<MoversPanel movers={view.drivers} render={(r) => driver(r)} />
+								<MoversPanel
+									movers={view.drivers}
+									render={(r) => (
+										<>
+											<DriverLink driver={r} className="text-universe font-medium max-sm:hidden" />
+											<DriverLink driver={r.name.length > 15 ? shortRef(r) : r} className="text-universe font-medium sm:hidden" />
+										</>
+									)}
+								/>
 							</TabsContent>
 							<TabsContent value="constructors">
 								<MoversPanel movers={view.constructors} render={(r) => team(r)} />

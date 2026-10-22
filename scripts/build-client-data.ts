@@ -45,3 +45,79 @@ for (const [file, data] of [
 	writeFileSync(join(dir, "fantasy.json"), json);
 	console.log(`fantasy.json: ${(json.length / 1024).toFixed(0)} KB`);
 }
+
+// --- Career path (/play/career) and Higher or lower (/play/higher-lower): team stints; career counts ---
+{
+	const { careerFile } = await import("../src/lib/game/career-data.ts");
+	const { higherLowerFile } = await import("../src/lib/game/higher-lower-data.ts");
+	for (const [file, data] of [
+		["career.json", careerFile(db)],
+		["higher-lower.json", higherLowerFile(db)],
+	] as const) {
+		const json = JSON.stringify(data);
+		writeFileSync(join(dir, file), json);
+		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+	}
+}
+
+// --- Guess the constructor (/play/constructor) and Guess the circuit (/play/circuit) ---
+{
+	const { constructorFile } = await import("../src/lib/game/constructor-guess-data.ts");
+	const { circuitFile } = await import("../src/lib/game/circuit-guess-data.ts");
+	for (const [file, data] of [
+		["constructor-guess.json", constructorFile(db)],
+		["circuit-guess.json", circuitFile(db)],
+	] as const) {
+		const json = JSON.stringify(data);
+		writeFileSync(join(dir, file), json);
+		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+	}
+}
+
+// --- Teammate chain (/play/chain): the team-mate graph with the teams and seasons of each link ---
+{
+	const { chainFile } = await import("../src/lib/game/chain-data.ts");
+	const json = JSON.stringify(chainFile(db));
+	writeFileSync(join(dir, "chain.json"), json);
+	console.log(`chain.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Grid of nine (/play/grid): the categories and every driver's memberships ---
+{
+	const { gridFile } = await import("../src/lib/game/grid-data.ts");
+	const json = JSON.stringify(gridFile(db));
+	writeFileSync(join(dir, "grid.json"), json);
+	console.log(`grid.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Name the grid (/play/name-the-grid) and Race prediction (/play/predict): every race since 1980 with its grid and result ---
+{
+	const { raceEntriesFile } = await import("../src/lib/game/race-entries-data.ts");
+	const json = JSON.stringify(raceEntriesFile(db));
+	writeFileSync(join(dir, "race-entries.json"), json);
+	console.log(`race-entries.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Guess the race (/play/race) and Lap chart mystery (/play/lap-chart): every race with its clues, and the lively lap charts ---
+{
+	const { raceGuessFile } = await import("../src/lib/game/race-guess-data.ts");
+	const { lapChartFile } = await import("../src/lib/game/lap-chart-data.ts");
+	const { existsSync } = await import("node:fs");
+	const lapFile = (id: number) => join(root, "data", "laps", `${id}.json`);
+	for (const [file, data] of [
+		["race-guess.json", raceGuessFile(db)],
+		["lap-chart.json", lapChartFile(db, (id) => (existsSync(lapFile(id)) ? JSON.parse(readFileSync(lapFile(id), "utf8")) : null))],
+	] as const) {
+		const json = JSON.stringify(data);
+		writeFileSync(join(dir, file), json);
+		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+	}
+}
+
+// --- Guess the season (/play/season): every completed season with its clues and top of the standings ---
+{
+	const { seasonFile } = await import("../src/lib/game/season-guess-data.ts");
+	const json = JSON.stringify(seasonFile(db));
+	writeFileSync(join(dir, "season-guess.json"), json);
+	console.log(`season-guess.json: ${(json.length / 1024).toFixed(0)} KB`);
+}

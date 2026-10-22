@@ -41,6 +41,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -88,6 +89,12 @@ const PRESETS: { name: string; description: string; changes: Change[] }[] = [
 		changes: [{ id: "p3", kind: "remove-driver", driverId: "michael-schumacher", fromYear: 1991, toYear: 2012 }],
 	},
 ];
+
+/** "M. Schumacher": struck-out names stay on one line on phones. */
+const shortRef = <R extends { name: string }>(r: R): R => {
+	const [first, ...rest] = r.name.split(" ");
+	return rest.length ? { ...r, name: `${first[0]}. ${rest.join(" ")}` } : r;
+};
 
 function useUniverses() {
 	const [list, setList] = useState<StoredUniverse[] | null>(null);
@@ -224,8 +231,8 @@ export function Lab() {
 
 	return (
 		<UniverseProvider universe={selected ? { id: selected.id, name: selected.name } : null}>
-		<div className="grid min-h-[calc(100dvh-3.5rem)] lg:grid-cols-[300px_minmax(0,1fr)]">
-			<aside className="bg-muted/30 space-y-6 border-b p-4 lg:border-r lg:border-b-0">
+		<div className="grid grid-cols-1 min-h-[calc(100dvh-3.5rem)] lg:grid-cols-[300px_minmax(0,1fr)]">
+			<aside id="universes" className="bg-muted/30 space-y-6 border-t p-4 max-lg:order-last lg:border-t-0 lg:border-r">
 				<div className="space-y-2">
 					<div className="flex items-center justify-between">
 						<h2 className="text-sm font-medium">Your universes</h2>
@@ -267,11 +274,14 @@ export function Lab() {
 				<ImportDialog onImported={(u) => select(u.id)} />
 			</aside>
 
-			<main className="min-w-0 space-y-10 px-4 py-8 sm:px-6 lg:px-10">
+			<main className="min-w-0 space-y-10 px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
 				<header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
 					<div className="min-w-0 flex-1 space-y-1.5">
 						<div className="text-universe flex items-center gap-1.5 text-sm">
 							<FlaskConical className="size-4" /> The Lab
+							<a href="#universes" className="text-muted-foreground hover:text-foreground ml-auto inline-flex items-center gap-1 lg:hidden">
+								<Orbit className="size-4" /> Your universes ({universes.length})
+							</a>
 						</div>
 						{selected ? (
 							<Input
@@ -282,14 +292,15 @@ export function Lab() {
 									const v = e.target.value.trim();
 									if (v && v !== selected.name) edit(selected, { name: v });
 								}}
-								className="h-auto max-w-2xl border-transparent bg-transparent px-0 py-0 text-3xl font-semibold tracking-tight shadow-none hover:bg-input/30 focus-visible:px-2 md:text-3xl"
+								className="h-auto max-w-2xl border-transparent bg-transparent px-0 py-0 text-2xl font-semibold tracking-tight shadow-none hover:bg-input/30 focus-visible:px-2 sm:text-3xl md:text-3xl"
 							/>
 						) : (
-							<h1 className="text-3xl font-semibold tracking-tight">Rewrite Formula 1 history</h1>
+							<h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Rewrite Formula 1 history</h1>
 						)}
 						{selected?.shared && (
-							<p className="text-universe flex items-center gap-1.5 text-sm">
-								<Inbox className="size-4" /> Someone shared this universe with you. Save it to keep it with your own, or edit it to make it yours.
+							<p className="border-universe/25 bg-universe/8 text-universe flex max-w-3xl items-start gap-2 rounded-lg border px-3 py-2 text-sm">
+								<Inbox className="mt-0.5 size-4 shrink-0" />
+								<span>Someone shared this universe with you. Save it to keep it with your own, or edit it to make it yours.</span>
 							</p>
 						)}
 						<p className="text-muted-foreground max-w-3xl text-sm">
@@ -307,7 +318,7 @@ export function Lab() {
 									}}
 								>
 									<BookmarkPlus data-icon="inline-start" />
-									Save to my Lab
+									Save<span className="max-sm:hidden"> to my Lab</span>
 								</Button>
 							)}
 							<ShareButton universe={selected} variant="outline" />
@@ -317,9 +328,11 @@ export function Lab() {
 									navigator.clipboard.writeText(exportUniverse(selected));
 									toast.success("Universe copied as JSON");
 								}}
+								aria-label="Copy JSON"
+								className="max-[379px]:px-2.5"
 							>
 								<Copy data-icon="inline-start" />
-								Copy JSON
+								<span className="max-[379px]:hidden">Copy JSON</span>
 							</Button>
 							<AlertDialog>
 								<AlertDialogTrigger asChild>
@@ -342,7 +355,7 @@ export function Lab() {
 									</AlertDialogFooter>
 								</AlertDialogContent>
 							</AlertDialog>
-							<Link href={`/u/${selected.id}`} className={cn(buttonVariants({ className: "bg-universe hover:bg-universe/90 text-white" }))}>
+							<Link href={`/u/${selected.id}`} className={cn(buttonVariants({ className: "bg-universe hover:bg-universe/90 text-white max-sm:w-full" }))}>
 								Explore this universe
 								<ArrowRight data-icon="inline-end" />
 							</Link>
@@ -351,7 +364,7 @@ export function Lab() {
 				</header>
 
 				{selected && (
-					<div className="grid gap-6 xl:grid-cols-2">
+					<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 						<Card className="gap-3 pb-2">
 							<CardHeader>
 								<CardTitle>Changes</CardTitle>
@@ -385,14 +398,14 @@ export function Lab() {
 						</Card>
 						<Card className="gap-3 pb-2">
 							<CardHeader>
-								<CardTitle>Impact on the championships</CardTitle>
-								<CardAction>
+								<CardTitle className="max-sm:col-[1/-1]">Impact on the championships</CardTitle>
+								<CardAction className="max-sm:col-[1/-1] max-sm:row-[3] max-sm:-ml-2.5 max-sm:justify-self-start">
 									<Link href={`/u/${selected.id}/changes`} className={cn(buttonVariants({ variant: "ghost", size: "sm", className: "text-muted-foreground" }))}>
 										<GitCompareArrows data-icon="inline-start" />
 										What changed
 									</Link>
 								</CardAction>
-								<CardDescription>
+								<CardDescription className="max-sm:col-[1/-1]">
 									{applied.db?.modifiedYears?.size ?? 0} season{applied.db?.modifiedYears?.size === 1 ? "" : "s"} altered
 									{impact.length > 0 && `, ${impact.length} with a different champion`}
 								</CardDescription>
@@ -408,7 +421,7 @@ export function Lab() {
 								) : impact.length === 0 ? (
 									<p className="text-muted-foreground px-3 pb-3 text-sm">No titles have changed hands.</p>
 								) : (
-									<ScrollArea viewportClassName="max-h-72">
+									<ScrollArea viewportClassName="sm:max-h-72">
 										<Table className="[&_td:first-child]:pl-3 [&_td:last-child]:pr-3">
 											<TableBody>
 												{impact.map((c) => (
@@ -418,15 +431,16 @@ export function Lab() {
 														</TableCell>
 														<TableCell>
 															{c.real !== c.now ? (
-																<span className="inline-flex flex-wrap items-center gap-1.5">
+																<span className="inline-flex flex-wrap items-center gap-1.5 max-sm:flex-col max-sm:items-start max-sm:gap-0">
 																	{c.real ? (
 																		<span className="text-muted-foreground line-through">
-																			<DriverLink driver={driverRef(base, c.real)} flag={false} />
+																			<DriverLink driver={driverRef(base, c.real)} flag={false} className="max-sm:hidden" />
+																			<DriverLink driver={shortRef(driverRef(base, c.real))} flag={false} className="sm:hidden" />
 																		</span>
 																	) : (
 																		<span className="text-muted-foreground text-xs">{c.year > base.meta.lastCompletedYear ? "New season" : "No champion"}</span>
 																	)}
-																	<ArrowRight className="text-muted-foreground size-3.5" />
+																	<ArrowRight className="text-muted-foreground size-3.5 max-sm:hidden" />
 																	{c.now ? (
 																		<DriverLink driver={driverRef(applied.db!, c.now)} className="text-universe font-medium" />
 																	) : (
@@ -438,14 +452,17 @@ export function Lab() {
 															)}
 															{c.realTeam !== c.nowTeam && (c.realTeam || c.nowTeam) && (
 																<div className="text-muted-foreground mt-0.5 inline-flex flex-wrap items-center gap-1.5 text-xs">
-																	Constructors:
-																	{c.realTeam && (
-																		<span className="line-through">
-																			<TeamLink team={teamRef(base, c.realTeam)} />
-																		</span>
-																	)}
-																	<ArrowRight className="size-3" />
-																	{c.nowTeam && <TeamLink team={teamRef(applied.db!, c.nowTeam)} className="text-universe" />}
+																	<span className="sm:hidden">Teams:</span>
+																	<span className="max-sm:hidden">Constructors:</span>
+																	<span className="inline-flex items-center gap-1.5 whitespace-nowrap [&_*]:whitespace-nowrap">
+																		{c.realTeam && (
+																			<span className="line-through">
+																				<TeamLink team={teamRef(base, c.realTeam)} />
+																			</span>
+																		)}
+																		<ArrowRight className="size-3" />
+																		{c.nowTeam && <TeamLink team={teamRef(applied.db!, c.nowTeam)} className="text-universe" />}
+																	</span>
 																</div>
 															)}
 														</TableCell>
@@ -477,7 +494,19 @@ export function Lab() {
 						<p className="text-muted-foreground text-sm">Every change previews its effect before you add it.</p>
 					</div>
 					<Tabs value={tab} onValueChange={(v) => setTab(String(v))} className="gap-6">
-						<TabsList variant="line" className="h-auto flex-wrap justify-start gap-y-1 group-data-horizontal/tabs:h-auto">
+						<Select items={EDITORS.map((e) => ({ value: e.id, label: e.label }))} value={tab} onValueChange={(v) => setTab(String(v))}>
+							<SelectTrigger className="w-full sm:hidden" aria-label="Kind of change">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{EDITORS.map((e) => (
+									<SelectItem key={e.id} value={e.id}>
+										{e.label}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+						<TabsList variant="line" className="h-auto flex-wrap justify-start gap-y-1 group-data-horizontal/tabs:h-auto max-sm:hidden">
 							{EDITORS.map((e) => (
 								<TabsTrigger key={e.id} value={e.id} className="h-8 flex-none px-2.5">
 									{e.label}

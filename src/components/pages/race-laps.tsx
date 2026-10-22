@@ -202,13 +202,13 @@ function LapChart({ session, refs, grid, initial }: { session: Session; refs: Ma
 				<p className="text-muted-foreground text-xs">
 					Position at the end of each lap. Select up to {HIGHLIGHT.length} drivers to highlight them; names link to their pages.
 				</p>
-				<ul className="flex flex-wrap gap-x-3 gap-y-1.5">
+				<ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 max-sm:[&_.fi]:hidden! sm:flex sm:flex-wrap">
 					{session.drivers.map((id) => {
 						const ref = refs.get(id);
 						const i = selected.indexOf(id);
 						const color = i >= 0 ? HIGHLIGHT[i] : null;
 						return (
-							<li key={id} className="flex items-center gap-1" onMouseEnter={() => setHovered(id)} onMouseLeave={() => setHovered(null)}>
+							<li key={id} className="flex min-w-0 items-center gap-1" onMouseEnter={() => setHovered(id)} onMouseLeave={() => setHovered(null)}>
 								<Toggle
 									size="sm"
 									variant="outline"
@@ -293,7 +293,7 @@ export function PitStopsPanel({ raceId, initial, drivers }: { raceId: number; in
 			<TableCard>
 				<TableHeader>
 					<TableRow>
-						<TableHead className="w-16 text-right">Lap</TableHead>
+						<TableHead className="w-12 text-right sm:w-16">Lap</TableHead>
 						<TableHead>Driver</TableHead>
 						<TableHead className="text-right">Stop</TableHead>
 						<TableHead className="text-right">Duration</TableHead>
@@ -307,7 +307,7 @@ export function PitStopsPanel({ raceId, initial, drivers }: { raceId: number; in
 								<TableCell className="text-right tabular-nums">{lap ?? "–"}</TableCell>
 								<TableCell>{ref ? <DriverLink driver={ref} className="font-medium" /> : id}</TableCell>
 								<TableCell className="text-muted-foreground text-right tabular-nums">{stop}</TableCell>
-								<TableCell className={cn("text-right tabular-nums", ms === fastest && "text-primary font-semibold")}>{stopTime(ms)}</TableCell>
+								<TableCell className={cn("text-right whitespace-nowrap tabular-nums", ms === fastest && "text-primary font-semibold")}>{stopTime(ms)}</TableCell>
 							</TableRow>
 						);
 					})}
