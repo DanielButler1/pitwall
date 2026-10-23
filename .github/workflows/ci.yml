@@ -26,13 +26,13 @@ jobs:
       - uses: actions/cache@v6
         with:
           path: |
-            f1db
-            jolpica
-          key: sources-${{ hashFiles('data/sources.json') }}
+            apps/web/f1db
+            apps/web/jolpica
+          key: sources-${{ hashFiles('apps/web/data/sources.json') }}
       - name: Build the dataset
-        run: node scripts/prepare-data.mjs --force
+        run: node apps/web/scripts/prepare-data.mjs --force
 
       - run: pnpm typecheck
       - run: pnpm test
       - name: Build the site
-        run: pnpm exec next build
+        run: pnpm --filter @pitwall/web exec next build

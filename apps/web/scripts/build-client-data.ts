@@ -1,0 +1,160 @@
+// Writes the header search's index (public/data/search-index.json) and the link
+// hover cards (public/data/cards.json, race-cards.json, more-cards.json) as plain static files, instant even under
+// `next dev`, where a route would first have to compile. Run by build-data.mjs and
+// before `next dev`; the /search-index route stays as a fallback.
+//
+//   node --experimental-strip-types scripts/build-client-data.ts
+
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { hydrate, indexData } from "../../../packages/core/src/f1/dataset.ts";
+import { searchIndex } from "../../../packages/core/src/f1/views.ts";
+import { allCards, allMoreCards, allRaceCards } from "../../../packages/core/src/f1/cards.ts";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const db = indexData(hydrate(JSON.parse(readFileSync(join(root, "data", "f1.json"), "utf8"))));
+const dir = join(root, "public", "data");
+mkdirSync(dir, { recursive: true });
+for (const [file, data] of [
+	["search-index.json", searchIndex(db)],
+	["cards.json", allCards(db)],
+	["race-cards.json", allRaceCards(db)],
+	["more-cards.json", allMoreCards(db)],
+] as const) {
+	const json = JSON.stringify(data);
+	writeFileSync(join(dir, file), json);
+	console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Guess the driver game (/play/guess): every driver with their career teams ---
+{
+	const { guessFile } = await import("../../../packages/core/src/game/guess-data.ts");
+	const json = JSON.stringify(guessFile(db));
+	writeFileSync(join(dir, "guess.json"), json);
+	console.log(`guess.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Fantasy: Through the Eras (/play/fantasy): priced driver- and constructor-seasons with their races ---
+{
+	const { buildFantasyData, packFantasy } = await import("../../../packages/core/src/game/fantasy.ts");
+	const { carFor, deriveRatings, dnfAt, skillAt } = await import("../../../packages/core/src/sim/ratings.ts");
+	const ratings = deriveRatings(db);
+	const data = buildFantasyData(db, (driverId, teamId, year) => ({ skill: skillAt(ratings, db, driverId, year), car: carFor(ratings, teamId, driverId, year), dnf: dnfAt(ratings, teamId, year) }));
+	const json = JSON.stringify(packFantasy(data));
+	writeFileSync(join(dir, "fantasy.json"), json);
+	console.log(`fantasy.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Career path (/play/career) and Higher or lower (/play/higher-lower): team stints; career counts ---
+{
+	const { careerFile } = await import("../../../packages/core/src/game/career-data.ts");
+	const { higherLowerFile } = await import("../../../packages/core/src/game/higher-lower-data.ts");
+	for (const [file, data] of [
+		["career.json", careerFile(db)],
+		["higher-lower.json", higherLowerFile(db)],
+	] as const) {
+		const json = JSON.stringify(data);
+		writeFileSync(join(dir, file), json);
+		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+	}
+}
+
+// --- Guess the constructor (/play/constructor) and Guess the circuit (/play/circuit) ---
+{
+	const { constructorFile } = await import("../../../packages/core/src/game/constructor-guess-data.ts");
+	const { circuitFile } = await import("../../../packages/core/src/game/circuit-guess-data.ts");
+	for (const [file, data] of [
+		["constructor-guess.json", constructorFile(db)],
+		["circuit-guess.json", circuitFile(db)],
+	] as const) {
+		const json = JSON.stringify(data);
+		writeFileSync(join(dir, file), json);
+		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+	}
+}
+
+// --- Teammate chain (/play/chain): the team-mate graph with the teams and seasons of each link ---
+{
+	const { chainFile } = await import("../../../packages/core/src/game/chain-data.ts");
+	const json = JSON.stringify(chainFile(db));
+	writeFileSync(join(dir, "chain.json"), json);
+	console.log(`chain.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Grid of nine (/play/grid): the categories and every driver's memberships ---
+{
+	const { gridFile } = await import("../../../packages/core/src/game/grid-data.ts");
+	const json = JSON.stringify(gridFile(db));
+	writeFileSync(join(dir, "grid.json"), json);
+	console.log(`grid.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Name the grid (/play/name-the-grid) and Race prediction (/play/predict): every race since 1980 with its grid and result ---
+{
+	const { raceEntriesFile } = await import("../../../packages/core/src/game/race-entries-data.ts");
+	const json = JSON.stringify(raceEntriesFile(db));
+	writeFileSync(join(dir, "race-entries.json"), json);
+	console.log(`race-entries.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- Guess the race (/play/race) and Lap chart mystery (/play/lap-chart): every race with its clues, and the lively lap charts ---
+{
+	const { raceGuessFile } = await import("../../../packages/core/src/game/race-guess-data.ts");
+	const { lapChartFile } = await import("../../../packages/core/src/game/lap-chart-data.ts");
+	const { mysteryLapsName } = await import("../../../packages/core/src/game/lap-chart.ts");
+	const { existsSync, rmSync } = await import("node:fs");
+	const lapFile = (id: number) => join(root, "data", "laps", `${id}.json`);
+	const readLaps = (id: number) => (existsSync(lapFile(id)) ? JSON.parse(readFileSync(lapFile(id), "utf8")) : null);
+	const pool = lapChartFile(db, readLaps);
+	for (const [file, data] of [
+		["race-guess.json", raceGuessFile(db)],
+		["lap-chart.json", pool],
+	] as const) {
+		const json = JSON.stringify(data);
+		writeFileSync(join(dir, file), json);
+		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
+	}
+	// each pooled race's chart, positions only, under a name that doesn't give the race away
+	const charts = join(dir, "lap-chart");
+	rmSync(charts, { recursive: true, force: true });
+	mkdirSync(charts, { recursive: true });
+	let bytes = 0;
+	for (const [raceId] of pool.races) {
+		const json = JSON.stringify({ positions: readLaps(raceId).positions });
+		writeFileSync(join(charts, `${mysteryLapsName(raceId)}.json`), json);
+		bytes += json.length;
+	}
+	console.log(`lap-chart/: ${pool.races.length} charts, ${(bytes / 1024).toFixed(0)} KB`);
+}
+
+// --- Guess the season (/play/season): every completed season with its clues and top of the standings ---
+{
+	const { seasonFile } = await import("../../../packages/core/src/game/season-guess-data.ts");
+	const json = JSON.stringify(seasonFile(db));
+	writeFileSync(join(dir, "season-guess.json"), json);
+	console.log(`season-guess.json: ${(json.length / 1024).toFixed(0)} KB`);
+}
+
+// --- "All results" on driver and constructor pages: one file each, fetched when the list is shown ---
+{
+	const { entityResults } = await import("../../../packages/core/src/f1/entity-results.ts");
+	let files = 0;
+	let bytes = 0;
+	for (const [kind, ids] of [
+		["driver", db.resultsByDriver.keys()],
+		["team", db.resultsByConstructor.keys()],
+	] as const) {
+		const out = join(dir, "results", kind);
+		mkdirSync(out, { recursive: true });
+		for (const id of ids) {
+			const json = JSON.stringify(entityResults(db, kind, id));
+			writeFileSync(join(out, `${id}.json`), json);
+			files++;
+			bytes += json.length;
+		}
+	}
+	// written last, so its age tells ensure-client-data.mjs whether the set is current
+	writeFileSync(join(dir, "results", "index.json"), JSON.stringify({ files }));
+	console.log(`results/: ${files} files, ${(bytes / 1024).toFixed(0)} KB`);
+}

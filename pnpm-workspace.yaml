@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Keep native Android/CMake object paths under Windows' path limit (the mobile app's builds).
+virtualStoreDirMaxLength: 32
