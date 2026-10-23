@@ -7,10 +7,13 @@ import { EntityCards } from "@/components/entity-cards";
 import { SiteHeader } from "@/components/site-header";
 import { Toaster } from "@/components/ui/sonner";
 import { getDb } from "@/lib/f1/server";
+import { SITE_URL } from "@/lib/site";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
 
 export const metadata: Metadata = {
+	metadataBase: new URL(SITE_URL),
+	openGraph: { siteName: "Pitwall", type: "website" },
 	title: { default: "Pitwall: Formula 1 statistics and what-ifs", template: "%s | Pitwall" },
 	description: "Every Formula 1 season, race, driver and team since 1950, plus a lab to rewrite history and browse the result.",
 };
