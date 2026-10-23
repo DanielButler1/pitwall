@@ -105,11 +105,44 @@ export function retryDataset() {
 	void bootDataset();
 }
 
-/** The dataset. Screens render inside the root gate (app/_layout.tsx), so it's always there. */
-export function useDb(): Db {
+/**
+ * A universe from the Lab that the whole app is showing instead of reality (set by
+ * src/features/lab/engine/mode.ts once it has been applied). `base` is the reality it was applied
+ * to: when reality refreshes underneath, the old universe stops showing until it has been re-applied.
+ */
+export type ActiveUniverse = { id: string; name: string; base: Db; db: Db };
+export const universeSlot = createStore<ActiveUniverse | null>(null);
+
+/** Real history, whatever universe the app is showing (the Lab builds universes on top of it). */
+export function useRealDb(): Db {
 	const state = datasetStore.use();
-	if (state.status !== "ready") throw new Error("The dataset isn't loaded yet");
+	if (state.status !== "ready") throw new Error("The dataset isn’t loaded yet");
 	return state.db;
+}
+
+/** The universe being shown, if any (only once it’s ready for the current reality). */
+export function useActiveUniverse(): ActiveUniverse | null {
+	const real = useRealDb();
+	const active = universeSlot.use();
+	return active && active.base === real ? active : null;
+}
+
+/**
+ * The dataset every screen shows: real history, or the Lab universe the user has entered. Screens
+ * render inside the root gate (app/_layout.tsx), so it’s always there.
+ */
+export function useDb(): Db {
+	const real = useRealDb();
+	const active = universeSlot.use();
+	return active && active.base === real ? active.db : real;
+}
+
+/**
+ * Reality while a universe is shown, else undefined: the `base` argument many core views take
+ * (seasonView(db, year, base), driverView(db, id, base), ...) to mark what a universe changed.
+ */
+export function useUniverseBase(): Db | undefined {
+	return useActiveUniverse()?.base;
 }
 
 /**

@@ -13,7 +13,7 @@ export function Chip({ label, selected, onPress, icon, dropdown, className }: { 
 			className={cn("h-8 flex-row items-center gap-1.5 rounded-full border px-3", selected ? "border-primary bg-primary" : "border-border bg-background active:bg-accent", className)}
 		>
 			{icon ? <Icon icon={icon} tone={selected ? "primary-foreground" : "muted"} size={14} /> : null}
-			<Text variant="small" className={cn("font-semibold", selected ? "text-primary-foreground" : "text-foreground")}>{label}</Text>
+			<Text variant="small" numberOfLines={1} className={cn("font-semibold", selected ? "text-primary-foreground" : "text-foreground")}>{label}</Text>
 			{dropdown ? <Icon icon={ChevronDown} tone={selected ? "primary-foreground" : "muted"} size={14} /> : null}
 		</Pressable>
 	);
@@ -39,7 +39,7 @@ export function Badge({ label, tone = "neutral" }: { label: string; tone?: "neut
 	const [bg, fg] = tones[tone].split(" ");
 	return (
 		<View className={cn("rounded-md px-1.5 py-0.5", bg)}>
-			<Text variant="caption" className={cn("font-semibold", fg)}>{label}</Text>
+			<Text variant="caption" numberOfLines={1} className={cn("font-semibold", fg)}>{label}</Text>
 		</View>
 	);
 }

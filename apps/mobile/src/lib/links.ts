@@ -6,6 +6,19 @@
 import { useRouter, useSegments, type Href } from "expo-router";
 import { useCallback } from "react";
 import { TAB_GROUPS, type TabGroup } from "@/components/shell/navigation";
+import { createStore } from "@/lib/store";
+
+/**
+ * The tab in front, kept up to date by each tab's stack layout as it gains focus. Screens outside
+ * the tabs (the search sheet) read it to open results where the user was.
+ */
+export const currentTab = createStore<TabGroup>("(home)");
+
+/** Opens a website-style path in the tab in front, from anywhere (e.g. the search sheet, after closing it). */
+export function useOpenInCurrentTab() {
+	const router = useRouter();
+	return useCallback((path: string) => router.push(`/(app)/${currentTab.get()}${path}` as Href), [router]);
+}
 
 /** The website's paths, as in apps/web/src/components/f1.tsx `href`. */
 export const href = {

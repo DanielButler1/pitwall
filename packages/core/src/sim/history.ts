@@ -80,10 +80,11 @@ export function regulationYears(seed: number, lastReal: number, toYear: number):
 
 /* ----------------------------------------------------------- real-grids --- */
 
-function simulateRealGrids(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): HistoryOutput {
+function* realGridSteps(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): Generator<number, HistoryOutput> {
 	const out = emptyOutput();
 	const to = Math.min(p.toYear, base.meta.lastCompletedYear);
 	for (let y = p.fromYear; y <= to; y++) {
+		yield y;
 		onYear?.(y, p.fromYear, to);
 		const races = completedRaces(base, y);
 		if (!races.length) continue;
@@ -240,7 +241,7 @@ function futureRace(tpl: Race, year: number, base: Db): Race {
 	return { ...tpl, id: year * 1000 + tpl.round, year, date: `${year}-${md}`, officialName: `Formula 1 ${gp?.fullName ?? tpl.officialName} ${year}` };
 }
 
-function simulateDynamic(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): HistoryOutput {
+function* dynamicSteps(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): Generator<number, HistoryOutput> {
 	const out = emptyOutput();
 	const R: Ratings = deriveRatings(base);
 	const { plans, careers } = realStructure(base);
@@ -356,6 +357,7 @@ function simulateDynamic(base: Db, p: HistorySim, mods: Modifiers, onYear?: Prog
 
 	// --- season by season ------------------------------------------------------
 	for (let Y = from; Y <= to; Y++) {
+		yield Y;
 		onYear?.(Y, from, to);
 		const real = Y <= lastReal;
 		const plan = real ? plans.get(Y) : undefined;
@@ -658,16 +660,30 @@ function simulateDynamic(base: Db, p: HistorySim, mods: Modifiers, onYear?: Prog
 
 const simCache = new Map<string, HistoryOutput>();
 
-/** Simulate a span of seasons. Memoised by inputs (the universe re-applies often while editing). */
 /** Called as each season starts, for progress bars. */
 export type Progress = (year: number, from: number, to: number) => void;
 
-export function simulateHistory(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): HistoryOutput {
+/**
+ * Simulate a span of seasons one season per step: the generator yields each
+ * year before simulating it, so a caller without threads (the mobile app) can
+ * pause between seasons and keep its UI responsive. Same output, and the same
+ * cache, as `simulateHistory`.
+ */
+export function* simulateHistorySteps(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): Generator<number, HistoryOutput> {
 	const key = JSON.stringify([base.meta.generatedAt, p.fromYear, p.toYear, p.seed, p.chaos, p.reliability, p.mode, p.anchor ?? null, mods.key]);
 	const hit = simCache.get(key);
 	if (hit) return hit;
-	const out = p.mode === "dynamic" ? simulateDynamic(base, p, mods, onYear) : simulateRealGrids(base, p, mods, onYear);
+	const out = yield* p.mode === "dynamic" ? dynamicSteps(base, p, mods, onYear) : realGridSteps(base, p, mods, onYear);
 	simCache.set(key, out);
 	if (simCache.size > 6) simCache.delete(simCache.keys().next().value!);
 	return out;
+}
+
+/** Simulate a span of seasons. Memoised by inputs (the universe re-applies often while editing). */
+export function simulateHistory(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progress): HistoryOutput {
+	const steps = simulateHistorySteps(base, p, mods, onYear);
+	for (;;) {
+		const step = steps.next();
+		if (step.done) return step.value;
+	}
 }

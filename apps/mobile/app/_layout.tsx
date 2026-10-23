@@ -78,7 +78,6 @@ function RootNavigator() {
 					<Stack.Screen name="(app)" />
 					<Stack.Screen name="search" options={{ presentation: "formSheet", sheetAllowedDetents: [1], sheetGrabberVisible: true }} />
 					<Stack.Screen name="settings" />
-					<Stack.Screen name="sheets/[kind]" options={{ presentation: "formSheet", sheetAllowedDetents: [0.6, 1], sheetGrabberVisible: true }} />
 				</Stack>
 			)}
 		</ThemeProvider>

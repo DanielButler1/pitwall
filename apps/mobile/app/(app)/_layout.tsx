@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NAV_ITEMS } from "@/components/shell/navigation";
 import { TabButton } from "@/components/shell/TabButton";
 import { Text } from "@/components/ui";
+import { UniverseBanner } from "@/features/lab/components/UniverseBanner";
 import { useLayout } from "@/hooks/useLayout";
 import { cn } from "@/lib/cn";
 
@@ -20,6 +21,7 @@ export default function AppLayout() {
 			{split ? <Sidebar labelled={wide} /> : null}
 			<View className="flex-1 bg-background">
 				<TabSlot />
+				<UniverseBanner />
 			</View>
 			{!split ? <BottomBar /> : null}
 			<TabList style={{ display: "none" }}>

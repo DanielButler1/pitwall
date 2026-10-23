@@ -1,4 +1,7 @@
-import { Stack } from "expo-router";
+import { Stack, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
+import type { TabGroup } from "@/components/shell/navigation";
+import { currentTab } from "@/lib/links";
 
 /**
  * Every tab's stack. This folder's routes exist in all five tabs, so a driver or a race opens on
@@ -12,6 +15,8 @@ export const unstable_settings = {
 	"(lab)": { initialRouteName: "lab/index" },
 };
 
-export default function TabStack() {
+/** `segment` is the tab this copy of the stack belongs to, e.g. "(browse)". */
+export default function TabStack({ segment }: { segment: string }) {
+	useFocusEffect(useCallback(() => currentTab.set(segment as TabGroup), [segment]));
 	return <Stack screenOptions={{ headerShown: false }} />;
 }
