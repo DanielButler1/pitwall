@@ -4,8 +4,8 @@
 // drivers' names hidden. The player may open hints (round, continent, decade, winner's team,
 // winner's name, every driver) at any time, in any order; each uses up one of the six guesses.
 // The board's tiles are deliberately coarse (year earlier/later, Grand Prix and winner match or
-// miss). The pool is public/data/lap-chart.json, the chart the race's /data/laps/<raceId>.json
-// (fetched on demand), guesses the shared race catalogue (./race-picker, lib/game/race-guess).
+// miss). The pool is public/data/lap-chart.json, the chart an anonymous positions-only copy
+// (/data/lap-chart/<name>.json, fetched on demand), guesses the shared race catalogue (./race-picker, lib/game/race-guess).
 // Drawn like the race page's lap chart (components/pages/race-laps).
 
 import { useEffect, useMemo, useState } from "react";
@@ -24,6 +24,7 @@ import {
 	lapOver,
 	lapReveal,
 	lapShareText,
+	mysteryLapsName,
 	randomLapRace,
 	roundsPerYear,
 	slotsUsed,
@@ -32,9 +33,9 @@ import {
 	type LapHintKey,
 	type LapRace,
 	type LapReveal,
+	type MysteryLaps,
 } from "@/lib/game/lap-chart";
 import { CONTINENT_NAME, continentOf, emptyStats, MAX_GUESSES, puzzleNumber, recordResult, type RaceCatalog, type RgRace } from "@/lib/game/race-guess";
-import type { RaceLapFile } from "@/lib/f1/laps";
 import { cn } from "@/lib/utils";
 import { Flag, href, Page } from "../f1";
 import { ULink } from "../universe-link";
@@ -70,13 +71,13 @@ const loadData = (() => {
 			}));
 })();
 
-const lapFiles = new Map<number, Promise<RaceLapFile>>();
+const lapFiles = new Map<number, Promise<MysteryLaps>>();
 function fetchLaps(raceId: number) {
 	let p = lapFiles.get(raceId);
 	if (!p) {
-		p = fetch(`/data/laps/${raceId}.json`).then((r) => {
+		p = fetch(`/data/lap-chart/${mysteryLapsName(raceId)}.json`).then((r) => {
 			if (!r.ok) throw new Error(`HTTP ${r.status}`);
-			return r.json() as Promise<RaceLapFile>;
+			return r.json() as Promise<MysteryLaps>;
 		});
 		p.catch(() => lapFiles.delete(raceId));
 		lapFiles.set(raceId, p);
@@ -84,9 +85,9 @@ function fetchLaps(raceId: number) {
 	return p;
 }
 
-/** The target race's lap file, or an error flag (with retry). */
+/** The target race's chart (positions only, see MysteryLaps), or an error flag (with retry). */
 function useLapFile(raceId: number | null) {
-	const [state, setState] = useState<{ id: number; file: RaceLapFile | null; error: boolean } | null>(null);
+	const [state, setState] = useState<{ id: number; file: MysteryLaps | null; error: boolean } | null>(null);
 	const [attempt, setAttempt] = useState(0);
 	useEffect(() => {
 		if (raceId == null) return;
@@ -242,7 +243,7 @@ export function LapChartGame() {
 							)}
 							{laps.error ? (
 								<GameError what="the lap chart" onRetry={laps.retry} />
-							) : !laps.file?.positions || !laps.file.drivers ? (
+							) : !laps.file?.positions ? (
 								<Skeleton className="h-72 w-full rounded-xl sm:h-[26rem]" />
 							) : (
 								<MysteryChart key={lapTarget.id} file={laps.file} race={lapTarget} reveal={reveal} over={over} />
@@ -411,9 +412,10 @@ const PICKED = ["var(--chart-3)", "var(--gold)"];
 
 type Row = { lap: number } & Record<string, number | null>;
 
-function MysteryChart({ file, race, reveal, over }: { file: RaceLapFile; race: LapRace; reveal: LapReveal; over: boolean }) {
-	const drivers = file.drivers!;
-	const positions = file.positions!;
+function MysteryChart({ file, race, reveal, over }: { file: MysteryLaps; race: LapRace; reveal: LapReveal; over: boolean }) {
+	// one line per charted driver, in the pool's order (winner first); names come from race.entries
+	const positions = file.positions;
+	const drivers = positions;
 	const [picked, setPicked] = useState<number[]>([]);
 	const [hovered, setHovered] = useState<number | null>(null);
 	const laps = Math.max(0, ...positions.map((p) => p.length));

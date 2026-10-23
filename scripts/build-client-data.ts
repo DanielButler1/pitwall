@@ -102,16 +102,30 @@ for (const [file, data] of [
 {
 	const { raceGuessFile } = await import("../src/lib/game/race-guess-data.ts");
 	const { lapChartFile } = await import("../src/lib/game/lap-chart-data.ts");
-	const { existsSync } = await import("node:fs");
+	const { mysteryLapsName } = await import("../src/lib/game/lap-chart.ts");
+	const { existsSync, rmSync } = await import("node:fs");
 	const lapFile = (id: number) => join(root, "data", "laps", `${id}.json`);
+	const readLaps = (id: number) => (existsSync(lapFile(id)) ? JSON.parse(readFileSync(lapFile(id), "utf8")) : null);
+	const pool = lapChartFile(db, readLaps);
 	for (const [file, data] of [
 		["race-guess.json", raceGuessFile(db)],
-		["lap-chart.json", lapChartFile(db, (id) => (existsSync(lapFile(id)) ? JSON.parse(readFileSync(lapFile(id), "utf8")) : null))],
+		["lap-chart.json", pool],
 	] as const) {
 		const json = JSON.stringify(data);
 		writeFileSync(join(dir, file), json);
 		console.log(`${file}: ${(json.length / 1024).toFixed(0)} KB`);
 	}
+	// each pooled race's chart, positions only, under a name that doesn't give the race away
+	const charts = join(dir, "lap-chart");
+	rmSync(charts, { recursive: true, force: true });
+	mkdirSync(charts, { recursive: true });
+	let bytes = 0;
+	for (const [raceId] of pool.races) {
+		const json = JSON.stringify({ positions: readLaps(raceId).positions });
+		writeFileSync(join(charts, `${mysteryLapsName(raceId)}.json`), json);
+		bytes += json.length;
+	}
+	console.log(`lap-chart/: ${pool.races.length} charts, ${(bytes / 1024).toFixed(0)} KB`);
 }
 
 // --- Guess the season (/play/season): every completed season with its clues and top of the standings ---

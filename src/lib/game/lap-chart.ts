@@ -5,7 +5,7 @@
 // the race's /data/laps/<raceId>.json, fetched on demand. Guesses are compared with the shared
 // race catalogue (race-guess.ts).
 
-import { dailyPick, randomPick, VERDICT_SQUARE } from "./daily.ts";
+import { dailyPick, hash, randomPick, VERDICT_SQUARE } from "./daily.ts";
 import { MAX_GUESSES, type RaceColumn, type RaceComparison, type RgRace } from "./race-guess.ts";
 
 export { MAX_GUESSES };
@@ -24,6 +24,14 @@ export type LapChartFile = { drivers: PackedLapDriver[]; teams: [string, string]
 export type LapDriver = { id: string; name: string; lastName: string; flag: string | null };
 export type LapEntry = { driver: LapDriver; team: { id: string; name: string }; grid: number | null };
 export type LapRace = { id: number; score: number; entries: LapEntry[] };
+
+/**
+ * The game's copy of a race's chart (public/data/lap-chart/<name>.json): positions only, in the
+ * pool's driver order, under a name that isn't the race id. The race's own lap file is named
+ * by id and lists the drivers, so fetching it would show the answer in the network panel.
+ */
+export type MysteryLaps = { positions: (number | null)[][] };
+export const mysteryLapsName = (raceId: number) => hash(`lap-chart:${raceId}`).toString(36);
 
 export function unpackLapChart(f: LapChartFile): { races: LapRace[]; byId: Map<number, LapRace> } {
 	const drivers = f.drivers.map(([id, name, lastName, flag]): LapDriver => ({ id, name, lastName, flag }));
