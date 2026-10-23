@@ -34,9 +34,18 @@ export function Pos({ text, className }: { text: string; className?: string }) {
 	);
 }
 
+// Two to a row: each tile starts just under half the width and grows to fill it. (Styles rather than
+// classes: Uniwind didn't lay these out as a wrapping row.)
+const GRID = { flexDirection: "row", flexWrap: "wrap", gap: 8 } as const;
+const TWO_UP = { flexBasis: "45%", flexGrow: 1 } as const;
+
 /** Two-column stat tiles (titles, wins, poles…): label above, value below. */
 export function StatGrid({ children, className }: { children: ReactNode; className?: string }) {
-	return <View className={cn("flex-row flex-wrap gap-2 px-4", className)}>{children}</View>;
+	return (
+		<View className={cn("px-4", className)} style={GRID}>
+			{children}
+		</View>
+	);
 }
 
 export function Stat({ label, value, detail, onPress }: { label: string; value: ReactNode; detail?: string | null; onPress?: () => void }) {
@@ -57,14 +66,15 @@ export function Stat({ label, value, detail, onPress }: { label: string; value: 
 			) : null}
 		</>
 	);
-	// two to a row: each tile takes just under half the width and grows to fill it
-	const box = "grow basis-[45%] rounded-md border border-border px-3 py-2.5";
+	const box = "rounded-md border border-border px-3 py-2.5";
 	return onPress ? (
-		<Pressable accessibilityRole="button" onPress={onPress} className={cn(box, "active:bg-accent")}>
+		<Pressable accessibilityRole="button" onPress={onPress} className={cn(box, "active:bg-accent")} style={TWO_UP}>
 			{body}
 		</Pressable>
 	) : (
-		<View className={box}>{body}</View>
+		<View className={box} style={TWO_UP}>
+			{body}
+		</View>
 	);
 }
 
