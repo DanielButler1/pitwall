@@ -2,13 +2,11 @@
 // driver (or constructor), most successful first.
 
 import { LegendList } from "@legendapp/list/react-native";
-import { X } from "lucide-react-native";
 import { memo, useCallback, useMemo, useState } from "react";
-import { Modal, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View } from "react-native";
 import { constructorsView, driversView } from "@pitwall/core/f1/views";
 import { Flag } from "@/components/f1";
-import { EmptyState, IconButton, Row, SearchField, Text } from "@/components/ui";
+import { EmptyState, Row, SearchField, Sheet } from "@/components/ui";
 import { useDb } from "@/data/dataset";
 import { haptic } from "@/lib/haptics";
 import { yearRange } from "@/lib/format";
@@ -37,7 +35,6 @@ function pickables(db: Db) {
 
 export function ComparePicker({ kind, visible, taken, onPick, onClose }: { kind: "driver" | "team"; visible: boolean; taken: string[]; onPick(id: string): void; onClose(): void }) {
 	const db = useDb();
-	const insets = useSafeAreaInsets();
 	const [query, setQuery] = useState("");
 	const all = useMemo(() => pickables(db)[kind], [db, kind]);
 	const hits = useMemo(() => {
@@ -63,13 +60,7 @@ export function ComparePicker({ kind, visible, taken, onPick, onClose }: { kind:
 		[onPick],
 	);
 	return (
-		<Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={close}>
-			<View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
-				<View className="min-h-12 flex-row items-center gap-1 px-2">
-					<View className="w-2" />
-					<Text variant="heading" className="flex-1">{kind === "driver" ? "Add a driver" : "Add a constructor"}</Text>
-					<IconButton icon={X} label="Close" onPress={close} />
-				</View>
+		<Sheet open={visible} onClose={close} title={kind === "driver" ? "Add a driver" : "Add a constructor"}>
 				<SearchField value={query} onChangeText={setQuery} placeholder={kind === "driver" ? "Search drivers" : "Search constructors"} className="mx-4 mb-2" autoFocus />
 				<LegendList
 					data={hits}
@@ -80,10 +71,9 @@ export function ComparePicker({ kind, visible, taken, onPick, onClose }: { kind:
 					keyboardShouldPersistTaps="handled"
 					keyboardDismissMode="on-drag"
 					ListEmptyComponent={<EmptyState title={kind === "driver" ? "No driver found" : "No constructor found"} />}
-					contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}
+					contentContainerStyle={{ paddingBottom: 24 }}
 				/>
-			</View>
-		</Modal>
+		</Sheet>
 	);
 }
 

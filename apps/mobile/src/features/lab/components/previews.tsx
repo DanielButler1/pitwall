@@ -3,10 +3,10 @@
 
 import { ArrowDown, ArrowUp, CircleSlash } from "lucide-react-native";
 import type { ReactNode } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import type { Db, Result } from "@pitwall/core/f1/dataset";
 import { Pos } from "@/components/f1";
-import { Icon, Row, Section, Text, useToneColor } from "@/components/ui";
+import { Icon, Row, Section, Spinner, Text, useToneColor } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { num } from "@/lib/format";
 import type { ApplyProgress } from "../engine/apply";
@@ -32,7 +32,7 @@ export function Working({ pending, progress, label = "Updating preview" }: { pen
 	const text = progress ? `${progress.label}${progress.fraction != null ? ` · ${Math.round(progress.fraction * 100)}%` : ""}` : label;
 	return (
 		<View className="flex-row items-center gap-2 px-4 py-3">
-			<ActivityIndicator size="small" color={colour} />
+			<Spinner size="small" color={colour} />
 			<Text variant="muted">{text}</Text>
 		</View>
 	);

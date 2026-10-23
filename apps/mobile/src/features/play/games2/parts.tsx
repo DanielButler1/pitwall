@@ -1,11 +1,9 @@
 // Small pieces the six games here share that the play kit doesn't have: a full-screen sheet
-// (RN Modal) and names that only link once a game is over.
+// (the ui kit's) and names that only link once a game is over.
 
-import { X } from "lucide-react-native";
 import type { ReactNode } from "react";
-import { Modal, Pressable, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IconButton, Text } from "@/components/ui";
+import { Pressable } from "react-native";
+import { Sheet as KitSheet, Text } from "@/components/ui";
 import { cn } from "@/lib/cn";
 
 /**
@@ -13,26 +11,10 @@ import { cn } from "@/lib/cn";
  * then the content. Android's back button closes it.
  */
 export function Sheet({ open, onClose, title, subtitle, children }: { open: boolean; onClose: () => void; title: ReactNode; subtitle?: ReactNode; children: ReactNode }) {
-	const insets = useSafeAreaInsets();
 	return (
-		<Modal visible={open} animationType="slide" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
-			<View className="flex-1 bg-background" style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
-				<View className="flex-row items-start gap-2 py-2 pl-4 pr-2">
-					<View className="flex-1 pt-2">
-						{typeof title === "string" ? <Text variant="heading">{title}</Text> : title}
-						{typeof subtitle === "string" ? (
-							<Text variant="caption" className="mt-1">
-								{subtitle}
-							</Text>
-						) : (
-							subtitle
-						)}
-					</View>
-					<IconButton icon={X} label="Close" onPress={onClose} />
-				</View>
-				{children}
-			</View>
-		</Modal>
+		<KitSheet open={open} onClose={onClose} title={title} subtitle={subtitle}>
+			{children}
+		</KitSheet>
 	);
 }
 

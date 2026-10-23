@@ -1,7 +1,8 @@
 import type { LucideIcon } from "lucide-react-native";
-import { ActivityIndicator, Pressable, type PressableProps, View } from "react-native";
+import { Pressable, type PressableProps, View } from "react-native";
 import { cn } from "@/lib/cn";
 import { Icon, useToneColor, type IconTone } from "./icon";
+import { Spinner } from "./spinner";
 import { Text } from "./text";
 
 const variants = {
@@ -38,7 +39,7 @@ export function Button({ label, variant = "primary", size = "md", icon, loading,
 			{...props}
 			className={cn("flex-row items-center justify-center disabled:opacity-50", sizes[size], style.box, className)}
 		>
-			{loading ? <ActivityIndicator size="small" color={spinner} /> : icon ? <Icon icon={icon} tone={style.tone} size={size === "sm" ? 16 : 18} /> : null}
+			{loading ? <Spinner size="small" color={spinner} /> : icon ? <Icon icon={icon} tone={style.tone} size={size === "sm" ? 16 : 18} /> : null}
 			<Text variant="label" className={cn(style.text, size === "sm" && "text-[13px]")}>{label}</Text>
 		</Pressable>
 	);

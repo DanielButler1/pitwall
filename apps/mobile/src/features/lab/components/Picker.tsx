@@ -2,11 +2,10 @@
 // choice, which opens a full-screen list, searchable when it's long.
 
 import { LegendList } from "@legendapp/list/react-native";
-import { Check, ChevronDown, X } from "lucide-react-native";
+import { Check, ChevronDown } from "lucide-react-native";
 import { memo, useCallback, useMemo, useState } from "react";
-import { Modal, Pressable, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { EmptyState, Icon, IconButton, SearchField, Text } from "@/components/ui";
+import { Pressable, View } from "react-native";
+import { EmptyState, Icon, SearchField, Sheet, Text } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { haptic } from "@/lib/haptics";
 
@@ -74,7 +73,6 @@ export function Picker<T extends string | number>({
 }
 
 function PickerSheet<T extends string | number>({ title, options, value, searchable, onPick, onClose }: { title: string; options: Option<T>[]; value: T | null; searchable: boolean; onPick: (v: T) => void; onClose: () => void }) {
-	const insets = useSafeAreaInsets();
 	const [query, setQuery] = useState("");
 	const indexed = useMemo(() => options.map((o) => ({ o, s: fold(o.search ?? `${o.label} ${o.detail ?? ""}`) })), [options]);
 	const hits = useMemo(() => {
@@ -85,15 +83,7 @@ function PickerSheet<T extends string | number>({ title, options, value, searcha
 	const initial = useMemo(() => Math.max(0, options.findIndex((o) => o.value === value)), [options, value]);
 	const renderItem = useCallback(({ item }: { item: Option<T> }) => <OptionRow option={item} selected={item.value === value} onPick={onPick} />, [value, onPick]);
 	return (
-		<Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
-			<View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
-				<View className="min-h-12 flex-row items-center gap-1 px-2">
-					<View className="w-2" />
-					<Text variant="heading" className="flex-1" numberOfLines={1}>
-						{title}
-					</Text>
-					<IconButton icon={X} label="Close" onPress={onClose} />
-				</View>
+		<Sheet open onClose={onClose} title={title}>
 				{searchable ? <SearchField value={query} onChangeText={setQuery} placeholder={`Search ${title.toLowerCase()}`} className="mx-4 mb-2" /> : null}
 				<LegendList
 					data={hits}
@@ -105,10 +95,9 @@ function PickerSheet<T extends string | number>({ title, options, value, searcha
 					keyboardShouldPersistTaps="handled"
 					keyboardDismissMode="on-drag"
 					ListEmptyComponent={<EmptyState title="Nothing matches" />}
-					contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}
+					contentContainerStyle={{ paddingBottom: 24 }}
 				/>
-			</View>
-		</Modal>
+		</Sheet>
 	);
 }
 

@@ -1,8 +1,9 @@
 import type { LucideIcon } from "lucide-react-native";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import { cn } from "@/lib/cn";
 import { Button } from "./button";
 import { Icon, useToneColor } from "./icon";
+import { Spinner } from "./spinner";
 import { Text } from "./text";
 
 export function EmptyState({ title, body, icon, action, onAction, className }: { title: string; body?: string; icon?: LucideIcon; action?: string; onAction?: () => void; className?: string }) {
@@ -25,7 +26,7 @@ export function LoadingState({ label, className }: { label?: string; className?:
 	const color = useToneColor("muted");
 	return (
 		<View className={cn("items-center justify-center gap-3 py-16", className)}>
-			<ActivityIndicator color={color} />
+			<Spinner color={color} />
 			{label ? <Text variant="muted">{label}</Text> : null}
 		</View>
 	);

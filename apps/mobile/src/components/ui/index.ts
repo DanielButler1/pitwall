@@ -7,4 +7,6 @@ export { Header, ReadableWidth, Screen } from "./screen";
 export { Segmented } from "./segmented";
 export { EmptyState, ErrorState, LoadingState, Skeleton, SkeletonRows } from "./states";
 export { alert, confirm, FeedbackHost, toast, type DialogAction } from "./feedback";
+export { Sheet } from "./sheet";
+export { Spinner } from "./spinner";
 export { Text } from "./text";

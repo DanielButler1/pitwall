@@ -1,5 +1,5 @@
-import { ActivityIndicator, View } from "react-native";
-import { EmptyState, Screen, Text, useToneColor } from "@/components/ui";
+import { View } from "react-native";
+import { EmptyState, Screen, Spinner, Text, useToneColor } from "@/components/ui";
 import { retryDataset, type DatasetState } from "@/data/dataset";
 
 /** Shown until the dataset is open: the first download, or what went wrong with it. */
@@ -20,7 +20,7 @@ export function BootScreen({ state }: { state: DatasetState }) {
 	return (
 		<Screen className="items-center justify-center px-8">
 			<View className="mb-6 h-10 w-3 -skew-x-12 rounded-sm bg-primary" />
-			<ActivityIndicator color={primary} />
+			<Spinner color={primary} />
 			<Text variant="heading" className="mt-4 text-center">
 				{state.status === "downloading" ? "Downloading Formula 1 history" : "Opening Formula 1 history"}
 			</Text>

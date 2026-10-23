@@ -3,14 +3,14 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { AppState } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useCSSVariable } from "uniwind";
 import { setGameStorage } from "@pitwall/core/game/daily";
 import { BootScreen } from "@/components/shell/BootScreen";
-import { FeedbackHost } from "@/components/ui";
+import { FeedbackHost, toast } from "@/components/ui";
 import { bootDataset, datasetStore, refreshDataset } from "@/data/dataset";
 import { gameStorage } from "@/lib/storage";
 import { AppearanceProvider, useAppearance } from "@/providers/AppearanceProvider";
@@ -59,6 +59,15 @@ function RootNavigator() {
 		if (splashDone) void SplashScreen.hideAsync();
 	}, [splashDone]);
 
+	// Say so when the quiet check brings in new results (the first open isn't news).
+	const built = dataset.status === "ready" ? dataset.generatedAt : null;
+	const shown = useRef<string | null>(null);
+	useEffect(() => {
+		if (!built) return;
+		if (shown.current && shown.current !== built) toast("New results downloaded");
+		shown.current = built;
+	}, [built]);
+
 	// Back in the foreground after a while: there may be new results.
 	useEffect(() => {
 		const sub = AppState.addEventListener("change", (state) => {
@@ -77,7 +86,7 @@ function RootNavigator() {
 			) : (
 				<Stack screenOptions={{ headerShown: false }}>
 					<Stack.Screen name="(app)" />
-					<Stack.Screen name="search" options={{ presentation: "formSheet", sheetAllowedDetents: [1], sheetGrabberVisible: true }} />
+					<Stack.Screen name="search" options={{ animation: "slide_from_bottom" }} />
 					<Stack.Screen name="settings" />
 				</Stack>
 			)}

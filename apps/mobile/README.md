@@ -32,7 +32,7 @@ modules/haptics              Android touch pulses for motors that can't play sys
 
 ## Design rules
 
-Shared with Phaseo and Solar: sentence-case bold headings, flat rows and dividers rather than cards, `rounded-md`, borders not shadows, Montserrat, tokens from `global.css` (mirroring the website's theme: F1 red, podium and universe colours). Wide web tables become rows with the few numbers that matter; detail goes one tap deeper. Haptics mark choices, switches, scrubs and outcomes, never plain taps (`haptic(kind)` in `src/lib/haptics.ts`). No system dialogs or toasts: ask with `confirm()`, tell with `alert()` and report outcomes with `toast()` from `@/components/ui` (drawn by `FeedbackHost` in the app's design). The share sheet is the one system surface, for sending to other apps.
+Shared with Phaseo and Solar: sentence-case bold headings, flat rows and dividers rather than cards, `rounded-md`, borders not shadows, Montserrat, tokens from `global.css` (mirroring the website's theme: F1 red, podium and universe colours). Wide web tables become rows with the few numbers that matter; detail goes one tap deeper. Haptics mark choices, switches, scrubs and outcomes, never plain taps (`haptic(kind)` in `src/lib/haptics.ts`). No system dialogs or toasts: ask with `confirm()`, tell with `alert()` and report outcomes with `toast()` from `@/components/ui` (drawn by `FeedbackHost` in the app's design). Spinners are the kit's `Spinner`, sheets its `Sheet`, and there's no pull-to-refresh (its spinner is the system's; the app checks for new data on launch and on return, and says so with a toast). The share sheet is the one system surface, for sending to other apps.
 
 ## Running it
 

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Page, Stat, StatGrid, TabScreen } from "@/components/f1";
 import { Button, Text } from "@/components/ui";
-import { datasetStore, refreshDataset, useDb, useView } from "@/data/dataset";
+import { useDb, useView } from "@/data/dataset";
 import { num } from "@/lib/format";
 import { href } from "@/lib/links";
 import { watchDataChecks } from "@/features/settings/data";
@@ -52,21 +52,12 @@ export function HomeScreen() {
 	const watch = useMilestoneWatch();
 	const { month, day } = useToday();
 	const onThisDay = useView((db) => onThisDayView(db, month, day), [month, day]);
-	const checking = datasetStore.use((s) => s.status === "ready" && s.checking);
-	// The spinner shows only for a pull, not for the quiet check at launch.
-	const [pulled, setPulled] = useState(false);
 	const go = useGo();
 
 	const leader = view.inProgress ? "leader" : "champion";
 	return (
 		<TabScreen title="Pitwall" subtitle={`Formula 1 statistics, 1950–${view.lastYear}`}>
-			<Page
-				refreshing={pulled && checking}
-				onRefresh={() => {
-					setPulled(true);
-					void refreshDataset().finally(() => setPulled(false));
-				}}
-			>
+			<Page>
 				<Text variant="muted" className="px-4 pt-1">
 					{num(view.totals.races)} Grands Prix, {num(view.totals.drivers)} drivers and {view.totals.constructors} constructors across {view.totals.seasons} seasons. Browse the record books, play the daily games, or use the Lab to change results and see how history would have turned out.
 				</Text>

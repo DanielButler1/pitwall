@@ -5,7 +5,7 @@
 import { useRouter } from "expo-router";
 import { Search, Settings } from "lucide-react-native";
 import type { ReactNode } from "react";
-import { Pressable, RefreshControl, ScrollView, View, type ScrollViewProps } from "react-native";
+import { Pressable, ScrollView, View, type ScrollViewProps } from "react-native";
 import { IconButton, Header, ReadableWidth, Screen, Text } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { flagEmoji } from "@/lib/format";
@@ -79,17 +79,13 @@ export function Stat({ label, value, detail, onPress }: { label: string; value: 
 }
 
 /**
- * A screen's scrolling body: readable width on tablets, room under the last row, and optional
- * pull-to-refresh.
+ * A screen's scrolling body: readable width on tablets and room under the last row. (No
+ * pull-to-refresh: its spinner is the system's, and the app checks for new data by itself on
+ * launch and on return; Settings has a check button.)
  */
-export function Page({ children, refreshing, onRefresh, ...props }: ScrollViewProps & { children: ReactNode; refreshing?: boolean; onRefresh?: () => void }) {
+export function Page({ children, ...props }: ScrollViewProps & { children: ReactNode }) {
 	return (
-		<ScrollView
-			contentContainerClassName="pb-10"
-			keyboardShouldPersistTaps="handled"
-			refreshControl={onRefresh ? <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} /> : undefined}
-			{...props}
-		>
+		<ScrollView contentContainerClassName="pb-10" keyboardShouldPersistTaps="handled" {...props}>
 			<ReadableWidth>{children}</ReadableWidth>
 		</ScrollView>
 	);

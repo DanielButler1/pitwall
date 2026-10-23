@@ -86,8 +86,8 @@ export function SearchScreen() {
 
 	const q = query.trim();
 	return (
-		<View className="flex-1 bg-background">
-			<ReadableWidth className="flex-row items-center gap-2 px-4 pb-2 pt-4">
+		<View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+			<ReadableWidth className="flex-row items-center gap-2 px-4 pb-2 pt-2">
 				<SearchField value={query} onChangeText={setQuery} autoFocus placeholder="Drivers, teams, races, seasons…" className="flex-1" accessibilityLabel="Search Pitwall" />
 				<Pressable accessibilityRole="button" hitSlop={8} onPress={() => router.back()} className="h-11 justify-center px-1 active:opacity-60">
 					<Text variant="label" className="text-link">
