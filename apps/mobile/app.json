@@ -1,0 +1,82 @@
+{
+	"expo": {
+		"name": "Pitwall",
+		"slug": "pitwall",
+		"scheme": "pitwall",
+		"version": "0.1.0",
+		"platforms": ["android", "ios"],
+		"orientation": "default",
+		"userInterfaceStyle": "automatic",
+		"icon": "./assets/icon.png",
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "app.phaseo.pitwall"
+		},
+		"android": {
+			"package": "app.phaseo.pitwall",
+			"versionCode": 1,
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-foreground.png",
+				"monochromeImage": "./assets/adaptive-monochrome.png",
+				"backgroundColor": "#0a0a0a"
+			},
+			"softwareKeyboardLayoutMode": "resize",
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"autoVerify": false,
+					"data": [{ "scheme": "https", "host": "pitwall.phaseo.app" }],
+					"category": ["BROWSABLE", "DEFAULT"]
+				}
+			]
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"backgroundColor": "#ffffff",
+					"image": "./assets/splash-light.png",
+					"imageWidth": 220,
+					"dark": {
+						"backgroundColor": "#0a0a0a",
+						"image": "./assets/splash-dark.png"
+					}
+				}
+			],
+			"expo-sqlite",
+			[
+				"expo-font",
+				{
+					"android": {
+						"fonts": [
+							{
+								"fontFamily": "Montserrat",
+								"fontDefinitions": [
+									{ "path": "./assets/Montserrat-Regular.ttf", "weight": 400 },
+									{ "path": "./assets/Montserrat-SemiBold.ttf", "weight": 600 },
+									{ "path": "./assets/Montserrat-Bold.ttf", "weight": 700 }
+								]
+							}
+						]
+					},
+					"ios": {
+						"fonts": ["./assets/Montserrat-Regular.ttf", "./assets/Montserrat-SemiBold.ttf", "./assets/Montserrat-Bold.ttf"]
+					}
+				}
+			],
+			[
+				"expo-build-properties",
+				{
+					"android": { "enableMinifyInReleaseBuilds": true }
+				}
+			]
+		],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"extra": {
+			"pitwallOrigin": "https://pitwall.phaseo.app"
+		}
+	}
+}
