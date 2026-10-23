@@ -19,7 +19,8 @@ Browse every season, race, driver, constructor, circuit and record, then change 
 A pnpm workspace:
 
 - `apps/web`: the website (Next.js).
-- `packages/core`: the shared logic, plain TypeScript with no dependencies: the dataset, one view model per page, records, the diary, the games, the race simulator and universes. The website runs it on the server and in the browser; the tests live here.
+- `apps/mobile`: the Android app (Expo, React Native): every section of the website, built on the device from the same dataset and logic, working offline. See [apps/mobile/README.md](apps/mobile/README.md).
+- `packages/core`: the shared logic, plain TypeScript with no dependencies: the dataset, one view model per page, records, the diary, the games, the race simulator and universes. The website runs it on the server and in the browser, the app on the phone; the tests live here.
 
 ## Running it locally
 

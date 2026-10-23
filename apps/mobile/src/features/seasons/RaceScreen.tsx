@@ -1,14 +1,15 @@
 // One race: where and when, the summary, then the race, sprint and qualifying results, the lap
 // chart and the pit stops, one at a time. apps/web race.tsx in a phone form.
 
-import { useLocalSearchParams } from "expo-router";
-import { History, MapPin, Share2, Timer } from "lucide-react-native";
+import { useLocalSearchParams, useRouter, type Href } from "expo-router";
+import { FlaskConical, History, MapPin, Share2, Timer } from "lucide-react-native";
 import { memo, useState } from "react";
 import { Pressable, View } from "react-native";
 import { raceView, type RaceView, type ResultRow } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
 import { useUniverseBase, useView } from "@/data/dataset";
+import { createUniverse } from "@/features/lab/engine/store";
 import { cn } from "@/lib/cn";
 import { fmtDate, num } from "@/lib/format";
 import { haptic } from "@/lib/haptics";
@@ -230,7 +231,8 @@ export function RaceScreen() {
 				) : null}
 				<View className="mt-2">
 					<Row icon={MapPin} title={view.circuit.name} subtitle={[view.circuit.place, view.nation?.name].filter(Boolean).join(", ")} onPress={() => open(href.circuit(view.circuit.id))} />
-					<Row icon={History} title={`${view.grandPrix.name} history`} subtitle={`Every ${view.grandPrix.name}, year by year`} onPress={() => open(href.grandPrix(view.grandPrix.id))} last />
+					<Row icon={History} title={`${view.grandPrix.name} history`} subtitle={`Every ${view.grandPrix.name}, year by year`} onPress={() => open(href.grandPrix(view.grandPrix.id))} last={!view.completed} />
+					{view.completed ? <RewriteRow view={view} /> : null}
 				</View>
 
 				<StatGrid className="mt-3">
@@ -291,5 +293,22 @@ export function RaceScreen() {
 				</Section>
 			</Page>
 		</DetailScreen>
+	);
+}
+
+/** The website's "Rewrite this race": a new Lab universe, opened on this race's result editor. */
+function RewriteRow({ view }: { view: RaceView }) {
+	const router = useRouter();
+	return (
+		<Row
+			icon={FlaskConical}
+			title="Rewrite this race"
+			subtitle="Change the result in the Lab, then browse the history it makes"
+			onPress={() => {
+				const universe = createUniverse(`${view.race.year} ${view.grandPrix.name}, rewritten`);
+				router.push(`/(app)/(lab)/lab/${universe.id}/race-edit?race=${view.raceId}` as Href);
+			}}
+			last
+		/>
 	);
 }

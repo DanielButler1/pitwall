@@ -23,10 +23,10 @@ export function Screen({ children, className, edges = ["top"] }: { children: Rea
  */
 export function Header({ title, subtitle, back, large, right, className }: { title?: string; subtitle?: string | null; back?: boolean; large?: boolean; right?: ReactNode; className?: string }) {
 	const router = useRouter();
-	const showBack = back && router.canGoBack();
+	// Always offer the arrow on pushed screens: one opened from a link has nothing to go back to, so it goes Home.
 	return (
 		<View className={cn("flex-row items-center gap-1 px-2", large ? "min-h-14 pt-2" : "min-h-12", className)}>
-			{showBack ? <IconButton icon={ArrowLeft} label="Back" onPress={() => router.back()} /> : <View className="w-2" />}
+			{back ? <IconButton icon={ArrowLeft} label="Back" onPress={() => (router.canGoBack() ? router.back() : router.replace("/"))} /> : <View className="w-2" />}
 			<View className="flex-1">
 				{title ? <Text variant={large ? "title" : "heading"} numberOfLines={1}>{title}</Text> : null}
 				{subtitle ? <Text variant="caption" numberOfLines={1}>{subtitle}</Text> : null}
