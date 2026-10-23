@@ -126,7 +126,20 @@ function ChartTooltip({
 	);
 }
 
-function LapChart({ session, refs, grid, initial }: { session: Session; refs: Map<string, DriverRef>; grid: Map<string, number>; initial: string[] }) {
+function LapChart({
+	session,
+	refs,
+	grid,
+	finish,
+	initial,
+}: {
+	session: Session;
+	refs: Map<string, DriverRef>;
+	grid: Map<string, number>;
+	/** Classified result per driver ("1", "DNF"…). */
+	finish: Map<string, string>;
+	initial: string[];
+}) {
 	const [selected, setSelected] = useState<string[]>(initial.filter((d) => session.drivers.includes(d)).slice(0, HIGHLIGHT.length));
 	const [hovered, setHovered] = useState<string | null>(null);
 	const laps = Math.max(0, ...session.positions.map((p) => p.length));
@@ -154,6 +167,23 @@ function LapChart({ session, refs, grid, initial }: { session: Session; refs: Ma
 		setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id].slice(-HIGHLIGHT.length)));
 	// muted lines first, highlighted ones drawn on top
 	const drawOrder = [...session.drivers].sort((a, b) => Number(colorOf(a) != null) - Number(colorOf(b) != null));
+	const rows = useMemo(
+		() =>
+			session.drivers.map((id, i) => {
+				const pos = session.positions[i].filter((p): p is number => p != null);
+				const times = session.times[i].filter((t): t is number => t != null);
+				return {
+					id,
+					grid: grid.get(id) ?? null,
+					finish: finish.get(id) ?? (pos.length ? `P${pos[pos.length - 1]}` : "–"),
+					best: pos.length ? Math.min(...pos) : null,
+					led: pos.filter((p) => p === 1).length,
+					bestLap: times.length ? Math.min(...times) : null,
+				};
+			}),
+		[session, grid, finish],
+	);
+	const fastest = Math.min(...rows.map((r) => r.bestLap ?? Infinity));
 	const ticks = [1, ...Array.from({ length: Math.floor(field / 5) }, (_, i) => (i + 1) * 5).filter((t) => t <= field)];
 
 	return (
@@ -198,33 +228,57 @@ function LapChart({ session, refs, grid, initial }: { session: Session; refs: Ma
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
-			<div className="space-y-2">
-				<p className="text-muted-foreground text-xs">
-					Position at the end of each lap. Select up to {HIGHLIGHT.length} drivers to highlight them; names link to their pages.
-				</p>
-				<ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 max-sm:[&_.fi]:hidden! sm:flex sm:flex-wrap">
-					{session.drivers.map((id) => {
-						const ref = refs.get(id);
-						const i = selected.indexOf(id);
+			<p className="text-muted-foreground text-xs">
+				Position at the end of each lap. Select up to {HIGHLIGHT.length} drivers below to highlight them.
+			</p>
+			<TableCard>
+				<TableHeader>
+					<TableRow>
+						<TableHead className="w-10">
+							<span className="sr-only">Highlight</span>
+						</TableHead>
+						<TableHead>Driver</TableHead>
+						<TableHead className="text-right">Grid</TableHead>
+						<TableHead className="text-right">Finish</TableHead>
+						<TableHead className="text-right max-sm:hidden">Best</TableHead>
+						<TableHead className="text-right">Led</TableHead>
+						<TableHead className="text-right">Best lap</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{rows.map((r) => {
+						const ref = refs.get(r.id);
+						const i = selected.indexOf(r.id);
 						const color = i >= 0 ? HIGHLIGHT[i] : null;
 						return (
-							<li key={id} className="flex min-w-0 items-center gap-1" onMouseEnter={() => setHovered(id)} onMouseLeave={() => setHovered(null)}>
-								<Toggle
-									size="sm"
-									variant="outline"
-									pressed={i >= 0}
-									onPressedChange={() => toggle(id)}
-									aria-label={`${i >= 0 ? "Stop highlighting" : "Highlight"} ${ref?.name ?? id}`}
-									className="min-w-0 px-1.5"
-								>
-									<span className="inline-block h-1 w-4 rounded-full" style={{ background: color ?? "var(--muted-foreground)", opacity: color ? 1 : 0.4 }} />
-								</Toggle>
-								{ref ? <DriverLink driver={ref} className={cn("text-sm", color ? "font-medium" : "text-muted-foreground")} /> : <span className="text-sm">{id}</span>}
-							</li>
+							<TableRow key={r.id} onMouseEnter={() => setHovered(r.id)} onMouseLeave={() => setHovered(null)}>
+								<TableCell>
+									<Toggle
+										size="sm"
+										variant="outline"
+										pressed={i >= 0}
+										onPressedChange={() => toggle(r.id)}
+										aria-label={`${i >= 0 ? "Stop highlighting" : "Highlight"} ${ref?.name ?? r.id}`}
+										className="min-w-0 px-1.5"
+									>
+										<span className="inline-block h-1 w-4 rounded-full" style={{ background: color ?? "var(--muted-foreground)", opacity: color ? 1 : 0.4 }} />
+									</Toggle>
+								</TableCell>
+								<TableCell className="max-sm:[&_.fi]:hidden">
+									{ref ? <DriverLink driver={ref} className={cn(color && "font-medium")} /> : r.id}
+								</TableCell>
+								<TableCell className="text-muted-foreground text-right tabular-nums">{r.grid ?? "–"}</TableCell>
+								<TableCell className="text-right font-medium tabular-nums">{r.finish}</TableCell>
+								<TableCell className="text-muted-foreground text-right tabular-nums max-sm:hidden">{r.best ? `P${r.best}` : "–"}</TableCell>
+								<TableCell className="text-right tabular-nums">{r.led || <span className="text-muted-foreground">–</span>}</TableCell>
+								<TableCell className={cn("text-right whitespace-nowrap tabular-nums", r.bestLap != null && r.bestLap === fastest && "text-primary font-semibold")}>
+									{lapTime(r.bestLap) || "–"}
+								</TableCell>
+							</TableRow>
 						);
 					})}
-				</ul>
-			</div>
+				</TableBody>
+			</TableCard>
 		</div>
 	);
 }
@@ -234,8 +288,10 @@ export function LapChartPanel({
 	initial,
 	drivers,
 	grid,
+	finish,
 	sprintDrivers,
 	sprintGrid,
+	sprintFinish,
 	sprintAvailable,
 	highlight,
 }: {
@@ -243,8 +299,10 @@ export function LapChartPanel({
 	initial?: RaceLapFile | null;
 	drivers: DriverRef[];
 	grid: Record<string, number>;
+	finish: Record<string, string>;
 	sprintDrivers: DriverRef[];
 	sprintGrid: Record<string, number>;
+	sprintFinish: Record<string, string>;
 	sprintAvailable: boolean;
 	highlight: string[];
 }) {
@@ -253,6 +311,8 @@ export function LapChartPanel({
 	const refs = useMemo(() => new Map([...sprintDrivers, ...drivers].map((d) => [d.id, d])), [drivers, sprintDrivers]);
 	const raceGrid = useMemo(() => new Map(Object.entries(grid)), [grid]);
 	const sGrid = useMemo(() => new Map(Object.entries(sprintGrid)), [sprintGrid]);
+	const raceFinish = useMemo(() => new Map(Object.entries(finish)), [finish]);
+	const sFinish = useMemo(() => new Map(Object.entries(sprintFinish)), [sprintFinish]);
 	if (loading) return <Loading />;
 	if (!data?.drivers || !data.positions || !data.times) return <Missing what="lap chart" />;
 	const race: Session = { drivers: data.drivers, positions: data.positions, times: data.times };
@@ -266,9 +326,9 @@ export function LapChartPanel({
 				</ToggleGroup>
 			)}
 			{which === "sprint" && sprint ? (
-				<LapChart key="sprint" session={sprint} refs={refs} grid={sGrid} initial={highlight} />
+				<LapChart key="sprint" session={sprint} refs={refs} grid={sGrid} finish={sFinish} initial={highlight} />
 			) : (
-				<LapChart key="race" session={race} refs={refs} grid={raceGrid} initial={highlight} />
+				<LapChart key="race" session={race} refs={refs} grid={raceGrid} finish={raceFinish} initial={highlight} />
 			)}
 		</div>
 	);

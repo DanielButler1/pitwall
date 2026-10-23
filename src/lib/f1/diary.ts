@@ -200,3 +200,48 @@ export function diaryIndexView(db: Db): DiaryIndexView {
 }
 
 export { key as diaryKey };
+
+/* ---------------------------------------------------------- home teaser --- */
+
+export type OnThisDayItem =
+	| { kind: "race"; year: number; race: RaceRef; winner: DriverRef | null; winnerTeam: TeamRef | null }
+	| { kind: "title"; year: number; race: RaceRef; driver: DriverRef | null; team: TeamRef | null }
+	| { kind: "firstWin"; year: number; race: RaceRef; driver: DriverRef }
+	| { kind: "debut"; year: number; race: RaceRef; driver: DriverRef; wins: number; titles: number; starts: number }
+	| { kind: "birth"; year: number; driver: DriverRef; wins: number; titles: number; starts: number };
+
+export type OnThisDayView = { slug: string; label: string; items: OnThisDayItem[] };
+
+/**
+ * A few highlights of a date for the home page, picked in this order: titles decided, maiden
+ * wins, notable debuts and birthdays, then the races held on it; shown newest first.
+ */
+export function onThisDayView(db: Db, month: number, day: number, n = 6): OnThisDayView {
+	const v = diaryView(db, month, day);
+	const careers = driverCareers(db);
+	const notable = (p: DiaryPerson) => p.titles * 1000 + p.wins * 10 + Math.min(p.starts, 9);
+	const picks: OnThisDayItem[] = [
+		...v.titles.filter((t) => t.kind === "driver").map((t) => ({ kind: "title" as const, year: t.race.year, race: t.race, driver: t.driver, team: t.team })),
+		...v.firstWins.map((w) => ({ kind: "firstWin" as const, year: w.race.year, race: w.race, driver: w.driver })),
+		...[...v.births]
+			.filter((p) => p.starts > 0)
+			.sort((a, b) => notable(b) - notable(a))
+			.slice(0, 2)
+			.map((p) => ({ kind: "birth" as const, year: p.year, driver: p.driver, wins: p.wins, titles: p.titles, starts: p.starts })),
+		...v.debuts
+			.map((d) => ({ d, c: careers.get(d.driver.id) }))
+			.filter(({ c }) => c && (c.wins > 0 || c.podiums >= 5))
+			.sort((a, b) => b.c!.titles * 1000 + b.c!.wins - (a.c!.titles * 1000 + a.c!.wins))
+			.slice(0, 2)
+			.map(({ d, c }) => ({ kind: "debut" as const, year: d.race.year, race: d.race, driver: d.driver, wins: c!.wins, titles: c!.titles, starts: c!.starts })),
+		...v.races
+			.filter((r) => !r.upcoming)
+			.slice(0, n)
+			.map((r) => ({ kind: "race" as const, year: r.race.year, race: r.race, winner: r.winner, winnerTeam: r.winnerTeam })),
+	];
+	// a title decided at a race already says who won it
+	const titleRaces = new Set(picks.filter((p) => p.kind === "title").map((p) => `${p.year}`));
+	const items = picks.filter((p) => !(p.kind === "race" && titleRaces.has(`${p.year}`)));
+	const shown = items.slice(0, n).sort((a, b) => b.year - a.year);
+	return { slug: diarySlug(month, day), label: v.label, items: shown };
+}

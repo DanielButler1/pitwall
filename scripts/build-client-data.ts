@@ -121,3 +121,26 @@ for (const [file, data] of [
 	writeFileSync(join(dir, "season-guess.json"), json);
 	console.log(`season-guess.json: ${(json.length / 1024).toFixed(0)} KB`);
 }
+
+// --- "All results" on driver and constructor pages: one file each, fetched when the list is shown ---
+{
+	const { entityResults } = await import("../src/lib/f1/entity-results.ts");
+	let files = 0;
+	let bytes = 0;
+	for (const [kind, ids] of [
+		["driver", db.resultsByDriver.keys()],
+		["team", db.resultsByConstructor.keys()],
+	] as const) {
+		const out = join(dir, "results", kind);
+		mkdirSync(out, { recursive: true });
+		for (const id of ids) {
+			const json = JSON.stringify(entityResults(db, kind, id));
+			writeFileSync(join(out, `${id}.json`), json);
+			files++;
+			bytes += json.length;
+		}
+	}
+	// written last, so its age tells ensure-client-data.mjs whether the set is current
+	writeFileSync(join(dir, "results", "index.json"), JSON.stringify({ files }));
+	console.log(`results/: ${files} files, ${(bytes / 1024).toFixed(0)} KB`);
+}

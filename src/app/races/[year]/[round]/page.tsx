@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { RacePage } from "@/components/pages/race";
-import { getDb, getRaceLaps } from "@/lib/f1/server";
+import { getDb } from "@/lib/f1/server";
 import { raceView } from "@/lib/f1/views";
-import { staticParams } from "@/lib/f1/static-params";
+import { prebuild } from "@/lib/f1/static-params";
 
 type Props = { params: Promise<{ year: string; round: string }> };
 
 export function generateStaticParams() {
-	return staticParams.races();
+	return prebuild.races();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,6 +21,6 @@ export default async function Page({ params }: Props) {
 	const { year, round } = await params;
 	const view = raceView(getDb(), Number(year), Number(round));
 	if (!view) notFound();
-	const laps = view.lapData ? getRaceLaps(view.raceId) : null;
-	return <RacePage view={view} laps={laps} labHref={`/lab?race=${view.raceId}`} />;
+	// the lap chart and pit stops fetch /data/laps/<raceId>.json when their tab opens, keeping the page small
+	return <RacePage view={view} labHref={`/lab?race=${view.raceId}`} />;
 }
