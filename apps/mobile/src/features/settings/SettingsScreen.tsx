@@ -2,9 +2,9 @@ import Constants from "expo-constants";
 import * as WebBrowser from "expo-web-browser";
 import { Database, Download, ExternalLink, Globe, RefreshCw, Scale, Vibrate } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { Page, DetailScreen } from "@/components/f1";
-import { Button, Fact, Icon, Row, Section, Segmented, Text } from "@/components/ui";
+import { Button, confirm, Fact, Icon, Row, Section, Segmented, Text } from "@/components/ui";
 import { Switch } from "@/components/ui/switch";
 import { datasetStore, refreshDataset, useRealDb } from "@/data/dataset";
 import { ORIGIN } from "@/lib/config";
@@ -101,11 +101,15 @@ function DataSection() {
 		setNow(Date.now());
 	};
 
-	const again = () =>
-		Alert.alert("Download the data again?", "The saved copy is deleted and the whole history downloaded again (about 1 MB). You'll need a connection.", [
-			{ text: "Cancel", style: "cancel" },
-			{ text: "Download", style: "destructive", onPress: () => void downloadAgain() },
-		]);
+	const again = async () => {
+		const sure = await confirm({
+			title: "Download the data again?",
+			body: "The saved copy is deleted and the whole history downloaded again (about 1 MB). You'll need a connection.",
+			confirmLabel: "Download",
+			destructive: true,
+		});
+		if (sure) void downloadAgain();
+	};
 
 	return (
 		<Section title="Data" description="The whole history is on this phone, so the app works offline.">

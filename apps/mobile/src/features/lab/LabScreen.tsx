@@ -2,10 +2,10 @@
 
 import { FileInput, Inbox, Lightbulb, Orbit, Plus } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import type { Change } from "@pitwall/core/universe/apply";
 import { Page, TabScreen } from "@/components/f1";
-import { Badge, Button, IconButton, Row, Section, Text, TextField } from "@/components/ui";
+import { alert, Badge, Button, IconButton, Row, Section, Text, TextField } from "@/components/ui";
 import { useRealDb } from "@/data/dataset";
 import { fmtDate, plural } from "@/lib/format";
 import { haptic } from "@/lib/haptics";
@@ -74,7 +74,7 @@ export function LabScreen() {
 			open(`/lab/${id}`);
 		} catch (e) {
 			haptic("error");
-			Alert.alert("Couldn’t import that", (e as Error).message);
+			alert("Couldn’t import that", (e as Error).message);
 		}
 	};
 	const universeRow = (u: StoredUniverse, i: number, all: StoredUniverse[]) => (

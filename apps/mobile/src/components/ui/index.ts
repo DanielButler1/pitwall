@@ -6,4 +6,5 @@ export { Divider, Fact, Row, Section } from "./list";
 export { Header, ReadableWidth, Screen } from "./screen";
 export { Segmented } from "./segmented";
 export { EmptyState, ErrorState, LoadingState, Skeleton, SkeletonRows } from "./states";
+export { alert, confirm, FeedbackHost, toast, type DialogAction } from "./feedback";
 export { Text } from "./text";

@@ -5,10 +5,10 @@
 import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 import { BookmarkPlus, Copy, FileJson, GitCompareArrows, LogOut, Orbit, Share2, Trash2 } from "lucide-react-native";
 import { useMemo, useState } from "react";
-import { Alert, Share, View } from "react-native";
+import { Share, View } from "react-native";
 import { championChanges, describeChange } from "@pitwall/core/universe/apply";
 import { DetailScreen, Page, Stat, StatGrid } from "@/components/f1";
-import { Button, EmptyState, IconButton, Row, Section, Text, TextField } from "@/components/ui";
+import { alert, Button, confirm, EmptyState, IconButton, Row, Section, Text, TextField, toast } from "@/components/ui";
 import { useRealDb } from "@/data/dataset";
 import { plural } from "@/lib/format";
 import { haptic } from "@/lib/haptics";
@@ -59,24 +59,24 @@ export function UniverseScreen() {
 	const share = async () => {
 		try {
 			const { long } = await shareUniverse(universe);
-			if (long) Alert.alert("It’s a long link", "Some chat apps and email clients cut long links off. If it doesn’t open, send the JSON instead (More, Copy JSON).");
+			if (long) alert("It’s a long link", "Some chat apps and email clients cut long links off. If it doesn’t open, send the JSON instead (More, Copy JSON).");
 		} catch (e) {
-			Alert.alert("Couldn’t share this universe", (e as Error).message);
+			alert("Couldn’t share this universe", (e as Error).message);
 		}
 	};
-	const confirmDelete = () =>
-		Alert.alert(`Delete “${universe.name}”?`, `This removes the universe and its ${plural(universe.changes.length, "change")} from this phone. Share links you have sent keep working.`, [
-			{ text: "Cancel", style: "cancel" },
-			{
-				text: "Delete",
-				style: "destructive",
-				onPress: () => {
-					haptic("success");
-					router.back();
-					deleteUniverse(universe.id);
-				},
-			},
-		]);
+	const confirmDelete = async () => {
+		const sure = await confirm({
+			title: `Delete “${universe.name}”?`,
+			body: `This removes the universe and its ${plural(universe.changes.length, "change")} from this phone. Share links you have sent keep working.`,
+			confirmLabel: "Delete",
+			destructive: true,
+		});
+		if (!sure) return;
+		haptic("success");
+		router.back();
+		deleteUniverse(universe.id);
+		toast(`Deleted “${universe.name}”`);
+	};
 	const impactShown = showAllImpact ? impact : impact.slice(0, 12);
 
 	return (
@@ -85,7 +85,7 @@ export function UniverseScreen() {
 				{universe.shared ? (
 					<View className="mx-4 mt-2 gap-3">
 						<Text variant="muted">Someone shared this universe with you. Save it to keep it with your own, or edit it to make it yours.</Text>
-						<Button label="Save to my Lab" icon={BookmarkPlus} variant="outline" onPress={() => (keepShared(universe.id), haptic("success"))} />
+						<Button label="Save to my Lab" icon={BookmarkPlus} variant="outline" onPress={() => (keepShared(universe.id), haptic("success"), toast("Saved to your Lab"))} />
 					</View>
 				) : null}
 				<View className="mt-3 px-4">
@@ -195,6 +195,7 @@ export function UniverseScreen() {
 							if (copy) {
 								haptic("success");
 								router.replace(`/(app)/${group}/lab/${copy.id}` as Href);
+								toast(`Duplicated as “${copy.name}”`);
 							}
 						}}
 					/>

@@ -10,6 +10,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useCSSVariable } from "uniwind";
 import { setGameStorage } from "@pitwall/core/game/daily";
 import { BootScreen } from "@/components/shell/BootScreen";
+import { FeedbackHost } from "@/components/ui";
 import { bootDataset, datasetStore, refreshDataset } from "@/data/dataset";
 import { gameStorage } from "@/lib/storage";
 import { AppearanceProvider, useAppearance } from "@/providers/AppearanceProvider";
@@ -80,6 +81,7 @@ function RootNavigator() {
 					<Stack.Screen name="settings" />
 				</Stack>
 			)}
+			<FeedbackHost />
 		</ThemeProvider>
 	);
 }
