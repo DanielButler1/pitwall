@@ -1,0 +1,20 @@
+{
+	"name": "@pitwall/core",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Pitwall's shared logic: the dataset, every page's view, records, the games, the simulator and universes. Plain TypeScript with no dependencies, used by the web app and the mobile app.",
+	"license": "PolyForm-Noncommercial-1.0.0",
+	"type": "module",
+	"exports": {
+		"./f1/records": "./src/f1/records/index.ts",
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
+	},
+	"devDependencies": {
+		"@types/node": "^26",
+		"typescript": "^6"
+	}
+}
