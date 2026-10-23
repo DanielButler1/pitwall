@@ -10,6 +10,7 @@ import {
 	constructorCareers,
 	driverCareers,
 	poleOf,
+	rulesFor,
 	seasonStandings,
 	standingsAfter,
 	winnerOf,
@@ -116,6 +117,8 @@ function spans(races: Race[], key: (r: Race) => string) {
 
 /* ----------------------------------------------------------------- home --- */
 
+export type HomeResult = { position: string; driver: DriverRef; team: TeamRef; time: string | null; points: number; grid: number | null };
+
 export type HomeView = {
 	lastYear: number;
 	/** The latest season still has rounds to run: champion fields hold the current leaders. */
@@ -126,11 +129,86 @@ export type HomeView = {
 	champion: { driver: DriverRef; points: number } | null;
 	constructorChampion: { team: TeamRef; points: number } | null;
 	standings: SeasonView["driverStandings"];
-	latestRace: { race: RaceRef; circuit: CircuitRef; podium: { driver: DriverRef; team: TeamRef; time: string | null }[] } | null;
+	/** The latest race: its top ten (the winner's race time, then gaps), pole and fastest lap. */
+	latestRace: { race: RaceRef; circuit: CircuitRef; top: HomeResult[]; pole: DriverRef | null; fastestLap: { driver: DriverRef; time: string | null } | null } | null;
 	topWinners: { driver: DriverRef; value: number }[];
-	/** The next race to be run, whether later this season or next season. */
-	nextRace: { race: RaceRef; circuit: CircuitRef; round: number; of: number } | null;
+	topChampions: { driver: DriverRef; titles: number; wins: number }[];
+	/** The next race to be run, whether later this season or next season, with its Grand Prix's past. */
+	nextRace: {
+		race: RaceRef;
+		circuit: CircuitRef;
+		grandPrix: GrandPrixRef;
+		round: number;
+		of: number;
+		sprint: boolean;
+		/** Earlier editions of the Grand Prix, its last winner and its most successful driver. */
+		editions: number;
+		lastWinner: { driver: DriverRef; team: TeamRef; year: number } | null;
+		mostWins: { driver: DriverRef; wins: number } | null;
+	} | null;
+	constructorStandings: SeasonView["constructorStandings"];
+	/** While the season runs: both title fights, what is still to play for and the winners so far. */
+	titleFight: {
+		roundsLeft: number;
+		sprintsLeft: number;
+		drivers: TitleFight<DriverRef>;
+		constructors: TitleFight<TeamRef> | null;
+		winners: { driver: DriverRef; wins: number }[];
+	} | null;
+	/** How many of each thing the site has pages for (the Explore links). */
+	counts: { circuits: number; grandsPrix: number; engines: number; nations: number };
 };
+
+export type TitleFight<R> = {
+	leader: R;
+	second: R | null;
+	gap: number;
+	/** Most points one driver (or constructor) can still score. */
+	pointsLeft: number;
+	/** Everyone still able to finish on top, the leader first. */
+	contenders: { who: R; points: number; behind: number }[];
+	/** The leader is champion after the next race by outscoring the runner-up by this much (null: not yet possible). */
+	clinchMargin: number | null;
+};
+
+/**
+ * Most points one driver (or, with `team`, one two-car constructor) can still score in these
+ * races under the season's rules; null when dropped results or best-car-only scoring make it unclear.
+ */
+function pointsLeft(db: Db, year: number, races: Race[], team = false): number | null {
+	const rules = rulesFor(db, year);
+	const s = rules.system;
+	if (s.bestResults || (team ? rules.constructorDrop.type !== "all" || rules.constructorBestCarOnly || !rules.hasConstructorsChampionship : rules.driverDrop.type !== "all")) return null;
+	const cars = team ? 2 : 1;
+	const top = (table: number[] | undefined) => (table ?? []).slice(0, cars).reduce((a, b) => a + b, 0);
+	const all = db.racesByYear.get(year) ?? [];
+	const final = all[all.length - 1];
+	let total = 0;
+	for (const r of races) {
+		const race = top(s.race) + (team && !rules.constructorFastestLap ? 0 : (s.fastestLap?.points ?? 0)) + (s.pole ?? 0);
+		total += race * ((rules.doublePointsFinalRace || s.doubleFinal) && r.id === final?.id ? 2 : 1);
+		if (r.hasSprint) total += top(s.sprint);
+	}
+	return total;
+}
+
+/** The fight for one championship, from its standings and the races still to run. */
+function titleFight<R>(rows: StandingRow[], left: number | null, nextLeft: number, toRun: number, ref: (id: string) => R): TitleFight<R> | null {
+	const table = rows.filter((r) => r.position != null).sort((a, b) => a.position! - b.position!);
+	if (left == null || !table.length) return null;
+	const [first, second] = table;
+	const gap = first.points - (second?.points ?? 0);
+	// after the next race, the runner-up could still score everything that remains
+	const need = left - nextLeft - gap + 1;
+	return {
+		leader: ref(first.id),
+		second: second ? ref(second.id) : null,
+		gap: r2(gap),
+		pointsLeft: left,
+		contenders: table.filter((r) => r.points + left >= first.points).map((r) => ({ who: ref(r.id), points: r2(r.points), behind: r2(first.points - r.points) })),
+		clinchMargin: toRun > 1 && need <= nextLeft ? Math.max(need, 0) : null,
+	};
+}
 
 export function homeView(db: Db): HomeView {
 	const lastYear = db.meta.lastCompletedYear;
@@ -141,9 +219,68 @@ export function homeView(db: Db): HomeView {
 	const next = db.races.find((r) => r.year >= lastYear && !db.resultsByRace.has(r.id));
 	const champion = season.driverStandings[0];
 	const cChampion = season.constructorStandings[0];
+	const inProgress = seasonInProgress(db, lastYear);
+
+	const lastResults = last ? (db.resultsByRace.get(last.id) ?? []) : [];
+	const fastest = lastResults.find((r) => r.fastestLap);
+	const pole = last ? poleOf(db, last.id) : undefined;
+
+	let nextRace: HomeView["nextRace"] = null;
+	if (next) {
+		const past = db.races.filter((r) => r.grandPrixId === next.grandPrixId && db.resultsByRace.has(r.id)).sort((a, b) => a.date.localeCompare(b.date));
+		const wins = new Map<string, number>();
+		let lastWinner: NonNullable<HomeView["nextRace"]>["lastWinner"] = null;
+		for (const r of past) {
+			const w = winnerOf(db, r.id);
+			if (!w) continue;
+			wins.set(w.driverId, (wins.get(w.driverId) ?? 0) + 1);
+			lastWinner = { driver: driverRef(db, w.driverId), team: teamRef(db, w.constructorId), year: r.year };
+		}
+		const best = [...wins].sort((a, b) => b[1] - a[1])[0];
+		nextRace = {
+			race: raceRef(db, next),
+			circuit: circuitRef(db, next.circuitId),
+			grandPrix: grandPrixRef(db, next.grandPrixId),
+			round: next.round,
+			of: db.racesByYear.get(next.year)!.length,
+			sprint: next.hasSprint,
+			editions: past.length,
+			lastWinner,
+			mostWins: best && best[1] > 1 ? { driver: driverRef(db, best[0]), wins: best[1] } : null,
+		};
+	}
+
+	let fight: HomeView["titleFight"] = null;
+	const toRun = (db.racesByYear.get(lastYear) ?? []).filter((r) => !db.resultsByRace.has(r.id));
+	if (inProgress && toRun.length) {
+		const standings = seasonStandings(db, lastYear);
+		const fightOf = (team: boolean) => {
+			const rows = team ? standings.constructors : standings.drivers;
+			const left = pointsLeft(db, lastYear, toRun, team);
+			const nextLeft = pointsLeft(db, lastYear, toRun.slice(0, 1), team) ?? 0;
+			return team
+				? titleFight(rows, left, nextLeft, toRun.length, (id) => teamRef(db, id))
+				: titleFight(rows, left, nextLeft, toRun.length, (id) => driverRef(db, id));
+		};
+		const drivers = fightOf(false) as TitleFight<DriverRef> | null;
+		const wins = new Map<string, number>();
+		for (const r of races) {
+			const w = winnerOf(db, r.id);
+			if (w) wins.set(w.driverId, (wins.get(w.driverId) ?? 0) + 1);
+		}
+		if (drivers)
+			fight = {
+				roundsLeft: toRun.length,
+				sprintsLeft: toRun.filter((r) => r.hasSprint).length,
+				drivers,
+				constructors: fightOf(true) as TitleFight<TeamRef> | null,
+				winners: [...wins].sort((a, b) => b[1] - a[1]).map(([id, n]) => ({ driver: driverRef(db, id), wins: n })),
+			};
+	}
+
 	return {
 		lastYear,
-		inProgress: seasonInProgress(db, lastYear),
+		inProgress,
 		completedRounds: races.length,
 		totalRounds: db.racesByYear.get(lastYear)?.length ?? 0,
 		totals: {
@@ -160,18 +297,38 @@ export function homeView(db: Db): HomeView {
 			? {
 					race: raceRef(db, last),
 					circuit: circuitRef(db, last.circuitId),
-					podium: (db.resultsByRace.get(last.id) ?? [])
-						.filter((r) => r.position != null && r.position <= 3)
-						.map((r) => ({ driver: driverRef(db, r.driverId), team: teamRef(db, r.constructorId), time: r.time ?? r.gap })),
+					top: lastResults
+						.filter((r) => r.position != null && r.position <= 10)
+						.map((r) => ({
+							position: r.positionText,
+							driver: driverRef(db, r.driverId),
+							team: teamRef(db, r.constructorId),
+							time: r.position === 1 ? r.time : (r.gap ?? r.time),
+							points: r2(r.points),
+							grid: r.grid,
+						})),
+					pole: pole ? driverRef(db, pole.driverId) : null,
+					fastestLap: fastest ? { driver: driverRef(db, fastest.driverId), time: db.fastestLaps.find((f) => f.raceId === last.id)?.time ?? null } : null,
 				}
 			: null,
 		topWinners: [...careers.values()]
 			.sort((a, b) => b.wins - a.wins)
 			.slice(0, 10)
 			.map((c) => ({ driver: driverRef(db, c.id), value: c.wins })),
-		nextRace: next
-			? { race: raceRef(db, next), circuit: circuitRef(db, next.circuitId), round: next.round, of: db.racesByYear.get(next.year)!.length }
-			: null,
+		topChampions: [...careers.values()]
+			.filter((c) => c.titles > 0)
+			.sort((a, b) => b.titles - a.titles || b.wins - a.wins)
+			.slice(0, 10)
+			.map((c) => ({ driver: driverRef(db, c.id), titles: c.titles, wins: c.wins })),
+		nextRace,
+		constructorStandings: season.constructorStandings.slice(0, 10),
+		titleFight: fight,
+		counts: {
+			circuits: new Set(db.races.map((r) => r.circuitId)).size,
+			grandsPrix: new Set(db.races.map((r) => r.grandPrixId)).size,
+			engines: new Set(db.results.map((r) => r.engineId)).size,
+			nations: new Set([...db.resultsByDriver.keys()].map((id) => db.drivers.get(id)?.nationality)).size,
+		},
 	};
 }
 

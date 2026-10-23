@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { CircuitPage } from "@/components/pages/profiles";
 import { getDb } from "@/lib/f1/server";
 import { circuitView } from "@/lib/f1/views";
-import { staticParams } from "@/lib/f1/static-params";
+import { prebuild } from "@/lib/f1/static-params";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-	return staticParams.circuits();
+	return prebuild.none();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { DiaryPage } from "@/components/pages/diary";
 import { MONTHS, diaryView, parseDiarySlug } from "@/lib/f1/diary";
 import { getDb } from "@/lib/f1/server";
-import { staticParams } from "@/lib/f1/static-params";
+import { prebuild } from "@/lib/f1/static-params";
 
 type Props = { params: Promise<{ date: string }> };
 
 export function generateStaticParams() {
-	return staticParams.diary();
+	return prebuild.none();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { RecordCategoryPage } from "@/components/pages/records";
 import { findRecord, recordCategoryView } from "@/lib/f1/records";
 import { getDb } from "@/lib/f1/server";
-import { staticParams } from "@/lib/f1/static-params";
+import { prebuild } from "@/lib/f1/static-params";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
 export function generateStaticParams() {
-	return staticParams.records();
+	return prebuild.none();
 }
 
 const idOf = (slug: string[]) => slug.map(decodeURIComponent).join("/");

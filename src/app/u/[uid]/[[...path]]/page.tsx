@@ -17,7 +17,7 @@ import { CircuitPage, CircuitsPage, ConstructorPage, DriverPage } from "@/compon
 import { GrandPrixPage, GrandsPrixPage, NationPage, NationsPage, SupplierPage, SuppliersPage } from "@/components/pages/entities";
 import { RecordCategoryPage, RecordsPage } from "@/components/pages/records";
 import { DiaryIndexPage, DiaryPage } from "@/components/pages/diary";
-import { diaryIndexView, diaryView, parseDiarySlug } from "@/lib/f1/diary";
+import { diaryIndexView, diaryView, onThisDayView, parseDiarySlug } from "@/lib/f1/diary";
 import { recordCategoryView, recordsIndexView } from "@/lib/f1/records";
 import { UniverseDiffPage } from "@/components/pages/universe-diff";
 import { PointsPage } from "@/components/pages/points";
@@ -29,6 +29,7 @@ import { milestonesView, milestoneWatch } from "@/lib/f1/milestones";
 import { seasonProgression } from "@/lib/f1/progression";
 import { driverTeammatesView, teammatePairView } from "@/lib/f1/teammates";
 import { compareQuery, compareView } from "@/lib/f1/compare";
+import { entityResults, unpackResults } from "@/lib/f1/entity-results";
 import { copyShareLink, saveShared, ShareButton, SharedActions } from "@/components/lab/share-button";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -45,7 +46,7 @@ function render(db: Db, base: Db, path: string[], uid: string, name: string, sea
 	const [section, a, b] = path;
 	switch (section) {
 		case undefined:
-			return <HomePage view={v.homeView(db)} universeName={name} milestones={milestoneWatch(db)} />;
+			return <HomePage view={v.homeView(db)} universeName={name} milestones={milestoneWatch(db)} onThisDay={onThisDayView(db, new Date().getMonth() + 1, new Date().getDate())} />;
 		case "seasons": {
 			if (!a) return <SeasonsPage view={v.seasonsView(db, base)} />;
 			const view = v.seasonView(db, Number(a), base);
@@ -58,7 +59,7 @@ function render(db: Db, base: Db, path: string[], uid: string, name: string, sea
 		case "drivers": {
 			if (!a) return <DriversPage view={v.driversView(db)} />;
 			const view = v.driverView(db, decodeURIComponent(a), base);
-			return view && <DriverPage view={view} teammates={driverTeammatesView(db, decodeURIComponent(a))} />;
+			return view && <DriverPage view={view} teammates={driverTeammatesView(db, decodeURIComponent(a))} results={unpackResults(entityResults(db, "driver", view.driver.id))} />;
 		}
 		case "teammates": {
 			const view = a && b ? teammatePairView(db, decodeURIComponent(a), decodeURIComponent(b), base) : null;
@@ -75,7 +76,7 @@ function render(db: Db, base: Db, path: string[], uid: string, name: string, sea
 		case "constructors": {
 			if (!a) return <ConstructorsPage view={v.constructorsView(db)} />;
 			const view = v.constructorView(db, decodeURIComponent(a), base);
-			return view && <ConstructorPage view={view} />;
+			return view && <ConstructorPage view={view} results={unpackResults(entityResults(db, "team", view.team.id))} />;
 		}
 		case "circuits": {
 			if (!a) return <CircuitsPage view={v.circuitsView(db)} />;

@@ -4,12 +4,12 @@ import { SeasonPage } from "@/components/pages/season";
 import { seasonProgression } from "@/lib/f1/progression";
 import { getDb } from "@/lib/f1/server";
 import { seasonView } from "@/lib/f1/views";
-import { staticParams } from "@/lib/f1/static-params";
+import { prebuild } from "@/lib/f1/static-params";
 
 type Props = { params: Promise<{ year: string }> };
 
 export function generateStaticParams() {
-	return staticParams.seasons();
+	return prebuild.seasons();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

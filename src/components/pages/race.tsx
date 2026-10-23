@@ -16,17 +16,16 @@ import {
 	Pos,
 	RealDiff,
 	Section,
-	StatCard,
 	TableCard,
 	TeamLink,
 	TyreLink,
-	fmtDate,
 	href,
 	num,
 	DateLink,
 } from "../f1";
 import { ULink } from "../universe-link";
 import { Badge } from "../ui/badge";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { buttonVariants } from "../ui/button";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
@@ -176,13 +175,14 @@ function QualifyingTable({ view }: { view: RaceView }) {
 }
 
 const gridOf = (rows: ResultRow[]) => Object.fromEntries(rows.filter((r) => r.grid != null && r.grid > 0).map((r) => [r.driver.id, r.grid!]));
+const finishOf = (rows: ResultRow[]) => Object.fromEntries(rows.map((r) => [r.driver.id, r.position]));
 const spanText = (spans: [number, number][]) => spans.map(([a, b]) => (a === b ? String(a) : `${a}–${b}`)).join(", ");
 
 /** Who led which laps (sidebar). */
 function LapsLed({ view }: { view: RaceView }) {
 	if (!view.lapsLed?.length) return null;
 	return (
-		<Section title="Laps led" description={`Lap-by-lap data from Jolpica${view.lapData?.dumpDate ? ` (dump of ${fmtDate(view.lapData.dumpDate)})` : ""}.`}>
+		<Section title="Laps led">
 			<TableCard>
 				<TableBody>
 					{view.lapsLed.map((l) => (
@@ -200,6 +200,65 @@ function LapsLed({ view }: { view: RaceView }) {
 	);
 }
 
+/** Context for the race result: who led, and the championships after the round. */
+function RaceSidebar({ view }: { view: RaceView }) {
+	return (
+		<div className="space-y-8">
+			<LapsLed view={view} />
+			<Section title="Drivers after this round">
+				<TableCard>
+					<TableBody>
+						{view.standingsAfter.drivers.map((s) => (
+							<TableRow key={s.driver.id}>
+								<TableCell className="w-10">
+									<Pos text={s.position} />
+								</TableCell>
+								<TableCell>
+									<DriverLink driver={s.driver} />
+								</TableCell>
+								<TableCell className="text-right font-semibold tabular-nums">{num(s.points)}</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</TableCard>
+			</Section>
+			{view.standingsAfter.constructors.length > 0 && view.race.year >= 1958 && (
+				<Section title="Constructors after this round">
+					<TableCard>
+						<TableBody>
+							{view.standingsAfter.constructors.map((s, i) => (
+								<TableRow key={s.team.id + i}>
+									<TableCell className="w-10">
+										<Pos text={s.position} />
+									</TableCell>
+									<TableCell>
+										<TeamLink team={s.team} flag />
+									</TableCell>
+									<TableCell className="text-right font-semibold tabular-nums">{num(s.points)}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</TableCard>
+				</Section>
+			)}
+		</div>
+	);
+}
+
+/** A summary card: label, value and a detail line pinned to the bottom, so the four line up. */
+function RaceStat({ label, value, detail }: { label: string; value: React.ReactNode; detail?: React.ReactNode }) {
+	return (
+		<Card size="sm">
+			<CardHeader className="flex h-full flex-col gap-1">
+				<CardDescription>{label}</CardDescription>
+				{/* long names wrap; the detail line stays on the card's bottom edge so the four still line up */}
+				<CardTitle className="text-lg leading-snug font-semibold tabular-nums break-words sm:text-xl [&_.truncate]:overflow-visible [&_.truncate]:whitespace-normal">{value}</CardTitle>
+				<div className="text-muted-foreground mt-auto min-h-4 truncate text-xs tabular-nums">{detail || "\u00a0"}</div>
+			</CardHeader>
+		</Card>
+	);
+}
+
 /**
  * `laps`: the race's lap file when the server already read it (null: none);
  * leave it undefined in the browser and the lap tabs fetch it on demand.
@@ -208,6 +267,7 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 	const winner = view.results.find((r) => r.position === "1");
 	const lapData = view.lapData && laps !== null ? view.lapData : null;
 	const lapDrivers = view.results.map((r) => r.driver);
+	const classified = view.results.filter((r) => /^\d+$/.test(r.position)).length;
 	return (
 		<Page>
 			<PageHeader
@@ -292,137 +352,87 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 			</PageHeader>
 
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-				<StatCard
+				<RaceStat
 					label="Winner"
-					value={
-						winner ? (
-							<>
-								<DriverLink driver={winner.driver} flag={false} className="sm:hidden" />
-								<DriverLink driver={winner.driver} className="max-sm:hidden" />
-							</>
-						) : (
-							"–"
-						)
-					}
+					value={winner ? <DriverLink driver={winner.driver} flag={false} /> : "–"}
+					detail={winner && <TeamLink team={winner.team} />}
 				/>
-				<StatCard
+				<RaceStat
 					label="Fastest lap"
-					value={
-						view.fastestLap ? (
-							<span className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-								<DriverLink driver={view.fastestLap.driver} flag={false} className="min-w-0" />
-								{view.fastestLap.time && <span className="text-muted-foreground text-base whitespace-nowrap">{view.fastestLap.time}</span>}
-							</span>
-						) : (
-							"–"
-						)
+					value={view.fastestLap ? <DriverLink driver={view.fastestLap.driver} flag={false} /> : "–"}
+					detail={
+						view.fastestLap &&
+						[view.fastestLap.time, view.fastestLap.lap != null && `lap ${view.fastestLap.lap}`].filter(Boolean).join(" · ")
 					}
 				/>
-				<StatCard label="Laps" value={view.laps} />
-				<StatCard label="Distance" value={`${num(view.distance)} km`} />
+				<RaceStat label="Laps" value={view.laps} detail={view.completed && `${classified} classified`} />
+				<RaceStat label="Distance" value={`${num(view.distance)} km`} detail={view.laps > 0 && `${num(Math.round((view.distance / view.laps) * 1000) / 1000)} km a lap`} />
 			</div>
 
 			{!view.completed ? (
 				<p className="text-muted-foreground text-sm">This race hasn&apos;t been run yet.</p>
 			) : (
-				<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
-					<Tabs defaultValue="race" className="min-w-0 gap-4">
-						<TabsList variant="line">
-							<TabsTrigger value="race">Race</TabsTrigger>
-							{view.sprint.length > 0 && <TabsTrigger value="sprint">Sprint</TabsTrigger>}
-							{view.qualifying.length > 0 && (
-								<TabsTrigger value="qualifying">
-									<span className="sm:hidden">Quali</span>
-									<span className="hidden sm:inline">Qualifying</span>
-								</TabsTrigger>
-							)}
-							{lapData?.chart && (
-								<TabsTrigger value="laps">
-									<span className="sm:hidden">Laps</span>
-									<span className="hidden sm:inline">Lap chart</span>
-								</TabsTrigger>
-							)}
-							{lapData?.pitStops && (laps === undefined || !!laps?.pitStops?.length) && (
-								<TabsTrigger value="pits">
-									<span className="sm:hidden">Pits</span>
-									<span className="hidden sm:inline">Pit stops</span>
-								</TabsTrigger>
-							)}
-						</TabsList>
-						<TabsContent value="race">
-							<ResultsTable rows={view.results} fastestLap={view.fastestLap} />
-						</TabsContent>
-						{view.sprint.length > 0 && (
-							<TabsContent value="sprint">
-								<ResultsTable rows={view.sprint} sprint />
-							</TabsContent>
-						)}
+				<Tabs defaultValue="race" className="min-w-0 gap-4">
+					<TabsList variant="line">
+						<TabsTrigger value="race">Race</TabsTrigger>
+						{view.sprint.length > 0 && <TabsTrigger value="sprint">Sprint</TabsTrigger>}
 						{view.qualifying.length > 0 && (
-							<TabsContent value="qualifying">
-								<QualifyingTable view={view} />
-							</TabsContent>
+							<TabsTrigger value="qualifying">
+								<span className="sm:hidden">Quali</span>
+								<span className="hidden sm:inline">Qualifying</span>
+							</TabsTrigger>
 						)}
 						{lapData?.chart && (
-							<TabsContent value="laps">
-								<LapChartPanel
-									raceId={view.raceId}
-									initial={laps}
-									drivers={lapDrivers}
-									grid={gridOf(view.results)}
-									sprintDrivers={view.sprint.map((r) => r.driver)}
-									sprintGrid={gridOf(view.sprint)}
-									sprintAvailable={lapData.sprintChart}
-									highlight={winner ? [winner.driver.id] : []}
-								/>
-							</TabsContent>
+							<TabsTrigger value="laps">
+								<span className="sm:hidden">Laps</span>
+								<span className="hidden sm:inline">Lap chart</span>
+							</TabsTrigger>
 						)}
-						{lapData?.pitStops && (
-							<TabsContent value="pits">
-								<PitStopsPanel raceId={view.raceId} initial={laps && { raceId: laps.raceId, pitStops: laps.pitStops }} drivers={lapDrivers} />
-							</TabsContent>
+						{lapData?.pitStops && (laps === undefined || !!laps?.pitStops?.length) && (
+							<TabsTrigger value="pits">
+								<span className="sm:hidden">Pits</span>
+								<span className="hidden sm:inline">Pit stops</span>
+							</TabsTrigger>
 						)}
-					</Tabs>
-
-					<div className="space-y-8">
-						<LapsLed view={view} />
-						<Section title="Drivers after this round">
-							<TableCard>
-								<TableBody>
-									{view.standingsAfter.drivers.map((s) => (
-										<TableRow key={s.driver.id}>
-											<TableCell className="w-10">
-												<Pos text={s.position} />
-											</TableCell>
-											<TableCell>
-												<DriverLink driver={s.driver} />
-											</TableCell>
-											<TableCell className="text-right font-semibold tabular-nums">{num(s.points)}</TableCell>
-										</TableRow>
-									))}
-								</TableBody>
-							</TableCard>
-						</Section>
-						{view.standingsAfter.constructors.length > 0 && view.race.year >= 1958 && (
-							<Section title="Constructors after this round">
-								<TableCard>
-									<TableBody>
-										{view.standingsAfter.constructors.map((s, i) => (
-											<TableRow key={s.team.id + i}>
-												<TableCell className="w-10">
-													<Pos text={s.position} />
-												</TableCell>
-												<TableCell>
-													<TeamLink team={s.team} flag />
-												</TableCell>
-												<TableCell className="text-right font-semibold tabular-nums">{num(s.points)}</TableCell>
-											</TableRow>
-										))}
-									</TableBody>
-								</TableCard>
-							</Section>
-						)}
-					</div>
-				</div>
+					</TabsList>
+					<TabsContent value="race">
+						<div className="grid grid-cols-1 items-start gap-12 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-8 2xl:grid-cols-[minmax(0,1fr)_380px]">
+							<ResultsTable rows={view.results} fastestLap={view.fastestLap} />
+							<RaceSidebar view={view} />
+						</div>
+					</TabsContent>
+					{view.sprint.length > 0 && (
+						<TabsContent value="sprint">
+							<ResultsTable rows={view.sprint} sprint />
+						</TabsContent>
+					)}
+					{view.qualifying.length > 0 && (
+						<TabsContent value="qualifying">
+							<QualifyingTable view={view} />
+						</TabsContent>
+					)}
+					{lapData?.chart && (
+						<TabsContent value="laps">
+							<LapChartPanel
+								raceId={view.raceId}
+								initial={laps}
+								drivers={lapDrivers}
+								grid={gridOf(view.results)}
+								finish={finishOf(view.results)}
+								sprintDrivers={view.sprint.map((r) => r.driver)}
+								sprintGrid={gridOf(view.sprint)}
+								sprintFinish={finishOf(view.sprint)}
+								sprintAvailable={lapData.sprintChart}
+								highlight={winner ? [winner.driver.id] : []}
+							/>
+						</TabsContent>
+					)}
+					{lapData?.pitStops && (
+						<TabsContent value="pits">
+							<PitStopsPanel raceId={view.raceId} initial={laps && { raceId: laps.raceId, pitStops: laps.pitStops }} drivers={lapDrivers} />
+						</TabsContent>
+					)}
+				</Tabs>
 			)}
 		</Page>
 	);

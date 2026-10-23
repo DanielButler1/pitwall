@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { ConstructorPage } from "@/components/pages/profiles";
 import { getDb } from "@/lib/f1/server";
 import { constructorView } from "@/lib/f1/views";
-import { staticParams } from "@/lib/f1/static-params";
+import { prebuild } from "@/lib/f1/static-params";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-	return staticParams.constructors();
+	return prebuild.constructors();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

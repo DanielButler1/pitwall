@@ -258,9 +258,10 @@ export function TableCard({
 	);
 }
 
-export function StatCard({ label, value, real, className }: { label: string; value: React.ReactNode; real?: React.ReactNode; className?: string }) {
-	return (
-		<Card size="sm" className={className}>
+/** `href` makes the whole card a link (e.g. "#results-wins" to the filtered results list). */
+export function StatCard({ label, value, real, className, href: to }: { label: string; value: React.ReactNode; real?: React.ReactNode; className?: string; href?: string }) {
+	const card = (
+		<Card size="sm" className={cn(to && "group-hover:ring-foreground/25 h-full transition-shadow", !to && className)}>
 			{/* values sit on the card's bottom edge, so a two-line label beside a one-line one doesn't stagger them */}
 			<CardHeader className="flex h-full flex-col">
 				<CardDescription>{label}</CardDescription>
@@ -272,6 +273,13 @@ export function StatCard({ label, value, real, className }: { label: string; val
 				)}
 			</CardHeader>
 		</Card>
+	);
+	return to ? (
+		<a href={to} className={cn("group focus-visible:ring-ring rounded-xl outline-none focus-visible:ring-2", className)}>
+			{card}
+		</a>
+	) : (
+		card
 	);
 }
 

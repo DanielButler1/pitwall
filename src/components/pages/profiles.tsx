@@ -2,6 +2,7 @@ import { CalendarDays, Flag as FlagIcon, GitCompareArrows, MapPin, Sparkles, Tro
 import { Fragment } from "react";
 import { cn } from "@/lib/utils";
 import type { CircuitView, CircuitsView, ConstructorView, DriverView } from "@/lib/f1/views";
+import type { EntityResult } from "@/lib/f1/entity-results";
 import { ageOn } from "@/lib/f1/stats";
 import type { DriverTeammatesView } from "@/lib/f1/teammates";
 import {
@@ -32,6 +33,7 @@ import {
 import { ULink } from "../universe-link";
 import { Badge } from "../ui/badge";
 import { buttonVariants } from "../ui/button";
+import { ResultsExplorer } from "./results-explorer";
 import { TeammatesSection, keepSuffix, surname } from "./teammates";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
@@ -47,8 +49,11 @@ function Milestone({ icon: Icon, label, children }: { icon: typeof CalendarDays;
 	);
 }
 
-/** `teammates` (driverTeammatesView) adds the head-to-head section; without it the page lists team-mates by races together. */
-export function DriverPage({ view, teammates }: { view: DriverView; teammates?: DriverTeammatesView | null }) {
+/**
+ * `teammates` (driverTeammatesView) adds the head-to-head section; without it the page lists team-mates by races together.
+ * `results`: universes pass the full results list; the real site fetches it.
+ */
+export function DriverPage({ view, teammates, results }: { view: DriverView; teammates?: DriverTeammatesView | null; results?: EntityResult[] }) {
 	const d = view.driver;
 	const t = view.totals;
 	const r = view.realTotals;
@@ -104,11 +109,11 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 
 			<div className={cn("grid grid-cols-2 gap-4 max-sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:grid-cols-4", view.lapsLed ? "xl:grid-cols-9" : "xl:grid-cols-8")}>
 				<StatCard label="Titles" value={t.titles} real={realOf(r, "titles", t.titles)} />
-				<StatCard label="Wins" value={t.wins} real={realOf(r, "wins", t.wins)} />
-				<StatCard label="Podiums" value={t.podiums} real={realOf(r, "podiums", t.podiums)} />
-				<StatCard label="Poles" value={t.poles} real={realOf(r, "poles", t.poles)} />
-				<StatCard label="Fastest laps" value={t.fastestLaps} real={realOf(r, "fastestLaps", t.fastestLaps)} />
-				<StatCard label="Starts" value={t.starts} real={realOf(r, "starts", t.starts)} />
+				<StatCard label="Wins" value={t.wins} real={realOf(r, "wins", t.wins)} href={t.wins ? "#results-wins" : undefined} />
+				<StatCard label="Podiums" value={t.podiums} real={realOf(r, "podiums", t.podiums)} href={t.podiums ? "#results-podiums" : undefined} />
+				<StatCard label="Poles" value={t.poles} real={realOf(r, "poles", t.poles)} href={t.poles ? "#results-poles" : undefined} />
+				<StatCard label="Fastest laps" value={t.fastestLaps} real={realOf(r, "fastestLaps", t.fastestLaps)} href={t.fastestLaps ? "#results-fastest-laps" : undefined} />
+				<StatCard label="Starts" value={t.starts} real={realOf(r, "starts", t.starts)} href="#results-all" />
 				<StatCard label="Points" value={num(t.points)} real={realOf(r, "points", t.points)} />
 				<StatCard label="Win rate" value={`${(t.winRate * 100).toFixed(1)}%`} />
 				{view.lapsLed && <StatCard label={view.lapsLed.partial ? `Laps led since ${view.lapsLed.from}` : "Laps led"} value={num(view.lapsLed.laps)} />}
@@ -261,6 +266,7 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 					</div>
 				)}
 			</div>
+			<ResultsExplorer kind="driver" id={d.id} rows={results} />
 			{teammates && <TeammatesSection view={teammates} />}
 		</Page>
 	);
@@ -269,7 +275,8 @@ export function DriverPage({ view, teammates }: { view: DriverView; teammates?: 
 // The 1950s teams ran a dozen drivers a season; phones list the first few and count the rest.
 const PHONE_DRIVERS = 4;
 
-export function ConstructorPage({ view }: { view: ConstructorView }) {
+/** `results`: universes pass the full results list; the real site fetches it. */
+export function ConstructorPage({ view, results }: { view: ConstructorView; results?: EntityResult[] }) {
 	const t = view.totals;
 	const r = view.realTotals;
 	return (
@@ -289,12 +296,12 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 			</PageHeader>
 			<div className="grid grid-cols-2 gap-4 sm:grid-cols-4 xl:grid-cols-8">
 				<StatCard label="Titles" value={t.titles} real={realOf(r, "titles", t.titles)} />
-				<StatCard label="Wins" value={t.wins} real={realOf(r, "wins", t.wins)} />
+				<StatCard label="Wins" value={t.wins} real={realOf(r, "wins", t.wins)} href={t.wins ? "#results-wins" : undefined} />
 				<StatCard label="1-2 finishes" value={t.oneTwos} />
-				<StatCard label="Podiums" value={t.podiums} real={realOf(r, "podiums", t.podiums)} />
-				<StatCard label="Poles" value={t.poles} real={realOf(r, "poles", t.poles)} />
-				<StatCard label="Fastest laps" value={t.fastestLaps} />
-				<StatCard label="Races" value={t.entries} />
+				<StatCard label="Podiums" value={t.podiums} real={realOf(r, "podiums", t.podiums)} href={t.podiums ? "#results-podiums" : undefined} />
+				<StatCard label="Poles" value={t.poles} real={realOf(r, "poles", t.poles)} href={t.poles ? "#results-poles" : undefined} />
+				<StatCard label="Fastest laps" value={t.fastestLaps} href={t.fastestLaps ? "#results-fastest-laps" : undefined} />
+				<StatCard label="Races" value={t.entries} href="#results-all" />
 				<StatCard label="Points" value={num(t.points)} real={realOf(r, "points", t.points)} />
 			</div>
 			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
@@ -410,6 +417,7 @@ export function ConstructorPage({ view }: { view: ConstructorView }) {
 					)}
 				</div>
 			</div>
+			<ResultsExplorer kind="team" id={view.team.id} rows={results} />
 		</Page>
 	);
 }
