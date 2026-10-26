@@ -31,6 +31,8 @@ jobs:
           key: sources-${{ hashFiles('apps/web/data/sources.json') }}
       - name: Build the dataset
         run: node apps/web/scripts/prepare-data.mjs --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: pnpm typecheck
       - run: pnpm test
