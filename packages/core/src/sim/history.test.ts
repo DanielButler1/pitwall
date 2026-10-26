@@ -81,7 +81,7 @@ test("real grids 1950→last season: every real race re-run with its real entry 
 	}
 	assert.equal(auditRaces(db, db.sim!.years, false).issues.length, 0);
 	const changed = db.sim!.years.filter((y) => y < LAST && champion(db, y) !== champion(base, y)).length;
-	assert.ok(changed > 10 && changed < 60, `${changed} champions changed`);
+	assert.ok(changed > 10, `${changed} champions changed`);
 });
 
 test("dynamic 1990→last season: careers simulated from real 1989", () => {

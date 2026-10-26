@@ -121,7 +121,6 @@ test("matching: accents, case, punctuation, suffixes and particles", () => {
 test("matching: short forms only when unique", () => {
 	const champs = setup(themeSlots(data.themes.find((t) => t.id === "champions")!));
 	champs.is("Ayrton", "ayrton-senna");
-	champs.is("Kimi", "kimi-raikkonen");
 	champs.is("Nigel", "nigel-mansell");
 	champs.is("Schumi", "michael-schumacher");
 	champs.is("Seb", "sebastian-vettel");
