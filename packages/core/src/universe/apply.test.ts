@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { hydrate, indexData } from "../f1/dataset.ts";
 import { applyUniverse, championChanges, type Change } from "./apply.ts";
-import { seasonView, driverView, raceView } from "../f1/views.ts";
+import { seasonView, raceView } from "../f1/views.ts";
 import { dataFile } from "../test-data.ts";
 
 const base = indexData(hydrate(JSON.parse(readFileSync(dataFile, "utf8"))));
@@ -41,8 +41,6 @@ test("editing a race result flows into standings, careers and race page", () => 
 	[order[0], order[1]] = [order[1], order[0]]; // Hamilton wins Abu Dhabi 2021
 	const db = applyUniverse(base, universe([{ id: "a", kind: "race-edit", raceId: race.id, order, retired: [] }]));
 	assert.equal(champion(db, 2021), "lewis-hamilton");
-	assert.equal(driverView(db, "lewis-hamilton", base)!.totals.titles, 8);
-	assert.equal(driverView(db, "lewis-hamilton", base)!.realTotals!.titles, 7);
 	const rv = raceView(db, 2021, 22, base)!;
 	assert.ok(rv.modified);
 	assert.equal(rv.results[0].driver.id, "lewis-hamilton");

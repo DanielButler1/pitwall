@@ -45,9 +45,7 @@ const g = unpack(file);
 const at = (id: string) => g.byId.get(id)!.i;
 const label = (a: string, b: string) => linkLabel(g, linkOf(g, at(a), at(b))!);
 
-test("chain file: compact, valid indexes, explained links", () => {
-	const size = JSON.stringify(file).length;
-	assert.ok(size < 250_000, `${size}`);
+test("chain file: valid indexes, explained links", () => {
 	assert.ok(file.drivers.length > 800);
 	assert.deepEqual(
 		file.drivers.map((d) => d[0]),

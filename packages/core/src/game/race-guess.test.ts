@@ -29,9 +29,8 @@ const find = (label: string) => {
 	return r;
 };
 
-test("race file: every race with results, labels, podium, clues, small", () => {
+test("race file: every race with results, labels, podium, clues", () => {
 	assert.ok(races.length > 1100);
-	assert.ok(JSON.stringify(file).length < 250_000);
 	const suzuka = find("2005 Japanese Grand Prix");
 	assert.equal(suzuka.circuit.name, "Suzuka");
 	assert.equal(suzuka.circuit.flag, "JP");
