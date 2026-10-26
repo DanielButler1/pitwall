@@ -7,6 +7,7 @@ import { View } from "react-native";
 import { Page, Stat, StatGrid, TabScreen } from "@/components/f1";
 import { Button, Text } from "@/components/ui";
 import { useDb, useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { num } from "@/lib/format";
 import { href } from "@/lib/links";
 import { watchDataChecks } from "@/features/settings/data";
@@ -82,6 +83,7 @@ export function HomeScreen() {
 
 				<Standings view={view} go={go} />
 				{view.latestRace ? <LatestRace race={view.latestRace} go={go} /> : null}
+				<NativeAdSlot />
 				{view.nextRace ? <NextRace next={view.nextRace} go={go} /> : null}
 				{view.titleFight ? <TitleFightSection fight={view.titleFight} year={view.lastYear} go={go} /> : null}
 				<Puzzles go={go} />

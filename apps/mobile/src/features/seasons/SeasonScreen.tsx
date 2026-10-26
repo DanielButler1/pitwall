@@ -10,6 +10,7 @@ import { seasonView, type DriverRef, type SeasonView } from "@pitwall/core/f1/vi
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
 import { useUniverseBase, useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { fmtDay, num, plural } from "@/lib/format";
 import { haptic } from "@/lib/haptics";
 import { href, useOpen } from "@/lib/links";
@@ -164,6 +165,8 @@ export function SeasonScreen() {
 				/>
 
 				{view.completed ? <Standings view={view} /> : null}
+
+				<NativeAdSlot />
 
 				{progression && progression.rounds.length > 1 ? (
 					<Section title="Championship progression" description={`The title fight round by round, for the top ten drivers${progression.constructors ? " and constructors" : ""}.`}>

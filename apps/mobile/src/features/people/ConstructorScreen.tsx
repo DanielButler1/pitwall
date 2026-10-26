@@ -6,6 +6,7 @@ import { constructorView, type ConstructorView } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, Row, Section, Text } from "@/components/ui";
 import { useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { InlineLink, MoreButton, surname, useMore } from "@/features/browse/kit";
 import { cn } from "@/lib/cn";
 import { num, plural, yearRange } from "@/lib/format";
@@ -102,6 +103,8 @@ export function ConstructorScreen() {
 					<Stat label="Races" value={num(t.entries)} onPress={show("all")} />
 					<Stat label="Points" value={num(t.points)} />
 				</StatGrid>
+
+				<NativeAdSlot />
 
 				{allSeasons.length ? (
 					<Section title="Season by season" description="Drivers, engines and tyres each season. Position and points in the constructors' championship (from 1958).">

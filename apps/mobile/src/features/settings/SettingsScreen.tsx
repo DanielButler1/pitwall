@@ -1,12 +1,15 @@
 import Constants from "expo-constants";
 import * as WebBrowser from "expo-web-browser";
-import { Database, Download, ExternalLink, Globe, RefreshCw, Scale, Vibrate } from "lucide-react-native";
+import { BadgeCheck, Database, Download, ExternalLink, Globe, History, RefreshCw, Scale, ShieldCheck, Sparkles, Vibrate } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Page, DetailScreen } from "@/components/f1";
-import { Button, confirm, Fact, Icon, Row, Section, Segmented, Text } from "@/components/ui";
+import { Button, confirm, Fact, Icon, Row, Section, Segmented, Text, toast } from "@/components/ui";
 import { Switch } from "@/components/ui/switch";
 import { datasetStore, refreshDataset, useRealDb } from "@/data/dataset";
+import { adsStore, showAdPrivacyOptions } from "@/features/ads/ads";
+import { purchaseStore, restoreAdFree } from "@/features/ads/purchases";
+import { openRemoveAds } from "@/features/ads/RemoveAdsSheet";
 import { ORIGIN } from "@/lib/config";
 import { fmtDate } from "@/lib/format";
 import { haptic, hapticsStore, setHapticsEnabled } from "@/lib/haptics";
@@ -36,6 +39,7 @@ export function SettingsScreen() {
 		<DetailScreen title="Settings">
 			<Page>
 				<AppearanceSection />
+				<AdsSection />
 				<DataSection />
 				<AboutSection />
 			</Page>
@@ -73,6 +77,36 @@ function AppearanceSection() {
 				trailing={<Switch value={haptics} onValueChange={setHapticsEnabled} accessibilityLabel="Haptic feedback" />}
 				last
 			/>
+		</Section>
+	);
+}
+
+/** Remove ads (or the thanks once bought), restoring a purchase, and changing ad consent. */
+function AdsSection() {
+	const { adFree, available, price } = purchaseStore.use();
+	const privacyOptions = adsStore.use((s) => s.privacyOptions);
+	const [restoring, setRestoring] = useState(false);
+	if (!available && !adFree && !privacyOptions) return null;
+
+	const restore = async () => {
+		setRestoring(true);
+		const found = await restoreAdFree();
+		setRestoring(false);
+		if (found) {
+			haptic("success");
+			toast("Purchase restored. Ads removed");
+		} else toast(found === false ? "No purchase found for this account" : "Couldn't reach the store. Try again later", { tone: found === false ? "default" : "error" });
+	};
+
+	return (
+		<Section title="Ads">
+			{adFree ? (
+				<Row icon={BadgeCheck} title="Ads removed" subtitle="Thank you for supporting Pitwall" last={!available} />
+			) : available ? (
+				<Row icon={Sparkles} title="Remove ads" subtitle="One payment, on every phone with your store account" value={price} onPress={openRemoveAds} />
+			) : null}
+			{available ? <Row icon={History} title={restoring ? "Restoring…" : "Restore purchase"} subtitle="After a reinstall or on a new phone" chevron={false} onPress={restoring ? undefined : () => void restore()} last={adFree || !privacyOptions} /> : null}
+			{!adFree && privacyOptions ? <Row icon={ShieldCheck} title="Ad privacy choices" subtitle="Change what you agreed to for ads" onPress={() => void showAdPrivacyOptions()} last /> : null}
 		</Section>
 	);
 }
