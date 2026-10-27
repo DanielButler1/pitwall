@@ -76,7 +76,10 @@
 			[
 				"expo-build-properties",
 				{
-					"android": { "enableMinifyInReleaseBuilds": true }
+					"android": {
+						"enableMinifyInReleaseBuilds": true,
+						"extraProguardRules": "-keep class * extends androidx.room.RoomDatabase { <init>(); }"
+					}
 				}
 			]
 		],
