@@ -1,18 +1,26 @@
-// A race's lap chart and pit stops, from the per-race Jolpica file (data/laps/<raceId>.json),
-// fetched only when one of those sections opens (apps/web race-laps.tsx).
+// A race's lap chart, strategy and pit stops, from the per-race file (data/laps/<raceId>.json: Jolpica's
+// laps and pit stops, the race notes' tyres), fetched only when one of those sections opens
+// (apps/web race-laps.tsx).
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Pressable, View } from "react-native";
-import type { RaceLapFile } from "@pitwall/core/f1/laps";
+import { NEUTRAL_LABEL, neutralText, raceStints, tyreColour, tyreName, type Neutralisation, type RaceLapFile, type TyreCode } from "@pitwall/core/f1/laps";
 import type { DriverRef, ResultRow } from "@pitwall/core/f1/views";
-import { EmptyState, ErrorState, Segmented, SkeletonRows, Skeleton, Text } from "@/components/ui";
+import { EmptyState, ErrorState, Segmented, SkeletonRows, Skeleton, Text, useToneColor } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { dataUrl } from "@/lib/config";
 import { haptic } from "@/lib/haptics";
 import { href, useOpen } from "@/lib/links";
 import { lapTime, shortNamer } from "../names";
-import { HIGHLIGHTS, HighlightChart, toggleSlot, useHighlightColours, type ChartLine } from "./HighlightChart";
+import { HIGHLIGHTS, HighlightChart, toggleSlot, useHighlightColours, type ChartBand, type ChartLine } from "./HighlightChart";
+
+/** Safety cars and virtual safety cars in gold, red flags in red (as on the website). */
+function useNeutralColours(): Record<Neutralisation[0], string> {
+	const gold = useToneColor("gold");
+	const red = useToneColor("primary");
+	return useMemo(() => ({ SC: gold, VSC: gold, RF: red }), [gold, red]);
+}
 
 export function useRaceLaps(raceId: number) {
 	return useQuery({
@@ -45,8 +53,23 @@ function lapTicks(laps: number, hasGrid: boolean) {
 	return out;
 }
 
-function LapChart({ session, refs, grid, finish, initial }: { session: Session; refs: Map<string, DriverRef>; grid: Map<string, number>; finish: Map<string, string>; initial: string[] }) {
+function LapChart({
+	session,
+	refs,
+	grid,
+	finish,
+	initial,
+	neutralised = [],
+}: {
+	session: Session;
+	refs: Map<string, DriverRef>;
+	grid: Map<string, number>;
+	finish: Map<string, string>;
+	initial: string[];
+	neutralised?: Neutralisation[];
+}) {
 	const colours = useHighlightColours();
+	const neutralColours = useNeutralColours();
 	const open = useOpen();
 	const [slots, setSlots] = useState<(string | null)[]>(() => initial.filter((d) => session.drivers.includes(d)).slice(0, HIGHLIGHTS));
 	const colourOf = (id: string) => {
@@ -59,6 +82,15 @@ function LapChart({ session, refs, grid, finish, initial }: { session: Session; 
 	const offset = hasGrid ? 0 : 1;
 	const count = laps + (hasGrid ? 1 : 0);
 	const short = useMemo(() => shortNamer(session.drivers.map((id) => refs.get(id) ?? { id, name: id, country: null, countryName: null })), [session, refs]);
+	// a band covers its laps: from the end of the lap before to the end of its last (x = lap - offset)
+	const bands: ChartBand[] = neutralised.map(([type, from, to]) => ({
+		key: `${type}-${from}`,
+		from: from - 1 - offset,
+		to: to - offset,
+		colour: neutralColours[type],
+		opacity: type === "VSC" ? 0.1 : 0.18,
+		label: type,
+	}));
 	const nameOf = (id: string) => short(refs.get(id) ?? { id, name: id, country: null, countryName: null });
 
 	const lines: ChartLine[] = useMemo(
@@ -115,7 +147,8 @@ function LapChart({ session, refs, grid, finish, initial }: { session: Session; 
 					xLabel={(x) => (x + offset === 0 ? "Grid" : String(x + offset))}
 					xTicks={lapTicks(laps, hasGrid)}
 					height={340}
-					label={`Lap chart: position at the end of each of ${laps} laps`}
+					bands={bands}
+					label={`Lap chart: position at the end of each of ${laps} laps${neutralised.length ? `. ${neutralised.map(neutralText).join(", ")}` : ""}`}
 					describe={(x) => {
 						const lap = x + offset;
 						return `${lap === 0 ? "Grid" : `Lap ${lap}`}: ${order(x)
@@ -153,7 +186,7 @@ function LapChart({ session, refs, grid, finish, initial }: { session: Session; 
 				/>
 			</View>
 			<Text variant="caption" className="mt-3 px-4">
-				{`Position at the end of each lap. Tap the colour boxes to highlight up to ${HIGHLIGHTS} drivers; hold the chart to read each lap.`}
+				{`Position at the end of each lap. Tap the colour boxes to highlight up to ${HIGHLIGHTS} drivers; hold the chart to read each lap.${neutralised.length ? ` Shaded: ${neutralised.map(neutralText).join(", ").toLowerCase()}.` : ""}`}
 			</Text>
 			<View className="mt-3 flex-row items-end gap-3 border-b border-border px-4 pb-1.5">
 				<View className="w-10" />
@@ -213,7 +246,21 @@ function LapChart({ session, refs, grid, finish, initial }: { session: Session; 
 const gridOf = (rows: ResultRow[]) => new Map(rows.filter((r) => r.grid != null && r.grid > 0).map((r) => [r.driver.id, r.grid!]));
 const finishOf = (rows: ResultRow[]) => new Map(rows.map((r) => [r.driver.id, r.position]));
 
-export function LapChartPanel({ raceId, results, sprint, sprintAvailable, highlight }: { raceId: number; results: ResultRow[]; sprint: ResultRow[]; sprintAvailable: boolean; highlight: string[] }) {
+export function LapChartPanel({
+	raceId,
+	results,
+	sprint,
+	sprintAvailable,
+	highlight,
+	neutralised,
+}: {
+	raceId: number;
+	results: ResultRow[];
+	sprint: ResultRow[];
+	sprintAvailable: boolean;
+	highlight: string[];
+	neutralised?: Neutralisation[];
+}) {
 	const query = useRaceLaps(raceId);
 	const [which, setWhich] = useState<"race" | "sprint">("race");
 	const refs = useMemo(() => new Map([...sprint, ...results].map((r) => [r.driver.id, r.driver])), [results, sprint]);
@@ -243,7 +290,7 @@ export function LapChartPanel({ raceId, results, sprint, sprintAvailable, highli
 			{which === "sprint" && sprintSession ? (
 				<LapChart key="sprint" session={sprintSession} refs={refs} grid={maps.sGrid} finish={maps.sFinish} initial={sprint[0] ? [sprint[0].driver.id] : highlight} />
 			) : (
-				<LapChart key="race" session={race} refs={refs} grid={maps.grid} finish={maps.finish} initial={highlight} />
+				<LapChart key="race" session={race} refs={refs} grid={maps.grid} finish={maps.finish} initial={highlight} neutralised={neutralised} />
 			)}
 		</View>
 	);
@@ -254,14 +301,105 @@ const stopTime = (ms: number | null) => {
 	return ms >= 60000 ? lapTime(ms) : `${(ms / 1000).toFixed(3)} s`;
 };
 
-export function PitStopsPanel({ raceId, drivers }: { raceId: number; drivers: DriverRef[] }) {
+/** Each driver's stints as a bar across the race, coloured by compound where the race notes have them. */
+function Stints({ file, refs, laps, year, neutralised }: { file: RaceLapFile; refs: Map<string, DriverRef>; laps: Map<string, number>; year: number; neutralised: Neutralisation[] }) {
+	const neutralColours = useNeutralColours();
+	const rows = useMemo(() => raceStints(file, laps, neutralised), [file, laps, neutralised]);
+	const short = useMemo(() => shortNamer(rows.map((r) => refs.get(r.driverId) ?? { id: r.driverId, name: r.driverId, country: null, countryName: null })), [rows, refs]);
+	const total = Math.max(1, ...laps.values());
+	const used = [...new Set(rows.flatMap((r) => r.stints.map((s) => s.compound)).filter((c): c is TyreCode => c != null))];
+	const pct = (lap: number) => `${(lap / total) * 100}%` as const;
+	if (!rows.length) return null;
+	return (
+		<View className="px-4">
+			<View className="flex-row">
+				<View className="w-24 gap-1 pr-2">
+					{rows.map((r) => (
+						<View key={r.driverId} className="h-5 justify-center">
+							<Text variant="caption" numberOfLines={1} className="text-foreground">
+								{short(refs.get(r.driverId) ?? { id: r.driverId, name: r.driverId, country: null, countryName: null })}
+							</Text>
+						</View>
+					))}
+				</View>
+				<View className="flex-1 gap-1">
+					{neutralised.map(([type, from, to]) => (
+						<View
+							key={`${type}-${from}`}
+							pointerEvents="none"
+							className="absolute bottom-0 top-0 z-10 rounded-sm"
+							style={{ left: pct(from - 1), width: pct(to - from + 1), backgroundColor: neutralColours[type], opacity: type === "VSC" ? 0.18 : 0.3 }}
+						/>
+					))}
+					{rows.map((r) => (
+						<View key={r.driverId} className="h-5" accessible accessibilityLabel={`${refs.get(r.driverId)?.name ?? r.driverId}: ${r.stints.map((s) => `${s.compound ? tyreName(s.compound) : "unknown"} laps ${s.from} to ${s.to}`).join(", ")}`}>
+							{r.stints.map((s) => {
+								const colour = s.compound ? tyreColour(s.compound, year) : null;
+								const n = s.to - s.from + 1;
+								return (
+									<View
+										key={s.from}
+										className={cn("absolute bottom-0 top-0 items-center justify-center overflow-hidden rounded-sm border", !colour && "border-border bg-muted")}
+										style={{ left: pct(s.from - 1), width: pct(n), ...(colour ? { backgroundColor: colour, borderColor: "rgba(0,0,0,0.15)" } : {}) }}
+									>
+										{n / total > 0.1 ? (
+											<Text className="text-[10px] font-semibold" style={colour ? { color: "#111" } : undefined}>
+												{s.compound ?? n}
+											</Text>
+										) : null}
+									</View>
+								);
+							})}
+						</View>
+					))}
+				</View>
+			</View>
+			<View className="ml-24 mt-1 flex-row justify-between">
+				<Text variant="caption" className="tabular-nums">1</Text>
+				<Text variant="caption" className="tabular-nums">{`Lap ${total}`}</Text>
+			</View>
+			<View className="mt-3 flex-row flex-wrap gap-x-4 gap-y-1.5">
+				{used.map((c) => (
+					<View key={c} className="flex-row items-center gap-1.5">
+						<View className="size-2.5 rounded-full border border-black/15" style={{ backgroundColor: tyreColour(c, year) ?? undefined }} />
+						<Text variant="caption">{`${tyreName(c)}${file.compounds?.[c] ? ` (${file.compounds[c]})` : ""}`}</Text>
+					</View>
+				))}
+				{[...new Set(neutralised.map((x) => x[0]))].map((t) => (
+					<View key={t} className="flex-row items-center gap-1.5">
+						<View className="h-2.5 w-4 rounded-sm" style={{ backgroundColor: neutralColours[t], opacity: t === "VSC" ? 0.35 : 0.55 }} />
+						<Text variant="caption">{NEUTRAL_LABEL[t]}</Text>
+					</View>
+				))}
+			</View>
+			{!file.tyres?.length ? (
+				<Text variant="caption" className="mt-2">
+					{"Stints run between pit stops; compounds haven't been entered for this race."}
+				</Text>
+			) : null}
+		</View>
+	);
+}
+
+/** Stints across the race (compounds from the race notes), then the pit stops. */
+export function StrategyPanel({ raceId, results, year, neutralised = [] }: { raceId: number; results: ResultRow[]; year: number; neutralised?: Neutralisation[] }) {
 	const query = useRaceLaps(raceId);
-	const open = useOpen();
-	const refs = useMemo(() => new Map(drivers.map((d) => [d.id, d])), [drivers]);
+	const refs = useMemo(() => new Map(results.map((r) => [r.driver.id, r.driver])), [results]);
+	const laps = useMemo(() => new Map(results.filter((r) => r.laps).map((r) => [r.driver.id, r.laps!])), [results]);
 	if (query.isPending) return <Loading />;
 	if (query.isError) return <ErrorState error={query.error} onRetry={() => void query.refetch()} />;
-	const stops = query.data.pitStops ?? [];
-	if (!stops.length) return <EmptyState title="No pit stops for this race" body="The lap data file has no pit stops." />;
+	const data = query.data;
+	if (!data.pitStops?.length && !data.tyres?.length) return <EmptyState title="No strategy for this race" body="The race file has no pit stops or tyres." />;
+	return (
+		<View className="gap-6">
+			<Stints file={data} refs={refs} laps={laps} year={year} neutralised={neutralised} />
+			{data.pitStops?.length ? <PitStops stops={data.pitStops} refs={refs} /> : null}
+		</View>
+	);
+}
+
+function PitStops({ stops, refs }: { stops: NonNullable<RaceLapFile["pitStops"]>; refs: Map<string, DriverRef> }) {
+	const open = useOpen();
 	const fastest = Math.min(...stops.map((p) => p[3] ?? Infinity));
 	return (
 		<View>

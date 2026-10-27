@@ -1,0 +1,99 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_South_African_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Brazilian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Spanish_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_San_Marino_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Canadian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 18
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1992_French_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_German_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Hungarian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Belgian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Portuguese_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Japanese_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1992_Australian_Grand_Prix"
+		]
+	}
+}

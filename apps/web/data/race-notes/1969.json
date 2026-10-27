@@ -1,0 +1,62 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_South_African_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_Spanish_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_Monaco_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_Dutch_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_French_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_British_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_Italian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_Canadian_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_United_States_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1969_Mexican_Grand_Prix"
+		]
+	}
+}

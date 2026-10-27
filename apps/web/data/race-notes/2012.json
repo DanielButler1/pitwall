@@ -1,0 +1,211 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 37,
+				"to": 42
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 6,
+				"to": 10
+			},
+			{
+				"type": "RF",
+				"lap": 9
+			},
+			{
+				"type": "SC",
+				"from": 10,
+				"to": 15
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Malaysian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Chinese_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Bahrain_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Canadian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 27,
+				"to": 34
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_European_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_German_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Hungarian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Belgian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 30,
+				"to": 32
+			},
+			{
+				"type": "SC",
+				"from": 33,
+				"to": 43
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Singapore_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Japanese_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Korean_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2012_Indian_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 9,
+				"to": 15
+			},
+			{
+				"type": "SC",
+				"from": 39,
+				"to": 43
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Abu_Dhabi_Grand_Prix"
+		]
+	},
+	"20": {
+		"weather": "wet",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 23,
+				"to": 29
+			},
+			{
+				"type": "SC",
+				"from": 70,
+				"to": 71
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2012_Brazilian_Grand_Prix"
+		]
+	}
+}

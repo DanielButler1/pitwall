@@ -6,7 +6,7 @@
 //   node scripts/prepare-data.mjs --force   (always rebuild data/f1.json)
 
 import { execFileSync } from "node:child_process";
-import { existsSync, statSync } from "node:fs";
+import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { localF1db, localJolpica, readSources, root, sourcesFile } from "./lib/sources.mjs";
 
@@ -27,5 +27,8 @@ if (!jolpica || jolpica < pinned.jolpica) {
 }
 
 const data = join(root, "data", "f1.json");
-const stale = !existsSync(data) || statSync(data).mtimeMs < statSync(sourcesFile).mtimeMs;
+// race notes are edited by hand, so a newer notes file needs a rebuild too
+const notesDir = join(root, "data", "race-notes");
+const notes = existsSync(notesDir) ? readdirSync(notesDir).map((f) => statSync(join(notesDir, f)).mtimeMs) : [];
+const stale = !existsSync(data) || statSync(data).mtimeMs < Math.max(statSync(sourcesFile).mtimeMs, ...notes);
 if (fetched || stale || process.argv.includes("--force")) run("build-data.mjs");

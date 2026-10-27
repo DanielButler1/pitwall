@@ -1,0 +1,44 @@
+{
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_South_African_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_British_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_Austrian_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_Italian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_Canadian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1972_United_States_Grand_Prix"
+		]
+	}
+}

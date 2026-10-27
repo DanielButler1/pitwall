@@ -1,0 +1,44 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_Monaco_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_Dutch_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_Belgian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_French_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_British_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_German_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1961_Italian_Grand_Prix"
+		]
+	}
+}

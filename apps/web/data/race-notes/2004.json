@@ -1,0 +1,154 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Malaysian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Bahrain_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_San_Marino_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 3,
+				"to": 8
+			},
+			{
+				"type": "SC",
+				"from": 32,
+				"to": 37
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2004_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_European_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Canadian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			},
+			{
+				"type": "SC",
+				"from": 11,
+				"to": 20
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2004_United_States_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_French_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_British_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_German_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Hungarian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			},
+			{
+				"type": "SC",
+				"from": 31,
+				"to": 34
+			},
+			{
+				"type": "SC",
+				"from": 38,
+				"to": 42
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2004_Belgian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Italian_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Chinese_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Japanese_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2004_Brazilian_Grand_Prix"
+		]
+	}
+}

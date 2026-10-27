@@ -1,14 +1,15 @@
 "use client";
 
-// Lap chart and pit stops of one race, from the per-race Jolpica file
-// (data/laps/<raceId>.json). Server pages pass the file in; universe pages
-// fetch /data/laps/<raceId>.json on demand (the race page only offers these
-// tabs when the race's results still match the real race).
+// Lap chart, strategy and pit stops of one race, from the per-race file
+// (data/laps/<raceId>.json: Jolpica's laps and pit stops, and the race notes'
+// tyres). Server pages pass the file in; universe pages fetch
+// /data/laps/<raceId>.json on demand (the race page only offers these tabs
+// when the race's results still match the real race).
 
 import { useEffect, useMemo, useState } from "react";
 import { CircleAlert } from "lucide-react";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import type { RaceLapFile } from "@pitwall/core/f1/laps";
+import { CartesianGrid, Line, LineChart, ReferenceArea, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { NEUTRAL_LABEL, neutralText, raceStints, tyreColour, tyreName, type Neutralisation, type RaceLapFile, type TyreCode } from "@pitwall/core/f1/laps";
 import type { DriverRef } from "@pitwall/core/f1/views";
 import { cn } from "@/lib/utils";
 import { DriverLink, TableCard } from "../f1";
@@ -78,6 +79,9 @@ function Missing({ what }: { what: string }) {
 /** Fixed highlight order (never cycled); every other driver is muted ink. */
 const HIGHLIGHT = ["var(--f1)", "var(--chart-3)", "var(--gold)"];
 
+/** Safety cars and virtual safety cars in amber, red flags in red. */
+const NEUTRAL_FILL: Record<Neutralisation[0], string> = { SC: "var(--gold)", VSC: "var(--gold)", RF: "var(--f1)" };
+
 type Session = { drivers: string[]; positions: (number | null)[][]; times: (number | null)[][] };
 type Row = { lap: number } & Record<string, number | null>;
 
@@ -132,6 +136,7 @@ function LapChart({
 	grid,
 	finish,
 	initial,
+	neutralised = [],
 }: {
 	session: Session;
 	refs: Map<string, DriverRef>;
@@ -139,6 +144,8 @@ function LapChart({
 	/** Classified result per driver ("1", "DNF"…). */
 	finish: Map<string, string>;
 	initial: string[];
+	/** Safety cars, virtual safety cars and red flags, drawn as bands. */
+	neutralised?: Neutralisation[];
 }) {
 	const [selected, setSelected] = useState<string[]>(initial.filter((d) => session.drivers.includes(d)).slice(0, HIGHLIGHT.length));
 	const [hovered, setHovered] = useState<string | null>(null);
@@ -192,8 +199,24 @@ function LapChart({
 				<ResponsiveContainer width="100%" height="100%">
 					<LineChart data={data} margin={{ top: 8, right: 16, bottom: 4, left: -16 }} onMouseLeave={() => setHovered(null)}>
 						<CartesianGrid vertical={false} stroke="var(--border)" />
+						{/* a band covers its laps: from the end of the lap before to the end of its last (a red flag: the lap it came out on) */}
+						{neutralised.map(([type, from, to]) => (
+							<ReferenceArea
+								key={`${type}-${from}`}
+								x1={Math.max(from - 1, hasGrid ? 0 : 1)}
+								x2={to}
+								fill={NEUTRAL_FILL[type]}
+								fillOpacity={type === "VSC" ? 0.08 : 0.16}
+								stroke="none"
+								ifOverflow="hidden"
+								label={{ value: type, position: "insideTop", fill: "var(--muted-foreground)", fontSize: 10 }}
+							/>
+						))}
 						<XAxis
 							dataKey="lap"
+							type="number"
+							domain={[hasGrid ? 0 : 1, laps]}
+							allowDecimals={false}
 							tickLine={false}
 							axisLine={false}
 							tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
@@ -230,6 +253,7 @@ function LapChart({
 			</div>
 			<p className="text-muted-foreground text-xs">
 				Position at the end of each lap. Select up to {HIGHLIGHT.length} drivers below to highlight them.
+				{neutralised.length > 0 && ` Shaded: ${neutralised.map(neutralText).join(", ").toLowerCase()}.`}
 			</p>
 			<TableCard>
 				<TableHeader>
@@ -294,7 +318,9 @@ export function LapChartPanel({
 	sprintFinish,
 	sprintAvailable,
 	highlight,
+	neutralised,
 }: {
+	neutralised?: Neutralisation[];
 	raceId: number;
 	initial?: RaceLapFile | null;
 	drivers: DriverRef[];
@@ -328,7 +354,7 @@ export function LapChartPanel({
 			{which === "sprint" && sprint ? (
 				<LapChart key="sprint" session={sprint} refs={refs} grid={sGrid} finish={sFinish} initial={highlight} />
 			) : (
-				<LapChart key="race" session={race} refs={refs} grid={raceGrid} finish={raceFinish} initial={highlight} />
+				<LapChart key="race" session={race} refs={refs} grid={raceGrid} finish={raceFinish} initial={highlight} neutralised={neutralised} />
 			)}
 		</div>
 	);
@@ -341,12 +367,115 @@ const stopTime = (ms: number | null) => {
 	return ms >= 60000 ? lapTime(ms) : `${(ms / 1000).toFixed(3)} s`;
 };
 
-export function PitStopsPanel({ raceId, initial, drivers }: { raceId: number; initial?: RaceLapFile | null; drivers: DriverRef[] }) {
+/* -------------------------------------------------------------- strategy --- */
+
+/** Each driver's stints as a bar across the race, coloured by compound where the race notes have them. */
+function Stints({ file, refs, laps, year, neutralised }: { file: RaceLapFile; refs: Map<string, DriverRef>; laps: Map<string, number>; year: number; neutralised: Neutralisation[] }) {
+	const rows = useMemo(() => raceStints(file, laps, neutralised), [file, laps, neutralised]);
+	const total = Math.max(1, ...laps.values());
+	const used = [...new Set(rows.flatMap((r) => r.stints.map((s) => s.compound)).filter((c): c is TyreCode => c != null))];
+	const pct = (lap: number) => `${(lap / total) * 100}%`;
+	const ticks = [1, ...Array.from({ length: Math.floor(total / 10) }, (_, i) => (i + 1) * 10).filter((t) => t < total - 3), total];
+	if (!rows.length) return null;
+	return (
+		<div className="space-y-3">
+			<div className="grid grid-cols-[minmax(0,7rem)_1fr] gap-x-3 sm:grid-cols-[minmax(0,10rem)_1fr]">
+				<div />
+				<div className="text-muted-foreground relative mb-1 h-4 text-[11px] tabular-nums">
+					{ticks.map((t) => (
+						<span key={t} className="absolute -translate-x-1/2" style={{ left: pct(t - 0.5) }}>
+							{t}
+						</span>
+					))}
+				</div>
+				<div className="space-y-1">
+					{rows.map((r) => (
+						<div key={r.driverId} className="flex h-5 items-center truncate text-xs">
+							{refs.get(r.driverId)?.name ?? r.driverId}
+						</div>
+					))}
+				</div>
+				<div className="relative space-y-1">
+					{neutralised.map(([type, from, to]) => (
+						<div
+							key={`${type}-${from}`}
+							title={neutralText([type, from, to])}
+							className="absolute inset-y-0 z-10 rounded-sm"
+							style={{ left: pct(from - 1), width: pct(to - from + 1), background: NEUTRAL_FILL[type], opacity: type === "VSC" ? 0.18 : 0.3 }}
+						/>
+					))}
+					{rows.map((r) => (
+						<div key={r.driverId} className="relative h-5">
+							{r.stints.map((s) => {
+								const colour = s.compound ? tyreColour(s.compound, year) : null;
+								const n = s.to - s.from + 1;
+								return (
+									<div
+										key={s.from}
+										title={`${s.compound ? tyreName(s.compound) : "Compound not entered"}${s.compound && file.compounds?.[s.compound] ? ` (${file.compounds[s.compound]})` : ""}: laps ${s.from}–${s.to} (${n})`}
+										className={cn("absolute inset-y-0 flex items-center justify-center overflow-hidden rounded-sm border text-[10px] font-semibold", !colour && "bg-muted text-muted-foreground border-border")}
+										style={{ left: pct(s.from - 1), width: `calc(${pct(n)} - 2px)`, ...(colour ? { background: colour, borderColor: "rgb(0 0 0 / 0.15)", color: "#111" } : {}) }}
+									>
+										{n / total > 0.06 ? (s.compound ?? n) : ""}
+									</div>
+								);
+							})}
+						</div>
+					))}
+				</div>
+			</div>
+			<div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+				{used.map((c) => (
+					<span key={c} className="inline-flex items-center gap-1.5">
+						<span className="inline-block size-2.5 rounded-full border border-black/15" style={{ background: tyreColour(c, year) ?? undefined }} />
+						{tyreName(c)}
+						{file.compounds?.[c] && ` (${file.compounds[c]})`}
+					</span>
+				))}
+				{[...new Set(neutralised.map((n) => n[0]))].map((t) => (
+					<span key={t} className="inline-flex items-center gap-1.5">
+						<span className="inline-block h-2.5 w-4 rounded-sm" style={{ background: NEUTRAL_FILL[t], opacity: t === "VSC" ? 0.35 : 0.55 }} />
+						{NEUTRAL_LABEL[t]}
+					</span>
+				))}
+				{!file.tyres?.length && <span>Stints run between pit stops; compounds haven&apos;t been entered for this race.</span>}
+			</div>
+		</div>
+	);
+}
+
+/** Stints across the race (compounds from the race notes), then the pit stops. */
+export function StrategyPanel({
+	raceId,
+	initial,
+	drivers,
+	laps,
+	year,
+	neutralised = [],
+}: {
+	raceId: number;
+	initial?: RaceLapFile | null;
+	drivers: DriverRef[];
+	/** Laps each driver completed (the classification). */
+	laps: Record<string, number>;
+	year: number;
+	neutralised?: Neutralisation[];
+}) {
 	const { loading, data } = useRaceLaps(raceId, initial);
 	const refs = useMemo(() => new Map(drivers.map((d) => [d.id, d])), [drivers]);
+	const lapMap = useMemo(() => new Map(Object.entries(laps)), [laps]);
 	if (loading) return <Loading />;
-	if (!data?.pitStops?.length) return <Missing what="pit stops" />;
-	const fastest = Math.min(...data.pitStops.map((p) => p[3] ?? Infinity));
+	if (!data?.pitStops?.length && !data?.tyres?.length) return <Missing what="strategy" />;
+	return (
+		<div className="space-y-8">
+			<Stints file={data} refs={refs} laps={lapMap} year={year} neutralised={neutralised} />
+			{data.pitStops?.length ? <PitStops stops={data.pitStops} refs={refs} /> : null}
+		</div>
+	);
+}
+
+function PitStops({ stops, refs }: { stops: NonNullable<RaceLapFile["pitStops"]>; refs: Map<string, DriverRef> }) {
+	const fastest = Math.min(...stops.map((p) => p[3] ?? Infinity));
 	return (
 		<div className="space-y-3">
 			<p className="text-muted-foreground text-xs">Time in the pit lane, from pit entry to pit exit. Long times are usually stops under a red flag.</p>
@@ -360,7 +489,7 @@ export function PitStopsPanel({ raceId, initial, drivers }: { raceId: number; in
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{data.pitStops.map(([id, stop, lap, ms], i) => {
+					{stops.map(([id, stop, lap, ms], i) => {
 						const ref = refs.get(id);
 						return (
 							<TableRow key={`${id}-${stop}-${i}`}>

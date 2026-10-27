@@ -1,0 +1,32 @@
+{
+	"3": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1965_Belgian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1965_French_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1965_British_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1965_German_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1965_United_States_Grand_Prix"
+		]
+	}
+}

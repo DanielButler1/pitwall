@@ -1,0 +1,279 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 26,
+				"to": 28
+			},
+			{
+				"type": "SC",
+				"from": 29,
+				"to": 32
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2018_Bahrain_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 31,
+				"to": 35
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Chinese_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			},
+			{
+				"type": "SC",
+				"from": 40,
+				"to": 48
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Azerbaijan_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 7
+			},
+			{
+				"type": "VSC",
+				"from": 41,
+				"to": 43
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 72,
+				"to": 74
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			},
+			{
+				"type": "VSC",
+				"from": 51,
+				"to": 53
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_French_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 15,
+				"to": 16
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Austrian_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 33,
+				"to": 38
+			},
+			{
+				"type": "SC",
+				"from": 38,
+				"to": 42
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_British_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 52,
+				"to": 58
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_German_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 6,
+				"to": 7
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Hungarian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Belgian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Italian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Singapore_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2018_Russian_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 3,
+				"to": 8
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Japanese_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2018_United_States_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2018_Mexican_Grand_Prix"
+		]
+	},
+	"20": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2018_Brazilian_Grand_Prix"
+		]
+	},
+	"21": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2018_Abu_Dhabi_Grand_Prix"
+		]
+	}
+}
