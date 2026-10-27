@@ -8,6 +8,7 @@ import { driverView, type DriverView } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Stat, StatGrid } from "@/components/f1";
 import { Badge, Button, EmptyState, Icon, IconButton, Row, Section, Text } from "@/components/ui";
 import { useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { MoreButton, ResultCell, useMore } from "@/features/browse/kit";
 import { cn } from "@/lib/cn";
 import { fmtDate, num, yearRange } from "@/lib/format";
@@ -120,6 +121,8 @@ export function DriverScreen() {
 						))}
 					</Section>
 				) : null}
+
+				<NativeAdSlot />
 
 				{seasons.length ? (
 					<Section title="Season by season" description="Every result, newest season first. Underlined: pole position. R: retired.">

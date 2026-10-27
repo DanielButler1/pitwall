@@ -5,6 +5,7 @@ import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { EmptyState, Fact, Row, Section, Text } from "@/components/ui";
 import { InlineLink, MoreButton, Ranked, surname, useMore, words } from "@/features/browse/kit";
 import { useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { num, plural, yearRange } from "@/lib/format";
 import { href, useOpen } from "@/lib/links";
 
@@ -50,6 +51,7 @@ export function CircuitScreen() {
 					<Fact label="Type" value={c.type === "RACE" ? "Race circuit" : words(c.type)} />
 					<Fact label="Years" value={yearRange(first, last)} last />
 				</Section>
+				<NativeAdSlot />
 				<Section title="Races held" description={view.races.length ? "Newest first." : undefined}>
 					{view.races.length ? (
 						view.races.slice(0, races.count).map((r, i, shown) => (

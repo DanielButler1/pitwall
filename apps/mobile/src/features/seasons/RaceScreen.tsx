@@ -9,6 +9,7 @@ import { raceView, type RaceView, type ResultRow } from "@pitwall/core/f1/views"
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
 import { useUniverseBase, useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { createUniverse } from "@/features/lab/engine/store";
 import { cn } from "@/lib/cn";
 import { fmtDate, num } from "@/lib/format";
@@ -283,6 +284,8 @@ export function RaceScreen() {
 						)}
 					</View>
 				)}
+
+				<NativeAdSlot />
 
 				<Section title="More">
 					<Row title={`${view.race.year} season`} subtitle="Standings, calendar and results" onPress={() => open(href.season(view.race.year))} />
