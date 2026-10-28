@@ -46,9 +46,9 @@ function Part({ cell }: { cell: Cell }) {
 		case "gp":
 			return <GrandPrixLink gp={cell.ref} flag={false} />;
 		case "race":
-			return <RaceLink race={cell.ref} year flag={false} />;
+			return <RaceLink race={cell.ref} year />;
 		case "circuit":
-			return <CircuitLink circuit={cell.ref} flag={false} />;
+			return <CircuitLink circuit={cell.ref} />;
 		case "season":
 			return <SeasonLink year={cell.year} />;
 		case "date":

@@ -69,10 +69,10 @@ export function TeamLink({ team, className, flag = false }: { team: TeamRef; cla
 	);
 }
 
-export function RaceLink({ race, className, year = false, flag = true }: { race: RaceRef; className?: string; year?: boolean; flag?: boolean }) {
+export function RaceLink({ race, className, year = false }: { race: RaceRef; className?: string; year?: boolean }) {
 	return (
 		<ULink href={href.race(race)} className={cn(entityLink, className)} data-card={`race:${race.year}-${race.round}`}>
-			{flag && <Flag code={race.country} />}
+			<Flag code={race.country} />
 			<span className={linkName}>
 				{year && `${race.year} `}
 				{race.name}
@@ -81,10 +81,10 @@ export function RaceLink({ race, className, year = false, flag = true }: { race:
 	);
 }
 
-export function CircuitLink({ circuit, className, flag = true }: { circuit: CircuitRef; className?: string; flag?: boolean }) {
+export function CircuitLink({ circuit, className }: { circuit: CircuitRef; className?: string }) {
 	return (
 		<ULink href={href.circuit(circuit.id)} className={cn(entityLink, className)} data-card={`circuit:${circuit.id}`}>
-			{flag && <Flag code={circuit.country} />}
+			<Flag code={circuit.country} />
 			<span className={linkName}>{circuit.name}</span>
 		</ULink>
 	);
