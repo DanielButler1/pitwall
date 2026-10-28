@@ -45,6 +45,22 @@ export type RawDataset = {
 	 * each driver's compounds stint by stint (where entered)].
 	 */
 	raceNotes?: [number, N<Weather>, Neutralisation[], 0 | 1, [string, string[]][]?][];
+	/**
+	 * The FIA's documents (2019 on): [raceId, [[driverId, session, penalty codes]], [[session, driverId, deleted
+	 * lap times]], [[driverId, new power unit elements]]]. See apps/web/scripts/lib/stewards.mjs for the codes.
+	 */
+	stewards?: [number, [string, N<string>, string[]][], [string, string, number][], [string, string[]][]][];
+};
+
+/** A stewards' decision on a driver: the session and the penalty codes ("T5", "G3", "R", "P2", ...). */
+export type StewardsDecision = { driverId: string; session: string | null; penalties: string[] };
+export type Stewards = {
+	raceId: number;
+	decisions: StewardsDecision[];
+	/** Lap times deleted for leaving the track. */
+	deleted: { session: string; driverId: string; laps: number }[];
+	/** Power unit elements fitted new at the event (ICE, TC, MGU-H, MGU-K, ES, CE, EX), per driver. */
+	newPu: Map<string, string[]>;
 };
 
 export type Weather = "dry" | "wet" | "mixed";
@@ -213,6 +229,9 @@ export type F1Data = {
 	/** Hand-entered race notes, with the signature of the results they belong to (laps.ts raceNote). */
 	raceNotes?: Map<number, RaceNote>;
 	raceNotesSig?: Map<number, string>;
+	/** The FIA's documents per race, with the signature of the results they belong to (stewards.ts). */
+	stewards?: Map<number, Stewards>;
+	stewardsSig?: Map<number, string>;
 	/** Set by universes that change a season's scoring; absent means historic era rules. */
 	rulesOverride?: Map<number, EraRules>;
 	/** Seasons a universe changed, for "differs from reality" markers. */
@@ -289,6 +308,18 @@ export function hydrate(raw: RawDataset): F1Data {
 		]),
 		results,
 	);
+	const fia = lapIndex<Stewards>(
+		(raw.stewards ?? []).map(([raceId, decisions, deleted, newPu]) => [
+			raceId,
+			{
+				raceId,
+				decisions: decisions.map(([driverId, session, penalties]) => ({ driverId, session, penalties })),
+				deleted: deleted.map(([session, driverId, laps]) => ({ session, driverId, laps })),
+				newPu: new Map(newPu),
+			},
+		]),
+		results,
+	);
 	return {
 		meta: raw.meta,
 		countries: new Map(raw.countries.map(([id, name, alpha2, demonym]) => [id, { id, name, alpha2, demonym }])),
@@ -349,6 +380,8 @@ export function hydrate(raw: RawDataset): F1Data {
 		sprintFastestSig: sprintFl.sig,
 		raceNotes: notes.leaders,
 		raceNotesSig: notes.sig,
+		stewards: fia.leaders,
+		stewardsSig: fia.sig,
 	};
 }
 

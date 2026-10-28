@@ -14,7 +14,8 @@
 //   facts/deep.ts      the buried ones: margins, finishers, podiums, birthdays, families, team-mates
 //   facts/careers.ts   new teams won for, rivals, teams' best results, new nations, best season starts
 //   facts/venue.ts     new and returning circuits, round-number runnings, races cut short
-//   facts/notes.ts     weather, safety cars, red flags, tyres (race notes) and pit stops
+//   facts/notes.ts     weather, safety cars, red flags and tyres (race notes)
+//   facts/stewards.ts  penalties, track limits, penalty points, reprimands and engines (FIA documents)
 //   facts/upcoming.ts  what's at stake at the next race
 
 import type { Db } from "./dataset.ts";
@@ -26,6 +27,7 @@ import { deepFacts } from "./facts/deep.ts";
 import { careerFacts } from "./facts/careers.ts";
 import { venueFacts } from "./facts/venue.ts";
 import { noteFacts } from "./facts/notes.ts";
+import { stewardsFacts } from "./facts/stewards.ts";
 
 export { factText, type FactKind, type RaceFact } from "./facts/shared.ts";
 export { nextRace, upcomingFacts } from "./facts/upcoming.ts";
@@ -42,6 +44,7 @@ export function raceFacts(db: Db, raceId: number, limit = 8): RaceFact[] {
 	careerFacts(db, f, add);
 	venueFacts(db, f, add);
 	noteFacts(db, f, add);
+	stewardsFacts(db, f, add);
 	return pick(out, limit);
 }
 

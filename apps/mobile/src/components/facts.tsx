@@ -1,7 +1,7 @@
 // Race facts (@pitwall/core/f1/race-facts) as sentences: "Did you know" on a race's screen, and what's
 // at stake at the next race. Names in the sentence open their screens, like the website's links.
 
-import { CalendarHeart, CloudRain, Crown, Flame, Gauge, Hash, History, Medal, Sparkles, TrafficCone, Trophy, Users, type LucideIcon } from "lucide-react-native";
+import { CalendarHeart, CloudRain, Crown, Flame, Gauge, Gavel, Hash, History, Medal, Sparkles, TrafficCone, Trophy, Users, type LucideIcon } from "lucide-react-native";
 import { View } from "react-native";
 import type { FactKind, RaceFact } from "@pitwall/core/f1/race-facts";
 import type { Cell } from "@pitwall/core/f1/records";
@@ -27,6 +27,7 @@ const ICON: Partial<Record<FactKind, LucideIcon>> = {
 	family: Users,
 	teammate: Users,
 	rival: Users,
+	stewards: Gavel,
 };
 
 /** A cell's words, and where it leads (none for plain text). */

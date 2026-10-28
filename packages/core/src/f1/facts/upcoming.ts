@@ -9,6 +9,7 @@ import { cGp, cSeason } from "../records/cells.ts";
 import { sharedRaces } from "../teammates.ts";
 import { venueNews } from "./venue.ts";
 import { safetyCarEvery } from "./notes.ts";
+import { pointsAt, POINTS_BAN } from "./stewards.ts";
 import { standingsAfter } from "../stats.ts";
 import { activeGrid, latestSeason, recentRates } from "../milestones.ts";
 import { pointsLeft } from "../views.ts";
@@ -199,6 +200,12 @@ export function upcomingFacts(db: Db, limit = 8): { race: Race; facts: RaceFact[
 			const [x, y] = top === "a" ? pair : [pair[1], pair[0]];
 			if (L >= 10) add("teammate", `driver:${x}:mate-${field}`, 1.5 + log2(L / 5), sentence(subject(db, "driver", x), ` has ${what} `, subject(db, "driver", y), ` in each of their last ${L} races together`));
 		}
+	}
+
+	// penalty points: closing on a race ban
+	for (const id of grid.drivers) {
+		const pts = pointsAt(db, id, race.date);
+		if (pts >= 8) add("stewards", `driver:${id}:points`, 3 + (pts - 8) * 0.8, sentence(subject(db, "driver", id), ` is on ${pts} penalty points over twelve months; ${POINTS_BAN} mean a race ban`));
 	}
 
 	// a birthday on race day

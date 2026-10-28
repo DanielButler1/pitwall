@@ -73,7 +73,7 @@ It only warns when a driver's number of stints doesn't match their pit stops. A 
   - 2015 Monaco was left out because the table contradicts itself.
   - 2022 on comes from the imports below.
 - **Weather:** each race article's infobox, read as dry, wet or mixed where its words were clear. It covers about 1,040 races.
-- **Compounds, 2019 on:** from each article's "Tyre choices" section, where it lists three C-numbers.
+- **Compounds, 2019 on:** from each article's "Tyre choices" section, where it lists three C-numbers. Rounds without them get them from Pirelli's preview in the FIA's documents (`node scripts/fia-docs.mjs notes`, see data/stewards/README.md).
 - **Tyres per driver before 2018:** none. No open source has them; that part is yours.
 
 Wikipedia's text is CC BY-SA 4.0. Facts themselves can't be owned, but to be safe, credit Wikipedia for this data and keep this folder under CC BY-SA 4.0.
@@ -93,7 +93,6 @@ OpenF1 is CC BY-NC-SA 4.0 and asks to be contacted about commercial use. FastF1'
 
 Only use sources you're allowed to copy facts from, and check them against each other. Don't copy from:
 - F1's live timing or anything else built on it (FastF1, and datasets made from them). OpenF1 is the exception above, until it's used commercially;
-- the FIA's documents;
 - formula1.com;
 - other F1 statistics websites.
 

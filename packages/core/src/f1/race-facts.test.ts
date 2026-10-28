@@ -6,6 +6,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { hydrate, indexData, resultsSig, type Db } from "./dataset.ts";
 import { raceNote } from "./laps.ts";
+import { stewardsOf } from "./stewards.ts";
+import { pointsAt, pointsAwards } from "./facts/stewards.ts";
 import { factText, raceFacts, upcomingFacts } from "./race-facts.ts";
 import { champions } from "./records/facts.ts";
 import { dataFile } from "../test-data.ts";
@@ -152,5 +154,18 @@ test("a first hat-trick or a new circuit really is the first", () => {
 			m = /^circuit:circuit:(.+):first$/.exec(f.key);
 			if (m) assert.ok(!done.slice(0, at).some((r) => r.circuitId === m![1]), factText(f.cells));
 		}
+	}
+});
+
+test("stewards' facts only come from races with the FIA's documents", () => {
+	for (const race of done.slice(-150)) {
+		const s = stewardsOf(real, race.id);
+		for (const f of raceFacts(real, race.id, 40)) if (f.kind === "stewards") assert.ok(s, factText(f.cells));
+	}
+	// penalty points only count the twelve months before
+	for (const [id, awards] of pointsAwards(real)) {
+		const [lastAt] = awards.at(-1)!;
+		const later = new Date(lastAt + 400 * 86_400_000).toISOString().slice(0, 10);
+		assert.equal(pointsAt(real, id, later), 0);
 	}
 });

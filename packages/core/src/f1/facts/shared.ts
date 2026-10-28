@@ -40,7 +40,8 @@ export type FactKind =
 	| "circuit"
 	| "rival"
 	| "team"
-	| "nation";
+	| "nation"
+	| "stewards";
 
 export type RaceFact = {
 	/** Stable identity, e.g. "since:constructor:ferrari:win". */

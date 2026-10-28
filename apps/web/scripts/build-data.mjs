@@ -21,6 +21,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildJolpica } from "./lib/jolpica.mjs";
 import { buildRaceNotes } from "./lib/race-notes.mjs";
+import { buildStewards } from "./lib/stewards.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = resolve(process.env.F1DB_DIR ?? join(root, "f1db"));
@@ -66,6 +67,9 @@ const jolpica = buildJolpica(jolpicaDir, { races, drivers, grandsPrix, raceResul
 const notes = buildRaceNotes(join(root, "data", "race-notes"), { races, drivers, raceResults }, jolpica?.files);
 for (const w of notes.warnings) console.log(`  race notes: ${w}`);
 if (notes.errors.length) throw new Error(`Race notes (data/race-notes) need fixing:\n  ${notes.errors.join("\n  ")}`);
+
+// the stewards' decisions and reports from the FIA's documents (scripts/fia-docs.mjs), 2019 on
+const stewards = buildStewards(join(root, "data", "stewards"), races);
 
 const resultYears = raceResults.map((r) => r.year);
 const lastCompletedYear = Math.max(...resultYears);
@@ -174,6 +178,9 @@ const dataset = {
 	// race notes: [raceId, weather, [[SC|VSC|RF, fromLap, toLap], ...], has tyres (in the race's lap file),
 	//  [[driverId, [compound, ...]], ...] where tyres were entered, for the race facts]
 	raceNotes: notes.rows,
+	// FIA documents: [raceId, [[driverId, session, [penalty code, ...]], ...], [[session, driverId, deleted lap times], ...],
+	//  [[driverId, [new power unit element, ...]], ...]] (scripts/lib/stewards.mjs)
+	stewards: stewards.rows,
 };
 
 const json = JSON.stringify(dataset);
@@ -190,6 +197,7 @@ for (const dir of [join(root, "data", "laps"), join(root, "public", "data", "lap
 	mkdirSync(dir, { recursive: true });
 	for (const [raceId, file] of raceFiles) writeFileSync(join(dir, `${raceId}.json`), JSON.stringify(file));
 }
+console.log(`Stewards: ${stewards.count.races} races, ${stewards.count.decisions} decisions`);
 console.log(`Race notes: ${notes.count.races} races (${notes.count.neutralised} SC/VSC/red flag periods, tyres for ${notes.count.tyres})`);
 if (jolpica) {
 	const sizes = [...jolpica.files.values()].map((f) => JSON.stringify(f).length).sort((a, b) => a - b);

@@ -1,7 +1,7 @@
 // Race facts (@pitwall/core/f1/race-facts) as sentences: "Did you know" on a race's page, and what's at
 // stake at the next race. The sentence's names link like everywhere else, without flags so it reads as text.
 
-import { CalendarHeart, CloudRain, Crown, Flame, Gauge, Hash, History, Medal, Sparkles, TrafficCone, Trophy, Users } from "lucide-react";
+import { CalendarHeart, CloudRain, Crown, Flame, Gauge, Gavel, Hash, History, Medal, Sparkles, TrafficCone, Trophy, Users } from "lucide-react";
 import type { FactKind, RaceFact } from "@pitwall/core/f1/race-facts";
 import type { Cell } from "@pitwall/core/f1/records";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,7 @@ const ICON: Partial<Record<FactKind, typeof Sparkles>> = {
 	family: Users,
 	teammate: Users,
 	rival: Users,
+	stewards: Gavel,
 };
 
 function Part({ cell }: { cell: Cell }) {
