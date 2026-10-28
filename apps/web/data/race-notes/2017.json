@@ -87,11 +87,17 @@
 				"type": "SC",
 				"from": 1,
 				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 10,
+				"to": 13
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2017_Canadian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2017_Canadian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"8": {
@@ -214,11 +220,22 @@
 				"type": "SC",
 				"from": 1,
 				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 8,
+				"to": 9
+			},
+			{
+				"type": "VSC",
+				"from": 46,
+				"to": 48
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2017_Japanese_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2017_Japanese_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"17": {

@@ -36,6 +36,8 @@ import { buttonVariants } from "../ui/button";
 import { ResultsExplorer } from "./results-explorer";
 import { TeammatesSection, keepSuffix, surname } from "./teammates";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { FactsSection } from "../facts";
+import type { FactEntry, RaceFact } from "@pitwall/core/f1/race-facts";
 
 const realOf = <T extends object>(real: T | null, key: keyof T, current: unknown) => (real && real[key] !== current ? num(Number(real[key])) : undefined);
 
@@ -53,7 +55,19 @@ function Milestone({ icon: Icon, label, children }: { icon: typeof CalendarDays;
  * `teammates` (driverTeammatesView) adds the head-to-head section; without it the page lists team-mates by races together.
  * `results`: universes pass the full results list; the real site fetches it.
  */
-export function DriverPage({ view, teammates, results }: { view: DriverView; teammates?: DriverTeammatesView | null; results?: EntityResult[] }) {
+export function DriverPage({
+	view,
+	teammates,
+	results,
+	facts,
+	upcoming,
+}: {
+	view: DriverView;
+	teammates?: DriverTeammatesView | null;
+	results?: EntityResult[];
+	facts?: FactEntry[] | null;
+	upcoming?: RaceFact[] | null;
+}) {
 	const d = view.driver;
 	const t = view.totals;
 	const r = view.realTotals;
@@ -136,6 +150,8 @@ export function DriverPage({ view, teammates, results }: { view: DriverView; tea
 					</Milestone>
 				)}
 			</div>
+
+			<FactsSection entries={facts} upcoming={upcoming} description="The career's standout moments" />
 
 			<div className={cn("grid gap-12", side && "2xl:grid-cols-[minmax(0,1fr)_340px] 2xl:gap-8")}>
 				<Section
@@ -276,7 +292,7 @@ export function DriverPage({ view, teammates, results }: { view: DriverView; tea
 const PHONE_DRIVERS = 4;
 
 /** `results`: universes pass the full results list; the real site fetches it. */
-export function ConstructorPage({ view, results }: { view: ConstructorView; results?: EntityResult[] }) {
+export function ConstructorPage({ view, results, facts, upcoming }: { view: ConstructorView; results?: EntityResult[]; facts?: FactEntry[] | null; upcoming?: RaceFact[] | null }) {
 	const t = view.totals;
 	const r = view.realTotals;
 	return (
@@ -304,6 +320,8 @@ export function ConstructorPage({ view, results }: { view: ConstructorView; resu
 				<StatCard label="Races" value={t.entries} href="#results-all" />
 				<StatCard label="Points" value={num(t.points)} real={realOf(r, "points", t.points)} />
 			</div>
+			<FactsSection entries={facts} upcoming={upcoming} description="The team's standout moments" />
+
 			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 				<Section title="Season by season">
 					<TableCard>
@@ -477,7 +495,7 @@ export function CircuitsPage({ view }: { view: CircuitsView }) {
 	);
 }
 
-export function CircuitPage({ view }: { view: CircuitView }) {
+export function CircuitPage({ view, facts, upcoming }: { view: CircuitView; facts?: FactEntry[] | null; upcoming?: RaceFact[] | null }) {
 	const c = view.circuit;
 	const multiGp = view.grandsPrix.length > 1;
 	return (
@@ -505,6 +523,8 @@ export function CircuitPage({ view }: { view: CircuitView }) {
 				<StatCard label="Turns" value={c.turns} />
 				<StatCard label="Direction" value={<span className="capitalize">{c.direction.toLowerCase().replace("_", "-")}</span>} />
 			</div>
+			<FactsSection entries={facts} upcoming={upcoming} description="Standout moments from its races" />
+
 			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_360px] 2xl:gap-8">
 				<Section title="Races held">
 					<TableCard>

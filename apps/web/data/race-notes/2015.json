@@ -148,13 +148,24 @@
 			},
 			{
 				"type": "SC",
+				"from": 16,
+				"to": 19
+			},
+			{
+				"type": "VSC",
+				"from": 36,
+				"to": 36
+			},
+			{
+				"type": "SC",
 				"from": 37,
 				"to": 41
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2015_Singapore_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2015_Singapore_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"14": {

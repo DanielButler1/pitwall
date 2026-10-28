@@ -101,13 +101,19 @@
 		"weather": "wet",
 		"neutralised": [
 			{
+				"type": "SC",
+				"from": 4,
+				"to": 11
+			},
+			{
 				"type": "RF",
 				"lap": 15
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/1994_Japanese_Grand_Prix"
+			"https://en.wikipedia.org/wiki/1994_Japanese_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"16": {

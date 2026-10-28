@@ -31,6 +31,8 @@ import { Badge } from "../ui/badge";
 import { buttonVariants } from "../ui/button";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "../ui/empty";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { FactsSection } from "../facts";
+import type { FactEntry, RaceFact } from "@pitwall/core/f1/race-facts";
 
 const blank = (n: number | null | undefined) => (n ? num(n) : "");
 
@@ -127,7 +129,7 @@ export function GrandsPrixPage({ view }: { view: GrandsPrixView }) {
 	);
 }
 
-export function GrandPrixPage({ view }: { view: GrandPrixView }) {
+export function GrandPrixPage({ view, facts, upcoming }: { view: GrandPrixView; facts?: FactEntry[] | null; upcoming?: RaceFact[] | null }) {
 	const t = view.totals;
 	const top = view.topDrivers[0];
 	return (
@@ -162,6 +164,8 @@ export function GrandPrixPage({ view }: { view: GrandPrixView }) {
 				<StatCard label="Different winners" value={t.winners} />
 				<StatCard label={top ? `Most wins (${top.wins})` : "Most wins"} value={top ? <DriverLink driver={top.driver} /> : "–"} />
 			</div>
+
+			<FactsSection entries={facts} upcoming={upcoming} description="Standout moments from its runnings" />
 
 			<div className="grid grid-cols-1 gap-12 2xl:grid-cols-[minmax(0,1fr)_380px] 2xl:gap-8">
 				<Section title="Every edition">

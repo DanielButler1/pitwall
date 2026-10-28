@@ -10,8 +10,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Bahrain%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H H",
+			"max-verstappen": "M M H",
+			"valtteri-bottas": "M H H M",
+			"lando-norris": "S M H",
+			"sergio-perez": "M M H M",
+			"charles-leclerc": "S M H",
+			"daniel-ricciardo": "S M H",
+			"carlos-sainz-jr": "S M H",
+			"yuki-tsunoda": "M H H",
+			"lance-stroll": "S M H",
+			"kimi-raikkonen": "M H M",
+			"antonio-giovinazzi": "M H M",
+			"esteban-ocon": "S M H",
+			"george-russell": "S M M",
+			"sebastian-vettel": "M H",
+			"mick-schumacher": "M M H",
+			"pierre-gasly": "M H M H",
+			"nicholas-latifi": "S M M",
+			"fernando-alonso": "S M H",
+			"nikita-mazepin": "M"
+		}
 	},
 	"2": {
 		"weather": "mixed",
@@ -29,8 +52,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Emilia%20Romagna%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "I M",
+			"lewis-hamilton": "I M",
+			"lando-norris": "I M S",
+			"charles-leclerc": "I M",
+			"carlos-sainz-jr": "I M",
+			"daniel-ricciardo": "I M S",
+			"pierre-gasly": "W I M",
+			"lance-stroll": "I M",
+			"esteban-ocon": "W I M S M",
+			"fernando-alonso": "I M",
+			"sergio-perez": "I M S",
+			"yuki-tsunoda": "I M S",
+			"kimi-raikkonen": "I M",
+			"antonio-giovinazzi": "I M",
+			"sebastian-vettel": "I I M S",
+			"mick-schumacher": "W I S M",
+			"nikita-mazepin": "W I S M",
+			"valtteri-bottas": "I M",
+			"george-russell": "I M",
+			"nicholas-latifi": "I"
+		}
 	},
 	"3": {
 		"neutralised": [
@@ -41,8 +87,32 @@
 			}
 		],
 		"sources": [
-			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
-		]
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://github.com/TracingInsights/2021/tree/main/Portuguese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"max-verstappen": "M H S",
+			"valtteri-bottas": "M H S",
+			"sergio-perez": "M S",
+			"lando-norris": "S M",
+			"charles-leclerc": "M H",
+			"esteban-ocon": "S H",
+			"fernando-alonso": "M H",
+			"daniel-ricciardo": "M H",
+			"pierre-gasly": "S M",
+			"carlos-sainz-jr": "S M",
+			"antonio-giovinazzi": "M H",
+			"sebastian-vettel": "S M",
+			"lance-stroll": "S M",
+			"yuki-tsunoda": "M H",
+			"george-russell": "M H",
+			"mick-schumacher": "M H",
+			"nicholas-latifi": "M H",
+			"nikita-mazepin": "M H S",
+			"kimi-raikkonen": "S"
+		},
+		"weather": "dry"
 	},
 	"4": {
 		"weather": "dry",
@@ -55,8 +125,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Spanish_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Spanish%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M M",
+			"max-verstappen": "S M S",
+			"valtteri-bottas": "S M S",
+			"charles-leclerc": "S M S",
+			"sergio-perez": "S M S",
+			"daniel-ricciardo": "S M S",
+			"carlos-sainz-jr": "S M S",
+			"lando-norris": "S M S",
+			"esteban-ocon": "S M",
+			"pierre-gasly": "S M S",
+			"lance-stroll": "S M S",
+			"kimi-raikkonen": "M S",
+			"sebastian-vettel": "S M S",
+			"george-russell": "S M M",
+			"antonio-giovinazzi": "S M S",
+			"nicholas-latifi": "S M M S",
+			"fernando-alonso": "S M S",
+			"mick-schumacher": "S M M",
+			"nikita-mazepin": "S M M",
+			"yuki-tsunoda": "S"
+		}
 	},
 	"5": {
 		"weather": "dry",
@@ -66,8 +159,31 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Monaco_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Monaco%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "S H",
+			"carlos-sainz-jr": "S H",
+			"lando-norris": "S H",
+			"sergio-perez": "S H",
+			"sebastian-vettel": "S H",
+			"pierre-gasly": "S H",
+			"lewis-hamilton": "S H S",
+			"lance-stroll": "H S",
+			"esteban-ocon": "S M",
+			"antonio-giovinazzi": "S H",
+			"kimi-raikkonen": "M H",
+			"daniel-ricciardo": "M H",
+			"fernando-alonso": "M S",
+			"george-russell": "M H",
+			"nicholas-latifi": "M H",
+			"yuki-tsunoda": "H S",
+			"nikita-mazepin": "S H",
+			"mick-schumacher": "S H",
+			"valtteri-bottas": "S",
+			"charles-leclerc": "S"
+		}
 	},
 	"6": {
 		"weather": "dry",
@@ -90,20 +206,89 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Azerbaijan_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Azerbaijan_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Azerbaijan%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sergio-perez": "S H S",
+			"sebastian-vettel": "S H S",
+			"pierre-gasly": "S H S",
+			"charles-leclerc": "S H S",
+			"lando-norris": "S H S",
+			"fernando-alonso": "S H S",
+			"yuki-tsunoda": "S H S",
+			"carlos-sainz-jr": "S H S",
+			"daniel-ricciardo": "S H S",
+			"kimi-raikkonen": "M H S",
+			"antonio-giovinazzi": "S H H S",
+			"valtteri-bottas": "S H S",
+			"mick-schumacher": "S H S",
+			"nikita-mazepin": "S H S S",
+			"lewis-hamilton": "S H S",
+			"nicholas-latifi": "M H S",
+			"george-russell": "M H H S",
+			"max-verstappen": "S H",
+			"lance-stroll": "H",
+			"esteban-ocon": "S"
+		}
 	},
 	"7": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_French_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_French_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/French%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H M",
+			"lewis-hamilton": "M H",
+			"sergio-perez": "M H",
+			"valtteri-bottas": "M H",
+			"lando-norris": "M H",
+			"daniel-ricciardo": "M H",
+			"pierre-gasly": "M H",
+			"fernando-alonso": "M H",
+			"sebastian-vettel": "H M",
+			"lance-stroll": "H S",
+			"carlos-sainz-jr": "M H",
+			"george-russell": "M H",
+			"yuki-tsunoda": "M H",
+			"esteban-ocon": "H M",
+			"antonio-giovinazzi": "H M",
+			"charles-leclerc": "M H M",
+			"kimi-raikkonen": "H M",
+			"nicholas-latifi": "M H",
+			"mick-schumacher": "M H",
+			"nikita-mazepin": "H M"
+		}
 	},
 	"8": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_Styrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Styrian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Styrian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"lewis-hamilton": "M H S",
+			"valtteri-bottas": "M H",
+			"sergio-perez": "S H M",
+			"lando-norris": "S H",
+			"carlos-sainz-jr": "M H",
+			"charles-leclerc": "S H M",
+			"lance-stroll": "S H",
+			"fernando-alonso": "S H",
+			"yuki-tsunoda": "S H",
+			"kimi-raikkonen": "H M",
+			"sebastian-vettel": "M H",
+			"daniel-ricciardo": "M H",
+			"esteban-ocon": "M H",
+			"antonio-giovinazzi": "M H",
+			"mick-schumacher": "M H",
+			"nicholas-latifi": "M S H",
+			"nikita-mazepin": "M H",
+			"george-russell": "M H",
+			"pierre-gasly": "S"
+		}
 	},
 	"9": {
 		"weather": "dry",
@@ -116,8 +301,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Austrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Austrian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Austrian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"valtteri-bottas": "M H",
+			"lando-norris": "M H",
+			"lewis-hamilton": "M H H",
+			"carlos-sainz-jr": "H M",
+			"sergio-perez": "M H",
+			"daniel-ricciardo": "M H",
+			"charles-leclerc": "M H",
+			"pierre-gasly": "S H H",
+			"fernando-alonso": "M H",
+			"george-russell": "M H",
+			"yuki-tsunoda": "S H H",
+			"lance-stroll": "S H H",
+			"antonio-giovinazzi": "M H H",
+			"kimi-raikkonen": "H M",
+			"nicholas-latifi": "M H",
+			"sebastian-vettel": "S H H",
+			"mick-schumacher": "M H",
+			"nikita-mazepin": "M H H",
+			"esteban-ocon": "M"
+		}
 	},
 	"10": {
 		"weather": "dry",
@@ -129,8 +337,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2021_British_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_British_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/British%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M M H",
+			"charles-leclerc": "M M H",
+			"valtteri-bottas": "M M H",
+			"lando-norris": "M H",
+			"daniel-ricciardo": "M H",
+			"carlos-sainz-jr": "M M H",
+			"fernando-alonso": "M H",
+			"lance-stroll": "M M H",
+			"esteban-ocon": "M M H",
+			"yuki-tsunoda": "M H",
+			"pierre-gasly": "M H S",
+			"george-russell": "M M H",
+			"antonio-giovinazzi": "M M H",
+			"nicholas-latifi": "M M H",
+			"kimi-raikkonen": "M M H",
+			"sergio-perez": "H M M S",
+			"nikita-mazepin": "M M H",
+			"mick-schumacher": "M M H",
+			"sebastian-vettel": "M H",
+			"max-verstappen": "M"
+		}
 	},
 	"11": {
 		"weather": "mixed",
@@ -153,8 +384,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Hungarian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Hungarian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"esteban-ocon": "I I M H",
+			"lewis-hamilton": "I I M H M",
+			"carlos-sainz-jr": "I I M H",
+			"fernando-alonso": "I I M H",
+			"pierre-gasly": "I I M H S",
+			"yuki-tsunoda": "I I M H",
+			"nicholas-latifi": "I I M H",
+			"george-russell": "I I M H",
+			"max-verstappen": "I M H M",
+			"kimi-raikkonen": "I I M H S",
+			"daniel-ricciardo": "I I M H",
+			"mick-schumacher": "I I M H",
+			"antonio-giovinazzi": "M I M H",
+			"nikita-mazepin": "I",
+			"lando-norris": "I",
+			"valtteri-bottas": "I",
+			"sergio-perez": "I",
+			"charles-leclerc": "I",
+			"lance-stroll": "I",
+			"sebastian-vettel": "I I M H"
+		}
 	},
 	"12": {
 		"weather": "wet",
@@ -177,8 +431,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Belgian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Belgian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "?",
+			"george-russell": "?",
+			"lewis-hamilton": "?",
+			"daniel-ricciardo": "?",
+			"sebastian-vettel": "?",
+			"pierre-gasly": "?",
+			"esteban-ocon": "?",
+			"charles-leclerc": "?",
+			"nicholas-latifi": "?",
+			"carlos-sainz-jr": "?",
+			"fernando-alonso": "?",
+			"valtteri-bottas": "?",
+			"antonio-giovinazzi": "?",
+			"lando-norris": "?",
+			"yuki-tsunoda": "?",
+			"mick-schumacher": "?",
+			"nikita-mazepin": "?",
+			"kimi-raikkonen": "?",
+			"sergio-perez": "?",
+			"lance-stroll": "?"
+		}
 	},
 	"13": {
 		"weather": "dry",
@@ -188,8 +465,31 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_Dutch_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Dutch_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Dutch%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "S M H",
+			"lewis-hamilton": "S M M S",
+			"valtteri-bottas": "S M S",
+			"pierre-gasly": "S M",
+			"charles-leclerc": "S H",
+			"fernando-alonso": "S M",
+			"carlos-sainz-jr": "S H",
+			"sergio-perez": "H M S",
+			"esteban-ocon": "S M",
+			"lando-norris": "M H",
+			"daniel-ricciardo": "S H",
+			"lance-stroll": "S H",
+			"sebastian-vettel": "S H M",
+			"antonio-giovinazzi": "S M H",
+			"robert-kubica": "M H",
+			"nicholas-latifi": "M H",
+			"george-russell": "M H S",
+			"mick-schumacher": "S H M",
+			"yuki-tsunoda": "S M",
+			"nikita-mazepin": "M H"
+		}
 	},
 	"14": {
 		"weather": "dry",
@@ -212,8 +512,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Italian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Italian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"daniel-ricciardo": "M H",
+			"lando-norris": "M H",
+			"valtteri-bottas": "H M",
+			"charles-leclerc": "M H",
+			"sergio-perez": "M H",
+			"carlos-sainz-jr": "M H",
+			"lance-stroll": "M H",
+			"fernando-alonso": "M H",
+			"george-russell": "M H",
+			"esteban-ocon": "M H",
+			"nicholas-latifi": "M H",
+			"sebastian-vettel": "M H M",
+			"antonio-giovinazzi": "M H M",
+			"robert-kubica": "H M",
+			"mick-schumacher": "M H",
+			"nikita-mazepin": "M S H S",
+			"lewis-hamilton": "H",
+			"max-verstappen": "M H",
+			"pierre-gasly": "H",
+			"yuki-tsunoda": "M"
+		}
 	},
 	"15": {
 		"weather": "mixed",
@@ -223,14 +546,60 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_Russian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Russian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Russian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H I",
+			"max-verstappen": "H M I",
+			"carlos-sainz-jr": "M H I",
+			"daniel-ricciardo": "M H I",
+			"valtteri-bottas": "H M I",
+			"fernando-alonso": "H M I",
+			"lando-norris": "M H I",
+			"kimi-raikkonen": "M H I",
+			"sergio-perez": "H M I",
+			"george-russell": "M H I",
+			"lance-stroll": "M H I",
+			"sebastian-vettel": "M H I",
+			"pierre-gasly": "H M I",
+			"esteban-ocon": "M H I",
+			"charles-leclerc": "H M I",
+			"antonio-giovinazzi": "H M I",
+			"yuki-tsunoda": "M H S I",
+			"nikita-mazepin": "M H I",
+			"nicholas-latifi": "M H",
+			"mick-schumacher": "M H"
+		}
 	},
 	"16": {
-		"weather": "mixed",
+		"weather": "wet",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_Turkish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Turkish_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Turkish%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "I I",
+			"max-verstappen": "I I",
+			"sergio-perez": "I I",
+			"charles-leclerc": "I I",
+			"lewis-hamilton": "I I",
+			"pierre-gasly": "I I",
+			"lando-norris": "I I",
+			"carlos-sainz-jr": "I I",
+			"lance-stroll": "I I",
+			"esteban-ocon": "I",
+			"antonio-giovinazzi": "I I",
+			"kimi-raikkonen": "I I",
+			"daniel-ricciardo": "I I",
+			"yuki-tsunoda": "I I",
+			"george-russell": "I I",
+			"fernando-alonso": "I I",
+			"nicholas-latifi": "I I",
+			"sebastian-vettel": "I M I",
+			"mick-schumacher": "I I",
+			"nikita-mazepin": "I I"
+		}
 	},
 	"17": {
 		"weather": "dry",
@@ -248,8 +617,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_United_States_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_United_States_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/United%20States%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"lewis-hamilton": "M H H",
+			"sergio-perez": "M M H",
+			"charles-leclerc": "M H H",
+			"daniel-ricciardo": "M H H",
+			"valtteri-bottas": "M H H",
+			"carlos-sainz-jr": "S H H",
+			"lando-norris": "M H H",
+			"yuki-tsunoda": "S H H",
+			"sebastian-vettel": "M M H",
+			"antonio-giovinazzi": "M M H",
+			"lance-stroll": "M M H",
+			"kimi-raikkonen": "M M H",
+			"george-russell": "M H H",
+			"nicholas-latifi": "M H H",
+			"mick-schumacher": "M H M",
+			"nikita-mazepin": "M H M M",
+			"fernando-alonso": "M H H M",
+			"esteban-ocon": "M H M",
+			"pierre-gasly": "M H"
+		}
 	},
 	"18": {
 		"weather": "dry",
@@ -259,8 +651,39 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2021_Mexican_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Mexican_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2021/tree/main/Mexico%20City%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"lewis-hamilton": "M H",
+			"sergio-perez": "M H",
+			"pierre-gasly": "M H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"sebastian-vettel": "M H",
+			"kimi-raikkonen": "M H",
+			"fernando-alonso": "M H",
+			"lando-norris": "M H",
+			"antonio-giovinazzi": "M H",
+			"daniel-ricciardo": "M H M",
+			"esteban-ocon": "S H",
+			"lance-stroll": "M H M",
+			"valtteri-bottas": "M H M S S",
+			"george-russell": "M H",
+			"nicholas-latifi": "M H M",
+			"nikita-mazepin": "M H M",
+			"mick-schumacher": "M",
+			"yuki-tsunoda": "S"
+		}
 	},
 	"19": {
 		"weather": "dry",
@@ -288,8 +711,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_S%C3%A3o_Paulo_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_S%C3%A3o_Paulo_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/S%C3%A3o%20Paulo%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H H",
+			"max-verstappen": "M H H",
+			"valtteri-bottas": "M H H",
+			"sergio-perez": "M H H S",
+			"charles-leclerc": "M M H",
+			"carlos-sainz-jr": "M M H",
+			"pierre-gasly": "M H H",
+			"esteban-ocon": "M H",
+			"fernando-alonso": "M H",
+			"lando-norris": "M H",
+			"sebastian-vettel": "M H M",
+			"kimi-raikkonen": "M H M",
+			"george-russell": "M H H",
+			"antonio-giovinazzi": "M H M",
+			"yuki-tsunoda": "S H H",
+			"nicholas-latifi": "M H H",
+			"nikita-mazepin": "M H",
+			"mick-schumacher": "M H M M",
+			"daniel-ricciardo": "M H",
+			"lance-stroll": "M H"
+		}
 	},
 	"20": {
 		"weather": "dry",
@@ -307,8 +753,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Qatar_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Qatar_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Qatar%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H M",
+			"max-verstappen": "M H M S",
+			"fernando-alonso": "S H",
+			"sergio-perez": "M H M",
+			"esteban-ocon": "S H",
+			"lance-stroll": "M H",
+			"carlos-sainz-jr": "M H",
+			"charles-leclerc": "M H",
+			"lando-norris": "S H M",
+			"sebastian-vettel": "S M",
+			"pierre-gasly": "S M M",
+			"daniel-ricciardo": "M H",
+			"yuki-tsunoda": "S M H",
+			"kimi-raikkonen": "S M H",
+			"antonio-giovinazzi": "S M M",
+			"mick-schumacher": "S M",
+			"george-russell": "S H S",
+			"nikita-mazepin": "M S",
+			"nicholas-latifi": "S H",
+			"valtteri-bottas": "M H"
+		}
 	},
 	"21": {
 		"weather": "dry",
@@ -346,8 +815,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Saudi_Arabian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Saudi_Arabian_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Saudi%20Arabian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"max-verstappen": "M H M",
+			"valtteri-bottas": "M H M",
+			"esteban-ocon": "M H",
+			"daniel-ricciardo": "H M",
+			"pierre-gasly": "M H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "H M",
+			"antonio-giovinazzi": "M H",
+			"lando-norris": "S H",
+			"lance-stroll": "M H M",
+			"nicholas-latifi": "M H M H",
+			"fernando-alonso": "M H S",
+			"yuki-tsunoda": "M H M H",
+			"kimi-raikkonen": "M H M",
+			"sebastian-vettel": "H M M",
+			"sergio-perez": "M H M",
+			"nikita-mazepin": "M H",
+			"george-russell": "M H",
+			"mick-schumacher": "M"
+		}
 	},
 	"22": {
 		"weather": "dry",
@@ -365,7 +857,29 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2021_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2021_Abu_Dhabi_Grand_Prix",
+			"https://github.com/TracingInsights/2021/tree/main/Abu%20Dhabi%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "S H H S",
+			"lewis-hamilton": "M H",
+			"carlos-sainz-jr": "S H",
+			"yuki-tsunoda": "M H S",
+			"pierre-gasly": "H M S",
+			"valtteri-bottas": "M H",
+			"lando-norris": "S H M",
+			"fernando-alonso": "H M",
+			"esteban-ocon": "S H",
+			"charles-leclerc": "S H M",
+			"sebastian-vettel": "M H",
+			"daniel-ricciardo": "S H S",
+			"lance-stroll": "M H S",
+			"mick-schumacher": "S H S",
+			"sergio-perez": "S H H S",
+			"nicholas-latifi": "M H",
+			"antonio-giovinazzi": "M H",
+			"george-russell": "M",
+			"kimi-raikkonen": "M H"
+		}
 	}
 }

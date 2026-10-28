@@ -57,7 +57,15 @@
 	"5": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2006_European_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2006_European_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 3,
+				"to": 4
+			}
 		]
 	},
 	"6": {
@@ -73,11 +81,17 @@
 				"type": "SC",
 				"from": 47,
 				"to": 49
+			},
+			{
+				"type": "SC",
+				"from": 51,
+				"to": 53
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2006_Monaco_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2006_Monaco_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"8": {

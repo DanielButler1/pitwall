@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { RacePage } from "@/components/pages/race";
 import { describe, getDb } from "@/lib/server";
 import { raceView } from "@pitwall/core/f1/views";
+import { factsFor, sprintFacts } from "@pitwall/core/f1/race-facts";
 import { prebuild } from "@/lib/static-params";
 
 type Props = { params: Promise<{ year: string; round: string }> };
@@ -22,5 +23,5 @@ export default async function Page({ params }: Props) {
 	const view = raceView(getDb(), Number(year), Number(round));
 	if (!view) notFound();
 	// the lap chart and pit stops fetch /data/laps/<raceId>.json when their tab opens, keeping the page small
-	return <RacePage view={view} labHref={`/lab?race=${view.raceId}`} />;
+	return <RacePage view={view} labHref={`/lab?race=${view.raceId}`} facts={{ ...factsFor(getDb(), view.raceId), sprint: sprintFacts(getDb(), view.raceId) }} />;
 }

@@ -21,6 +21,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildJolpica } from "./lib/jolpica.mjs";
 import { buildRaceNotes } from "./lib/race-notes.mjs";
+import { buildStewards } from "./lib/stewards.mjs";
+import { buildCalendar } from "./lib/calendar.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = resolve(process.env.F1DB_DIR ?? join(root, "f1db"));
@@ -67,6 +69,14 @@ const notes = buildRaceNotes(join(root, "data", "race-notes"), { races, drivers,
 for (const w of notes.warnings) console.log(`  race notes: ${w}`);
 if (notes.errors.length) throw new Error(`Race notes (data/race-notes) need fixing:\n  ${notes.errors.join("\n  ")}`);
 
+// the stewards' decisions and reports from the FIA's documents (scripts/fia-docs.mjs), 2019 on
+const stewards = buildStewards(join(root, "data", "stewards"), races);
+
+// announced calendars and line-ups for seasons F1DB doesn't have yet: see data/calendar/README.md
+const calendar = buildCalendar(join(root, "data", "calendar"), { races, circuits, grandsPrix, drivers, constructors, engines, entrants: seasonEntrantsDrivers });
+for (const w of calendar.warnings) console.log(`  calendar: ${w}`);
+if (calendar.errors.length) throw new Error(`Calendars (data/calendar) need fixing:\n  ${calendar.errors.join("\n  ")}`);
+
 const resultYears = raceResults.map((r) => r.year);
 const lastCompletedYear = Math.max(...resultYears);
 
@@ -83,7 +93,7 @@ const dataset = {
 	// [id, name, alpha2, demonym]
 	countries: countries.map((c) => [c.id, c.name, c.alpha2Code, nn(c.demonym)]),
 	// [id, name, firstName, lastName, abbreviation, permanentNumber, dateOfBirth, dateOfDeath, nationalityCountryId, placeOfBirth, gender]
-	drivers: drivers.map((d) => [
+	drivers: drivers.concat(calendar.drivers).map((d) => [
 		d.id, d.name, d.firstName, d.lastName, nn(d.abbreviation), nn(d.permanentNumber),
 		nn(d.dateOfBirth), nn(d.dateOfDeath), d.nationalityCountryId, nn(d.placeOfBirth), d.gender === "FEMALE" ? "F" : "M",
 	]),
@@ -102,19 +112,20 @@ const dataset = {
 	]),
 	// [id, name, fullName, shortName, countryId]
 	grandsPrix: grandsPrix.map((g) => [g.id, g.name, g.fullName, g.shortName, g.countryId]),
-	// [id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qualifyingFormat]
+	// [id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qualifyingFormat, scheduledLaps]
 	races: races.map((r) => [
 		r.id, r.year, r.round, r.date, r.grandPrixId, r.circuitId, r.officialName,
-		r.laps, r.distance, r.courseLength, flag(r.sprintRaceDate), r.qualifyingFormat,
-	]),
+		r.laps, r.distance, r.courseLength, flag(r.sprintRaceDate), r.qualifyingFormat, nn(r.scheduledLaps),
+	]).concat(calendar.races),
 	// [raceId, positionNumber, positionText, driverId, constructorId, engineId, number,
-	//  grid, laps, time, gap, reasonRetired, points, fastestLap, pole, sharedCar, qualifyingPosition, tyreId, grandSlam]
+	//  grid, laps, time, gap, reasonRetired, points, fastestLap, pole, sharedCar, qualifyingPosition, tyreId, grandSlam,
+	//  driverOfTheDay]
 	results: raceResults.map((r) => [
 		r.raceId, nn(r.positionNumber), r.positionText, r.driverId, r.constructorId,
 		r.engineManufacturerId, nn(r.driverNumber), nn(r.gridPositionNumber), nn(r.laps),
 		nn(r.time), nn(r.gap), nn(r.reasonRetired), nn(r.points), flag(r.fastestLap),
 		flag(r.polePosition), flag(r.sharedCar), nn(r.qualificationPositionNumber),
-		nn(r.tyreManufacturerId), flag(r.grandSlam),
+		nn(r.tyreManufacturerId), flag(r.grandSlam), flag(r.driverOfTheDay),
 	]),
 	// same tuple shape as results
 	sprintResults: sprintResults.map((r) => [
@@ -122,7 +133,7 @@ const dataset = {
 		r.engineManufacturerId, nn(r.driverNumber), nn(r.gridPositionNumber), nn(r.laps),
 		nn(r.time), nn(r.gap), nn(r.reasonRetired), nn(r.points), flag(r.fastestLap),
 		flag(r.polePosition), flag(r.sharedCar), nn(r.qualificationPositionNumber),
-		nn(r.tyreManufacturerId), flag(r.grandSlam),
+		nn(r.tyreManufacturerId), flag(r.grandSlam), flag(r.driverOfTheDay),
 	]),
 	// [raceId, positionNumber, positionText, driverId, constructorId, time, q1, q2, q3]
 	qualifying: qualifying.map((q) => [
@@ -146,7 +157,8 @@ const dataset = {
 	// [year, constructorId, engineId, driverId]
 	upcomingEntrants: seasonEntrantsDrivers
 		.filter((e) => e.year > lastCompletedYear && !e.testDriver)
-		.map((e) => [e.year, e.constructorId, e.engineManufacturerId, e.driverId]),
+		.map((e) => [e.year, e.constructorId, e.engineManufacturerId, e.driverId])
+		.concat(calendar.entrants),
 	// Friday/practice-only drivers (F1DB test drivers who never entered a race):
 	// [driverId, practice weekends, firstYear, lastYear, constructorIds]
 	thirdDrivers: (() => {
@@ -170,14 +182,27 @@ const dataset = {
 	sprintLapLeaders: jolpica?.sprintLapLeaders ?? [],
 	// Jolpica: fastest lap of each sprint race: [raceId, driverId, lap, timeMs]
 	sprintFastestLaps: jolpica?.sprintFastestLaps ?? [],
-	// race notes: [raceId, weather, [[SC|VSC|RF, fromLap, toLap], ...], has tyres (in the race's lap file)]
+	// race notes: [raceId, weather, [[SC|VSC|RF, fromLap, toLap], ...], has tyres (in the race's lap file),
+	//  [[driverId, [compound, ...]], ...] where tyres were entered, for the race facts]
 	raceNotes: notes.rows,
+	// FIA documents: [raceId, [[driverId, session, [penalty code, ...]], ...], [[session, driverId, deleted lap times], ...],
+	//  [[driverId, [new power unit element, ...]], ...]] (scripts/lib/stewards.mjs)
+	stewards: stewards.rows,
 };
 
 const json = JSON.stringify(dataset);
 for (const out of [join(root, "data", "f1.json"), join(root, "public", "data", "f1.json")]) {
 	mkdirSync(dirname(out), { recursive: true });
 	writeFileSync(out, json);
+}
+// every race's facts, worked out once (about ten seconds) for the season, career and venue pages and the app
+{
+	const { hydrate, indexData } = await import("../../../packages/core/src/f1/dataset.ts");
+	const { factIndex, packFacts } = await import("../../../packages/core/src/f1/race-facts.ts");
+	const db = indexData(hydrate(JSON.parse(json)));
+	const facts = JSON.stringify(packFacts(db, factIndex(db)));
+	for (const out of [join(root, "data", "facts.json"), join(root, "public", "data", "facts.json")]) writeFileSync(out, facts);
+	console.log(`Facts: ${db.races.filter((r) => db.resultsByRace.has(r.id)).length} races, ${Math.round(facts.length / 1024)} KB`);
 }
 // per-race lap charts, pit stops and tyres, loaded on demand by the race page
 const raceFiles = new Map(jolpica?.files ?? []);
@@ -188,6 +213,8 @@ for (const dir of [join(root, "data", "laps"), join(root, "public", "data", "lap
 	mkdirSync(dir, { recursive: true });
 	for (const [raceId, file] of raceFiles) writeFileSync(join(dir, `${raceId}.json`), JSON.stringify(file));
 }
+console.log(`Calendars: ${calendar.years.length ? `${calendar.years.join(", ")} (${calendar.races.length} races, ${calendar.entrants.length} drivers, ${calendar.drivers.length} new to F1DB)` : "none needed"}`);
+console.log(`Stewards: ${stewards.count.races} races, ${stewards.count.decisions} decisions`);
 console.log(`Race notes: ${notes.count.races} races (${notes.count.neutralised} SC/VSC/red flag periods, tyres for ${notes.count.tyres})`);
 if (jolpica) {
 	const sizes = [...jolpica.files.values()].map((f) => JSON.stringify(f).length).sort((a, b) => a - b);

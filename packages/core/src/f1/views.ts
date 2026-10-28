@@ -175,7 +175,7 @@ export type TitleFight<R> = {
  * Most points one driver (or, with `team`, one two-car constructor) can still score in these
  * races under the season's rules; null when dropped results or best-car-only scoring make it unclear.
  */
-function pointsLeft(db: Db, year: number, races: Race[], team = false): number | null {
+export function pointsLeft(db: Db, year: number, races: Race[], team = false): number | null {
 	const rules = rulesFor(db, year);
 	const s = rules.system;
 	if (s.bestResults || (team ? rules.constructorDrop.type !== "all" || rules.constructorBestCarOnly || !rules.hasConstructorsChampionship : rules.driverDrop.type !== "all")) return null;

@@ -9,7 +9,9 @@ import { NEUTRAL_LABEL } from "@pitwall/core/f1/laps";
 import { raceView, type RaceView, type ResultRow } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
-import { useUniverseBase, useView } from "@/data/dataset";
+import { useDeferredView, useUniverseBase, useView } from "@/data/dataset";
+import { factsFor, sprintFacts } from "@pitwall/core/f1/race-facts";
+import { FactList } from "@/components/facts";
 import { createUniverse } from "@/features/lab/engine/store";
 import { cn } from "@/lib/cn";
 import { fmtDate, num } from "@/lib/format";
@@ -205,6 +207,13 @@ export function RaceScreen() {
 	const round = Number(params.round);
 	const base = useUniverseBase();
 	const view = useView((db) => raceView(db, year, round, base), [year, round, base]);
+	const facts = useDeferredView(
+		(db) => {
+			const race = db.racesByYear.get(year)?.find((r) => r.round === round);
+			return race ? { ...factsFor(db, race.id), sprint: race.hasSprint ? sprintFacts(db, race.id) : [] } : null;
+		},
+		[year, round, base],
+	);
 	const open = useOpen();
 	const [tab, setTab] = useState<Tab>("race");
 	if (!view) {
@@ -267,6 +276,12 @@ export function RaceScreen() {
 					<Stat label="Distance" value={`${num(view.distance)} km`} detail={view.laps > 0 ? `${num(Math.round((view.distance / view.laps) * 1000) / 1000)} km a lap` : null} />
 				</StatGrid>
 
+				{facts?.facts.length ? (
+					<Section title={facts.upcoming ? "What's at stake" : "Did you know?"}>
+						<FactList facts={facts.facts} />
+					</Section>
+				) : null}
+
 				<PrevNext
 					prev={view.prev ? { caption: "Previous race", label: raceLabel(view.prev, view.race.year), onPress: () => open(href.race(view.prev!)) } : null}
 					next={view.next ? { caption: "Next race", label: raceLabel(view.next, view.race.year), onPress: () => open(href.race(view.next!)) } : null}
@@ -293,7 +308,10 @@ export function RaceScreen() {
 								<RaceContext view={view} />
 							</>
 						) : current === "sprint" ? (
-							<ResultsList rows={view.sprint} fastest={null} />
+							<>
+								{facts?.sprint.length ? <FactList facts={facts.sprint} /> : null}
+								<ResultsList rows={view.sprint} fastest={null} />
+							</>
 						) : current === "qualifying" ? (
 							<Qualifying view={view} />
 						) : current === "laps" ? (

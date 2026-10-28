@@ -1,0 +1,3409 @@
+{
+	"1": {
+		"event": "australian grand prix",
+		"decisions": [
+			{
+				"doc": 15,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Practice 2",
+				"offence": "alleged impeding",
+				"fact": "Alleged Impeding by car 7 on car 77 in turn 3.",
+				"decision": "No Further Action",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 6,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 1",
+				"offence": "pit lane speeding",
+				"fact": "Pit Lane Speeding - 61.4 km/h",
+				"decision": "The competitor (Red bull Toro Rosso Honda) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 16,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Practice 2",
+				"offence": "minimum time set by fia ecu",
+				"fact": "Car 3 did not stay above the minimum time set by the FIA ECU under the red flag.",
+				"decision": "Three grid place penalty. (2 penalty points awarded, 2 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "77",
+				"driverId": "valtteri-bottas",
+				"session": "Qualifying",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 31,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Race",
+				"offence": "haas car 20 release in an unsafe condition",
+				"fact": "Car 20 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Haas F1 Team) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			},
+			{
+				"doc": 32,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "haas car 8 release in an unsafe condition",
+				"fact": "Car 8 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Haas F1 Team) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			}
+		]
+	},
+	"2": {
+		"event": "bahrain grand prix",
+		"decisions": [
+			{
+				"doc": 33,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Race",
+				"offence": "overtaking on the formation lap",
+				"fact": "Car 11 overtook car 28 on the formation lap.",
+				"decision": "10 Second Stop and Go penalty imposed after the race in accordance with Article 38.3 (30 seconds added to elapsed race time)",
+				"penalties": [
+					{
+						"type": "stopGo",
+						"seconds": 10
+					}
+				]
+			},
+			{
+				"doc": 27,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Race",
+				"offence": "causing a collision with car 11 in t4",
+				"fact": "Car 28 collided with car 11 in turn 4.",
+				"decision": "10 Second Time Penalty (2 penalty points awarded, 2 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 34,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Race",
+				"offence": "failure to re establish original start order",
+				"fact": "Car 28 failed to re-establish the original start order by the first safety car line.",
+				"decision": "10 Second Stop and Go penalty imposed after the race in accordance with Article 38.3 (30 seconds added to elapsed race time). (2 penalty points awarded, 4 points total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "stopGo",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 16,
+				"car": "44",
+				"driverId": "lewis-hamilton",
+				"session": "Practice 3",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 11,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Practice 2",
+				"offence": "ferrari car 7 release in an unsafe condition",
+				"fact": "Car 7 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Scuderia Ferrari) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Race",
+				"offence": "ferrari unsafe release of car 7 from a pitstop",
+				"fact": "Car 7 was released unsafely from a pit stop.",
+				"decision": "The competitor (Scuderia Ferrari) is fined €50,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 50000
+					}
+				]
+			}
+		]
+	},
+	"3": {
+		"event": "chinese grand prix",
+		"newPu": {
+			"daniel-ricciardo": [
+				"ES",
+				"CE"
+			]
+		},
+		"decisions": [
+			{
+				"doc": 29,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Race",
+				"offence": "causing a collision with car 28 in t14",
+				"fact": "Car 10 collided with car 28 in turn 14.",
+				"decision": "10 Second Time Penalty (2 penalty points awarded, 2 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 30,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Race",
+				"offence": "causing a collision with car 5 in t14",
+				"fact": "Car 33 collided with car 5 in turn 14.",
+				"decision": "10 Second Time Penalty (2 penalty points awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 20,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Qualifying",
+				"offence": "failure to slow for double waved yellow flags",
+				"fact": "Failing to slow for double waved yellow flags.",
+				"decision": "Drop of 5 grid positions. (3 penalty points awarded, 5 points total for the 12 month period to date)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					},
+					{
+						"type": "points",
+						"points": 3
+					}
+				]
+			}
+		]
+	},
+	"4": {
+		"event": "azerbaijan grand prix",
+		"decisions": [
+			{
+				"doc": 47,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Race",
+				"offence": "colision with car 11",
+				"fact": "Car 35 collided with car 11 in turn 2.",
+				"decision": "3 grid position penalty at the driver’s next event (2 penalty points awarded, 2 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 49,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Race",
+				"offence": "use",
+				"fact": "Use of DRS when not permitted.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 48,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Race",
+				"offence": "use",
+				"fact": "Use of DRS when not permitted.",
+				"decision": "No further action",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 50,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Race",
+				"offence": "use",
+				"fact": "Use of DRS when not permitted.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 51,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Race",
+				"offence": "incident with car",
+				"fact": "Car 31 collided with car 7 in turn 3.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 20,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Qualifying",
+				"offence": "alleged impeding",
+				"fact": "Alleged impeding by car 35 on car 9 in turn 7.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Race",
+				"offence": "overtaking before sc line",
+				"fact": "Car 11 overtaking before the safety car line.",
+				"decision": "5 Second Time Penalty (2 penalty points awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 43,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Race",
+				"offence": "causing a collision with car 10",
+				"fact": "Car 20 collided with car 10 at turn 20.",
+				"decision": "10 Second Time Penalty (2 penalty points awarded, 8 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 19,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Qualifying",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 46,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Race",
+				"offence": "collision with car 3 doc 46",
+				"fact": "Car 3 collided with car 33 at turn 20",
+				"decision": "Reprimand This is the driver’s 1st reprimand of the current season",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": false
+					}
+				]
+			},
+			{
+				"doc": 45,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Race",
+				"offence": "collision with car 33",
+				"fact": "Car 3 collided with car 33 at turn 20",
+				"decision": "Reprimand This is the driver’s 1st reprimand of the current season",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": false
+					}
+				]
+			},
+			{
+				"doc": 29,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Qualifying",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 33,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Race",
+				"offence": "causing a collision with car 20 in t2",
+				"fact": "Car 9 collided with car 20 in turn 2.",
+				"decision": "10 Second Time Penalty (2 penalty points awarded, 4 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			}
+		]
+	},
+	"5": {
+		"event": "spanish grand prix",
+		"decisions": [
+			{
+				"doc": 18,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Practice 3",
+				"offence": "re joining the track",
+				"fact": "Car 33 left the track and did not stay to the left of the bollard when re-joining the track in turn 2.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 21,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Practice 3",
+				"offence": "alleged overtaking under a red flag",
+				"fact": "Car 9 passed Car 8 at the time of the Red Flag at the exit of Turn 4.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Qualifying",
+				"offence": "re joining the track",
+				"fact": "Car 9 left the track and did not stay to the left of the bollard when re-joining the track in turn 2.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 9,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Practice 1",
+				"offence": "impeding",
+				"fact": "Alleged Impeding & potentially dangerous manoeuvre by car 20.",
+				"decision": "Reprimand (Driving) This is the driver’s 1st reprimand of the current season",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 33,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Qualifying",
+				"offence": "gearbox doc 33",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "2",
+				"driverId": "stoffel-vandoorne",
+				"session": "Race",
+				"offence": "re joining the track",
+				"fact": "Car 2 left the track and did not stay to the left of the bollard when re-joining the track, contrary to the Event Notes point 9.",
+				"decision": "5 second time penalty. (1 penalty point awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 39,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "turn 3 incident",
+				"fact": "Car 8 collided with Car 27 and Car 10",
+				"decision": "3 grid position penalty at the driver’s next event. (2 penalty points awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 13,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Practice 2",
+				"offence": "force india car 11 release in an unsafe condition",
+				"fact": "Car 11 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Sahara Force India F1 Team) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			}
+		]
+	},
+	"6": {
+		"event": "monaco grand prix",
+		"decisions": [
+			{
+				"doc": 0,
+				"car": "16",
+				"driverId": "charles-leclerc",
+				"session": "Race",
+				"offence": "turn 10 incident46",
+				"fact": "Car 16 collided with Car 28 in turn 10.",
+				"decision": "No further action",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Practice 1",
+				"offence": "re joining the track12",
+				"fact": "Car 33 was alleged to have left the track and re-joined in an unsafe manner in turn 1.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Race",
+				"offence": "being worked on during a 10 sec stop go41",
+				"fact": "Car 35 appeared to be worked on while in the pits for the stop & go penalty.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 1",
+				"offence": "pit lane speeding9",
+				"fact": "Pit Lane Speeding - 66.1 km/h.",
+				"decision": "The Competitor (Red Bull Toro Rosso Honda) is fined €700.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 700
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Practice 3",
+				"offence": "lane speeding24",
+				"fact": "Pit Lane Speeding - 61.6 km/h.",
+				"decision": "The competitor (Sahara Force India F1 Team) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Qualifying",
+				"offence": "lane speeding27",
+				"fact": "Pit Lane Speeding - 62.2 km/h.",
+				"decision": "The competitor (McLaren F1 Team) is fined €300.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 300
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "16",
+				"driverId": "charles-leclerc",
+				"session": "Practice 2",
+				"offence": "pit lane speeding13",
+				"fact": "Pit Lane Speeding - 66.4 km/h.",
+				"decision": "The competitor (Alfa Romeo Sauber F1 Team) is fined €700.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 700
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Practice 1",
+				"offence": "pit lane speeding10",
+				"fact": "Pit Lane Speeding 61.8 km/h.",
+				"decision": "The Competitor (Williams Martini Racing) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Practice 1",
+				"offence": "pit lane speeding 2nd11",
+				"fact": "Pit Lane Speeding - 62.9 km/h.",
+				"decision": "The Competitor (Williams Martini Racing) is fined €300.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 300
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Race",
+				"offence": "lane speeding42",
+				"fact": "Pit Lane Speeding - 61.5 km/h.",
+				"decision": "5 second time penalty.",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Qualifying",
+				"offence": "3rd mgu k36",
+				"fact": "3rd Motor Generator Unit - Kinetic (MGU-K) has been used.",
+				"decision": "Drop of 10 grid positions, 3rd MGU-K (1st 3rd element used).",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 10
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Qualifying",
+				"offence": "gearbox30",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Race",
+				"offence": "wheels not all fitted at 3mins40",
+				"fact": "Car 35 did not have all wheels fitted at the 3 minute signal.",
+				"decision": "10 second stop & go penalty.",
+				"penalties": [
+					{
+						"type": "stopGo",
+						"seconds": 10
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Practice 2",
+				"offence": "pit lane speeding14",
+				"fact": "Pit Lane Speeding - 63.2 km/h.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €400.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 400
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Practice 2",
+				"offence": "pit lane speeding15",
+				"fact": "Pit Lane Speeding - 61.0 km/h.",
+				"decision": "The competitor (Scuderia Ferrari) is fined €100.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 100
+					}
+				]
+			}
+		],
+		"newPu": {
+			"romain-grosjean": [
+				"ICE",
+				"TC"
+			],
+			"kevin-magnussen": [
+				"ICE",
+				"TC"
+			],
+			"marcus-ericsson": [
+				"ICE",
+				"TC"
+			],
+			"charles-leclerc": [
+				"ICE",
+				"TC"
+			],
+			"sergio-perez": [
+				"ES"
+			]
+		}
+	},
+	"7": {
+		"event": "canadian grand prix",
+		"decisions": [
+			{
+				"doc": 0,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Race",
+				"offence": "turn 5 6 incident27",
+				"fact": "Car 18 collided with Car 28 between turns 5 & 6.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Race",
+				"offence": "turn 1 incident with car 1128",
+				"fact": "Car 55 collided with Car 11 in turn 1.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Qualifying",
+				"offence": "power unit elements24",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H) and a 3rd Motor Generator Unit - Kinetic (MGU-K) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 1",
+				"offence": "pit lane speeding8",
+				"fact": "Pit Lane Speeding - 82.3 km/h.",
+				"decision": "The competitor (Red Bull Toro Rosso Honda) is fined €300.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 300
+					}
+				]
+			}
+		],
+		"newPu": {
+			"sebastian-vettel": [
+				"ICE",
+				"TC"
+			],
+			"daniel-ricciardo": [
+				"ICE",
+				"TC"
+			],
+			"max-verstappen": [
+				"ICE",
+				"TC",
+				"CE"
+			],
+			"nico-hulkenberg": [
+				"ICE",
+				"TC",
+				"CE"
+			],
+			"carlos-sainz-jr": [
+				"ICE",
+				"TC",
+				"CE"
+			],
+			"brendon-hartley": [
+				"ICE"
+			],
+			"pierre-gasly": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"fernando-alonso": [
+				"ICE"
+			],
+			"stoffel-vandoorne": [
+				"ICE",
+				"TC"
+			],
+			"kimi-raikkonen": [
+				"TC"
+			]
+		}
+	},
+	"8": {
+		"event": "french grand prix",
+		"decisions": [
+			{
+				"doc": 0,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Qualifying",
+				"offence": "alleged impeding35",
+				"fact": "Alleged Impeding by car 7 on car 20.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "leaving the track44",
+				"fact": "Car 8 left the track at turn 3 and rejoined the track at turn 5.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 52,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Race",
+				"offence": "incident with car 3152",
+				"fact": "Car 10 collided with Car 31 in Turn 3.",
+				"decision": "A penalty of a Reprimand is imposed. This is the driver's 1st Reprimand of the current season (Driving).",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 1",
+				"offence": "p140 tyres11",
+				"fact": "Tyres nominated for use during the first 40 minutes of P1 were used until 12:42:43.",
+				"decision": "Fine of €10,000, however the fine is suspended for a period of 12 months pending no further breach of Article 24.4.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 10000
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Practice 2",
+				"offence": "released in an unsafe condition28",
+				"fact": "Car 11 was released in an unsafe condition during practice.",
+				"decision": "A fine of €15,000 plus an additional fine of €85,000 which is suspended for 12 months subject to no further breach of Article 28.13 during this period, by the team.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 15000
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Practice 1",
+				"offence": "pit lane speeding7",
+				"fact": "Pit Lane Speeding - 81.7 km/h.",
+				"decision": "The competitor (Haas F1 Team) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 3",
+				"offence": "power unit elements25",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 3rd Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 53,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Race",
+				"offence": "incident with car 1053",
+				"fact": "Car 10 collided with Car 31 in Turn 3.",
+				"decision": "A penalty of a Reprimand is imposed. This is the driver's 1st Reprimand of the current season (Driving).",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Qualifying",
+				"offence": "lane speeding29",
+				"fact": "Pit Lane Speeding - 62.1 km/h",
+				"decision": "The competitor (Sahara Force India F1 Team) is fined €300.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 300
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Race",
+				"offence": "driving unnessarily slowly45",
+				"fact": "Car 35 drove unnecessarily slowly behind the safety car.",
+				"decision": "5 second time penalty (2 penalty points awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 49,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Race",
+				"offence": "pit lane speeding49",
+				"fact": "Pit Lane Speeding - 65.5 km/h.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €600.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 600
+					}
+				]
+			},
+			{
+				"doc": 43,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Race",
+				"offence": "causing a collision43",
+				"fact": "Car 5 collided with Car 77 in Turn 1.",
+				"decision": "5 second time penalty. (2 penalty points awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Qualifying",
+				"offence": "pit lane speeding30",
+				"fact": "Pit Lane Speeding - 61.7 km/h",
+				"decision": "The competitor (Scuderia Ferrari) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "causing a collision46",
+				"fact": "Car 8 collided with Car 31 on the Start/Finish straight at the Start of the race.",
+				"decision": "5 second time penalty. (2 penalty points awarded, 7 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 0,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "lane speeding42",
+				"fact": "Pit Lane Speeding - 74.3 km/h.",
+				"decision": "The competitor (Haas F1 Team) is fined €1,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 1000
+					}
+				]
+			}
+		]
+	},
+	"9": {
+		"event": "austrian grand prix",
+		"decisions": [
+			{
+				"doc": 12,
+				"car": "2",
+				"driverId": "stoffel-vandoorne",
+				"session": "Practice 1",
+				"offence": "mclaren car 2 unsafe release in p1",
+				"fact": "Car 2 was released unsafely from the pit garage.",
+				"decision": "The competitor (McLaren F1 Team) is fined €10,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 10000
+					}
+				]
+			},
+			{
+				"doc": 16,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Practice 2",
+				"offence": "haas car 20 release in an unsafe condition",
+				"fact": "Car 20 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Haas F1 Team) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			},
+			{
+				"doc": 21,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Practice 3",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 83.2 km/h",
+				"decision": "The competitor (Williams Martini Racing) is fined €400.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 400
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "16",
+				"driverId": "charles-leclerc",
+				"session": "Qualifying",
+				"offence": "gearbox has been changed",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 29,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Qualifying",
+				"offence": "impeding car 55",
+				"fact": "Car 5 unnecessarily impeded car 55 at turn 1.",
+				"decision": "Penalty of a drop of 3 grid positions. (1 penalty point awarded, 6 points in total for the 12-month period).",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 37,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Qualifying",
+				"offence": "power unit elements",
+				"fact": "A 5th Internal Combustion Engine (ICE), 5th Turbo Charger (TC), 5th Motor Generator Unit Heat (MGU-H) and 4th Motor Generator Unit - Kinetic (MGU-K have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 38,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Qualifying",
+				"offence": "pu element change of parts",
+				"fact": "A 3rd Motor Generator Unit - Kinetic (MGU-K) has been used. The front wing and pitot static tube have been changed whilst the car was under Parc Fermé conditions.",
+				"decision": "Required to start from the Pit Lane.",
+				"penalties": [
+					{
+						"type": "pitLane"
+					}
+				]
+			},
+			{
+				"doc": 42,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Race",
+				"offence": "turn 3 incident",
+				"fact": "Car 7 left the track when in front of car 33 and rejoined safely in the same position, after turn 3.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 43,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Race",
+				"offence": "crowding car 31",
+				"fact": "Car 55 left the track and rejoined at exit of turn 1, then deliberately crowded car 31.",
+				"decision": "A penalty of a Reprimand is imposed. This is the driver's first Reprimand of the current season (Driving).",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 47,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Race",
+				"offence": "ignoring blue flags",
+				"fact": "Car 18 ignored blue flags for one lap.",
+				"decision": "A time penalty of 10 seconds is imposed after the race (10 seconds added to elapsed race time). (3 penalty points awarded, 4 points in total for the 12-month period).",
+				"penalties": [
+					{
+						"type": "points",
+						"points": 3
+					}
+				]
+			},
+			{
+				"doc": 8,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Practice 1",
+				"offence": "pit lane speeding",
+				"fact": "Pit Lane Speeding - 84.2 kp/h.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €500.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 500
+					}
+				]
+			}
+		],
+		"newPu": {
+			"carlos-sainz-jr": [
+				"TC",
+				"ES"
+			],
+			"nico-hulkenberg": [
+				"ES"
+			],
+			"fernando-alonso": [
+				"ES",
+				"CE"
+			],
+			"stoffel-vandoorne": [
+				"ES"
+			]
+		}
+	},
+	"10": {
+		"event": "british grand prix",
+		"decisions": [
+			{
+				"doc": 11,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Practice 1",
+				"offence": "car 20",
+				"fact": "Alleged dangerous manoeuvre by Car 20.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 12,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Practice 1",
+				"offence": "renault pit entry bollard",
+				"fact": "Car 55 did not stay to the right of the bollard at the Pit Entry.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €1,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 1000
+					}
+				]
+			},
+			{
+				"doc": 14,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Practice 2",
+				"offence": "pit lane speeding",
+				"fact": "Pit Lane Speeding - 82.0 km/h.",
+				"decision": "The competitor (Haas F1 Team) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 27,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Qualifying",
+				"offence": "flag incident",
+				"fact": "Car 35 did not enter the Pit Lane and continued on track during a Red Flag Signal.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 34,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Qualifying",
+				"offence": "power unit elements",
+				"fact": "A 6th Internal Combustion Engine (ICE) and 5th Motor Generator Unit - Kinetic (MGU- K) have been used.",
+				"decision": "Penalty of a drop of 10 grid positions, which is superseded by the previous requirement to start from the pit lane (document 25). As the car did not participate in qualifying it will be placed behind any cars starting from the pit lane that did, in accordance with Art 36.2.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 10
+					},
+					{
+						"type": "pitLane"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Qualifying",
+				"offence": "change of parts of a different specification",
+				"fact": "Parts have been changed to those of a different specification whilst the car was under Parc Fermé conditions.",
+				"decision": "Required to start from the Pit Lane.",
+				"penalties": [
+					{
+						"type": "pitLane"
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Qualifying",
+				"offence": "change of parts of a different specification",
+				"fact": "Parts have been changed to those of a different specification whilst the car was under Parc Fermé conditions.",
+				"decision": "Required to start from the Pit Lane.",
+				"penalties": [
+					{
+						"type": "pitLane"
+					}
+				]
+			},
+			{
+				"doc": 42,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 7 collided with Car 44 in Turn 3.",
+				"decision": "10 second time penalty. (2 penalty points awarded, 5 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 43,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "incident with car 20",
+				"fact": "Incident between car 8 and car 20 in Turn 3.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 44,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Race",
+				"offence": "incident with car",
+				"fact": "Incident between car 8 and car 20 in Turn 3.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 48,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Race",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding 114.8 km/h.",
+				"decision": "The competitor (Scuderia Ferrari) is fined €1,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 1000
+					}
+				]
+			},
+			{
+				"doc": 49,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Race",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 83.8 km/h.",
+				"decision": "The competitor (Aston Martin Red Bull Racing) is fined €400.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 400
+					}
+				]
+			},
+			{
+				"doc": 53,
+				"car": "16",
+				"driverId": "charles-leclerc",
+				"session": "Race",
+				"offence": "sauber release of a car in an unsafe condition",
+				"fact": "Car 16 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Alfa Romeo Sauber F1 Team) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			},
+			{
+				"doc": 55,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "incident with car 55",
+				"fact": "Car 8 collided with Car 55 in Turn 9.",
+				"decision": "No Further Action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 56,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Race",
+				"offence": "causing a collision with car 11",
+				"fact": "Car 10 collided with Car 11 in Turn 17.",
+				"decision": "A time penalty of 5 seconds is imposed after the race (5 seconds added to elapsed race time). (2 penalty points awarded, 4 points in total for the 12 month period)",
+				"penalties": [
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			}
+		],
+		"newPu": {
+			"valtteri-bottas": [
+				"ICE",
+				"TC"
+			],
+			"nico-hulkenberg": [
+				"ICE",
+				"TC"
+			],
+			"romain-grosjean": [
+				"ES"
+			],
+			"charles-leclerc": [
+				"ES",
+				"CE"
+			]
+		}
+	},
+	"11": {
+		"event": "german grand prix",
+		"decisions": [
+			{
+				"doc": 24,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Qualifying",
+				"offence": "power unit elements",
+				"fact": "A 5th Internal Combustion Engine (ICE), 5th Turbo Charger (TC), 5th Motor Generator Unit Heat (MGU-H), 4th Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store (ES) and 3rd Control Electronics (CE) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 28,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Race",
+				"offence": "overtaking under the sc",
+				"fact": "Car 55 overtook car 9 under the Safety Car.",
+				"decision": "10 Second Time Penalty. (2 penalty points awarded, 2 penalty points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 32,
+				"car": "44",
+				"driverId": "lewis-hamilton",
+				"session": "Race",
+				"offence": "entry",
+				"fact": "Car 44 crossed the white line separating the pit entry and the track.",
+				"decision": "A reprimand. (1st reprimand of the current season)",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": false
+					}
+				]
+			},
+			{
+				"doc": 7,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 3rd Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store (ES) and 3rd Control Electronics (CE) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			}
+		],
+		"newPu": {
+			"sebastian-vettel": [
+				"ES"
+			],
+			"kimi-raikkonen": [
+				"ES"
+			],
+			"daniel-ricciardo": [
+				"ES",
+				"CE"
+			],
+			"max-verstappen": [
+				"ES"
+			]
+		}
+	},
+	"12": {
+		"event": "hungarian grand prix",
+		"decisions": [
+			{
+				"doc": 10,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Practice 2",
+				"offence": "sauber release of a car in an unsafe condition",
+				"fact": "Car 9 was released from a pit stop in an unsafe condition.",
+				"decision": "The competitor (Alfa Romeo Sauber F1 Team) is fined €5,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			},
+			{
+				"doc": 17,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 2",
+				"offence": "renault incorrect use of tyres",
+				"fact": "Incorrect use of tyres.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €10,000 which is suspended until the end of the 2018 season, subject to any other violation of the tyre usage regulations.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 10000
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Qualifying",
+				"offence": "alleged impeding",
+				"fact": "Alleged Impeding by car 33 on car 8 in turn 14.",
+				"decision": "No Further Action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 30,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Qualifying",
+				"offence": "change of parts setup",
+				"fact": "Parts have been changed to those of a different specification and changes have been made to the setup of the suspension whilst the car was under Parc Fermé conditions.",
+				"decision": "Required to start from the Pit Lane.",
+				"penalties": [
+					{
+						"type": "pitLane"
+					}
+				]
+			},
+			{
+				"doc": 37,
+				"car": "77",
+				"driverId": "valtteri-bottas",
+				"session": "Race",
+				"offence": "collision with car 3 in turn",
+				"fact": "Car 77 collided with Car 3 in Turn 1.",
+				"decision": "A time penalty of 10 seconds is imposed after the race (10 seconds added to elapsed race time). (2 penalty points awarded, 2 points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			}
+		],
+		"newPu": {
+			"romain-grosjean": [
+				"ICE"
+			],
+			"kevin-magnussen": [
+				"ICE",
+				"TC"
+			],
+			"marcus-ericsson": [
+				"ICE",
+				"TC"
+			],
+			"charles-leclerc": [
+				"ICE",
+				"TC"
+			]
+		}
+	},
+	"13": {
+		"event": "belgian grand prix",
+		"decisions": [
+			{
+				"doc": 17,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 3",
+				"offence": "pu element",
+				"fact": "A 5th Turbo Charger (TC) has been used.",
+				"decision": "5 grid place penalty.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 21,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Practice 3",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 81.1 km/h.",
+				"decision": "The competitor (Williams Martini Racing) is fined €200.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 200
+					}
+				]
+			},
+			{
+				"doc": 23,
+				"car": "77",
+				"driverId": "valtteri-bottas",
+				"session": "Practice 3",
+				"offence": "incident with car",
+				"fact": "Car 77 was driven in a manner that was potentially dangerous to the driver of Car 2 between turns 4 and 5.",
+				"decision": "A Reprimand is issued to the driver of Car 77 Valtteri Bottas. (1st reprimand of the current season)",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": false
+					}
+				]
+			},
+			{
+				"doc": 30,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Qualifying",
+				"offence": "pu elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 3rd Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 31,
+				"car": "2",
+				"driverId": "stoffel-vandoorne",
+				"session": "Qualifying",
+				"offence": "pu elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 3rd Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 39,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 27 collided with Car 14 into Turn 1.",
+				"decision": "Drop of 10 grid positions at the next race. (3 penalty points awarded, 4 points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 10
+					},
+					{
+						"type": "points",
+						"points": 3
+					}
+				]
+			},
+			{
+				"doc": 40,
+				"car": "77",
+				"driverId": "valtteri-bottas",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 77 collided with Car 35 into Turn 1.",
+				"decision": "A time penalty of 5 seconds is imposed after the race (5 seconds added to elapsed race time). (2 penalty points awarded, 4 points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 7,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 1",
+				"offence": "pu elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 3rd Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 8,
+				"car": "77",
+				"driverId": "valtteri-bottas",
+				"session": "Practice 1",
+				"offence": "pu elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 3rd Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			}
+		],
+		"newPu": {
+			"lewis-hamilton": [
+				"ICE",
+				"TC"
+			],
+			"valtteri-bottas": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"sebastian-vettel": [
+				"ICE",
+				"TC"
+			],
+			"kimi-raikkonen": [
+				"ICE"
+			],
+			"sergio-perez": [
+				"ICE",
+				"TC",
+				"CE"
+			],
+			"esteban-ocon": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"lance-stroll": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"sergey-sirotkin": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"nico-hulkenberg": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"carlos-sainz-jr": [
+				"ICE"
+			],
+			"stoffel-vandoorne": [
+				"ICE",
+				"TC"
+			]
+		}
+	},
+	"14": {
+		"event": "italian grand prix",
+		"decisions": [
+			{
+				"doc": 11,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Practice 2",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 81.0 km/h.",
+				"decision": "The competitor (Racing Point Force India F1 Team) is fined €100.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 100
+					}
+				]
+			},
+			{
+				"doc": 19,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Practice 3",
+				"offence": "pu elements",
+				"fact": "A 4th Internal Combustion Unit (ICE) has been used.",
+				"decision": "10 grid place penalty.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 10
+					}
+				]
+			},
+			{
+				"doc": 26,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Qualifying",
+				"offence": "incident with car 20 in turn",
+				"fact": "Incident between cars 14 and 20 in Turn 1.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 27,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Qualifying",
+				"offence": "incident with car 14 in turn",
+				"fact": "Incident between cars 14 and 20 in Turn 1.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 34,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Race",
+				"offence": "incident with car 44 in turn",
+				"fact": "Incident between cars 5 and 44 in turn 4.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "44",
+				"driverId": "lewis-hamilton",
+				"session": "Race",
+				"offence": "incident with car 5 in turn",
+				"fact": "Incident between cars 5 and 44 in turn 4.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Race",
+				"offence": "incident with car 77 in turn",
+				"fact": "Incident between cars 33 and 77 in turn 1.",
+				"decision": "5 Second Time Penalty (2 penalty points awarded, 5 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 8,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Practice 1",
+				"offence": "pu elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 4th Motor Generator Unit - Kinetic (MGU-K), 4th Energy Store and 4th Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 9,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 1",
+				"offence": "pu elements",
+				"fact": "A 5th Internal Combustion Engine (ICE), 6th Turbo Charger (TC), 5th Motor Generator Unit Heat (MGU-H), 4th Motor Generator Unit - Kinetic (MGU-K), 4th Energy Store and 4th Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			}
+		],
+		"newPu": {
+			"daniel-ricciardo": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"nico-hulkenberg": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			]
+		}
+	},
+	"15": {
+		"event": "singapore grand prix",
+		"decisions": [
+			{
+				"doc": 10,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Practice 1",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 76.3 km/h.",
+				"decision": "The competitor (Racing Point Force India F1 Team) is fined €1000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 1000
+					}
+				]
+			},
+			{
+				"doc": 12,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Practice 2",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 73.1 km/h.",
+				"decision": "The competitor (Scuderia Ferrari) is fined €1000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 1000
+					}
+				]
+			},
+			{
+				"doc": 13,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 2",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 62.8 km/h.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €300.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 300
+					}
+				]
+			},
+			{
+				"doc": 20,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 3",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 63.4 km/h.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €400.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 400
+					}
+				]
+			},
+			{
+				"doc": 23,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Practice 3",
+				"offence": "racing point force india f1 team unsafe release",
+				"fact": "Car 31 was released unsafely from a pit stop.",
+				"decision": "The Competitor (Racing Point Force India F1 Team) is fined €5000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 5000
+					}
+				]
+			},
+			{
+				"doc": 32,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Race",
+				"offence": "incident with car 31",
+				"fact": "Incident between cars 11 and 31 in turn 3.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 33,
+				"car": "11",
+				"driverId": "sergio-perez",
+				"session": "Race",
+				"offence": "incident with car 35 in turn 18",
+				"fact": "Incident between cars 11 and 35 in turn 18.",
+				"decision": "Drive through penalty (3 penalty points awarded, 5 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "driveThrough"
+					},
+					{
+						"type": "points",
+						"points": 3
+					}
+				]
+			},
+			{
+				"doc": 34,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Race",
+				"offence": "incident with car 28 in turn",
+				"fact": "Incident between cars 20 and 28 in turn 7.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "ignoring blue flags",
+				"fact": "Car 8 ignored blue flags.",
+				"decision": "5 second time penalty (2 penalty points awarded, 9 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Race",
+				"offence": "forcing another driver off the track",
+				"fact": "Car 35 forced car 28 off the track in turn 14.",
+				"decision": "5 second time penalty (2 penalty points awarded, 6 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 9,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Practice 1",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 68.2 km/h.",
+				"decision": "The competitor (Renault Sport Formula One Team) is fined €900.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 900
+					}
+				]
+			}
+		]
+	},
+	"16": {
+		"event": "russian grand prix",
+		"decisions": [
+			{
+				"doc": 10,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 6th Internal Combustion Engine (ICE), 6th Turbo Charger (TC), 6th Motor Generator Unit Heat (MGU-H) and 5th Motor Generator Unit - Kinetic (MGU-K) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 11,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 7th Internal Combustion Engine (ICE), 6th Turbo Charger (TC), 6th Motor Generator Unit Heat (MGU-H), 6th Motor Generator Unit - Kinetic (MGU-K) and 4th Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 20,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Practice 3",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of a further 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 21,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 3",
+				"offence": "power unit elements",
+				"fact": "A 7th Turbo Charger (TC), 7th Motor Generator Unit Heat (MGU-H) and 7th Motor Generator Unit - Kinetic (MGU-K) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 22,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Practice 3",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of a further 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 27,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Qualifying",
+				"offence": "yellow flag",
+				"fact": "Failing to slow for a single waved yellow flag.",
+				"decision": "Drop of 3 grid positions. (2 penalty points awarded, 7 points total for the 12 month period to date).",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 31,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 3",
+				"offence": "power unit elements",
+				"fact": "A 7th Turbo Charger (TC), 7th Motor Generator Unit Heat (MGU-H). Note that a 7th Motor Generator Unit - Kinetic (MGU-K) has not been used (contrary to what was reported in document 19).",
+				"decision": "A drop of 10 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 10
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "2",
+				"driverId": "stoffel-vandoorne",
+				"session": "Qualifying",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 42,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Race",
+				"offence": "incident with car 44 in turn",
+				"fact": "Reported moving more than once to defend the position.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 7,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 4th Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 8,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 5th Internal Combustion Engine (ICE), 5th Turbo Charger (TC), 5th Motor Generator Unit Heat (MGU-H) and 5th Motor Generator Unit - Kinetic (MGU-K) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 9,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 4th Internal Combustion Engine (ICE), 4th Turbo Charger (TC), 4th Motor Generator Unit Heat (MGU-H), 4th Motor Generator Unit - Kinetic (MGU-K), 3rd Energy Store and 3rd Control Electronics have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			}
+		],
+		"newPu": {
+			"daniel-ricciardo": [
+				"ICE",
+				"TC"
+			],
+			"max-verstappen": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			],
+			"brendon-hartley": [
+				"ICE",
+				"TC",
+				"CE"
+			],
+			"pierre-gasly": [
+				"ICE",
+				"TC"
+			],
+			"fernando-alonso": [
+				"ICE",
+				"TC",
+				"ES",
+				"CE"
+			]
+		}
+	},
+	"17": {
+		"event": "japanese grand prix",
+		"decisions": [
+			{
+				"doc": 23,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Practice 3",
+				"offence": "flag",
+				"fact": "Car 31 did not slow sufficiently during a Red Flag period.",
+				"decision": "Drop of 3 grid positions. (2 penalty points awarded, 2 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 30,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Qualifying",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 31,
+				"car": "9",
+				"driverId": "marcus-ericsson",
+				"session": "Qualifying",
+				"offence": "pu element",
+				"fact": "A 3rd Energy Store (ES) has been used.",
+				"decision": "Drop of 10 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 10
+					}
+				]
+			},
+			{
+				"doc": 34,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Race",
+				"offence": "re joinging the track",
+				"fact": "Car 33 left the track at turn 16 and re-joined unsafely.",
+				"decision": "5 Second Time Penalty (1 penalty points awarded, 8 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "16",
+				"driverId": "charles-leclerc",
+				"session": "Race",
+				"offence": "incident with car 20",
+				"fact": "Car 16 and Car 20 collided in the main straight.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 18 forced car 14 off the track in turn 16.",
+				"decision": "5 Second Time Penalty (2 penalty points awarded, 6 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 37,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Race",
+				"offence": "incident in turn 16",
+				"fact": "Car 14 left the track at turn 16 and gained an advantage.",
+				"decision": "5 Second Time Penalty (1 penalty points awarded, 3 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 38,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Race",
+				"offence": "incident with car 33 in turn 13",
+				"fact": "Car 5 and 33 collided in turn 13.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			}
+		]
+	},
+	"18": {
+		"event": "united states grand prix",
+		"decisions": [
+			{
+				"doc": 13,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Practice 1",
+				"offence": "fag",
+				"fact": "Car 5 did not slow sufficiently during a Red Flag period.",
+				"decision": "Drop of 3 grid positions. (2 penalty points awarded, 5 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 19,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 3",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 20,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Practice 3",
+				"offence": "power unit elements",
+				"fact": "An 8th Internal Combustion Engine (ICE), 8th Turbo Charger (TC), 8th Motor Generator Unit Heat (MGU-H), 7th Motor Generator Unit - Kinetic (MGU-K) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 23,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Qualifying",
+				"offence": "leaving the track in t19",
+				"fact": "Car 10 left the track at turn 19.",
+				"decision": "Deletion of lap time (1:36.457) as per Article 31.4 of the FIA Formula One Sporting Regulations.",
+				"penalties": [
+					{
+						"type": "lapDeleted",
+						"laps": 1
+					}
+				]
+			},
+			{
+				"doc": 29,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Qualifying",
+				"offence": "alleged driving unnecessarily slowly",
+				"fact": "Alleged driving unnecessarily slowly on an In lap during Qualifying.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 30,
+				"car": "77",
+				"driverId": "valtteri-bottas",
+				"session": "Qualifying",
+				"offence": "alleged driving unnecessarily slowly",
+				"fact": "Alleged driving unnecessarily slowly on an In lap during Qualifying.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Qualifying",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 38,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 18 collided with car 14 in turn 4.",
+				"decision": "Drive through penalty (2 penalty points awarded, 7 points for the 12 month period)",
+				"penalties": [
+					{
+						"type": "driveThrough"
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 39,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Race",
+				"offence": "incident with car 5 in turn 13",
+				"fact": "Incident with car 5 in turn 13.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 40,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Race",
+				"offence": "incident with car 3 in turn 13",
+				"fact": "Incident with car 3 in turn 13",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 43,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Race",
+				"offence": "crossing the white line in the pit entry during reconnaissance laps",
+				"fact": "Car 55 crossed the white line separating the pit entry and the track.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 44,
+				"car": "55",
+				"driverId": "carlos-sainz-jr",
+				"session": "Race",
+				"offence": "leaving track and gaining an advantage",
+				"fact": "Car 55 left the track in turn1 and retained his position and therefore gained a lasting advantage.",
+				"decision": "5 Second time penalty. (1 penalty point awarded, 3 for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 47,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 8 collided with car 16 in turn 12.",
+				"decision": "Drop of 3 grid positions for Driver's next race. (1 penalty point awarded, 10 for the 12 month period)",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 3
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 51,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Race",
+				"offence": "fuel mass flow",
+				"fact": "Car 31 exceeded the fuel mass flow during lap 1.",
+				"decision": "Disqualification from the race.",
+				"penalties": [
+					{
+						"type": "dsq"
+					}
+				]
+			},
+			{
+				"doc": 52,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Race",
+				"offence": "fuel consumption",
+				"fact": "Car 20 consumed more than 105 kg of fuel during the race.",
+				"decision": "Disqualification from the race.",
+				"penalties": [
+					{
+						"type": "dsq"
+					}
+				]
+			},
+			{
+				"doc": 8,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "A 7th Internal Combustion Engine (ICE), 7th Turbo Charger (TC), 7th Motor Generator Unit Heat (MGU-H) and 6th Motor Generator Unit - Kinetic (MGU-K) have been used.",
+				"decision": "Required to start the race from the back of the starting grid.",
+				"penalties": [
+					{
+						"type": "backOfGrid"
+					}
+				]
+			},
+			{
+				"doc": 9,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Practice 1",
+				"offence": "lane speeding",
+				"fact": "Pit Lane Speeding - 81.0 km/h.",
+				"decision": "The competitor (McLaren F1 Team) is fined €100.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 100
+					}
+				]
+			}
+		],
+		"deletedLaps": {
+			"Qualifying": {
+				"pierre-gasly": 1
+			}
+		},
+		"newPu": {
+			"pierre-gasly": [
+				"ICE",
+				"TC"
+			]
+		}
+	},
+	"19": {
+		"event": "mexican grand prix",
+		"decisions": [
+			{
+				"doc": 10,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 1",
+				"offence": "power unit elements",
+				"fact": "An 8th Internal Combustion Engine (ICE), 8th Turbo Charger (TC) and 8th Motor Generator Unit Heat (MGU-H) have been used.",
+				"decision": "Drop of 15 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 15
+					}
+				]
+			},
+			{
+				"doc": 19,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 3",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 23,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Practice 3",
+				"offence": "turn 8 incident",
+				"fact": "Car 18 failed to follow the Race Director’s Instruction in Turn 8.",
+				"decision": "No Further Action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Qualifying",
+				"offence": "leaving the track at turn 11",
+				"fact": "Car 14 left the track at turn 11.",
+				"decision": "Deletion of lap time (1:17.488) as per Article 31.4 of the FIA Formula One Sporting Regulations.",
+				"penalties": [
+					{
+						"type": "lapDeleted",
+						"laps": 1
+					}
+				]
+			},
+			{
+				"doc": 28,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Qualifying",
+				"offence": "turn 8 incident",
+				"fact": "Car 18 failed to follow the Race Director’s Instruction in Turn 8.",
+				"decision": "No Further Action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "28",
+				"driverId": "brendon-hartley",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 28 collided with car 31 in turn 2.",
+				"decision": "5 Second time Penalty. (2 penalty points awarded, 6 points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Race",
+				"offence": "turn 4 incident with car 10",
+				"fact": "Allegedly forcing car 10 off the track in turn 4.",
+				"decision": "No Further Action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 38,
+				"car": "18",
+				"driverId": "lance-stroll",
+				"session": "Race",
+				"offence": "unsafe release from a pit stop",
+				"fact": "Car 18 was released unsafely from a pit stop.",
+				"decision": "The Competitor (Williams Martini Racing) is fined €25,000.",
+				"penalties": [
+					{
+						"type": "fine",
+						"euros": 25000
+					}
+				]
+			}
+		],
+		"deletedLaps": {
+			"Qualifying": {
+				"fernando-alonso": 1
+			}
+		},
+		"newPu": {
+			"pierre-gasly": [
+				"ICE",
+				"TC"
+			]
+		}
+	},
+	"20": {
+		"event": "brazilian grand prix",
+		"decisions": [
+			{
+				"doc": 14,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Practice 3",
+				"offence": "gearbox",
+				"fact": "The gearbox has been changed.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			},
+			{
+				"doc": 22,
+				"car": "5",
+				"driverId": "sebastian-vettel",
+				"session": "Qualifying",
+				"offence": "scales",
+				"fact": "The driver of car 5 failed to follow instructions during the FIA weighing procedure.",
+				"decision": "Reprimand and €25,000 fine. 1st reprimand of the current season.",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": false
+					},
+					{
+						"type": "fine",
+						"euros": null
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "35",
+				"driverId": "sergey-sirotkin",
+				"session": "Qualifying",
+				"offence": "driving unnecessarily slowly",
+				"fact": "Driving unnecessarily slowly on an in lap during Qualifying.",
+				"decision": "Reprimand. 1st Reprimand of the current season (Driving)",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 26,
+				"car": "20",
+				"driverId": "kevin-magnussen",
+				"session": "Qualifying",
+				"offence": "driving unnecessarily slowly",
+				"fact": "Driving unnecessarily slowly on an in lap during Qualifying.",
+				"decision": "Reprimand. 2nd Reprimand of the current season (Driving).",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 33,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Race",
+				"offence": "causing a collision",
+				"fact": "Car 31 collided with car 33 in turn 2.",
+				"decision": "10 Second Stop and Go Penalty. (3 penalty point awarded, 5 for the 12 month period).",
+				"penalties": [
+					{
+						"type": "stopGo",
+						"seconds": 10
+					},
+					{
+						"type": "points",
+						"points": 3
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Race",
+				"offence": "ignoring blue flags",
+				"fact": "Car 14 ignored blue flags.",
+				"decision": "5 second time penalty. (2 penalty points awarded, 3 points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 38,
+				"car": "2",
+				"driverId": "stoffel-vandoorne",
+				"session": "Race",
+				"offence": "ignoring blue flags",
+				"fact": "Car 2 ignored blue flags.",
+				"decision": "A time penalty of 5 seconds is imposed after the race (5 seconds added to elapsed race time). (2 penalty points awarded, 3 points for the 12 month period).",
+				"penalties": [
+					{
+						"type": "points",
+						"points": 2
+					}
+				]
+			},
+			{
+				"doc": 40,
+				"car": "33",
+				"driverId": "max-verstappen",
+				"session": "Race",
+				"offence": "incident in the fia garage",
+				"fact": "The driver of car 33 made deliberate physical contact with the driver of car 31 in the FIA Garage.",
+				"decision": "The Driver is required to perform two (2) days of public service at the direction of the FIA within six months of the incident. (Penalty under Art. 12.3.1.c of the FIA International Sporting Code).",
+				"penalties": []
+			},
+			{
+				"doc": 7,
+				"car": "3",
+				"driverId": "daniel-ricciardo",
+				"session": "Practice 1",
+				"offence": "power unit element",
+				"fact": "A 6th Turbo Charger (TC) has been used.",
+				"decision": "Drop of 5 grid positions.",
+				"penalties": [
+					{
+						"type": "grid",
+						"places": 5
+					}
+				]
+			}
+		],
+		"newPu": {
+			"daniel-ricciardo": [
+				"TC"
+			]
+		}
+	},
+	"21": {
+		"event": "abu dhabi grand prix",
+		"decisions": [
+			{
+				"doc": 17,
+				"car": "44",
+				"driverId": "lewis-hamilton",
+				"session": "Practice 1",
+				"offence": "p1 pit entry",
+				"fact": "Car 44 crossed the white line separating the pit entry and the track.",
+				"decision": "A penalty of a Reprimand is imposed. 2nd driving reprimand of the current season.",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 25,
+				"car": "7",
+				"driverId": "kimi-raikkonen",
+				"session": "Practice 3",
+				"offence": "entry",
+				"fact": "Car 7 did not stay to the right of the white line leading to the safety car line and also crossed the white line separating the pit entry and the track.",
+				"decision": "A penalty of a Reprimand is imposed. This is the driver’s first Reprimand of the Season (Driving).",
+				"penalties": [
+					{
+						"type": "reprimand",
+						"driving": true
+					}
+				]
+			},
+			{
+				"doc": 26,
+				"car": "8",
+				"driverId": "romain-grosjean",
+				"session": "Practice 3",
+				"offence": "incident with car 10",
+				"fact": "Cars 10 & 8 collided in turn 17.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 27,
+				"car": "10",
+				"driverId": "pierre-gasly",
+				"session": "Practice 3",
+				"offence": "incident with car",
+				"fact": "Cars 10 & 8 collided in turn 17.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 35,
+				"car": "27",
+				"driverId": "nico-hulkenberg",
+				"session": "Race",
+				"offence": "incident with car 8 in turn",
+				"fact": "Cars 27 & 8 collided in turn 9.",
+				"decision": "No further action.",
+				"penalties": [
+					{
+						"type": "none"
+					}
+				]
+			},
+			{
+				"doc": 36,
+				"car": "31",
+				"driverId": "esteban-ocon",
+				"session": "Race",
+				"offence": "leaving the track and gaining an advantage",
+				"fact": "Car 31 left the track in turn17 and retained his position and therefore gained a lasting advantage.",
+				"decision": "5 Second time penalty. (1 penalty point awarded, 6 for the 12 month period).",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 37,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Race",
+				"offence": "leaving the track and gaining an advantage",
+				"fact": "Car 14 left the track in turns 8 & 9 gaining an advantage.",
+				"decision": "5 Second time penalty. (1 penalty point awarded, 4 for the 12 month period)",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 38,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Race",
+				"offence": "leaving the track and gaining an advantage",
+				"fact": "Car 14 left the track in turns 8 & 9 gaining an advantage.",
+				"decision": "5 Second time penalty. (1 penalty point awarded, 5 for the 12 month period).",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			},
+			{
+				"doc": 39,
+				"car": "14",
+				"driverId": "fernando-alonso",
+				"session": "Race",
+				"offence": "leaving the track and gaining an advantage",
+				"fact": "Car 14 left the track in turns 8 & 9 gaining an advantage.",
+				"decision": "5 Second time penalty. (1 penalty point awarded, 6 for the 12 month period).",
+				"penalties": [
+					{
+						"type": "time",
+						"seconds": 5
+					},
+					{
+						"type": "points",
+						"points": 1
+					}
+				]
+			}
+		]
+	}
+}

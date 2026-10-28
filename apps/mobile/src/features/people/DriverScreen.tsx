@@ -7,7 +7,7 @@ import { driverTeammatesView } from "@pitwall/core/f1/teammates";
 import { driverView, type DriverView } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Stat, StatGrid } from "@/components/f1";
 import { Badge, Button, EmptyState, Icon, IconButton, Row, Section, Text } from "@/components/ui";
-import { useView } from "@/data/dataset";
+import { useDeferredView, useView } from "@/data/dataset";
 import { MoreButton, ResultCell, useMore } from "@/features/browse/kit";
 import { cn } from "@/lib/cn";
 import { fmtDate, num, yearRange } from "@/lib/format";
@@ -15,6 +15,9 @@ import { href, useOpen } from "@/lib/links";
 import { AllResults, initialResults, type ResultFilter, type ResultsState } from "./AllResults";
 import { ScrollPage, useJump } from "./ScrollPage";
 import { TeammatesSection } from "./TeammatesSection";
+import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
+import { FactsSection } from "@/components/facts";
+import { useFactEntries } from "@/data/facts";
 
 type Season = DriverView["seasons"][number];
 type Result = DriverView["results"][number];
@@ -50,6 +53,8 @@ export function DriverScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const view = useView((db) => driverView(db, id), [id]);
 	const mates = useView((db) => driverTeammatesView(db, id), [id]);
+	const facts = useFactEntries((db, index) => subjectFacts(db, index, "driver", id), [id]);
+	const upcoming = useDeferredView((db) => upcomingAbout(db, { driver: id }), [id]);
 	const open = useOpen();
 	const { scroll, onTargetLayout, jump } = useJump();
 	const [results, setResults] = useState<ResultsState>(initialResults);
@@ -112,6 +117,8 @@ export function DriverScreen() {
 				</StatGrid>
 
 				<Button label="Compare with other drivers" icon={GitCompareArrows} variant="outline" size="sm" className="mx-4 mt-3" onPress={compare} />
+
+				<FactsSection entries={facts} upcoming={upcoming} description="The career's standout moments" />
 
 				{milestones.length ? (
 					<Section title="Career">

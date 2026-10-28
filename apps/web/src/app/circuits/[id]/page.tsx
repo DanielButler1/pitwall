@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CircuitPage } from "@/components/pages/profiles";
-import { describe, getDb } from "@/lib/server";
+import { describe, getDb, getFactIndex } from "@/lib/server";
+import { upcomingAbout, venueFacts } from "@pitwall/core/f1/race-facts";
 import { circuitView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
 
@@ -19,5 +20,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
 	const view = circuitView(getDb(), (await params).id);
 	if (!view) notFound();
-	return <CircuitPage view={view} />;
+	return <CircuitPage view={view} facts={venueFacts(getDb(), getFactIndex(), { circuitId: view.circuit.id })} upcoming={upcomingAbout(getDb(), { circuitId: view.circuit.id })} />;
 }

@@ -130,7 +130,15 @@
 	"17": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2005_Brazilian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2005_Brazilian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
 		]
 	},
 	"18": {

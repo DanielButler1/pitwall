@@ -38,17 +38,25 @@ import { TableBody, TableCell, TableRow } from "../ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { DaysUntil } from "./days-until";
 import { MilestoneWatchPanel } from "./milestones";
+import { FactEntryList, FactList } from "../facts";
+import type { FactEntry, RaceFact } from "@pitwall/core/f1/race-facts";
 
 export function HomePage({
 	view,
 	universeName,
 	milestones,
 	onThisDay,
+	upcoming,
+	facts,
 }: {
 	view: HomeView;
 	universeName?: string;
 	milestones?: MilestoneWatch | null;
 	onThisDay?: OnThisDayView | null;
+	/** What's at stake at the next race (@pitwall/core/f1/race-facts upcomingFacts). */
+	upcoming?: { race: { year: number; round: number }; facts: RaceFact[] } | null;
+	/** From the fact index: the latest race's facts, the season's so far, and races held on this day. */
+	facts?: { latest: FactEntry[]; season: FactEntry[]; onThisDay: FactEntry[] } | null;
 }) {
 	return (
 		<Page>
@@ -102,18 +110,23 @@ export function HomePage({
 			<div className="grid grid-cols-1 gap-12 xl:grid-cols-3 xl:gap-8">
 				<Standings view={view} />
 
-				{view.latestRace && <LatestRace race={view.latestRace} />}
+				{view.latestRace && <LatestRace race={view.latestRace} facts={facts?.latest} />}
 
 				<div className="flex min-w-0 flex-col gap-12 xl:gap-8">
-					{view.nextRace && <NextRace next={view.nextRace} />}
-					{view.titleFight && <TitleFightCard fight={view.titleFight} year={view.lastYear} />}
+					{view.nextRace && (
+						<NextRace
+							next={view.nextRace}
+							facts={upcoming && upcoming.race.year === view.nextRace.race.year && upcoming.race.round === view.nextRace.race.round ? upcoming.facts : []}
+						/>
+					)}
+					{view.titleFight && <TitleFightCard fight={view.titleFight} year={view.lastYear} facts={facts?.season} />}
 				</div>
 			</div>
 
 			{!universeName && <HomeGames />}
 
 			<div className="grid grid-cols-1 gap-12 xl:grid-cols-3 xl:gap-8">
-				{onThisDay && <OnThisDay day={onThisDay} />}
+				{onThisDay && <OnThisDay day={onThisDay} facts={facts?.onThisDay} />}
 
 				<Section title="Most race wins" action={<MoreLink href="/records">All records</MoreLink>}>
 					<TableCard>
@@ -168,7 +181,7 @@ export function HomePage({
 
 /* --------------------------------------------------------- latest race --- */
 
-function LatestRace({ race: r }: { race: NonNullable<HomeView["latestRace"]> }) {
+function LatestRace({ race: r, facts }: { race: NonNullable<HomeView["latestRace"]>; facts?: FactEntry[] }) {
 	return (
 		<Section
 			title="Latest race"
@@ -221,6 +234,13 @@ function LatestRace({ race: r }: { race: NonNullable<HomeView["latestRace"]> }) 
 					)}
 				</div>
 			)}
+			{facts && facts.length > 0 && (
+				<Card size="sm">
+					<CardContent>
+						<FactList facts={facts.map((e) => e.fact)} />
+					</CardContent>
+				</Card>
+			)}
 		</Section>
 	);
 }
@@ -245,7 +265,7 @@ function Moved({ result: x }: { result: HomeResult }) {
 
 /* ----------------------------------------------------------- next race --- */
 
-function NextRace({ next }: { next: NonNullable<HomeView["nextRace"]> }) {
+function NextRace({ next, facts }: { next: NonNullable<HomeView["nextRace"]>; facts: RaceFact[] }) {
 	return (
 		<Section title="Next race" action={<MoreLink href={href.grandPrix(next.grandPrix.id)}>Grand Prix history</MoreLink>}>
 			<Card>
@@ -271,6 +291,12 @@ function NextRace({ next }: { next: NonNullable<HomeView["nextRace"]> }) {
 						</div>
 					</CardDescription>
 				</CardHeader>
+				{facts.length > 0 && (
+					<CardContent className="space-y-2 border-t pt-4">
+						<div className="text-muted-foreground text-xs font-medium">What&apos;s at stake</div>
+						<FactList facts={facts} />
+					</CardContent>
+				)}
 				{(next.lastWinner || next.mostWins) && (
 					<CardFooter className="flex-col items-stretch gap-2 border-t text-sm">
 						{next.lastWinner && (
@@ -371,7 +397,7 @@ const pts = (n: number) => `${num(n)} ${n === 1 ? "point" : "points"}`;
 /** Contender lists longer than this are early-season noise: the card shows the winners so far instead. */
 const CONTENDERS_SHOWN = 6;
 
-function TitleFightCard({ fight: f, year }: { fight: NonNullable<HomeView["titleFight"]>; year: number }) {
+function TitleFightCard({ fight: f, year, facts }: { fight: NonNullable<HomeView["titleFight"]>; year: number; facts?: FactEntry[] }) {
 	const d = f.drivers;
 	const c = f.constructors;
 	const decided = d.contenders.length === 1;
@@ -454,6 +480,12 @@ function TitleFightCard({ fight: f, year }: { fight: NonNullable<HomeView["title
 						</p>
 					</CardFooter>
 				)}
+				{facts && facts.length > 0 && (
+					<CardContent className="space-y-2 border-t pt-4">
+						<div className="text-muted-foreground text-xs font-medium">The season so far</div>
+						<FactEntryList entries={facts} />
+					</CardContent>
+				)}
 			</Card>
 		</Section>
 	);
@@ -530,7 +562,7 @@ function Explore({ view, random }: { view: HomeView; random: boolean }) {
 
 /* ---------------------------------------------------------- on this day --- */
 
-function OnThisDay({ day }: { day: OnThisDayView }) {
+function OnThisDay({ day, facts }: { day: OnThisDayView; facts?: FactEntry[] }) {
 	return (
 		<Section title="On this day" description={`${day.label} in Formula 1 history`} action={<MoreLink href={href.diary(day.slug)}>More from {day.label}</MoreLink>}>
 			<Card>
@@ -548,6 +580,12 @@ function OnThisDay({ day }: { day: OnThisDayView }) {
 						))
 					) : (
 						<p className="text-muted-foreground text-sm">A quiet day in the history books: no races, titles or maiden wins.</p>
+					)}
+					{facts && facts.length > 0 && (
+						<div className="space-y-2 border-t pt-3.5">
+							<div className="text-muted-foreground text-xs font-medium">Did you know?</div>
+							<FactEntryList entries={facts} />
+						</div>
 					)}
 				</CardContent>
 			</Card>

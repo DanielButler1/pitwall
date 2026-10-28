@@ -4,13 +4,18 @@ import { circuitView } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { EmptyState, Fact, Row, Section, Text } from "@/components/ui";
 import { InlineLink, MoreButton, Ranked, surname, useMore, words } from "@/features/browse/kit";
-import { useView } from "@/data/dataset";
+import { useDeferredView, useView } from "@/data/dataset";
 import { num, plural, yearRange } from "@/lib/format";
 import { href, useOpen } from "@/lib/links";
+import { upcomingAbout, venueFacts } from "@pitwall/core/f1/race-facts";
+import { FactsSection } from "@/components/facts";
+import { useFactEntries } from "@/data/facts";
 
 export function CircuitScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const view = useView((db) => circuitView(db, id), [id]);
+	const facts = useFactEntries((db, index) => venueFacts(db, index, { circuitId: id }), [id]);
+	const upcoming = useDeferredView((db) => upcomingAbout(db, { circuitId: id }), [id]);
 	const open = useOpen();
 	const races = useMore(20, 50);
 	if (!view) {
@@ -46,6 +51,7 @@ export function CircuitScreen() {
 					<Stat label="Turns" value={c.turns || "–"} />
 					<Stat label="Direction" value={words(c.direction)} />
 				</StatGrid>
+				<FactsSection entries={facts} upcoming={upcoming} description="Standout moments from its races" />
 				<Section title="Facts">
 					<Fact label="Type" value={c.type === "RACE" ? "Race circuit" : words(c.type)} />
 					<Fact label="Years" value={yearRange(first, last)} last />

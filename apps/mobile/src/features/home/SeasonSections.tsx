@@ -1,6 +1,8 @@
 // The home page's current-season sections: standings, the latest race, the next race and the title fight.
 
 import type { HomeResult, HomeView, TitleFight } from "@pitwall/core/f1/views";
+import type { FactEntry, RaceFact } from "@pitwall/core/f1/race-facts";
+import { FactEntryList, FactList } from "@/components/facts";
 import { ArrowDown, ArrowUp, CalendarDays, Medal, Timer, Trophy, Zap } from "lucide-react-native";
 import { memo, useState } from "react";
 import { View } from "react-native";
@@ -73,7 +75,7 @@ function Points({ value }: { value: number }) {
 
 /* ---------------------------------------------------------- latest race --- */
 
-export const LatestRace = memo(function LatestRace({ race: r, go }: { race: NonNullable<HomeView["latestRace"]>; go: Go }) {
+export const LatestRace = memo(function LatestRace({ race: r, go, facts }: { race: NonNullable<HomeView["latestRace"]>; go: Go; facts?: FactEntry[] | null }) {
 	return (
 		<Section title="Latest race" description={`${r.race.year} ${r.race.name} · ${fmtDate(r.race.date)}`} action={<MoreLink label="Full result" onPress={() => go(href.race(r.race))} />}>
 			{r.top.map((x, i, all) => (
@@ -90,6 +92,11 @@ export const LatestRace = memo(function LatestRace({ race: r, go }: { race: NonN
 			{r.pole ? <Row icon={Zap} title={r.pole.name} subtitle="Pole position" trailing={<Flag code={r.pole.country} />} onPress={() => go(href.driver(r.pole!.id))} last={!r.fastestLap} /> : null}
 			{r.fastestLap ? (
 				<Row icon={Timer} title={r.fastestLap.driver.name} subtitle="Fastest lap" value={r.fastestLap.time} onPress={() => go(href.driver(r.fastestLap!.driver.id))} last />
+			) : null}
+			{facts?.length ? (
+				<View className="pt-2">
+					<FactList facts={facts.map((e) => e.fact)} />
+				</View>
 			) : null}
 		</Section>
 	);
@@ -142,7 +149,7 @@ function daysUntil(date: string): string | null {
 	return days === 0 ? "today" : days === 1 ? "tomorrow" : `in ${days} days`;
 }
 
-export const NextRace = memo(function NextRace({ next, go }: { next: NonNullable<HomeView["nextRace"]>; go: Go }) {
+export const NextRace = memo(function NextRace({ next, go, facts }: { next: NonNullable<HomeView["nextRace"]>; go: Go; facts?: RaceFact[] | null }) {
 	const until = daysUntil(next.race.date);
 	return (
 		<Section title="Next race" action={<MoreLink label="Grand Prix history" onPress={() => go(href.grandPrix(next.grandPrix.id))} />}>
@@ -152,6 +159,14 @@ export const NextRace = memo(function NextRace({ next, go }: { next: NonNullable
 				subtitle={`${next.circuit.name}, ${next.circuit.place}`}
 				onPress={() => go(href.race(next.race))}
 			/>
+			{facts?.length ? (
+				<View className="border-b border-border pb-1">
+					<Text variant="caption" className="px-4 pt-3">
+						What&apos;s at stake
+					</Text>
+					<FactList facts={facts} />
+				</View>
+			) : null}
 			<View className="pl-4">
 				<View className="flex-row flex-wrap items-center gap-x-2 gap-y-1.5 border-b border-border py-3 pr-4">
 					<Icon icon={CalendarDays} tone="muted" size={15} />
@@ -190,7 +205,7 @@ function clinch<R>(f: TitleFight<R>, name: (r: R) => string): string | null {
 		: `It could be settled at the next race: ${name(f.leader)} needs to outscore ${name(f.second)} by ${pts(f.clinchMargin)} (and the rest by less).`;
 }
 
-export const TitleFightSection = memo(function TitleFightSection({ fight: f, year, go }: { fight: NonNullable<HomeView["titleFight"]>; year: number; go: Go }) {
+export const TitleFightSection = memo(function TitleFightSection({ fight: f, year, go, facts }: { fight: NonNullable<HomeView["titleFight"]>; year: number; go: Go; facts?: FactEntry[] | null }) {
 	const d = f.drivers;
 	const c = f.constructors;
 	const decided = d.contenders.length === 1;
@@ -277,6 +292,14 @@ export const TitleFightSection = memo(function TitleFightSection({ fight: f, yea
 						</>
 					)}
 				</Text>
+			) : null}
+			{facts?.length ? (
+				<View className="pt-2">
+					<Text variant="caption" className="px-4">
+						The season so far
+					</Text>
+					<FactEntryList entries={facts} />
+				</View>
 			) : null}
 		</Section>
 	);
