@@ -248,6 +248,8 @@ export function hydrate(raw: RawDataset): F1Data {
 	const sprintResults = raw.sprintResults.map(hydrateResult);
 	const laps = lapIndex(raw.lapLeaders, results);
 	const sprintLaps = lapIndex(raw.sprintLapLeaders, sprintResults);
+	// F1DB only dates sprints from 2024; the 2021-23 sprint weekends are known by their results
+	const sprinted = new Set(sprintResults.map((r) => r.raceId));
 	const sprintFl = lapIndex<SprintFastestLap>(
 		(raw.sprintFastestLaps ?? []).map(([raceId, driverId, lap, ms]) => [raceId, { raceId, driverId, lap, ms }]),
 		sprintResults,
@@ -277,7 +279,7 @@ export function hydrate(raw: RawDataset): F1Data {
 		races: raw.races
 			.map(([id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qf]) => ({
 				id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength,
-				hasSprint: hasSprint === 1,
+				hasSprint: hasSprint === 1 || sprinted.has(id),
 				qualifyingFormat: qf,
 			}))
 			.sort((a, b) => a.year - b.year || a.round - b.round),

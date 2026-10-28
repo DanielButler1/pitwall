@@ -5,7 +5,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { hydrate, indexData, type Db } from "./dataset.ts";
-import { factText, raceFacts } from "./race-facts.ts";
+import { factText, raceFacts, upcomingFacts } from "./race-facts.ts";
+import { champions } from "./records/facts.ts";
 import { dataFile } from "../test-data.ts";
 
 const raw = () => hydrate(JSON.parse(readFileSync(dataFile, "utf8")));
@@ -30,12 +31,13 @@ test("facts come ranked, capped and readable", () => {
 });
 
 test("a race's facts don't depend on the races after it", () => {
-	const race = done[Math.floor(done.length * 0.8)];
+	// an early round, so its season is still open either way
+	const race = done.slice(Math.floor(done.length * 0.8)).find((r) => r.round === 3)!;
 	const data = raw();
-	// forget everything after this race
+	// forget every result after this race (the calendar stays, as it would have been at the time)
 	const later = new Set(data.races.filter((r) => r.year > race.year || (r.year === race.year && r.round > race.round)).map((r) => r.id));
 	data.results = data.results.filter((r) => !later.has(r.raceId));
-	data.races = data.races.filter((r) => !later.has(r.id));
+	data.sprintResults = data.sprintResults.filter((r) => !later.has(r.raceId));
 	const cut: Db = indexData(data);
 	assert.deepEqual(raceFacts(cut, race.id, 20), raceFacts(real, race.id, 20));
 });
@@ -65,4 +67,28 @@ test("a universe's history makes its own facts", () => {
 	[results[0].constructorId, last.constructorId] = [last.constructorId, results[0].constructorId];
 	const universe = indexData(data);
 	assert.notDeepEqual(raceFacts(universe, race.id, 20), raceFacts(real, race.id, 20));
+});
+
+test("every finished season has one race that made its champion", () => {
+	for (const { year, id } of champions(real, "driver").slice(-12)) {
+		const races = done.filter((r) => r.year === year);
+		const titled = races.flatMap((r) => raceFacts(real, r.id, 20).filter((f) => f.key.startsWith("title:driver:") && f.key.endsWith(":title")));
+		assert.equal(titled.length, 1, String(year));
+		assert.equal(titled[0].key, `title:driver:${id}:title`);
+	}
+});
+
+test("what's at stake next comes capped and readable", () => {
+	const next = upcomingFacts(real, 8);
+	if (!next) return; // between seasons with no calendar yet
+	assert.ok(!real.resultsByRace.has(next.race.id));
+	assert.ok(next.facts.length <= 8);
+	for (const f of next.facts) assert.doesNotMatch(factText(f.cells), /undefined|null|NaN/);
+	const kinds = new Map<string, number>();
+	for (const f of next.facts) kinds.set(f.kind, (kinds.get(f.kind) ?? 0) + 1);
+	for (const n of kinds.values()) assert.ok(n <= 3);
+});
+
+test("a race with sprint results is a sprint weekend", () => {
+	for (const id of new Set(real.sprintResults.map((r) => r.raceId))) assert.ok(real.raceById.get(id)!.hasSprint, String(id));
 });
