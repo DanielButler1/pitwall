@@ -58,10 +58,13 @@ function Part({ cell }: { cell: Cell }) {
 	}
 }
 
-/** One fact as a sentence. */
+/**
+ * One fact as a sentence. Its links lay out as text so long names wrap like words, which loses the gap a link
+ * keeps between its flag and its name: the flag gets it back as a margin.
+ */
 export function FactSentence({ cells, className }: { cells: Cell[]; className?: string }) {
 	return (
-		<span className={cn("[&_a]:inline [&_a_*]:inline", className)}>
+		<span className={cn("[&_a]:inline [&_a_*]:inline [&_a_.fi]:mr-1.5 [&_a_.fi]:inline-block", className)}>
 			{cells.map((c, i) => (
 				<Part key={i} cell={c} />
 			))}
