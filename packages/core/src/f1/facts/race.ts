@@ -179,7 +179,9 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 		if (prev < 0 && settled) add("grid", `driver:${w.driverId}`, 9, sentence(cDriver(db, w.driverId), ` won from ${P(w.grid)}, the lowest grid slot a Grand Prix has ever been won from`));
 		else if (prev >= 0 && g >= 15) {
 			const pw = F.races[prev].winner!;
-			add("grid", `driver:${w.driverId}`, 3 * log2(g / 8), sentence(cDriver(db, w.driverId), ` won from ${P(w.grid)}, the lowest grid slot for a winner since `, cDriver(db, pw.driverId), ` (${P(pw.grid!)}) at the `, cRaceFull(db, raceAt(prev))));
+			// the last to do it was the same driver: say so without naming them twice
+			const who = pw.driverId === w.driverId ? [`winning from ${P(pw.grid!)}`] : [cDriver(db, pw.driverId), ` (${P(pw.grid!)})`];
+			add("grid", `driver:${w.driverId}`, 3 * log2(g / 8), sentence(cDriver(db, w.driverId), ` won from ${P(w.grid)}, the lowest grid slot for a winner since `, ...who, " at the ", cRaceFull(db, raceAt(prev))));
 		}
 	}
 

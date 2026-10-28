@@ -39,15 +39,35 @@ export type FactEntry = { raceId: number; race: Cell; fact: RaceFact };
 /** The subject a fact is about, from its key ("since:constructor:ferrari:win" -> "constructor:ferrari"). */
 const subjectOf = (f: RaceFact) => f.key.split(":").slice(1, 3).join(":");
 
+/** Facts this many seasons old only make a career or venue page when they're its big moments. */
+const OLD = 20;
+/** Kinds that stay worth telling however long ago: titles, records and firsts. */
+const LASTING = new Set<FactKind>(["title", "record", "first"]);
+
+type Options = {
+	keep?: (f: RaceFact) => boolean;
+	perSubject?: number;
+	/** Recent races first, and old ones only for their big moments (career and venue pages, not a season's). */
+	recent?: boolean;
+};
+
 /** The best facts of some races: a few of each kind, one per subject and kind, no more than two per subject. */
-function best(db: Db, index: FactIndex, raceIds: number[], limit: number, keep: (f: RaceFact) => boolean = () => true, perSubject = 2): FactEntry[] {
-	const all: FactEntry[] = [];
+function best(db: Db, index: FactIndex, raceIds: number[], limit: number, { keep = () => true, perSubject = 2, recent = false }: Options = {}): FactEntry[] {
+	const latest = Math.max(0, ...facts(db).races.map((f) => f.race.year));
+	const all: (FactEntry & { rank: number })[] = [];
 	for (const raceId of raceIds) {
 		const race = db.raceById.get(raceId);
 		if (!race) continue;
-		for (const fact of index.get(raceId) ?? []) if (fact.score >= MIN_SCORE && keep(fact)) all.push({ raceId, race: cRaceFull(db, race), fact });
+		const age = latest - race.year;
+		for (const fact of index.get(raceId) ?? []) {
+			if (fact.score < MIN_SCORE || !keep(fact)) continue;
+			if (recent && age > OLD && !LASTING.has(fact.kind) && fact.score < 9) continue;
+			// the last few seasons count for up to three points more, halving every eight years
+			const rank = fact.score + (recent ? 3 * 2 ** (-age / 8) : 0);
+			all.push({ raceId, race: cRaceFull(db, race), fact, rank });
+		}
 	}
-	all.sort((a, b) => b.fact.score - a.fact.score || b.raceId - a.raceId);
+	all.sort((a, b) => b.rank - a.rank || b.raceId - a.raceId);
 	const kinds = new Map<FactKind, number>();
 	const subjects = new Map<string, number>();
 	const topics = new Set<string>();
@@ -61,7 +81,7 @@ function best(db: Db, index: FactIndex, raceIds: number[], limit: number, keep: 
 		topics.add(topic);
 		subjects.set(who, (subjects.get(who) ?? 0) + 1);
 		kinds.set(e.fact.kind, (kinds.get(e.fact.kind) ?? 0) + 1);
-		out.push(e);
+		out.push({ raceId: e.raceId, race: e.race, fact: e.fact });
 	}
 	return out;
 }
@@ -77,16 +97,21 @@ export function seasonFacts(db: Db, index: FactIndex, year: number, limit = 8): 
 export function subjectFacts(db: Db, index: FactIndex, kind: "driver" | "constructor", id: string, limit = 8): FactEntry[] {
 	const results = (kind === "driver" ? db.resultsByDriver : db.resultsByConstructor).get(id) ?? [];
 	const raceIds = [...new Set(results.map((r) => r.raceId))];
-	return best(db, index, raceIds, limit, (f) => subjectOf(f) === `${kind}:${id}`, limit);
+	return best(db, index, raceIds, limit, { keep: (f) => subjectOf(f) === `${kind}:${id}`, perSubject: limit, recent: true });
 }
 
-/** The standout facts from a Grand Prix's or circuit's runnings. */
+/** Facts about the place: its winners and records there, home wins, the weather, red flags and safety cars, milestones, titles decided there. */
+const ABOUT_VENUE = new Set<FactKind>(["venue", "home", "weather", "neutral", "circuit", "title"]);
+// a constructors' title is the season's story, a driver clinching it the place's
+const aboutVenue = (f: RaceFact) => (ABOUT_VENUE.has(f.kind) && !f.key.startsWith("title:constructor:")) || /^(gp|circuit):/.test(subjectOf(f));
+
+/** The standout facts from a Grand Prix's or circuit's runnings: about the place, recent ones first. */
 export function venueFacts(db: Db, index: FactIndex, where: { grandPrixId: string } | { circuitId: string }, limit = 8): FactEntry[] {
 	const at = (id: number) => {
 		const race = db.raceById.get(id);
 		return !!race && ("grandPrixId" in where ? race.grandPrixId === where.grandPrixId : race.circuitId === where.circuitId);
 	};
-	return best(db, index, completed(db, at), limit);
+	return best(db, index, completed(db, at), limit, { keep: aboutVenue, recent: true });
 }
 
 /** Facts about a race's sprint (sprint wins, sprint and Grand Prix doubles). */
