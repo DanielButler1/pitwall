@@ -7,7 +7,38 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Bahrain_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Bahrain_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=7953",
+			"https://api.openf1.org/v1/race_control?session_key=7953"
+		],
+		"tyres": {
+			"max-verstappen": "S S H",
+			"sergio-perez": "S S H",
+			"fernando-alonso": "S H H",
+			"carlos-sainz-jr": "S H H",
+			"lewis-hamilton": "S H H",
+			"lance-stroll": "S H H",
+			"george-russell": "S H H",
+			"valtteri-bottas": "S H H",
+			"pierre-gasly": "S H H S",
+			"alexander-albon": "S S H S",
+			"yuki-tsunoda": "S H H S",
+			"logan-sargeant": "S S H S",
+			"kevin-magnussen": "H H S S",
+			"nyck-de-vries": "S H H",
+			"nico-hulkenberg": "S H H S",
+			"guanyu-zhou": "S H S S",
+			"lando-norris": "S H S M H S S",
+			"esteban-ocon": "S H H H",
+			"charles-leclerc": "S H H",
+			"oscar-piastri": "S"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 41,
+				"to": 42
+			}
 		]
 	},
 	"2": {
@@ -18,15 +49,74 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Saudi_Arabian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Saudi_Arabian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=7779",
+			"https://api.openf1.org/v1/race_control?session_key=7779"
+		],
+		"tyres": {
+			"sergio-perez": "M H",
+			"max-verstappen": "M H",
+			"fernando-alonso": "M H",
+			"george-russell": "M H",
+			"lewis-hamilton": "H M",
+			"carlos-sainz-jr": "M H",
+			"charles-leclerc": "S H",
+			"esteban-ocon": "M H",
+			"pierre-gasly": "M H",
+			"kevin-magnussen": "M H",
+			"yuki-tsunoda": "M H",
+			"nico-hulkenberg": "M H",
+			"guanyu-zhou": "M H M",
+			"nyck-de-vries": "M H",
+			"oscar-piastri": "M H",
+			"logan-sargeant": "H M",
+			"lando-norris": "S H M",
+			"valtteri-bottas": "M H M S",
+			"alexander-albon": "M H",
+			"lance-stroll": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 18,
+				"to": 20
+			}
 		]
 	},
 	"3": {
 		"weather": "dry",
 		"neutralised": [
 			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			},
+			{
+				"type": "SC",
+				"from": 7,
+				"to": 8
+			},
+			{
 				"type": "RF",
 				"lap": 8
+			},
+			{
+				"type": "VSC",
+				"from": 18,
+				"to": 19
+			},
+			{
+				"type": "SC",
+				"from": 54,
+				"to": 55
+			},
+			{
+				"type": "RF",
+				"lap": 55
+			},
+			{
+				"type": "RF",
+				"lap": 57
 			}
 		],
 		"compounds": {
@@ -36,8 +126,32 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Australian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=7787",
+			"https://api.openf1.org/v1/race_control?session_key=7787"
+		],
+		"tyres": {
+			"max-verstappen": "M H S",
+			"lewis-hamilton": "M H S S",
+			"fernando-alonso": "M H S S",
+			"lance-stroll": "M H S",
+			"sergio-perez": "H M H H S S",
+			"lando-norris": "M H S",
+			"nico-hulkenberg": "M H S S",
+			"oscar-piastri": "M H S S",
+			"guanyu-zhou": "S H S",
+			"yuki-tsunoda": "M H S",
+			"valtteri-bottas": "S H S",
+			"carlos-sainz-jr": "M H S S",
+			"pierre-gasly": "S H S",
+			"esteban-ocon": "S H S",
+			"nyck-de-vries": "H M S",
+			"logan-sargeant": "H M H M H S",
+			"kevin-magnussen": "M H",
+			"george-russell": "M H",
+			"alexander-albon": "M",
+			"charles-leclerc": "M"
+		}
 	},
 	"4": {
 		"weather": "dry",
@@ -47,7 +161,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Azerbaijan_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Azerbaijan_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9070",
+			"https://api.openf1.org/v1/race_control?session_key=9070"
+		],
+		"tyres": {
+			"sergio-perez": "M H",
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"fernando-alonso": "M H",
+			"carlos-sainz-jr": "M H",
+			"lewis-hamilton": "M H",
+			"lance-stroll": "M H",
+			"george-russell": "M H S",
+			"lando-norris": "M H",
+			"yuki-tsunoda": "M H",
+			"oscar-piastri": "M H",
+			"alexander-albon": "M H",
+			"kevin-magnussen": "M H",
+			"pierre-gasly": "M H H",
+			"esteban-ocon": "H S",
+			"logan-sargeant": "M H",
+			"nico-hulkenberg": "H S",
+			"valtteri-bottas": "M H H M",
+			"guanyu-zhou": "M H",
+			"nyck-de-vries": "H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 11,
+				"to": 13
+			}
 		]
 	},
 	"5": {
@@ -58,8 +203,33 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Miami_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Miami_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9078",
+			"https://api.openf1.org/v1/race_control?session_key=9078"
+		],
+		"tyres": {
+			"max-verstappen": "H M",
+			"sergio-perez": "M H",
+			"fernando-alonso": "M H",
+			"george-russell": "M H",
+			"carlos-sainz-jr": "M H",
+			"lewis-hamilton": "H M",
+			"charles-leclerc": "M H",
+			"pierre-gasly": "M H",
+			"esteban-ocon": "H M",
+			"kevin-magnussen": "M H",
+			"yuki-tsunoda": "H M",
+			"lance-stroll": "H M",
+			"valtteri-bottas": "M H",
+			"alexander-albon": "M H",
+			"nico-hulkenberg": "H M",
+			"guanyu-zhou": "H M",
+			"lando-norris": "S H",
+			"nyck-de-vries": "M H",
+			"oscar-piastri": "S H",
+			"logan-sargeant": "M H"
+		},
+		"neutralised": []
 	},
 	"6": {
 		"weather": "mixed",
@@ -69,8 +239,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Monaco_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9094",
+			"https://api.openf1.org/v1/race_control?session_key=9094"
+		],
+		"tyres": {
+			"max-verstappen": "M I",
+			"fernando-alonso": "H M I",
+			"esteban-ocon": "M H I",
+			"lewis-hamilton": "M H I",
+			"george-russell": "H I",
+			"charles-leclerc": "H M I",
+			"pierre-gasly": "H M I",
+			"carlos-sainz-jr": "H M I",
+			"lando-norris": "M H I",
+			"oscar-piastri": "H I",
+			"valtteri-bottas": "H I",
+			"nyck-de-vries": "M I",
+			"guanyu-zhou": "S H I",
+			"alexander-albon": "M H I",
+			"yuki-tsunoda": "M I",
+			"sergio-perez": "M H M I W I",
+			"nico-hulkenberg": "M H I W",
+			"logan-sargeant": "M H S I",
+			"kevin-magnussen": "H W",
+			"lance-stroll": "H I"
+		},
+		"neutralised": []
 	},
 	"7": {
 		"weather": "dry",
@@ -80,8 +275,33 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Spanish_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9102",
+			"https://api.openf1.org/v1/race_control?session_key=9102"
+		],
+		"tyres": {
+			"max-verstappen": "M H S",
+			"lewis-hamilton": "S M S",
+			"george-russell": "S M S",
+			"sergio-perez": "M H S",
+			"carlos-sainz-jr": "S M H",
+			"lance-stroll": "S S H",
+			"fernando-alonso": "S S H",
+			"esteban-ocon": "S M H",
+			"guanyu-zhou": "S H H",
+			"pierre-gasly": "S M H",
+			"charles-leclerc": "H S H",
+			"yuki-tsunoda": "S H M",
+			"oscar-piastri": "S H M",
+			"nyck-de-vries": "S H M",
+			"nico-hulkenberg": "S M H M",
+			"alexander-albon": "S H M",
+			"lando-norris": "S H M S",
+			"kevin-magnussen": "S M H M",
+			"valtteri-bottas": "S H H",
+			"logan-sargeant": "M H H"
+		},
+		"neutralised": []
 	},
 	"8": {
 		"weather": "dry",
@@ -91,7 +311,43 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Canadian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Canadian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9110",
+			"https://api.openf1.org/v1/race_control?session_key=9110"
+		],
+		"tyres": {
+			"max-verstappen": "M H M",
+			"fernando-alonso": "M H H",
+			"lewis-hamilton": "M H M",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"sergio-perez": "H M S",
+			"alexander-albon": "M H",
+			"esteban-ocon": "M H H",
+			"lance-stroll": "M H H",
+			"valtteri-bottas": "H M",
+			"oscar-piastri": "M H H",
+			"pierre-gasly": "S H H",
+			"lando-norris": "M H H",
+			"yuki-tsunoda": "M H H",
+			"nico-hulkenberg": "M H H",
+			"guanyu-zhou": "M H H",
+			"kevin-magnussen": "H M M",
+			"nyck-de-vries": "M H H",
+			"george-russell": "M H",
+			"logan-sargeant": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 8,
+				"to": 8
+			},
+			{
+				"type": "SC",
+				"from": 12,
+				"to": 16
+			}
 		]
 	},
 	"9": {
@@ -102,7 +358,43 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Austrian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Austrian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9118",
+			"https://api.openf1.org/v1/race_control?session_key=9118"
+		],
+		"tyres": {
+			"max-verstappen": "M M H M S",
+			"charles-leclerc": "M M M H",
+			"sergio-perez": "M M H",
+			"lando-norris": "M H H",
+			"fernando-alonso": "H M M",
+			"carlos-sainz-jr": "M M M H",
+			"george-russell": "M H M",
+			"lewis-hamilton": "M H M",
+			"lance-stroll": "M H H M",
+			"pierre-gasly": "M M H M",
+			"alexander-albon": "M M H H",
+			"guanyu-zhou": "M M H H",
+			"logan-sargeant": "M M H H",
+			"esteban-ocon": "M H H",
+			"valtteri-bottas": "H H M H",
+			"oscar-piastri": "M H H M",
+			"nyck-de-vries": "M H M",
+			"kevin-magnussen": "H M H H",
+			"yuki-tsunoda": "M H H M",
+			"nico-hulkenberg": "M M H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			},
+			{
+				"type": "VSC",
+				"from": 14,
+				"to": 16
+			}
 		]
 	},
 	"10": {
@@ -113,7 +405,43 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_British_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_British_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9126",
+			"https://api.openf1.org/v1/race_control?session_key=9126"
+		],
+		"tyres": {
+			"max-verstappen": "M S",
+			"lando-norris": "M H",
+			"lewis-hamilton": "M S",
+			"oscar-piastri": "M H",
+			"george-russell": "S M",
+			"sergio-perez": "M S",
+			"fernando-alonso": "M S",
+			"alexander-albon": "M S",
+			"charles-leclerc": "M H M",
+			"carlos-sainz-jr": "M H",
+			"logan-sargeant": "M S",
+			"valtteri-bottas": "H S",
+			"nico-hulkenberg": "H M S",
+			"lance-stroll": "M S",
+			"guanyu-zhou": "M H S",
+			"yuki-tsunoda": "S H S",
+			"nyck-de-vries": "S M S",
+			"pierre-gasly": "M S",
+			"kevin-magnussen": "M",
+			"esteban-ocon": "S"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 33,
+				"to": 33
+			},
+			{
+				"type": "SC",
+				"from": 33,
+				"to": 38
+			}
 		]
 	},
 	"11": {
@@ -124,8 +452,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Hungarian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9133",
+			"https://api.openf1.org/v1/race_control?session_key=9133"
+		],
+		"tyres": {
+			"max-verstappen": "M H M",
+			"lando-norris": "M H M",
+			"sergio-perez": "H M M",
+			"lewis-hamilton": "M H M",
+			"oscar-piastri": "M H M",
+			"george-russell": "H M M",
+			"charles-leclerc": "M H H",
+			"carlos-sainz-jr": "S H H",
+			"fernando-alonso": "M H H",
+			"lance-stroll": "S H H",
+			"alexander-albon": "M H H",
+			"valtteri-bottas": "M H H",
+			"daniel-ricciardo": "M H M",
+			"nico-hulkenberg": "M H H",
+			"yuki-tsunoda": "S H M",
+			"guanyu-zhou": "M H H",
+			"kevin-magnussen": "M H H",
+			"logan-sargeant": "M H H",
+			"esteban-ocon": "M",
+			"pierre-gasly": "S"
+		},
+		"neutralised": []
 	},
 	"12": {
 		"weather": "mixed",
@@ -135,12 +488,47 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Belgian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9141",
+			"https://api.openf1.org/v1/race_control?session_key=9141"
+		],
+		"tyres": {
+			"max-verstappen": "S M S",
+			"sergio-perez": "S M S",
+			"charles-leclerc": "S M S",
+			"lewis-hamilton": "S M S M",
+			"fernando-alonso": "M M S",
+			"george-russell": "M S",
+			"lando-norris": "M H S",
+			"esteban-ocon": "S M S",
+			"lance-stroll": "M S",
+			"yuki-tsunoda": "M M S",
+			"pierre-gasly": "S M",
+			"valtteri-bottas": "S M M",
+			"guanyu-zhou": "S M S",
+			"alexander-albon": "S M M S",
+			"kevin-magnussen": "S M M",
+			"daniel-ricciardo": "S M M",
+			"logan-sargeant": "S M M S",
+			"nico-hulkenberg": "M S S",
+			"carlos-sainz-jr": "S M",
+			"oscar-piastri": "M"
+		},
+		"neutralised": []
 	},
 	"13": {
 		"weather": "mixed",
 		"neutralised": [
+			{
+				"type": "SC",
+				"from": 16,
+				"to": 21
+			},
+			{
+				"type": "VSC",
+				"from": 64,
+				"to": 64
+			},
 			{
 				"type": "RF",
 				"lap": 64
@@ -153,8 +541,32 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2023_Dutch_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Dutch_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9149",
+			"https://api.openf1.org/v1/race_control?session_key=9149"
+		],
+		"tyres": {
+			"max-verstappen": "S I S S I W I",
+			"fernando-alonso": "S I S S I",
+			"pierre-gasly": "S I S S I",
+			"sergio-perez": "S I S S I I",
+			"carlos-sainz-jr": "S I S S I I",
+			"lewis-hamilton": "M I S S I I",
+			"lando-norris": "S I S S I",
+			"alexander-albon": "S M I I",
+			"oscar-piastri": "S S M I I",
+			"esteban-ocon": "S I S S W I",
+			"lance-stroll": "S I S M S I",
+			"nico-hulkenberg": "S M S I I",
+			"liam-lawson": "S I S M S I I",
+			"valtteri-bottas": "S M S I",
+			"yuki-tsunoda": "S I S I I",
+			"kevin-magnussen": "S I S M I",
+			"george-russell": "S I S H I I",
+			"guanyu-zhou": "S I M S I",
+			"charles-leclerc": "S I S",
+			"logan-sargeant": "S"
+		}
 	},
 	"14": {
 		"weather": "dry",
@@ -164,8 +576,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Italian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9157",
+			"https://api.openf1.org/v1/race_control?session_key=9157"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"sergio-perez": "M H",
+			"carlos-sainz-jr": "M H",
+			"charles-leclerc": "M H",
+			"george-russell": "M H",
+			"lewis-hamilton": "H M",
+			"alexander-albon": "M H",
+			"lando-norris": "M H",
+			"fernando-alonso": "M H",
+			"valtteri-bottas": "H M",
+			"liam-lawson": "M H M",
+			"oscar-piastri": "M H M",
+			"logan-sargeant": "M H",
+			"guanyu-zhou": "M H M",
+			"pierre-gasly": "M H M",
+			"lance-stroll": "M H",
+			"nico-hulkenberg": "M H M",
+			"kevin-magnussen": "H M M",
+			"esteban-ocon": "M H",
+			"yuki-tsunoda": "M"
+		},
+		"neutralised": []
 	},
 	"15": {
 		"weather": "dry",
@@ -175,7 +612,42 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Singapore_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Singapore_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9165",
+			"https://api.openf1.org/v1/race_control?session_key=9165"
+		],
+		"tyres": {
+			"carlos-sainz-jr": "M H",
+			"lando-norris": "M H",
+			"lewis-hamilton": "M H M",
+			"charles-leclerc": "S H",
+			"max-verstappen": "H M",
+			"pierre-gasly": "M H",
+			"oscar-piastri": "M H",
+			"sergio-perez": "H M",
+			"liam-lawson": "M H",
+			"kevin-magnussen": "M H S",
+			"alexander-albon": "M H M",
+			"guanyu-zhou": "S H M",
+			"nico-hulkenberg": "M H",
+			"logan-sargeant": "M H M",
+			"fernando-alonso": "M H S",
+			"george-russell": "M H M",
+			"valtteri-bottas": "H M",
+			"esteban-ocon": "M H",
+			"yuki-tsunoda": "S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 20,
+				"to": 22
+			},
+			{
+				"type": "VSC",
+				"from": 44,
+				"to": 45
+			}
 		]
 	},
 	"16": {
@@ -186,13 +658,79 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Japanese_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Japanese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9173",
+			"https://api.openf1.org/v1/race_control?session_key=9173"
+		],
+		"tyres": {
+			"max-verstappen": "M M H",
+			"lando-norris": "M H H",
+			"oscar-piastri": "M H H",
+			"charles-leclerc": "M M H",
+			"lewis-hamilton": "M H H",
+			"carlos-sainz-jr": "M M H",
+			"george-russell": "M H",
+			"fernando-alonso": "S H H",
+			"esteban-ocon": "M H H",
+			"pierre-gasly": "M H H",
+			"liam-lawson": "S M H",
+			"yuki-tsunoda": "S M H",
+			"guanyu-zhou": "S S H",
+			"nico-hulkenberg": "S M H M",
+			"kevin-magnussen": "M H H",
+			"alexander-albon": "M S",
+			"logan-sargeant": "M M H",
+			"lance-stroll": "S M",
+			"sergio-perez": "M H S",
+			"valtteri-bottas": "S H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 14,
+				"to": 14
+			}
 		]
 	},
 	"17": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Qatar_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Qatar_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9221",
+			"https://api.openf1.org/v1/race_control?session_key=9221"
+		],
+		"tyres": {
+			"max-verstappen": "M M H M",
+			"oscar-piastri": "M M M H",
+			"lando-norris": "M M M H",
+			"george-russell": "M M H S",
+			"charles-leclerc": "M M H M",
+			"fernando-alonso": "M M H M",
+			"esteban-ocon": "M M H M",
+			"valtteri-bottas": "S M H H",
+			"guanyu-zhou": "M H H S",
+			"sergio-perez": "H M M M",
+			"lance-stroll": "M M H M",
+			"pierre-gasly": "M M H M",
+			"alexander-albon": "M M H H",
+			"kevin-magnussen": "S M H H",
+			"yuki-tsunoda": "M M H H",
+			"nico-hulkenberg": "M H M H",
+			"liam-lawson": "S H H M",
+			"logan-sargeant": "M M H",
+			"lewis-hamilton": "S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
 		]
 	},
 	"18": {
@@ -203,8 +741,33 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_United_States_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_United_States_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9213",
+			"https://api.openf1.org/v1/race_control?session_key=9213"
+		],
+		"tyres": {
+			"max-verstappen": "M M H",
+			"lando-norris": "M H H",
+			"carlos-sainz-jr": "M M H",
+			"sergio-perez": "M M H",
+			"george-russell": "M H M",
+			"pierre-gasly": "M M H",
+			"lance-stroll": "H M M",
+			"yuki-tsunoda": "M H M S",
+			"alexander-albon": "M H M",
+			"logan-sargeant": "M H M",
+			"nico-hulkenberg": "H M M",
+			"valtteri-bottas": "M H H",
+			"guanyu-zhou": "M H H",
+			"kevin-magnussen": "M H M",
+			"daniel-ricciardo": "M H S",
+			"fernando-alonso": "M M H",
+			"oscar-piastri": "M",
+			"esteban-ocon": "M",
+			"lewis-hamilton": "M H M",
+			"charles-leclerc": "M H"
+		},
+		"neutralised": []
 	},
 	"19": {
 		"weather": "dry",
@@ -214,12 +777,57 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Mexican_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Mexican_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9181",
+			"https://api.openf1.org/v1/race_control?session_key=9181"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"lewis-hamilton": "M H M",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"lando-norris": "S H M",
+			"george-russell": "M H M",
+			"daniel-ricciardo": "M H",
+			"oscar-piastri": "M H M",
+			"alexander-albon": "H M",
+			"esteban-ocon": "H M",
+			"pierre-gasly": "M H",
+			"yuki-tsunoda": "M H H",
+			"nico-hulkenberg": "M H M",
+			"guanyu-zhou": "M H",
+			"valtteri-bottas": "M H",
+			"logan-sargeant": "M H M",
+			"lance-stroll": "M H",
+			"fernando-alonso": "M H",
+			"kevin-magnussen": "M H",
+			"sergio-perez": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 5,
+				"to": 5
+			},
+			{
+				"type": "SC",
+				"from": 33,
+				"to": 34
+			},
+			{
+				"type": "RF",
+				"lap": 34
+			}
 		]
 	},
 	"20": {
 		"weather": "dry",
 		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 2
+			},
 			{
 				"type": "RF",
 				"lap": 2
@@ -232,8 +840,32 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2023_S%C3%A3o_Paulo_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_S%C3%A3o_Paulo_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9205",
+			"https://api.openf1.org/v1/race_control?session_key=9205"
+		],
+		"tyres": {
+			"max-verstappen": "S M S",
+			"lando-norris": "S M S",
+			"fernando-alonso": "S M S",
+			"sergio-perez": "S M S",
+			"lance-stroll": "S M S",
+			"carlos-sainz-jr": "S M S",
+			"pierre-gasly": "S M S",
+			"lewis-hamilton": "S M S",
+			"yuki-tsunoda": "S M S",
+			"esteban-ocon": "S M S S",
+			"logan-sargeant": "M S S S",
+			"nico-hulkenberg": "S M S S S",
+			"daniel-ricciardo": "S M S",
+			"oscar-piastri": "S M S S",
+			"george-russell": "S M S",
+			"valtteri-bottas": "S M",
+			"guanyu-zhou": "S M",
+			"kevin-magnussen": "S",
+			"alexander-albon": "S",
+			"charles-leclerc": "S"
+		}
 	},
 	"21": {
 		"weather": "dry",
@@ -243,7 +875,48 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Las_Vegas_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2023_Las_Vegas_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9189",
+			"https://api.openf1.org/v1/race_control?session_key=9189"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"charles-leclerc": "M H",
+			"sergio-perez": "M H H",
+			"esteban-ocon": "M H",
+			"lance-stroll": "S H H",
+			"carlos-sainz-jr": "M H H",
+			"lewis-hamilton": "H M H",
+			"george-russell": "M H H",
+			"fernando-alonso": "M H H",
+			"oscar-piastri": "H H M",
+			"pierre-gasly": "M H",
+			"alexander-albon": "M H",
+			"kevin-magnussen": "M H H",
+			"daniel-ricciardo": "M H",
+			"guanyu-zhou": "H M",
+			"logan-sargeant": "M H",
+			"valtteri-bottas": "M H M",
+			"yuki-tsunoda": "S M H",
+			"nico-hulkenberg": "M H H",
+			"lando-norris": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 1,
+				"to": 2
+			},
+			{
+				"type": "SC",
+				"from": 3,
+				"to": 6
+			},
+			{
+				"type": "SC",
+				"from": 26,
+				"to": 28
+			}
 		]
 	},
 	"22": {
@@ -254,7 +927,32 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2023_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2023_Abu_Dhabi_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9197",
+			"https://api.openf1.org/v1/race_control?session_key=9197"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"charles-leclerc": "M H H",
+			"george-russell": "M H H",
+			"sergio-perez": "M H H",
+			"lando-norris": "M H H",
+			"oscar-piastri": "M H H",
+			"fernando-alonso": "M H H",
+			"yuki-tsunoda": "M H",
+			"lewis-hamilton": "M H H",
+			"lance-stroll": "H H M",
+			"daniel-ricciardo": "M H H",
+			"esteban-ocon": "M H",
+			"pierre-gasly": "M H H",
+			"alexander-albon": "M H H",
+			"nico-hulkenberg": "M H H",
+			"logan-sargeant": "M H H",
+			"guanyu-zhou": "M H M",
+			"carlos-sainz-jr": "H H S",
+			"valtteri-bottas": "H M",
+			"kevin-magnussen": "M H H"
+		},
+		"neutralised": []
 	}
 }

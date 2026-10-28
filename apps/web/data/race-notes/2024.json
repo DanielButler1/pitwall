@@ -7,8 +7,33 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Bahrain_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Bahrain_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9472",
+			"https://api.openf1.org/v1/race_control?session_key=9472"
+		],
+		"tyres": {
+			"max-verstappen": "S H S",
+			"sergio-perez": "S H S",
+			"carlos-sainz-jr": "S H H",
+			"charles-leclerc": "S H H",
+			"george-russell": "S H H",
+			"lando-norris": "S H H",
+			"lewis-hamilton": "S H H",
+			"oscar-piastri": "S H H",
+			"fernando-alonso": "S H H",
+			"lance-stroll": "S H H",
+			"guanyu-zhou": "S H H",
+			"kevin-magnussen": "S H H",
+			"daniel-ricciardo": "S H S",
+			"yuki-tsunoda": "S H H",
+			"alexander-albon": "S H H",
+			"nico-hulkenberg": "S H H S",
+			"esteban-ocon": "S H H",
+			"pierre-gasly": "S H H S",
+			"valtteri-bottas": "S H H",
+			"logan-sargeant": "S H H S"
+		},
+		"neutralised": []
 	},
 	"2": {
 		"weather": "dry",
@@ -18,7 +43,38 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Saudi_Arabian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Saudi_Arabian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9480",
+			"https://api.openf1.org/v1/race_control?session_key=9480"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"sergio-perez": "M H",
+			"charles-leclerc": "M H",
+			"oscar-piastri": "M H",
+			"fernando-alonso": "M H",
+			"george-russell": "M H",
+			"oliver-bearman": "S H",
+			"lando-norris": "M S",
+			"lewis-hamilton": "M S",
+			"nico-hulkenberg": "M H",
+			"alexander-albon": "M H",
+			"kevin-magnussen": "M H",
+			"esteban-ocon": "M H",
+			"logan-sargeant": "M H",
+			"yuki-tsunoda": "M H",
+			"daniel-ricciardo": "M H",
+			"valtteri-bottas": "S H S",
+			"guanyu-zhou": "M S",
+			"lance-stroll": "M",
+			"pierre-gasly": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 7,
+				"to": 9
+			}
 		]
 	},
 	"3": {
@@ -29,7 +85,42 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Australian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Australian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9488",
+			"https://api.openf1.org/v1/race_control?session_key=9488"
+		],
+		"tyres": {
+			"carlos-sainz-jr": "M H H",
+			"charles-leclerc": "M H H",
+			"lando-norris": "M H H",
+			"oscar-piastri": "M H H",
+			"sergio-perez": "M H H",
+			"lance-stroll": "M H H",
+			"yuki-tsunoda": "M H H",
+			"fernando-alonso": "H M H",
+			"nico-hulkenberg": "H M H",
+			"kevin-magnussen": "M H H",
+			"alexander-albon": "M H H",
+			"daniel-ricciardo": "S H H",
+			"pierre-gasly": "M H H",
+			"valtteri-bottas": "M H H",
+			"guanyu-zhou": "S H H",
+			"esteban-ocon": "M H H H",
+			"george-russell": "M H H",
+			"lewis-hamilton": "S H",
+			"max-verstappen": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 17,
+				"to": 18
+			},
+			{
+				"type": "VSC",
+				"from": 58,
+				"to": 58
+			}
 		]
 	},
 	"4": {
@@ -47,8 +138,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2024_Japanese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Japanese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9496"
+		],
+		"tyres": {
+			"max-verstappen": "M M H",
+			"sergio-perez": "M M H",
+			"carlos-sainz-jr": "M M H",
+			"charles-leclerc": "M H",
+			"lando-norris": "M H H",
+			"fernando-alonso": "S M H",
+			"george-russell": "M H H M",
+			"oscar-piastri": "M H H",
+			"lewis-hamilton": "M H H M",
+			"yuki-tsunoda": "M S H H",
+			"nico-hulkenberg": "S H H",
+			"lance-stroll": "S M H S",
+			"kevin-magnussen": "M H",
+			"valtteri-bottas": "S H H",
+			"esteban-ocon": "S H H M",
+			"pierre-gasly": "S H M H",
+			"logan-sargeant": "S H H M S",
+			"guanyu-zhou": "M S H",
+			"daniel-ricciardo": "M",
+			"alexander-albon": "S"
+		}
 	},
 	"5": {
 		"weather": "dry",
@@ -58,7 +172,48 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Chinese_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Chinese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9673",
+			"https://api.openf1.org/v1/race_control?session_key=9673"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"lando-norris": "M H",
+			"sergio-perez": "M H H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"george-russell": "M M H",
+			"fernando-alonso": "M H S M",
+			"oscar-piastri": "M M H",
+			"lewis-hamilton": "S M H",
+			"nico-hulkenberg": "M H H",
+			"esteban-ocon": "M H H",
+			"alexander-albon": "M M H",
+			"pierre-gasly": "M H H M",
+			"guanyu-zhou": "M H H S",
+			"lance-stroll": "S M H M H",
+			"kevin-magnussen": "H H M",
+			"logan-sargeant": "S M H",
+			"daniel-ricciardo": "M M",
+			"yuki-tsunoda": "S M H",
+			"valtteri-bottas": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 22,
+				"to": 23
+			},
+			{
+				"type": "SC",
+				"from": 23,
+				"to": 26
+			},
+			{
+				"type": "SC",
+				"from": 27,
+				"to": 31
+			}
 		]
 	},
 	"6": {
@@ -69,7 +224,43 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Miami_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Miami_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9507",
+			"https://api.openf1.org/v1/race_control?session_key=9507"
+		],
+		"tyres": {
+			"lando-norris": "M H",
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"sergio-perez": "M H M",
+			"carlos-sainz-jr": "M H",
+			"lewis-hamilton": "H M",
+			"yuki-tsunoda": "M H",
+			"george-russell": "M H",
+			"fernando-alonso": "H M",
+			"esteban-ocon": "M H",
+			"nico-hulkenberg": "M H M",
+			"pierre-gasly": "M H",
+			"oscar-piastri": "M H M",
+			"guanyu-zhou": "M S",
+			"daniel-ricciardo": "H M",
+			"valtteri-bottas": "S H M",
+			"lance-stroll": "M H M",
+			"alexander-albon": "M H S",
+			"kevin-magnussen": "H M M",
+			"logan-sargeant": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 23,
+				"to": 23
+			},
+			{
+				"type": "SC",
+				"from": 28,
+				"to": 32
+			}
 		]
 	},
 	"7": {
@@ -80,8 +271,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Emilia_Romagna_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Emilia_Romagna_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9515",
+			"https://api.openf1.org/v1/race_control?session_key=9515"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"lando-norris": "M H",
+			"charles-leclerc": "M H",
+			"oscar-piastri": "M H",
+			"carlos-sainz-jr": "M H",
+			"lewis-hamilton": "M H",
+			"george-russell": "M H M",
+			"sergio-perez": "H M",
+			"lance-stroll": "M H",
+			"yuki-tsunoda": "M H",
+			"nico-hulkenberg": "M H",
+			"kevin-magnussen": "M H",
+			"daniel-ricciardo": "M H",
+			"esteban-ocon": "M H",
+			"guanyu-zhou": "H M",
+			"pierre-gasly": "S H M",
+			"logan-sargeant": "H M",
+			"valtteri-bottas": "M H",
+			"fernando-alonso": "S H M S",
+			"alexander-albon": "M H M M M"
+		},
+		"neutralised": []
 	},
 	"8": {
 		"weather": "dry",
@@ -98,8 +314,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2024_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Monaco_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9523"
+		],
+		"tyres": {
+			"charles-leclerc": "M H",
+			"oscar-piastri": "M H",
+			"carlos-sainz-jr": "M H",
+			"lando-norris": "M H",
+			"george-russell": "H M",
+			"max-verstappen": "H M H",
+			"lewis-hamilton": "H M H",
+			"yuki-tsunoda": "M H",
+			"alexander-albon": "M H",
+			"pierre-gasly": "H M",
+			"fernando-alonso": "H M",
+			"daniel-ricciardo": "M H",
+			"valtteri-bottas": "H M H",
+			"lance-stroll": "H M H S",
+			"logan-sargeant": "H M",
+			"guanyu-zhou": "M H S",
+			"esteban-ocon": "H",
+			"sergio-perez": "H",
+			"nico-hulkenberg": "M",
+			"kevin-magnussen": "H"
+		}
 	},
 	"9": {
 		"weather": "mixed",
@@ -109,7 +348,43 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Canadian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Canadian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9531",
+			"https://api.openf1.org/v1/race_control?session_key=9531"
+		],
+		"tyres": {
+			"max-verstappen": "I I M",
+			"lando-norris": "I I M",
+			"george-russell": "I I H M",
+			"lewis-hamilton": "I I M H",
+			"oscar-piastri": "I I M",
+			"fernando-alonso": "I I H",
+			"lance-stroll": "I I H",
+			"daniel-ricciardo": "I I M",
+			"pierre-gasly": "I I H",
+			"esteban-ocon": "I M",
+			"nico-hulkenberg": "W I I M",
+			"kevin-magnussen": "W I I M M",
+			"valtteri-bottas": "I M",
+			"yuki-tsunoda": "I M",
+			"guanyu-zhou": "I I M M",
+			"carlos-sainz-jr": "I I M",
+			"alexander-albon": "I I M",
+			"sergio-perez": "I I M",
+			"charles-leclerc": "I I H I",
+			"logan-sargeant": "I"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 25,
+				"to": 29
+			},
+			{
+				"type": "SC",
+				"from": 54,
+				"to": 58
+			}
 		]
 	},
 	"10": {
@@ -120,8 +395,33 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Spanish_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9539",
+			"https://api.openf1.org/v1/race_control?session_key=9539"
+		],
+		"tyres": {
+			"max-verstappen": "S M S",
+			"lando-norris": "S M S",
+			"lewis-hamilton": "S M S",
+			"george-russell": "S M H",
+			"charles-leclerc": "S M S",
+			"carlos-sainz-jr": "S M H",
+			"oscar-piastri": "S M S",
+			"sergio-perez": "S S M S",
+			"pierre-gasly": "S M H",
+			"esteban-ocon": "S M H",
+			"nico-hulkenberg": "S M H",
+			"fernando-alonso": "S M H",
+			"guanyu-zhou": "S M H",
+			"lance-stroll": "S M H",
+			"daniel-ricciardo": "S M H",
+			"valtteri-bottas": "S S H",
+			"kevin-magnussen": "S M H",
+			"alexander-albon": "M S S",
+			"yuki-tsunoda": "S M H S",
+			"logan-sargeant": "S M H"
+		},
+		"neutralised": []
 	},
 	"11": {
 		"weather": "dry",
@@ -131,7 +431,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Austrian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Austrian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9550",
+			"https://api.openf1.org/v1/race_control?session_key=9550"
+		],
+		"tyres": {
+			"george-russell": "M M H",
+			"oscar-piastri": "M H M",
+			"carlos-sainz-jr": "M H M",
+			"lewis-hamilton": "M H M",
+			"max-verstappen": "M H M S",
+			"nico-hulkenberg": "M H H",
+			"sergio-perez": "M H M",
+			"kevin-magnussen": "M H H",
+			"daniel-ricciardo": "M H H",
+			"pierre-gasly": "M H M",
+			"charles-leclerc": "M H M M M",
+			"esteban-ocon": "M H M",
+			"lance-stroll": "M M H",
+			"yuki-tsunoda": "M H H",
+			"alexander-albon": "M H H",
+			"valtteri-bottas": "M H H",
+			"guanyu-zhou": "H M H",
+			"fernando-alonso": "M M H S",
+			"logan-sargeant": "M H M",
+			"lando-norris": "M H M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 66,
+				"to": 66
+			}
 		]
 	},
 	"12": {
@@ -142,8 +473,33 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_British_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_British_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9558",
+			"https://api.openf1.org/v1/race_control?session_key=9558"
+		],
+		"tyres": {
+			"lewis-hamilton": "M I S",
+			"max-verstappen": "M I H",
+			"lando-norris": "M I S",
+			"oscar-piastri": "M I M",
+			"carlos-sainz-jr": "M I H S",
+			"nico-hulkenberg": "M I S",
+			"lance-stroll": "M I M",
+			"fernando-alonso": "M I M",
+			"alexander-albon": "M I M",
+			"yuki-tsunoda": "M I S",
+			"logan-sargeant": "M I S",
+			"kevin-magnussen": "M I S",
+			"daniel-ricciardo": "M I S",
+			"charles-leclerc": "M I I S",
+			"valtteri-bottas": "M I S",
+			"esteban-ocon": "S I M I M",
+			"sergio-perez": "H I I M S",
+			"guanyu-zhou": "S M I I S",
+			"george-russell": "M I",
+			"pierre-gasly": "M"
+		},
+		"neutralised": []
 	},
 	"13": {
 		"weather": "dry",
@@ -153,8 +509,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Hungarian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9566",
+			"https://api.openf1.org/v1/race_control?session_key=9566"
+		],
+		"tyres": {
+			"oscar-piastri": "M H M",
+			"lando-norris": "M H M",
+			"lewis-hamilton": "M H H",
+			"charles-leclerc": "M H M",
+			"max-verstappen": "M H M",
+			"carlos-sainz-jr": "M H M",
+			"sergio-perez": "H M M",
+			"george-russell": "H M H",
+			"yuki-tsunoda": "M H",
+			"lance-stroll": "S M H",
+			"fernando-alonso": "S M H",
+			"daniel-ricciardo": "M H H",
+			"nico-hulkenberg": "M H H",
+			"alexander-albon": "S H H",
+			"kevin-magnussen": "S H H",
+			"valtteri-bottas": "M H H",
+			"logan-sargeant": "M H H S",
+			"esteban-ocon": "M H H S",
+			"guanyu-zhou": "M H H",
+			"pierre-gasly": "H M"
+		},
+		"neutralised": []
 	},
 	"14": {
 		"weather": "dry",
@@ -164,8 +545,33 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Belgian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9574",
+			"https://api.openf1.org/v1/race_control?session_key=9574"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H H",
+			"oscar-piastri": "M H H",
+			"charles-leclerc": "M H H",
+			"max-verstappen": "M H M",
+			"lando-norris": "M H H",
+			"carlos-sainz-jr": "H M H",
+			"sergio-perez": "M M H S",
+			"fernando-alonso": "M H M",
+			"esteban-ocon": "M H H",
+			"daniel-ricciardo": "S M H S",
+			"lance-stroll": "M H M",
+			"alexander-albon": "M M H",
+			"pierre-gasly": "M H H",
+			"kevin-magnussen": "M H",
+			"valtteri-bottas": "M H M",
+			"yuki-tsunoda": "M H S",
+			"logan-sargeant": "M M H",
+			"nico-hulkenberg": "M H M",
+			"guanyu-zhou": "H",
+			"george-russell": "M H"
+		},
+		"neutralised": []
 	},
 	"15": {
 		"weather": "dry",
@@ -175,8 +581,33 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Dutch_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Dutch_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9582",
+			"https://api.openf1.org/v1/race_control?session_key=9582"
+		],
+		"tyres": {
+			"lando-norris": "M H",
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"oscar-piastri": "M H",
+			"carlos-sainz-jr": "M H",
+			"sergio-perez": "M H",
+			"george-russell": "M H S",
+			"lewis-hamilton": "S H S",
+			"pierre-gasly": "M H",
+			"fernando-alonso": "M H",
+			"nico-hulkenberg": "M H",
+			"daniel-ricciardo": "M H",
+			"lance-stroll": "M H",
+			"alexander-albon": "M H M",
+			"esteban-ocon": "M H",
+			"logan-sargeant": "M H",
+			"yuki-tsunoda": "S M H",
+			"kevin-magnussen": "H M",
+			"valtteri-bottas": "S H M",
+			"guanyu-zhou": "M H S"
+		},
+		"neutralised": []
 	},
 	"16": {
 		"weather": "dry",
@@ -186,8 +617,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Italian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9590",
+			"https://api.openf1.org/v1/race_control?session_key=9590"
+		],
+		"tyres": {
+			"charles-leclerc": "M H",
+			"oscar-piastri": "M H H",
+			"lando-norris": "M H H",
+			"carlos-sainz-jr": "M H",
+			"lewis-hamilton": "M H H",
+			"max-verstappen": "H H M",
+			"george-russell": "M H H",
+			"sergio-perez": "H H M",
+			"alexander-albon": "M H",
+			"kevin-magnussen": "M H",
+			"fernando-alonso": "M H H",
+			"franco-colapinto": "M H",
+			"daniel-ricciardo": "M H",
+			"esteban-ocon": "H M",
+			"pierre-gasly": "M H H",
+			"valtteri-bottas": "H M",
+			"nico-hulkenberg": "M H H",
+			"guanyu-zhou": "M H",
+			"lance-stroll": "H H M S",
+			"yuki-tsunoda": "H"
+		},
+		"neutralised": []
 	},
 	"17": {
 		"weather": "dry",
@@ -197,7 +653,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Azerbaijan_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Azerbaijan_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9598",
+			"https://api.openf1.org/v1/race_control?session_key=9598"
+		],
+		"tyres": {
+			"oscar-piastri": "M H",
+			"charles-leclerc": "M H",
+			"george-russell": "M H",
+			"lando-norris": "H M",
+			"max-verstappen": "M H S",
+			"fernando-alonso": "M H",
+			"alexander-albon": "H M",
+			"franco-colapinto": "M H",
+			"lewis-hamilton": "M H",
+			"oliver-bearman": "M H",
+			"nico-hulkenberg": "M H",
+			"pierre-gasly": "H S",
+			"daniel-ricciardo": "H S",
+			"guanyu-zhou": "H M",
+			"esteban-ocon": "H S",
+			"valtteri-bottas": "M H",
+			"sergio-perez": "M H",
+			"carlos-sainz-jr": "M H",
+			"lance-stroll": "M H H",
+			"yuki-tsunoda": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 51,
+				"to": 51
+			}
 		]
 	},
 	"18": {
@@ -208,8 +695,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Singapore_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Singapore_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9606",
+			"https://api.openf1.org/v1/race_control?session_key=9606"
+		],
+		"tyres": {
+			"lando-norris": "M H",
+			"max-verstappen": "M H",
+			"oscar-piastri": "M H",
+			"george-russell": "M H",
+			"charles-leclerc": "M H",
+			"lewis-hamilton": "S H",
+			"carlos-sainz-jr": "M H",
+			"fernando-alonso": "M H",
+			"nico-hulkenberg": "M H",
+			"sergio-perez": "M H",
+			"franco-colapinto": "M H",
+			"yuki-tsunoda": "M S",
+			"esteban-ocon": "M H",
+			"lance-stroll": "H M",
+			"guanyu-zhou": "H M",
+			"valtteri-bottas": "H M",
+			"pierre-gasly": "M S",
+			"daniel-ricciardo": "S M S S",
+			"kevin-magnussen": "H M S",
+			"alexander-albon": "M H"
+		},
+		"neutralised": []
 	},
 	"19": {
 		"weather": "dry",
@@ -219,21 +731,98 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_United_States_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_United_States_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9617",
+			"https://api.openf1.org/v1/race_control?session_key=9617"
+		],
+		"tyres": {
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"max-verstappen": "M H",
+			"lando-norris": "M H",
+			"oscar-piastri": "M H",
+			"george-russell": "H M",
+			"sergio-perez": "M H",
+			"nico-hulkenberg": "M H",
+			"liam-lawson": "H M",
+			"franco-colapinto": "H M",
+			"kevin-magnussen": "M H M",
+			"pierre-gasly": "M H",
+			"fernando-alonso": "M H",
+			"yuki-tsunoda": "M H",
+			"lance-stroll": "H M",
+			"alexander-albon": "M M H",
+			"valtteri-bottas": "M H",
+			"esteban-ocon": "M H S",
+			"guanyu-zhou": "M M H",
+			"lewis-hamilton": "H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 3,
+				"to": 5
+			}
 		]
 	},
 	"20": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Mexican_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Mexican_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9625",
+			"https://api.openf1.org/v1/race_control?session_key=9625"
+		],
+		"tyres": {
+			"carlos-sainz-jr": "M H",
+			"lando-norris": "M H",
+			"charles-leclerc": "M H S",
+			"lewis-hamilton": "M H",
+			"george-russell": "M H",
+			"max-verstappen": "M H",
+			"kevin-magnussen": "M H",
+			"oscar-piastri": "M H",
+			"nico-hulkenberg": "M H",
+			"pierre-gasly": "M H",
+			"lance-stroll": "M H",
+			"franco-colapinto": "H M",
+			"esteban-ocon": "H M",
+			"valtteri-bottas": "H M",
+			"guanyu-zhou": "H M",
+			"liam-lawson": "H M S",
+			"sergio-perez": "H M M S",
+			"fernando-alonso": "M",
+			"alexander-albon": "M",
+			"yuki-tsunoda": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			}
 		]
 	},
 	"21": {
 		"weather": "wet",
 		"neutralised": [
 			{
+				"type": "VSC",
+				"from": 28,
+				"to": 28
+			},
+			{
+				"type": "SC",
+				"from": 30,
+				"to": 32
+			},
+			{
 				"type": "RF",
 				"lap": 32
+			},
+			{
+				"type": "SC",
+				"from": 39,
+				"to": 42
 			}
 		],
 		"compounds": {
@@ -243,8 +832,31 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2024_S%C3%A3o_Paulo_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_S%C3%A3o_Paulo_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9636",
+			"https://api.openf1.org/v1/race_control?session_key=9636"
+		],
+		"tyres": {
+			"max-verstappen": "I I",
+			"esteban-ocon": "I I",
+			"pierre-gasly": "I I",
+			"george-russell": "I I I",
+			"charles-leclerc": "I I I",
+			"lando-norris": "I I I",
+			"yuki-tsunoda": "I W I",
+			"oscar-piastri": "I I I",
+			"liam-lawson": "I W I",
+			"lewis-hamilton": "I I I",
+			"sergio-perez": "I W I",
+			"oliver-bearman": "I I I",
+			"valtteri-bottas": "I I",
+			"fernando-alonso": "I I I",
+			"guanyu-zhou": "I I W I",
+			"carlos-sainz-jr": "I I I",
+			"franco-colapinto": "I I I",
+			"lance-stroll": "I",
+			"nico-hulkenberg": "I I W I"
+		}
 	},
 	"22": {
 		"weather": "dry",
@@ -254,8 +866,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Las_Vegas_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2024_Las_Vegas_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9644",
+			"https://api.openf1.org/v1/race_control?session_key=9644"
+		],
+		"tyres": {
+			"george-russell": "M H H",
+			"lewis-hamilton": "M H H",
+			"carlos-sainz-jr": "M H H",
+			"charles-leclerc": "M H H",
+			"max-verstappen": "M H H",
+			"lando-norris": "M H H S",
+			"oscar-piastri": "M H H",
+			"nico-hulkenberg": "M H H",
+			"yuki-tsunoda": "M H H",
+			"sergio-perez": "H M H",
+			"fernando-alonso": "S H H",
+			"kevin-magnussen": "M H",
+			"guanyu-zhou": "M H H",
+			"franco-colapinto": "H M H",
+			"lance-stroll": "M H H",
+			"liam-lawson": "M H H",
+			"esteban-ocon": "M M H S",
+			"valtteri-bottas": "H M H",
+			"alexander-albon": "M H",
+			"pierre-gasly": "M H"
+		},
+		"neutralised": []
 	},
 	"23": {
 		"weather": "dry",
@@ -265,7 +902,53 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Qatar_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Qatar_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9655",
+			"https://api.openf1.org/v1/race_control?session_key=9655"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"oscar-piastri": "M H",
+			"george-russell": "M H H",
+			"pierre-gasly": "M H",
+			"carlos-sainz-jr": "M H",
+			"fernando-alonso": "M H M",
+			"guanyu-zhou": "M H",
+			"kevin-magnussen": "M H",
+			"lando-norris": "M H H",
+			"valtteri-bottas": "M H M",
+			"lewis-hamilton": "M H",
+			"yuki-tsunoda": "M H S",
+			"liam-lawson": "M H S",
+			"alexander-albon": "M S S",
+			"nico-hulkenberg": "H M",
+			"sergio-perez": "M H",
+			"lance-stroll": "M H H",
+			"franco-colapinto": "? M",
+			"esteban-ocon": "? M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
+			{
+				"type": "SC",
+				"from": 35,
+				"to": 39
+			},
+			{
+				"type": "VSC",
+				"from": 40,
+				"to": 40
+			},
+			{
+				"type": "SC",
+				"from": 40,
+				"to": 42
+			}
 		]
 	},
 	"24": {
@@ -276,7 +959,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2024_Abu_Dhabi_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2024_Abu_Dhabi_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9662",
+			"https://api.openf1.org/v1/race_control?session_key=9662"
+		],
+		"tyres": {
+			"lando-norris": "M H",
+			"carlos-sainz-jr": "M H",
+			"charles-leclerc": "M H",
+			"lewis-hamilton": "H M",
+			"george-russell": "M H",
+			"max-verstappen": "M H",
+			"pierre-gasly": "M H",
+			"nico-hulkenberg": "M H",
+			"fernando-alonso": "M H H",
+			"oscar-piastri": "M H H",
+			"alexander-albon": "M H",
+			"yuki-tsunoda": "M H",
+			"guanyu-zhou": "M H H",
+			"lance-stroll": "M H H",
+			"jack-doohan": "M H",
+			"kevin-magnussen": "M H H S S",
+			"liam-lawson": "M H",
+			"valtteri-bottas": "M H",
+			"franco-colapinto": "M H",
+			"sergio-perez": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 2,
+				"to": 3
+			}
 		]
 	}
 }

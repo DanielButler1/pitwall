@@ -7,7 +7,48 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Australian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Australian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9693",
+			"https://api.openf1.org/v1/race_control?session_key=9693"
+		],
+		"tyres": {
+			"lando-norris": "I H I",
+			"max-verstappen": "I M I",
+			"george-russell": "I H I",
+			"kimi-antonelli": "I H I",
+			"alexander-albon": "I M I",
+			"lance-stroll": "I H I",
+			"nico-hulkenberg": "I M I",
+			"charles-leclerc": "I H I",
+			"oscar-piastri": "I H I",
+			"lewis-hamilton": "I H I",
+			"pierre-gasly": "I H I",
+			"yuki-tsunoda": "I M I",
+			"esteban-ocon": "I M I",
+			"oliver-bearman": "I M I",
+			"liam-lawson": "I I I M",
+			"gabriel-bortoleto": "I M I",
+			"fernando-alonso": "I",
+			"carlos-sainz-jr": "I",
+			"jack-doohan": "I",
+			"isack-hadjar": "I"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 7
+			},
+			{
+				"type": "SC",
+				"from": 34,
+				"to": 41
+			},
+			{
+				"type": "SC",
+				"from": 47,
+				"to": 51
+			}
 		]
 	},
 	"2": {
@@ -18,8 +59,33 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Chinese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2025_Chinese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9998",
+			"https://api.openf1.org/v1/race_control?session_key=9998"
+		],
+		"tyres": {
+			"oscar-piastri": "M H",
+			"lando-norris": "M H",
+			"george-russell": "M H",
+			"max-verstappen": "M H",
+			"esteban-ocon": "M H",
+			"kimi-antonelli": "M H",
+			"alexander-albon": "M H",
+			"oliver-bearman": "H M",
+			"lance-stroll": "H M",
+			"carlos-sainz-jr": "M H",
+			"isack-hadjar": "M H H",
+			"liam-lawson": "H M H",
+			"jack-doohan": "M H",
+			"gabriel-bortoleto": "M H H",
+			"nico-hulkenberg": "M H",
+			"yuki-tsunoda": "M H H M",
+			"fernando-alonso": "M",
+			"charles-leclerc": "M H",
+			"lewis-hamilton": "M H H",
+			"pierre-gasly": "M H"
+		},
+		"neutralised": []
 	},
 	"3": {
 		"weather": "dry",
@@ -29,8 +95,33 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Japanese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2025_Japanese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=10006",
+			"https://api.openf1.org/v1/race_control?session_key=10006"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"lando-norris": "M H",
+			"oscar-piastri": "M H",
+			"charles-leclerc": "M H",
+			"george-russell": "M H",
+			"kimi-antonelli": "M H",
+			"lewis-hamilton": "H M",
+			"isack-hadjar": "M H",
+			"alexander-albon": "M H",
+			"oliver-bearman": "M H",
+			"fernando-alonso": "M H",
+			"yuki-tsunoda": "M H",
+			"pierre-gasly": "M H",
+			"carlos-sainz-jr": "M S",
+			"jack-doohan": "S H",
+			"nico-hulkenberg": "M H",
+			"liam-lawson": "M S",
+			"esteban-ocon": "H M",
+			"gabriel-bortoleto": "H M",
+			"lance-stroll": "S H M"
+		},
+		"neutralised": []
 	},
 	"4": {
 		"weather": "dry",
@@ -40,7 +131,38 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Bahrain_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Bahrain_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=10014",
+			"https://api.openf1.org/v1/race_control?session_key=10014"
+		],
+		"tyres": {
+			"oscar-piastri": "S M M",
+			"george-russell": "S M S",
+			"lando-norris": "S M M",
+			"charles-leclerc": "M M H",
+			"lewis-hamilton": "M M H",
+			"max-verstappen": "S H M",
+			"pierre-gasly": "S M H",
+			"esteban-ocon": "S M H",
+			"yuki-tsunoda": "S M S",
+			"oliver-bearman": "S H S",
+			"kimi-antonelli": "S M S S",
+			"alexander-albon": "S H M",
+			"isack-hadjar": "S M H",
+			"jack-doohan": "S M H",
+			"fernando-alonso": "M M H",
+			"liam-lawson": "M H S",
+			"lance-stroll": "S M H",
+			"gabriel-bortoleto": "M H M",
+			"carlos-sainz-jr": "S M H S",
+			"nico-hulkenberg": "S M M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 32,
+				"to": 35
+			}
 		]
 	},
 	"5": {
@@ -51,7 +173,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Saudi_Arabian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Saudi_Arabian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=10022",
+			"https://api.openf1.org/v1/race_control?session_key=10022"
+		],
+		"tyres": {
+			"oscar-piastri": "M H",
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"lando-norris": "H M",
+			"george-russell": "M H",
+			"kimi-antonelli": "M H",
+			"lewis-hamilton": "M H",
+			"carlos-sainz-jr": "M H",
+			"alexander-albon": "M H",
+			"isack-hadjar": "H M",
+			"fernando-alonso": "M H",
+			"liam-lawson": "M H",
+			"oliver-bearman": "M H",
+			"esteban-ocon": "M H",
+			"nico-hulkenberg": "H M",
+			"lance-stroll": "H M",
+			"jack-doohan": "M H H",
+			"gabriel-bortoleto": "M H",
+			"yuki-tsunoda": "M",
+			"pierre-gasly": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
 		]
 	},
 	"6": {
@@ -62,7 +215,48 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Miami_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Miami_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=10033",
+			"https://api.openf1.org/v1/race_control?session_key=10033"
+		],
+		"tyres": {
+			"oscar-piastri": "M H",
+			"lando-norris": "M H",
+			"george-russell": "H M",
+			"max-verstappen": "M H",
+			"alexander-albon": "M H",
+			"kimi-antonelli": "M H",
+			"charles-leclerc": "M H",
+			"lewis-hamilton": "H M",
+			"carlos-sainz-jr": "M H",
+			"yuki-tsunoda": "M H",
+			"isack-hadjar": "M H",
+			"esteban-ocon": "M H",
+			"pierre-gasly": "H M",
+			"nico-hulkenberg": "H M",
+			"fernando-alonso": "H M",
+			"lance-stroll": "M H",
+			"liam-lawson": "H M",
+			"gabriel-bortoleto": "M H",
+			"oliver-bearman": "H",
+			"jack-doohan": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 2,
+				"to": 3
+			},
+			{
+				"type": "VSC",
+				"from": 29,
+				"to": 30
+			},
+			{
+				"type": "VSC",
+				"from": 33,
+				"to": 34
+			}
 		]
 	},
 	"7": {
@@ -73,7 +267,43 @@
 			"S": "C6"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Emilia_Romagna_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Emilia_Romagna_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9987",
+			"https://api.openf1.org/v1/race_control?session_key=9987"
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"lando-norris": "M H H",
+			"oscar-piastri": "M H H",
+			"lewis-hamilton": "H M H",
+			"alexander-albon": "M H H",
+			"charles-leclerc": "M H H",
+			"george-russell": "M H H",
+			"carlos-sainz-jr": "M H H",
+			"isack-hadjar": "M H H",
+			"yuki-tsunoda": "H M",
+			"fernando-alonso": "M H M",
+			"nico-hulkenberg": "H M",
+			"pierre-gasly": "M H H",
+			"liam-lawson": "M H H",
+			"lance-stroll": "M H M",
+			"franco-colapinto": "M H H",
+			"oliver-bearman": "H M H",
+			"gabriel-bortoleto": "M H H M",
+			"kimi-antonelli": "H M",
+			"esteban-ocon": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 29,
+				"to": 31
+			},
+			{
+				"type": "SC",
+				"from": 46,
+				"to": 53
+			}
 		]
 	},
 	"8": {
@@ -84,7 +314,38 @@
 			"S": "C6"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Monaco_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Monaco_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9979",
+			"https://api.openf1.org/v1/race_control?session_key=9979"
+		],
+		"tyres": {
+			"lando-norris": "M H H",
+			"charles-leclerc": "M H M",
+			"oscar-piastri": "M H H",
+			"max-verstappen": "H M S",
+			"lewis-hamilton": "H H M",
+			"isack-hadjar": "M S H",
+			"esteban-ocon": "M M H",
+			"liam-lawson": "M S H",
+			"alexander-albon": "M M H",
+			"carlos-sainz-jr": "H M",
+			"george-russell": "H M H",
+			"oliver-bearman": "M H M",
+			"franco-colapinto": "H M M",
+			"gabriel-bortoleto": "M H S M",
+			"lance-stroll": "H H M",
+			"nico-hulkenberg": "M H S",
+			"yuki-tsunoda": "S H M",
+			"kimi-antonelli": "H M H",
+			"fernando-alonso": "H H",
+			"pierre-gasly": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 2,
+				"to": 4
+			}
 		]
 	},
 	"9": {
@@ -95,7 +356,37 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Spanish_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Spanish_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9971",
+			"https://api.openf1.org/v1/race_control?session_key=9971"
+		],
+		"tyres": {
+			"oscar-piastri": "S M S S",
+			"lando-norris": "S M S S",
+			"charles-leclerc": "S M M S",
+			"george-russell": "S M S S",
+			"nico-hulkenberg": "S M S S",
+			"lewis-hamilton": "S M S S",
+			"isack-hadjar": "S M S S",
+			"pierre-gasly": "S S M S",
+			"fernando-alonso": "S M S S",
+			"max-verstappen": "S S M S H",
+			"liam-lawson": "S M S",
+			"gabriel-bortoleto": "S M S",
+			"yuki-tsunoda": "M S S S S",
+			"carlos-sainz-jr": "S S M S",
+			"franco-colapinto": "S M S S",
+			"esteban-ocon": "S M M",
+			"oliver-bearman": "S M M S",
+			"kimi-antonelli": "S M S",
+			"alexander-albon": "S S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 55,
+				"to": 60
+			}
 		]
 	},
 	"10": {
@@ -106,7 +397,38 @@
 			"S": "C6"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Canadian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Canadian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9963",
+			"https://api.openf1.org/v1/race_control?session_key=9963"
+		],
+		"tyres": {
+			"george-russell": "M H H",
+			"max-verstappen": "M H H",
+			"kimi-antonelli": "M H H",
+			"oscar-piastri": "M H H S",
+			"charles-leclerc": "H H M",
+			"lewis-hamilton": "M H",
+			"fernando-alonso": "M H H",
+			"nico-hulkenberg": "M H",
+			"esteban-ocon": "H M",
+			"carlos-sainz-jr": "H M",
+			"oliver-bearman": "M H S",
+			"yuki-tsunoda": "H M",
+			"franco-colapinto": "M H",
+			"gabriel-bortoleto": "H M",
+			"pierre-gasly": "H M",
+			"isack-hadjar": "M H S",
+			"lance-stroll": "H H M S",
+			"lando-norris": "H M H",
+			"liam-lawson": "H M",
+			"alexander-albon": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 67,
+				"to": 70
+			}
 		]
 	},
 	"11": {
@@ -117,7 +439,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Austrian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Austrian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9955",
+			"https://api.openf1.org/v1/race_control?session_key=9955"
+		],
+		"tyres": {
+			"lando-norris": "M H M",
+			"oscar-piastri": "M H M",
+			"charles-leclerc": "M H M",
+			"lewis-hamilton": "M H M",
+			"george-russell": "M M H",
+			"liam-lawson": "M H",
+			"fernando-alonso": "M H",
+			"gabriel-bortoleto": "M M H",
+			"nico-hulkenberg": "S M M",
+			"esteban-ocon": "M H H",
+			"oliver-bearman": "S H M",
+			"isack-hadjar": "S M H",
+			"pierre-gasly": "S H M",
+			"lance-stroll": "M H S",
+			"franco-colapinto": "S M H",
+			"yuki-tsunoda": "M H M S",
+			"alexander-albon": "M M",
+			"max-verstappen": "M",
+			"kimi-antonelli": "M",
+			"carlos-sainz-jr": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
 		]
 	},
 	"12": {
@@ -128,7 +481,53 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_British_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_British_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9947",
+			"https://api.openf1.org/v1/race_control?session_key=9947"
+		],
+		"tyres": {
+			"lando-norris": "I I M",
+			"oscar-piastri": "I I M",
+			"nico-hulkenberg": "I I M",
+			"lewis-hamilton": "I I S",
+			"max-verstappen": "I I M",
+			"pierre-gasly": "I I M",
+			"lance-stroll": "I S I S",
+			"alexander-albon": "I I M",
+			"fernando-alonso": "I I M",
+			"george-russell": "H I H",
+			"oliver-bearman": "H I M",
+			"carlos-sainz-jr": "I I M",
+			"esteban-ocon": "I I M",
+			"charles-leclerc": "M I S",
+			"yuki-tsunoda": "I I M",
+			"kimi-antonelli": "I H I I",
+			"isack-hadjar": "M I",
+			"gabriel-bortoleto": "M",
+			"liam-lawson": "I",
+			"franco-colapinto": "H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 2,
+				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 5,
+				"to": 7
+			},
+			{
+				"type": "SC",
+				"from": 14,
+				"to": 17
+			},
+			{
+				"type": "SC",
+				"from": 18,
+				"to": 21
+			}
 		]
 	},
 	"13": {
@@ -139,7 +538,42 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Belgian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Belgian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9939",
+			"https://api.openf1.org/v1/race_control?session_key=9939"
+		],
+		"tyres": {
+			"oscar-piastri": "I M M",
+			"lando-norris": "I H H",
+			"charles-leclerc": "I M M",
+			"max-verstappen": "I M M",
+			"george-russell": "I M M",
+			"alexander-albon": "I M M",
+			"lewis-hamilton": "I M M",
+			"liam-lawson": "I M M",
+			"gabriel-bortoleto": "I M M",
+			"pierre-gasly": "I M M",
+			"oliver-bearman": "I M M",
+			"nico-hulkenberg": "I M M",
+			"yuki-tsunoda": "I M M",
+			"lance-stroll": "I M M",
+			"esteban-ocon": "I M M",
+			"kimi-antonelli": "I M M",
+			"fernando-alonso": "I M M",
+			"carlos-sainz-jr": "I M H",
+			"franco-colapinto": "I M M",
+			"isack-hadjar": "I M H"
+		},
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			},
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 44
+			}
 		]
 	},
 	"14": {
@@ -150,8 +584,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2025_Hungarian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9928",
+			"https://api.openf1.org/v1/race_control?session_key=9928"
+		],
+		"tyres": {
+			"lando-norris": "M H",
+			"oscar-piastri": "M H H",
+			"george-russell": "M H H",
+			"charles-leclerc": "M H H",
+			"fernando-alonso": "M H",
+			"gabriel-bortoleto": "M H",
+			"lance-stroll": "M H",
+			"liam-lawson": "M H",
+			"max-verstappen": "M H H",
+			"kimi-antonelli": "M H",
+			"isack-hadjar": "M H",
+			"lewis-hamilton": "H M",
+			"nico-hulkenberg": "S M M",
+			"carlos-sainz-jr": "S H M",
+			"alexander-albon": "S M H",
+			"esteban-ocon": "M H",
+			"yuki-tsunoda": "M S H",
+			"franco-colapinto": "M H H",
+			"pierre-gasly": "H M",
+			"oliver-bearman": "M H"
+		},
+		"neutralised": []
 	},
 	"15": {
 		"weather": "dry",
@@ -161,7 +620,53 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Dutch_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Dutch_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9920",
+			"https://api.openf1.org/v1/race_control?session_key=9920"
+		],
+		"tyres": {
+			"oscar-piastri": "M H H",
+			"max-verstappen": "S M S",
+			"isack-hadjar": "M H S",
+			"george-russell": "M H S",
+			"alexander-albon": "M H S",
+			"oliver-bearman": "H M",
+			"lance-stroll": "M H H",
+			"fernando-alonso": "M H H",
+			"yuki-tsunoda": "S H S",
+			"esteban-ocon": "H M",
+			"franco-colapinto": "S H M S",
+			"liam-lawson": "M H S S",
+			"carlos-sainz-jr": "M H S S S",
+			"nico-hulkenberg": "S H M",
+			"gabriel-bortoleto": "M H S",
+			"kimi-antonelli": "M H S S",
+			"pierre-gasly": "M H",
+			"lando-norris": "M H H",
+			"charles-leclerc": "M H S",
+			"lewis-hamilton": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 23,
+				"to": 26
+			},
+			{
+				"type": "VSC",
+				"from": 31,
+				"to": 32
+			},
+			{
+				"type": "SC",
+				"from": 53,
+				"to": 57
+			},
+			{
+				"type": "SC",
+				"from": 65,
+				"to": 68
+			}
 		]
 	},
 	"16": {
@@ -172,8 +677,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2025_Italian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9912",
+			"https://api.openf1.org/v1/race_control?session_key=9912"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"lando-norris": "M S",
+			"oscar-piastri": "M S",
+			"charles-leclerc": "M H",
+			"george-russell": "M H",
+			"lewis-hamilton": "M H",
+			"alexander-albon": "H M",
+			"gabriel-bortoleto": "M H",
+			"kimi-antonelli": "M H",
+			"isack-hadjar": "H M",
+			"carlos-sainz-jr": "M H",
+			"oliver-bearman": "M H",
+			"yuki-tsunoda": "M H",
+			"liam-lawson": "S H",
+			"esteban-ocon": "H S",
+			"pierre-gasly": "H S",
+			"franco-colapinto": "M H",
+			"lance-stroll": "H S",
+			"fernando-alonso": "M H",
+			"nico-hulkenberg": "M"
+		},
+		"neutralised": []
 	},
 	"17": {
 		"weather": "dry",
@@ -183,7 +713,38 @@
 			"S": "C6"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Azerbaijan_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Azerbaijan_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9904",
+			"https://api.openf1.org/v1/race_control?session_key=9904"
+		],
+		"tyres": {
+			"max-verstappen": "H M",
+			"george-russell": "H M",
+			"carlos-sainz-jr": "M H",
+			"kimi-antonelli": "M H",
+			"liam-lawson": "M H",
+			"yuki-tsunoda": "H M",
+			"lando-norris": "M H",
+			"lewis-hamilton": "H M",
+			"charles-leclerc": "M H",
+			"isack-hadjar": "M H",
+			"gabriel-bortoleto": "H M",
+			"oliver-bearman": "H M",
+			"alexander-albon": "M H",
+			"esteban-ocon": "H M H",
+			"fernando-alonso": "M H",
+			"nico-hulkenberg": "H M",
+			"lance-stroll": "M H",
+			"pierre-gasly": "H M",
+			"franco-colapinto": "M H",
+			"oscar-piastri": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
 		]
 	},
 	"18": {
@@ -194,8 +755,33 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Singapore_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2025_Singapore_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9896",
+			"https://api.openf1.org/v1/race_control?session_key=9896"
+		],
+		"tyres": {
+			"george-russell": "M H",
+			"max-verstappen": "S H",
+			"lando-norris": "M H",
+			"oscar-piastri": "M H",
+			"kimi-antonelli": "M H",
+			"charles-leclerc": "M H",
+			"fernando-alonso": "S M",
+			"lewis-hamilton": "M H S",
+			"oliver-bearman": "M H",
+			"carlos-sainz-jr": "M S",
+			"isack-hadjar": "S H",
+			"yuki-tsunoda": "S H",
+			"lance-stroll": "S M",
+			"alexander-albon": "M S",
+			"liam-lawson": "M S",
+			"franco-colapinto": "S M",
+			"gabriel-bortoleto": "M H",
+			"esteban-ocon": "M H",
+			"pierre-gasly": "M H S",
+			"nico-hulkenberg": "M H S"
+		},
+		"neutralised": []
 	},
 	"19": {
 		"weather": "dry",
@@ -205,7 +791,38 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_United_States_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_United_States_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9888",
+			"https://api.openf1.org/v1/race_control?session_key=9888"
+		],
+		"tyres": {
+			"max-verstappen": "M S",
+			"lando-norris": "M S",
+			"charles-leclerc": "S M",
+			"lewis-hamilton": "M S",
+			"oscar-piastri": "M S",
+			"george-russell": "M S",
+			"yuki-tsunoda": "M S",
+			"nico-hulkenberg": "M S",
+			"oliver-bearman": "M S",
+			"fernando-alonso": "M S",
+			"liam-lawson": "M S",
+			"lance-stroll": "S M",
+			"kimi-antonelli": "M S",
+			"alexander-albon": "H M S",
+			"esteban-ocon": "H M",
+			"isack-hadjar": "H S",
+			"franco-colapinto": "M S",
+			"gabriel-bortoleto": "S M S",
+			"pierre-gasly": "M S",
+			"carlos-sainz-jr": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 7,
+				"to": 8
+			}
 		]
 	},
 	"20": {
@@ -216,7 +833,38 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Mexican_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Mexican_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9877",
+			"https://api.openf1.org/v1/race_control?session_key=9877"
+		],
+		"tyres": {
+			"lando-norris": "S M",
+			"charles-leclerc": "S M",
+			"max-verstappen": "M S",
+			"oliver-bearman": "S M S",
+			"oscar-piastri": "S M S",
+			"kimi-antonelli": "S M S",
+			"george-russell": "S M S",
+			"lewis-hamilton": "S M S",
+			"esteban-ocon": "S M",
+			"gabriel-bortoleto": "M S",
+			"yuki-tsunoda": "M S",
+			"alexander-albon": "H S",
+			"isack-hadjar": "M S",
+			"lance-stroll": "S M S",
+			"pierre-gasly": "M S",
+			"franco-colapinto": "H S",
+			"carlos-sainz-jr": "M S S",
+			"fernando-alonso": "S M",
+			"nico-hulkenberg": "S",
+			"liam-lawson": "S H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 70,
+				"to": 71
+			}
 		]
 	},
 	"21": {
@@ -227,7 +875,43 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_S%C3%A3o_Paulo_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_S%C3%A3o_Paulo_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9869",
+			"https://api.openf1.org/v1/race_control?session_key=9869"
+		],
+		"tyres": {
+			"lando-norris": "M S M",
+			"kimi-antonelli": "S M M",
+			"max-verstappen": "H M M S",
+			"george-russell": "M S M",
+			"oscar-piastri": "M S M",
+			"oliver-bearman": "S M M",
+			"liam-lawson": "S M",
+			"isack-hadjar": "S M M",
+			"nico-hulkenberg": "M S",
+			"pierre-gasly": "S M M",
+			"alexander-albon": "M S M",
+			"esteban-ocon": "H M M",
+			"carlos-sainz-jr": "S M M",
+			"fernando-alonso": "H M M",
+			"franco-colapinto": "M S M",
+			"lance-stroll": "H M M",
+			"yuki-tsunoda": "H M M M",
+			"lewis-hamilton": "S H M M",
+			"charles-leclerc": "M",
+			"gabriel-bortoleto": "S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 5
+			},
+			{
+				"type": "VSC",
+				"from": 7,
+				"to": 8
+			}
 		]
 	},
 	"22": {
@@ -238,13 +922,80 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Las_Vegas_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Las_Vegas_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9858",
+			"https://api.openf1.org/v1/race_control?session_key=9858"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"george-russell": "M H",
+			"kimi-antonelli": "S H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"isack-hadjar": "M H",
+			"nico-hulkenberg": "H M",
+			"lewis-hamilton": "H M",
+			"esteban-ocon": "M H",
+			"oliver-bearman": "M H",
+			"fernando-alonso": "M H",
+			"yuki-tsunoda": "M H M",
+			"pierre-gasly": "M H",
+			"liam-lawson": "M H H",
+			"franco-colapinto": "H M",
+			"alexander-albon": "H M H M",
+			"gabriel-bortoleto": "H M",
+			"lance-stroll": "M",
+			"lando-norris": "M H",
+			"oscar-piastri": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 2,
+				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 16,
+				"to": 16
+			}
 		]
 	},
 	"23": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Qatar_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2025_Qatar_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9850",
+			"https://api.openf1.org/v1/race_control?session_key=9850"
+		],
+		"tyres": {
+			"max-verstappen": "M M H",
+			"oscar-piastri": "M M H",
+			"carlos-sainz-jr": "M M H",
+			"lando-norris": "M M H",
+			"kimi-antonelli": "M M H",
+			"george-russell": "M M H",
+			"fernando-alonso": "M M H",
+			"charles-leclerc": "M M H",
+			"liam-lawson": "M M H",
+			"yuki-tsunoda": "M M H",
+			"alexander-albon": "H M M",
+			"lewis-hamilton": "S M M",
+			"gabriel-bortoleto": "M M S",
+			"franco-colapinto": "H M M",
+			"esteban-ocon": "M H M H",
+			"pierre-gasly": "M H M",
+			"lance-stroll": "M M M S",
+			"isack-hadjar": "M M H",
+			"oliver-bearman": "M M H",
+			"nico-hulkenberg": "S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 7,
+				"to": 10
+			}
 		]
 	},
 	"24": {
@@ -255,7 +1006,32 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2025_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2025_Abu_Dhabi_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=9839",
+			"https://api.openf1.org/v1/race_control?session_key=9839"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"oscar-piastri": "H M",
+			"lando-norris": "M H H",
+			"charles-leclerc": "M H M",
+			"george-russell": "M H",
+			"fernando-alonso": "M H",
+			"esteban-ocon": "M H",
+			"lewis-hamilton": "S H M",
+			"nico-hulkenberg": "S H M",
+			"lance-stroll": "H M",
+			"gabriel-bortoleto": "M H",
+			"oliver-bearman": "M H",
+			"carlos-sainz-jr": "M H",
+			"yuki-tsunoda": "H M",
+			"kimi-antonelli": "H M",
+			"alexander-albon": "S H M",
+			"isack-hadjar": "M H",
+			"liam-lawson": "M H",
+			"pierre-gasly": "M H M",
+			"franco-colapinto": "M H M"
+		},
+		"neutralised": []
 	}
 }

@@ -7,7 +7,49 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Australian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Australian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11234",
+			"https://api.openf1.org/v1/race_control?session_key=11234"
+		],
+		"tyres": {
+			"george-russell": "? H",
+			"kimi-antonelli": "M H",
+			"charles-leclerc": "M H",
+			"lewis-hamilton": "M H",
+			"lando-norris": "M H M",
+			"max-verstappen": "H M H",
+			"oliver-bearman": "M H",
+			"arvid-lindblad": "M H",
+			"gabriel-bortoleto": "M H H",
+			"pierre-gasly": "? H",
+			"esteban-ocon": "? H",
+			"alexander-albon": "? H S",
+			"liam-lawson": "? H S",
+			"franco-colapinto": "H S",
+			"carlos-sainz-jr": "S H M S",
+			"sergio-perez": "? H S",
+			"lance-stroll": "M H S S S",
+			"fernando-alonso": "S S",
+			"valtteri-bottas": "H",
+			"isack-hadjar": "M",
+			"nico-hulkenberg": "H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 12,
+				"to": 14
+			},
+			{
+				"type": "VSC",
+				"from": 18,
+				"to": 20
+			},
+			{
+				"type": "VSC",
+				"from": 34,
+				"to": 34
+			}
 		]
 	},
 	"2": {
@@ -18,7 +60,40 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Chinese_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Chinese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11245",
+			"https://api.openf1.org/v1/race_control?session_key=11245"
+		],
+		"tyres": {
+			"kimi-antonelli": "M H",
+			"george-russell": "M H",
+			"lewis-hamilton": "M H",
+			"charles-leclerc": "M H",
+			"oliver-bearman": "M H",
+			"pierre-gasly": "M H",
+			"liam-lawson": "M H",
+			"isack-hadjar": "S H H",
+			"carlos-sainz-jr": "M H",
+			"franco-colapinto": "H M",
+			"nico-hulkenberg": "H M",
+			"arvid-lindblad": "H M",
+			"valtteri-bottas": "M H",
+			"esteban-ocon": "H M S",
+			"sergio-perez": "M H",
+			"max-verstappen": "S H",
+			"fernando-alonso": "H M",
+			"lance-stroll": "H",
+			"oscar-piastri": "M",
+			"lando-norris": "H",
+			"gabriel-bortoleto": "H",
+			"alexander-albon": "H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 10,
+				"to": 13
+			}
 		]
 	},
 	"3": {
@@ -29,7 +104,40 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Japanese_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Japanese_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11253",
+			"https://api.openf1.org/v1/race_control?session_key=11253"
+		],
+		"tyres": {
+			"kimi-antonelli": "M H",
+			"oscar-piastri": "M H",
+			"charles-leclerc": "M H",
+			"george-russell": "M H",
+			"lando-norris": "M H",
+			"lewis-hamilton": "M H",
+			"pierre-gasly": "M H",
+			"max-verstappen": "M H",
+			"liam-lawson": "M H",
+			"esteban-ocon": "M H",
+			"nico-hulkenberg": "M H",
+			"isack-hadjar": "M H",
+			"gabriel-bortoleto": "M H",
+			"arvid-lindblad": "M H",
+			"carlos-sainz-jr": "M H",
+			"franco-colapinto": "M H",
+			"sergio-perez": "M H",
+			"fernando-alonso": "M H M",
+			"valtteri-bottas": "H M",
+			"alexander-albon": "M H S M",
+			"lance-stroll": "M H M",
+			"oliver-bearman": "M H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 22,
+				"to": 27
+			}
 		]
 	},
 	"4": {
@@ -40,7 +148,40 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Miami_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Miami_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11280",
+			"https://api.openf1.org/v1/race_control?session_key=11280"
+		],
+		"tyres": {
+			"kimi-antonelli": "M H",
+			"lando-norris": "M H",
+			"oscar-piastri": "M H",
+			"george-russell": "M H",
+			"max-verstappen": "M H",
+			"lewis-hamilton": "M H",
+			"franco-colapinto": "M H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"alexander-albon": "M H",
+			"oliver-bearman": "M H",
+			"gabriel-bortoleto": "M H",
+			"esteban-ocon": "M H",
+			"arvid-lindblad": "M H",
+			"fernando-alonso": "M S",
+			"sergio-perez": "M H",
+			"lance-stroll": "M S S",
+			"valtteri-bottas": "M S M",
+			"nico-hulkenberg": "M",
+			"liam-lawson": "M",
+			"pierre-gasly": "M",
+			"isack-hadjar": "H"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 6,
+				"to": 11
+			}
 		]
 	},
 	"5": {
@@ -51,12 +192,65 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Canadian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Canadian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11291",
+			"https://api.openf1.org/v1/race_control?session_key=11291"
+		],
+		"tyres": {
+			"kimi-antonelli": "S M",
+			"lewis-hamilton": "S M",
+			"max-verstappen": "S M",
+			"charles-leclerc": "S M",
+			"isack-hadjar": "S M S",
+			"franco-colapinto": "M H",
+			"liam-lawson": "M S",
+			"pierre-gasly": "M H",
+			"carlos-sainz-jr": "I M M",
+			"oliver-bearman": "S M",
+			"oscar-piastri": "I M M S",
+			"nico-hulkenberg": "I S M",
+			"gabriel-bortoleto": "I S M",
+			"esteban-ocon": "S M S",
+			"lance-stroll": "S S M",
+			"valtteri-bottas": "I S M S M",
+			"sergio-perez": "I S M S",
+			"lando-norris": "I M M",
+			"george-russell": "S",
+			"fernando-alonso": "S S",
+			"alexander-albon": "S",
+			"arvid-lindblad": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 31,
+				"to": 32
+			},
+			{
+				"type": "VSC",
+				"from": 46,
+				"to": 46
+			},
+			{
+				"type": "VSC",
+				"from": 53,
+				"to": 54
+			}
 		]
 	},
 	"6": {
 		"weather": "dry",
 		"neutralised": [
+			{
+				"type": "SC",
+				"from": 60,
+				"to": 65
+			},
+			{
+				"type": "SC",
+				"from": 66,
+				"to": 68
+			},
 			{
 				"type": "RF",
 				"lap": 68
@@ -69,8 +263,34 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2026_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2026_Monaco_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11299",
+			"https://api.openf1.org/v1/race_control?session_key=11299"
+		],
+		"tyres": {
+			"kimi-antonelli": "M H S S",
+			"lewis-hamilton": "M H S S",
+			"isack-hadjar": "M H S",
+			"oscar-piastri": "M H S S",
+			"liam-lawson": "M S S",
+			"arvid-lindblad": "M S",
+			"pierre-gasly": "M H H H S",
+			"alexander-albon": "M S S",
+			"esteban-ocon": "M H S",
+			"fernando-alonso": "M S",
+			"gabriel-bortoleto": "S H M M S S",
+			"george-russell": "M H S S",
+			"nico-hulkenberg": "M H S",
+			"franco-colapinto": "M H H S",
+			"sergio-perez": "S M S",
+			"carlos-sainz-jr": "M S S",
+			"charles-leclerc": "M H S",
+			"lance-stroll": "M S",
+			"lando-norris": "M",
+			"oliver-bearman": "M H",
+			"valtteri-bottas": "S M",
+			"max-verstappen": "M"
+		}
 	},
 	"7": {
 		"weather": "dry",
@@ -80,7 +300,45 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Barcelona-Catalunya_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Barcelona-Catalunya_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11307",
+			"https://api.openf1.org/v1/race_control?session_key=11307"
+		],
+		"tyres": {
+			"lewis-hamilton": "S H M H",
+			"george-russell": "M H H",
+			"lando-norris": "M H H",
+			"max-verstappen": "S M H M",
+			"oscar-piastri": "M H H",
+			"isack-hadjar": "M H H S",
+			"pierre-gasly": "M H H",
+			"liam-lawson": "M H H",
+			"arvid-lindblad": "M H H",
+			"franco-colapinto": "S H H",
+			"gabriel-bortoleto": "M H H S",
+			"carlos-sainz-jr": "S H H M",
+			"esteban-ocon": "S H M S",
+			"sergio-perez": "S H H M",
+			"charles-leclerc": "M H H",
+			"kimi-antonelli": "M H H",
+			"oliver-bearman": "M H S",
+			"alexander-albon": "M H H S S",
+			"fernando-alonso": "H H",
+			"nico-hulkenberg": "S H",
+			"valtteri-bottas": "M H",
+			"lance-stroll": "H"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 41,
+				"to": 42
+			},
+			{
+				"type": "VSC",
+				"from": 63,
+				"to": 65
+			}
 		]
 	},
 	"8": {
@@ -91,7 +349,45 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Austrian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Austrian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11315",
+			"https://api.openf1.org/v1/race_control?session_key=11315"
+		],
+		"tyres": {
+			"george-russell": "M H H",
+			"max-verstappen": "M H H",
+			"kimi-antonelli": "M H H",
+			"oscar-piastri": "M H H",
+			"lewis-hamilton": "M H S H",
+			"isack-hadjar": "M M H",
+			"lando-norris": "M H H",
+			"charles-leclerc": "M H H S",
+			"liam-lawson": "M H M",
+			"arvid-lindblad": "M H M",
+			"gabriel-bortoleto": "S M H",
+			"nico-hulkenberg": "M M H",
+			"pierre-gasly": "M H M S",
+			"oliver-bearman": "M H M",
+			"franco-colapinto": "M H M",
+			"esteban-ocon": "M M H",
+			"alexander-albon": "M M H",
+			"fernando-alonso": "M S S",
+			"lance-stroll": "M S",
+			"carlos-sainz-jr": "S M",
+			"sergio-perez": "M",
+			"valtteri-bottas": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 25,
+				"to": 26
+			},
+			{
+				"type": "VSC",
+				"from": 52,
+				"to": 53
+			}
 		]
 	},
 	"9": {
@@ -102,7 +398,55 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_British_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_British_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11326",
+			"https://api.openf1.org/v1/race_control?session_key=11326"
+		],
+		"tyres": {
+			"charles-leclerc": "M H S",
+			"george-russell": "M H M",
+			"lewis-hamilton": "M H S",
+			"lando-norris": "M H M S",
+			"isack-hadjar": "M H M S",
+			"liam-lawson": "M H S",
+			"arvid-lindblad": "M H S",
+			"gabriel-bortoleto": "M H S",
+			"franco-colapinto": "M H S",
+			"pierre-gasly": "M H S",
+			"oscar-piastri": "M H M S",
+			"oliver-bearman": "M H S",
+			"esteban-ocon": "M H S",
+			"sergio-perez": "M H S",
+			"kimi-antonelli": "M H M",
+			"valtteri-bottas": "M H S",
+			"carlos-sainz-jr": "M H S",
+			"fernando-alonso": "M H S",
+			"lance-stroll": "M H S",
+			"max-verstappen": "M H M",
+			"alexander-albon": "M H M S S S",
+			"nico-hulkenberg": "M H S"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 22,
+				"to": 22
+			},
+			{
+				"type": "VSC",
+				"from": 39,
+				"to": 39
+			},
+			{
+				"type": "SC",
+				"from": 48,
+				"to": 51
+			},
+			{
+				"type": "SC",
+				"from": 51,
+				"to": 52
+			}
 		]
 	},
 	"10": {
@@ -113,7 +457,50 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Belgian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Belgian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11334",
+			"https://api.openf1.org/v1/race_control?session_key=11334"
+		],
+		"tyres": {
+			"kimi-antonelli": "M H S",
+			"charles-leclerc": "M H",
+			"max-verstappen": "M H",
+			"lewis-hamilton": "M H",
+			"oscar-piastri": "M H",
+			"isack-hadjar": "H M H H",
+			"lando-norris": "H M",
+			"gabriel-bortoleto": "M H",
+			"arvid-lindblad": "M H",
+			"franco-colapinto": "M H",
+			"pierre-gasly": "M H",
+			"liam-lawson": "M H",
+			"nico-hulkenberg": "M H",
+			"oliver-bearman": "M H H",
+			"alexander-albon": "M H",
+			"carlos-sainz-jr": "S H",
+			"esteban-ocon": "M H H",
+			"valtteri-bottas": "S H S",
+			"fernando-alonso": "H S H",
+			"lance-stroll": "H S",
+			"sergio-perez": "H S H",
+			"george-russell": "M"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 18,
+				"to": 18
+			},
+			{
+				"type": "VSC",
+				"from": 20,
+				"to": 21
+			}
 		]
 	},
 	"11": {
@@ -124,7 +511,40 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Hungarian_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Hungarian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11342",
+			"https://api.openf1.org/v1/race_control?session_key=11342"
+		],
+		"tyres": {
+			"lando-norris": "M H ? S",
+			"max-verstappen": "M H S",
+			"kimi-antonelli": "M H H",
+			"charles-leclerc": "S H H S",
+			"lewis-hamilton": "S H H S",
+			"isack-hadjar": "M H H",
+			"george-russell": "M H H",
+			"liam-lawson": "M H S",
+			"nico-hulkenberg": "M H S",
+			"arvid-lindblad": "M H",
+			"gabriel-bortoleto": "S H",
+			"pierre-gasly": "M H H S",
+			"lance-stroll": "S M S",
+			"fernando-alonso": "S M S",
+			"franco-colapinto": "M H H",
+			"esteban-ocon": "M H H",
+			"alexander-albon": "M H S",
+			"carlos-sainz-jr": "S M S S",
+			"oliver-bearman": "M H H",
+			"oscar-piastri": "M H H",
+			"sergio-perez": "M S",
+			"valtteri-bottas": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 56,
+				"to": 57
+			}
 		]
 	},
 	"12": {
@@ -133,6 +553,16 @@
 			{
 				"type": "RF",
 				"lap": 2
+			},
+			{
+				"type": "VSC",
+				"from": 55,
+				"to": 57
+			},
+			{
+				"type": "VSC",
+				"from": 70,
+				"to": 70
 			}
 		],
 		"compounds": {
@@ -142,15 +572,51 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2026_Dutch_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2026_Dutch_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11353",
+			"https://api.openf1.org/v1/race_control?session_key=11353"
+		],
+		"tyres": {
+			"lando-norris": "M S H H",
+			"kimi-antonelli": "M H H S",
+			"george-russell": "M H H",
+			"lewis-hamilton": "S H S",
+			"charles-leclerc": "S S M H S",
+			"oscar-piastri": "M H H S S",
+			"liam-lawson": "S S M M",
+			"nico-hulkenberg": "S S H",
+			"fernando-alonso": "S S H",
+			"pierre-gasly": "M H M",
+			"yuki-tsunoda": "S H S",
+			"arvid-lindblad": "S M M H",
+			"gabriel-bortoleto": "S S M H S",
+			"franco-colapinto": "M M M H S",
+			"sergio-perez": "S H H S",
+			"carlos-sainz-jr": "S S H S",
+			"alexander-albon": "S H H M",
+			"valtteri-bottas": "H H H S",
+			"esteban-ocon": "M S H H",
+			"lance-stroll": "S S H H",
+			"oliver-bearman": "S",
+			"max-verstappen": "S"
+		}
 	},
 	"13": {
 		"weather": "dry",
 		"neutralised": [
 			{
+				"type": "SC",
+				"from": 3,
+				"to": 3
+			},
+			{
 				"type": "RF",
 				"lap": 3
+			},
+			{
+				"type": "VSC",
+				"from": 28,
+				"to": 29
 			}
 		],
 		"compounds": {
@@ -160,8 +626,34 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2026_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2026_Italian_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11361",
+			"https://api.openf1.org/v1/race_control?session_key=11361"
+		],
+		"tyres": {
+			"kimi-antonelli": "H M M",
+			"george-russell": "M H",
+			"max-verstappen": "S M H",
+			"lando-norris": "M H",
+			"oscar-piastri": "M H",
+			"lewis-hamilton": "S M",
+			"pierre-gasly": "M H",
+			"arvid-lindblad": "M H",
+			"franco-colapinto": "M H",
+			"yuki-tsunoda": "H M",
+			"gabriel-bortoleto": "S M",
+			"nico-hulkenberg": "M H M",
+			"carlos-sainz-jr": "S H M",
+			"liam-lawson": "M H M",
+			"oliver-bearman": "S H",
+			"esteban-ocon": "S H M",
+			"alexander-albon": "M H S",
+			"sergio-perez": "S S M",
+			"valtteri-bottas": "S M S",
+			"lance-stroll": "S H",
+			"fernando-alonso": "H S",
+			"charles-leclerc": "S"
+		}
 	},
 	"14": {
 		"weather": "dry",
@@ -171,7 +663,40 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Spanish_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Spanish_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11369",
+			"https://api.openf1.org/v1/race_control?session_key=11369"
+		],
+		"tyres": {
+			"kimi-antonelli": "M H",
+			"max-verstappen": "S H",
+			"lando-norris": "M H",
+			"charles-leclerc": "H S",
+			"george-russell": "H M H",
+			"liam-lawson": "H M",
+			"franco-colapinto": "M H",
+			"oscar-piastri": "H M",
+			"arvid-lindblad": "M H",
+			"nico-hulkenberg": "S H",
+			"esteban-ocon": "M H",
+			"pierre-gasly": "H S",
+			"gabriel-bortoleto": "H S",
+			"yuki-tsunoda": "H M",
+			"alexander-albon": "M H",
+			"oliver-bearman": "H M H",
+			"fernando-alonso": "H S H",
+			"valtteri-bottas": "H H S",
+			"carlos-sainz-jr": "H M H",
+			"sergio-perez": "M H",
+			"lance-stroll": "H",
+			"lewis-hamilton": "S"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 14,
+				"to": 15
+			}
 		]
 	},
 	"15": {
@@ -182,7 +707,45 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Azerbaijan_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Azerbaijan_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11377",
+			"https://api.openf1.org/v1/race_control?session_key=11377"
+		],
+		"tyres": {
+			"george-russell": "M S S",
+			"max-verstappen": "M S",
+			"isack-hadjar": "S M",
+			"charles-leclerc": "S M",
+			"kimi-antonelli": "M S",
+			"lewis-hamilton": "S M",
+			"arvid-lindblad": "M S",
+			"esteban-ocon": "S M M",
+			"oliver-bearman": "S M",
+			"carlos-sainz-jr": "M S S S",
+			"nico-hulkenberg": "M S",
+			"liam-lawson": "S M S",
+			"oscar-piastri": "S M M",
+			"sergio-perez": "M S",
+			"gabriel-bortoleto": "M S",
+			"valtteri-bottas": "M S",
+			"franco-colapinto": "M S",
+			"pierre-gasly": "M S",
+			"lando-norris": "M S",
+			"alexander-albon": "S",
+			"fernando-alonso": "S",
+			"lance-stroll": "S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 31,
+				"to": 35
+			},
+			{
+				"type": "SC",
+				"from": 36,
+				"to": 38
+			}
 		]
 	},
 	"16": {
@@ -193,7 +756,50 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Bahrain_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Bahrain_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11731",
+			"https://api.openf1.org/v1/race_control?session_key=11731"
+		],
+		"tyres": {
+			"max-verstappen": "I S S",
+			"kimi-antonelli": "I M S S",
+			"lewis-hamilton": "S M S",
+			"charles-leclerc": "S I S S S",
+			"isack-hadjar": "I S S S",
+			"oscar-piastri": "M I H M H",
+			"liam-lawson": "I H H S",
+			"fernando-alonso": "M H S",
+			"lando-norris": "M H S S",
+			"arvid-lindblad": "I H H S",
+			"nico-hulkenberg": "S I S S S",
+			"lance-stroll": "M I H H S",
+			"franco-colapinto": "S M H M",
+			"oliver-bearman": "S M H H",
+			"esteban-ocon": "I S H S",
+			"pierre-gasly": "S M H S S",
+			"carlos-sainz-jr": "I S H S",
+			"gabriel-bortoleto": "S I S H S S",
+			"sergio-perez": "S I M H H M S",
+			"george-russell": "I M S S",
+			"alexander-albon": "I S H S",
+			"valtteri-bottas": "S"
+		},
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 9,
+				"to": 12
+			},
+			{
+				"type": "VSC",
+				"from": 43,
+				"to": 45
+			},
+			{
+				"type": "SC",
+				"from": 45,
+				"to": 51
+			}
 		]
 	},
 	"17": {
@@ -204,7 +810,45 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2026_Singapore_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2026_Singapore_Grand_Prix",
+			"https://api.openf1.org/v1/stints?session_key=11388",
+			"https://api.openf1.org/v1/race_control?session_key=11388"
+		],
+		"tyres": {
+			"max-verstappen": "S M",
+			"charles-leclerc": "S M S",
+			"kimi-antonelli": "S M S",
+			"lando-norris": "S M",
+			"oscar-piastri": "S M S",
+			"lewis-hamilton": "M S",
+			"liam-lawson": "S M",
+			"nico-hulkenberg": "M S",
+			"george-russell": "M S",
+			"isack-hadjar": "M S",
+			"pierre-gasly": "M S",
+			"oliver-bearman": "S M",
+			"esteban-ocon": "S M",
+			"carlos-sainz-jr": "S M",
+			"arvid-lindblad": "M S",
+			"fernando-alonso": "S M",
+			"sergio-perez": "S M S",
+			"alexander-albon": "M S S",
+			"valtteri-bottas": "M S",
+			"lance-stroll": "S M",
+			"franco-colapinto": "M",
+			"gabriel-bortoleto": "M"
+		},
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 8,
+				"to": 9
+			},
+			{
+				"type": "VSC",
+				"from": 39,
+				"to": 40
+			}
 		]
 	}
 }
