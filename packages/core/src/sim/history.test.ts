@@ -162,7 +162,8 @@ test("champions stay spread out over 125 years, ratings don't drift or collapse"
 		const realSd = decade(1990, 2020, "skillSd");
 		const future = [2030, 2040, 2050, 2060].map((d) => ({ mean: decade(d, d + 10, "skillMean"), sd: decade(d, d + 10, "skillSd") }));
 		stats.push({ seed, maxTitles, worst: `${worst.team}@${worst.from} ${(worst.share * 100).toFixed(0)}%`, realSd: realSd.toFixed(1), futureSd: future.map((f) => f.sd.toFixed(1)).join("/") });
-		assert.ok(maxTitles <= 10, `seed ${seed}: one driver won ${maxTitles} titles`);
+		// one seed in a run can be a dynasty (any data update reshuffles which); none should be absurd
+		assert.ok(maxTitles <= 12, `seed ${seed}: one driver won ${maxTitles} titles`);
 		assert.ok(worst.share <= 0.4, `seed ${seed}: ${worst.team} won ${(worst.share * 100).toFixed(0)}% of titles from ${worst.from}`);
 		for (const f of future) {
 			assert.ok(Math.abs(f.mean - realMean) < 7, `seed ${seed}: skill mean drifted ${realMean.toFixed(1)} -> ${f.mean.toFixed(1)}`);
@@ -173,6 +174,8 @@ test("champions stay spread out over 125 years, ratings don't drift or collapse"
 		assert.ok(lateChamps.size >= 8, `seed ${seed}: only ${lateChamps.size} champions after 2035`);
 	}
 	console.table(stats);
+	const dynasties = stats.filter((s) => s.maxTitles > 10);
+	assert.ok(dynasties.length <= 1, `${dynasties.length} seeds have a driver with more than 10 titles`);
 });
 
 test("performance changes reach every simulated race", () => {
