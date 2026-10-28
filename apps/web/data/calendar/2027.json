@@ -1,0 +1,46 @@
+{
+	"$note": "The 2027 calendar as announced on 16 September 2026, and the drivers under contract. Used until F1DB publishes the season; see README.md.",
+	"sources": [
+		"https://en.wikipedia.org/wiki/2027_Formula_One_World_Championship",
+		"https://www.mclaren.com/racing/formula-1/2026/2027-calendar-announced/"
+	],
+	"races": [
+		{ "round": 1, "date": "2027-03-14", "grandPrixId": "bahrain", "circuitId": "bahrain", "sprint": true },
+		{ "round": 2, "date": "2027-03-21", "grandPrixId": "saudi-arabia", "circuitId": "jeddah" },
+		{ "round": 3, "date": "2027-04-04", "grandPrixId": "australia", "circuitId": "melbourne", "sprint": true },
+		{ "round": 4, "date": "2027-04-11", "grandPrixId": "japan", "circuitId": "suzuka", "sprint": true },
+		{ "round": 5, "date": "2027-04-18", "grandPrixId": "china", "circuitId": "shanghai" },
+		{ "round": 6, "date": "2027-05-02", "grandPrixId": "miami", "circuitId": "miami" },
+		{ "round": 7, "date": "2027-05-23", "grandPrixId": "canada", "circuitId": "montreal", "sprint": true },
+		{ "round": 8, "date": "2027-06-06", "grandPrixId": "monaco", "circuitId": "monaco", "sprint": true },
+		{ "round": 9, "date": "2027-06-20", "grandPrixId": "portugal", "circuitId": "portimao" },
+		{ "round": 10, "date": "2027-07-04", "grandPrixId": "great-britain", "circuitId": "silverstone", "sprint": true },
+		{ "round": 11, "date": "2027-07-11", "grandPrixId": "austria", "circuitId": "spielberg" },
+		{ "round": 12, "date": "2027-07-25", "grandPrixId": "belgium", "circuitId": "spa-francorchamps" },
+		{ "round": 13, "date": "2027-08-01", "grandPrixId": "hungary", "circuitId": "hungaroring" },
+		{ "round": 14, "date": "2027-09-05", "grandPrixId": "italy", "circuitId": "monza", "sprint": true },
+		{ "round": 15, "date": "2027-09-12", "grandPrixId": "spain", "circuitId": "madring" },
+		{ "round": 16, "date": "2027-09-26", "grandPrixId": "azerbaijan", "circuitId": "baku" },
+		{ "round": 17, "date": "2027-10-03", "grandPrixId": "turkey", "circuitId": "istanbul" },
+		{ "round": 18, "date": "2027-10-10", "grandPrixId": "singapore", "circuitId": "marina-bay" },
+		{ "round": 19, "date": "2027-10-24", "grandPrixId": "united-states", "circuitId": "austin" },
+		{ "round": 20, "date": "2027-10-31", "grandPrixId": "mexico", "circuitId": "mexico-city" },
+		{ "round": 21, "date": "2027-11-07", "grandPrixId": "sao-paulo", "circuitId": "interlagos", "sprint": true },
+		{ "round": 22, "date": "2027-11-20", "grandPrixId": "las-vegas", "circuitId": "las-vegas" },
+		{ "round": 23, "date": "2027-12-05", "grandPrixId": "qatar", "circuitId": "lusail", "sprint": true },
+		{ "round": 24, "date": "2027-12-12", "grandPrixId": "abu-dhabi", "circuitId": "yas-marina", "sprint": true }
+	],
+	"entrants": [
+		{ "constructorId": "alpine", "engineId": "mercedes", "drivers": ["pierre-gasly", "franco-colapinto"] },
+		{ "constructorId": "aston-martin", "engineId": "honda", "drivers": ["fernando-alonso", "lance-stroll"] },
+		{ "constructorId": "williams", "engineId": "mercedes", "drivers": ["alexander-albon", "carlos-sainz-jr"] },
+		{ "constructorId": "audi", "engineId": "audi", "drivers": ["gabriel-bortoleto", "nico-hulkenberg"] },
+		{ "constructorId": "cadillac", "engineId": "ferrari", "drivers": ["sergio-perez", "valtteri-bottas"] },
+		{ "constructorId": "ferrari", "engineId": "ferrari", "drivers": ["charles-leclerc", "lewis-hamilton"] },
+		{ "constructorId": "haas", "engineId": "ferrari", "drivers": ["rafael-camara"] },
+		{ "constructorId": "mclaren", "engineId": "mercedes", "drivers": ["lando-norris", "oscar-piastri"] },
+		{ "constructorId": "mercedes", "engineId": "mercedes", "drivers": ["kimi-antonelli", "george-russell"] },
+		{ "constructorId": "racing-bulls", "engineId": "red-bull-ford", "drivers": [] },
+		{ "constructorId": "red-bull", "engineId": "red-bull-ford", "drivers": ["max-verstappen", "isack-hadjar"] }
+	]
+}

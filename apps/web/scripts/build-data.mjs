@@ -22,6 +22,7 @@ import { fileURLToPath } from "node:url";
 import { buildJolpica } from "./lib/jolpica.mjs";
 import { buildRaceNotes } from "./lib/race-notes.mjs";
 import { buildStewards } from "./lib/stewards.mjs";
+import { buildCalendar } from "./lib/calendar.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = resolve(process.env.F1DB_DIR ?? join(root, "f1db"));
@@ -71,6 +72,11 @@ if (notes.errors.length) throw new Error(`Race notes (data/race-notes) need fixi
 // the stewards' decisions and reports from the FIA's documents (scripts/fia-docs.mjs), 2019 on
 const stewards = buildStewards(join(root, "data", "stewards"), races);
 
+// announced calendars and line-ups for seasons F1DB doesn't have yet: see data/calendar/README.md
+const calendar = buildCalendar(join(root, "data", "calendar"), { races, circuits, grandsPrix, drivers, constructors, engines, entrants: seasonEntrantsDrivers });
+for (const w of calendar.warnings) console.log(`  calendar: ${w}`);
+if (calendar.errors.length) throw new Error(`Calendars (data/calendar) need fixing:\n  ${calendar.errors.join("\n  ")}`);
+
 const resultYears = raceResults.map((r) => r.year);
 const lastCompletedYear = Math.max(...resultYears);
 
@@ -110,7 +116,7 @@ const dataset = {
 	races: races.map((r) => [
 		r.id, r.year, r.round, r.date, r.grandPrixId, r.circuitId, r.officialName,
 		r.laps, r.distance, r.courseLength, flag(r.sprintRaceDate), r.qualifyingFormat, nn(r.scheduledLaps),
-	]),
+	]).concat(calendar.races),
 	// [raceId, positionNumber, positionText, driverId, constructorId, engineId, number,
 	//  grid, laps, time, gap, reasonRetired, points, fastestLap, pole, sharedCar, qualifyingPosition, tyreId, grandSlam,
 	//  driverOfTheDay]
@@ -151,7 +157,8 @@ const dataset = {
 	// [year, constructorId, engineId, driverId]
 	upcomingEntrants: seasonEntrantsDrivers
 		.filter((e) => e.year > lastCompletedYear && !e.testDriver)
-		.map((e) => [e.year, e.constructorId, e.engineManufacturerId, e.driverId]),
+		.map((e) => [e.year, e.constructorId, e.engineManufacturerId, e.driverId])
+		.concat(calendar.entrants),
 	// Friday/practice-only drivers (F1DB test drivers who never entered a race):
 	// [driverId, practice weekends, firstYear, lastYear, constructorIds]
 	thirdDrivers: (() => {
@@ -197,6 +204,7 @@ for (const dir of [join(root, "data", "laps"), join(root, "public", "data", "lap
 	mkdirSync(dir, { recursive: true });
 	for (const [raceId, file] of raceFiles) writeFileSync(join(dir, `${raceId}.json`), JSON.stringify(file));
 }
+console.log(`Calendars: ${calendar.years.length ? `${calendar.years.join(", ")} (${calendar.races.length} races, ${calendar.entrants.length} drivers)` : "none needed"}`);
 console.log(`Stewards: ${stewards.count.races} races, ${stewards.count.decisions} decisions`);
 console.log(`Race notes: ${notes.count.races} races (${notes.count.neutralised} SC/VSC/red flag periods, tyres for ${notes.count.tyres})`);
 if (jolpica) {
