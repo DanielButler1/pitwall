@@ -9,7 +9,9 @@ import { NEUTRAL_LABEL } from "@pitwall/core/f1/laps";
 import { raceView, type RaceView, type ResultRow } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
-import { useUniverseBase, useView } from "@/data/dataset";
+import { useDeferredView, useUniverseBase, useView } from "@/data/dataset";
+import { factsFor } from "@pitwall/core/f1/race-facts";
+import { FactList } from "@/components/facts";
 import { createUniverse } from "@/features/lab/engine/store";
 import { cn } from "@/lib/cn";
 import { fmtDate, num } from "@/lib/format";
@@ -205,6 +207,13 @@ export function RaceScreen() {
 	const round = Number(params.round);
 	const base = useUniverseBase();
 	const view = useView((db) => raceView(db, year, round, base), [year, round, base]);
+	const facts = useDeferredView(
+		(db) => {
+			const race = db.racesByYear.get(year)?.find((r) => r.round === round);
+			return race ? factsFor(db, race.id) : null;
+		},
+		[year, round, base],
+	);
 	const open = useOpen();
 	const [tab, setTab] = useState<Tab>("race");
 	if (!view) {
@@ -266,6 +275,12 @@ export function RaceScreen() {
 					<Stat label="Laps" value={view.laps} detail={view.completed ? `${classified} classified` : null} />
 					<Stat label="Distance" value={`${num(view.distance)} km`} detail={view.laps > 0 ? `${num(Math.round((view.distance / view.laps) * 1000) / 1000)} km a lap` : null} />
 				</StatGrid>
+
+				{facts?.facts.length ? (
+					<Section title={facts.upcoming ? "What's at stake" : "Did you know?"}>
+						<FactList facts={facts.facts} />
+					</Section>
+				) : null}
 
 				<PrevNext
 					prev={view.prev ? { caption: "Previous race", label: raceLabel(view.prev, view.race.year), onPress: () => open(href.race(view.prev!)) } : null}

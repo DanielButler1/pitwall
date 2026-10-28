@@ -1,6 +1,8 @@
 // The home page's current-season sections: standings, the latest race, the next race and the title fight.
 
 import type { HomeResult, HomeView, TitleFight } from "@pitwall/core/f1/views";
+import type { RaceFact } from "@pitwall/core/f1/race-facts";
+import { FactList } from "@/components/facts";
 import { ArrowDown, ArrowUp, CalendarDays, Medal, Timer, Trophy, Zap } from "lucide-react-native";
 import { memo, useState } from "react";
 import { View } from "react-native";
@@ -142,7 +144,7 @@ function daysUntil(date: string): string | null {
 	return days === 0 ? "today" : days === 1 ? "tomorrow" : `in ${days} days`;
 }
 
-export const NextRace = memo(function NextRace({ next, go }: { next: NonNullable<HomeView["nextRace"]>; go: Go }) {
+export const NextRace = memo(function NextRace({ next, go, facts }: { next: NonNullable<HomeView["nextRace"]>; go: Go; facts?: RaceFact[] | null }) {
 	const until = daysUntil(next.race.date);
 	return (
 		<Section title="Next race" action={<MoreLink label="Grand Prix history" onPress={() => go(href.grandPrix(next.grandPrix.id))} />}>
@@ -152,6 +154,14 @@ export const NextRace = memo(function NextRace({ next, go }: { next: NonNullable
 				subtitle={`${next.circuit.name}, ${next.circuit.place}`}
 				onPress={() => go(href.race(next.race))}
 			/>
+			{facts?.length ? (
+				<View className="border-b border-border pb-1">
+					<Text variant="caption" className="px-4 pt-3">
+						What&apos;s at stake
+					</Text>
+					<FactList facts={facts} />
+				</View>
+			) : null}
 			<View className="pl-4">
 				<View className="flex-row flex-wrap items-center gap-x-2 gap-y-1.5 border-b border-border py-3 pr-4">
 					<Icon icon={CalendarDays} tone="muted" size={15} />

@@ -31,6 +31,8 @@ import { buttonVariants } from "../ui/button";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { LapChartPanel, StrategyPanel } from "./race-laps";
+import { FactList } from "../facts";
+import type { RaceFact } from "@pitwall/core/f1/race-facts";
 
 const WEATHER = { dry: { icon: Sun, label: "Dry" }, wet: { icon: CloudRain, label: "Wet" }, mixed: { icon: CloudSunRain, label: "Mixed conditions" } } as const;
 
@@ -288,8 +290,19 @@ function RaceStat({ label, value, detail }: { label: string; value: React.ReactN
 /**
  * `laps`: the race's lap file when the server already read it (null: none);
  * leave it undefined in the browser and the lap tabs fetch it on demand.
+ * `facts`: what made the race unusual, or what's at stake if it's next (@pitwall/core/f1/race-facts factsFor).
  */
-export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: string; laps?: RaceLapFile | null }) {
+export function RacePage({
+	view,
+	labHref,
+	laps,
+	facts,
+}: {
+	view: RaceView;
+	labHref?: string;
+	laps?: RaceLapFile | null;
+	facts?: { upcoming: boolean; facts: RaceFact[] };
+}) {
 	const winner = view.results.find((r) => r.position === "1");
 	const lapData = view.lapData && laps !== null ? view.lapData : null;
 	const lapDrivers = view.results.map((r) => r.driver);
@@ -405,6 +418,16 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 				<RaceStat label="Laps" value={view.laps} detail={view.completed && `${classified} classified`} />
 				<RaceStat label="Distance" value={`${num(view.distance)} km`} detail={view.laps > 0 && `${num(Math.round((view.distance / view.laps) * 1000) / 1000)} km a lap`} />
 			</div>
+
+			{facts && facts.facts.length > 0 && (
+				<Section title={facts.upcoming ? "What's at stake" : "Did you know?"} description={facts.upcoming ? undefined : "What made this race stand out, against everything before it"}>
+					<Card size="sm">
+						<CardHeader>
+							<FactList facts={facts.facts} className="md:columns-2 md:gap-8 md:divide-y-0 md:[&>li]:break-inside-avoid md:[&>li]:py-1.5" />
+						</CardHeader>
+					</Card>
+				</Section>
+			)}
 
 			{!view.completed ? (
 				<p className="text-muted-foreground text-sm">This race hasn&apos;t been run yet.</p>

@@ -38,17 +38,22 @@ import { TableBody, TableCell, TableRow } from "../ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { DaysUntil } from "./days-until";
 import { MilestoneWatchPanel } from "./milestones";
+import { FactList } from "../facts";
+import type { RaceFact } from "@pitwall/core/f1/race-facts";
 
 export function HomePage({
 	view,
 	universeName,
 	milestones,
 	onThisDay,
+	upcoming,
 }: {
 	view: HomeView;
 	universeName?: string;
 	milestones?: MilestoneWatch | null;
 	onThisDay?: OnThisDayView | null;
+	/** What's at stake at the next race (@pitwall/core/f1/race-facts upcomingFacts). */
+	upcoming?: { race: { year: number; round: number }; facts: RaceFact[] } | null;
 }) {
 	return (
 		<Page>
@@ -105,7 +110,12 @@ export function HomePage({
 				{view.latestRace && <LatestRace race={view.latestRace} />}
 
 				<div className="flex min-w-0 flex-col gap-12 xl:gap-8">
-					{view.nextRace && <NextRace next={view.nextRace} />}
+					{view.nextRace && (
+						<NextRace
+							next={view.nextRace}
+							facts={upcoming && upcoming.race.year === view.nextRace.race.year && upcoming.race.round === view.nextRace.race.round ? upcoming.facts : []}
+						/>
+					)}
 					{view.titleFight && <TitleFightCard fight={view.titleFight} year={view.lastYear} />}
 				</div>
 			</div>
@@ -245,7 +255,7 @@ function Moved({ result: x }: { result: HomeResult }) {
 
 /* ----------------------------------------------------------- next race --- */
 
-function NextRace({ next }: { next: NonNullable<HomeView["nextRace"]> }) {
+function NextRace({ next, facts }: { next: NonNullable<HomeView["nextRace"]>; facts: RaceFact[] }) {
 	return (
 		<Section title="Next race" action={<MoreLink href={href.grandPrix(next.grandPrix.id)}>Grand Prix history</MoreLink>}>
 			<Card>
@@ -271,6 +281,12 @@ function NextRace({ next }: { next: NonNullable<HomeView["nextRace"]> }) {
 						</div>
 					</CardDescription>
 				</CardHeader>
+				{facts.length > 0 && (
+					<CardContent className="space-y-2 border-t pt-4">
+						<div className="text-muted-foreground text-xs font-medium">What&apos;s at stake</div>
+						<FactList facts={facts} />
+					</CardContent>
+				)}
 				{(next.lastWinner || next.mostWins) && (
 					<CardFooter className="flex-col items-stretch gap-2 border-t text-sm">
 						{next.lastWinner && (

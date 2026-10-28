@@ -29,6 +29,7 @@ import { noteFacts } from "./facts/notes.ts";
 
 export { factText, type FactKind, type RaceFact } from "./facts/shared.ts";
 export { nextRace, upcomingFacts } from "./facts/upcoming.ts";
+import { upcomingFacts } from "./facts/upcoming.ts";
 
 /** The race's facts, best first. */
 export function raceFacts(db: Db, raceId: number, limit = 8): RaceFact[] {
@@ -42,4 +43,11 @@ export function raceFacts(db: Db, raceId: number, limit = 8): RaceFact[] {
 	venueFacts(db, f, add);
 	noteFacts(db, f, add);
 	return pick(out, limit);
+}
+
+/** What to say about a race on its page: what made it unusual once it's run, what's at stake if it's next. */
+export function factsFor(db: Db, raceId: number, limit = 6): { upcoming: boolean; facts: RaceFact[] } {
+	if (db.resultsByRace.has(raceId)) return { upcoming: false, facts: raceFacts(db, raceId, limit) };
+	const next = upcomingFacts(db, limit);
+	return { upcoming: true, facts: next?.race.id === raceId ? next.facts : [] };
 }

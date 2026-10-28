@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Page, Stat, StatGrid, TabScreen } from "@/components/f1";
 import { Button, Text } from "@/components/ui";
-import { useDb, useView } from "@/data/dataset";
+import { useDb, useDeferredView, useView } from "@/data/dataset";
+import { upcomingFacts } from "@pitwall/core/f1/race-facts";
 import { num } from "@/lib/format";
 import { href } from "@/lib/links";
 import { watchDataChecks } from "@/features/settings/data";
@@ -53,6 +54,7 @@ export function HomeScreen() {
 	const { month, day } = useToday();
 	const onThisDay = useView((db) => onThisDayView(db, month, day), [month, day]);
 	const go = useGo();
+	const upcoming = useDeferredView((db) => upcomingFacts(db, 4), []);
 
 	const leader = view.inProgress ? "leader" : "champion";
 	return (
@@ -82,7 +84,13 @@ export function HomeScreen() {
 
 				<Standings view={view} go={go} />
 				{view.latestRace ? <LatestRace race={view.latestRace} go={go} /> : null}
-				{view.nextRace ? <NextRace next={view.nextRace} go={go} /> : null}
+				{view.nextRace ? (
+					<NextRace
+						next={view.nextRace}
+						go={go}
+						facts={upcoming && upcoming.race.year === view.nextRace.race.year && upcoming.race.round === view.nextRace.race.round ? upcoming.facts : null}
+					/>
+				) : null}
 				{view.titleFight ? <TitleFightSection fight={view.titleFight} year={view.lastYear} go={go} /> : null}
 				<Puzzles go={go} />
 				<OnThisDay day={onThisDay} go={go} />
