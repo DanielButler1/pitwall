@@ -19,6 +19,9 @@ import { ResultsMatrix } from "./components/ResultsMatrix";
 import { shortNamer } from "./names";
 import { shareLink } from "./share";
 import { PosCell } from "./components/PosCell";
+import { seasonFacts } from "@pitwall/core/f1/race-facts";
+import { FactsSection } from "@/components/facts";
+import { useFactEntries } from "@/data/facts";
 
 type Table = "drivers" | "constructors" | "grid";
 
@@ -118,6 +121,7 @@ export function SeasonScreen() {
 	const base = useUniverseBase();
 	const view = useView((db) => seasonView(db, year, base), [year, base]);
 	const progression = useView((db) => seasonProgression(db, year), [year]);
+	const facts = useFactEntries((db, index) => seasonFacts(db, index, year), [year]);
 	const open = useOpen();
 	if (!view) {
 		return (
@@ -157,6 +161,7 @@ export function SeasonScreen() {
 						Standings are provisional until the final round.
 					</Text>
 				) : null}
+				<FactsSection entries={facts} description="What stood out in the season, race by race" />
 
 				<PrevNext
 					prev={view.prevYear ? { caption: "Previous season", label: String(view.prevYear), onPress: () => open(href.season(view.prevYear!)) } : null}

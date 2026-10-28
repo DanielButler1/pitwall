@@ -8,7 +8,7 @@ import { hydrate, indexData, resultsSig, type Db } from "./dataset.ts";
 import { raceNote } from "./laps.ts";
 import { stewardsOf } from "./stewards.ts";
 import { pointsAt, pointsAwards } from "./facts/stewards.ts";
-import { factText, raceFacts, upcomingFacts } from "./race-facts.ts";
+import { factIndex, factText, packFacts, raceFacts, seasonFacts, subjectFacts, unpackFacts, upcomingFacts, venueFacts } from "./race-facts.ts";
 import { champions } from "./records/facts.ts";
 import { dataFile } from "../test-data.ts";
 
@@ -168,4 +168,20 @@ test("stewards' facts only come from races with the FIA's documents", () => {
 		const later = new Date(lastAt + 400 * 86_400_000).toISOString().slice(0, 10);
 		assert.equal(pointsAt(real, id, later), 0);
 	}
+});
+
+test("season, career and venue facts are about them, from their races", () => {
+	const index = factIndex(real);
+	const year = done.at(-1)!.year - 1;
+	for (const e of seasonFacts(real, index, year)) assert.equal(real.raceById.get(e.raceId)!.year, year);
+	const winner = done.at(-1)!;
+	const id = real.resultsByRace.get(winner.id)!.find((r) => r.position === 1)!.driverId;
+	const mine = subjectFacts(real, index, "driver", id);
+	assert.ok(mine.length > 0);
+	for (const e of mine) assert.equal(e.fact.key.split(":").slice(1, 3).join(":"), `driver:${id}`);
+	for (const e of venueFacts(real, index, { grandPrixId: winner.grandPrixId })) assert.equal(real.raceById.get(e.raceId)!.grandPrixId, winner.grandPrixId);
+	// facts.json only fits the dataset it was made from
+	const packed = packFacts(real, index);
+	assert.ok(unpackFacts(real, packed));
+	assert.equal(unpackFacts(real, { ...packed, generatedAt: "another" }), null);
 });

@@ -195,6 +195,15 @@ for (const out of [join(root, "data", "f1.json"), join(root, "public", "data", "
 	mkdirSync(dirname(out), { recursive: true });
 	writeFileSync(out, json);
 }
+// every race's facts, worked out once (about ten seconds) for the season, career and venue pages and the app
+{
+	const { hydrate, indexData } = await import("../../../packages/core/src/f1/dataset.ts");
+	const { factIndex, packFacts } = await import("../../../packages/core/src/f1/race-facts.ts");
+	const db = indexData(hydrate(JSON.parse(json)));
+	const facts = JSON.stringify(packFacts(db, factIndex(db)));
+	for (const out of [join(root, "data", "facts.json"), join(root, "public", "data", "facts.json")]) writeFileSync(out, facts);
+	console.log(`Facts: ${db.races.filter((r) => db.resultsByRace.has(r.id)).length} races, ${Math.round(facts.length / 1024)} KB`);
+}
 // per-race lap charts, pit stops and tyres, loaded on demand by the race page
 const raceFiles = new Map(jolpica?.files ?? []);
 for (const [raceId, extra] of notes.files) raceFiles.set(raceId, { raceId, ...raceFiles.get(raceId), ...extra });

@@ -5,13 +5,16 @@ import { Pressable, View } from "react-native";
 import { constructorView, type ConstructorView } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, Row, Section, Text } from "@/components/ui";
-import { useView } from "@/data/dataset";
+import { useDeferredView, useView } from "@/data/dataset";
 import { InlineLink, MoreButton, surname, useMore } from "@/features/browse/kit";
 import { cn } from "@/lib/cn";
 import { num, plural, yearRange } from "@/lib/format";
 import { href, useOpen } from "@/lib/links";
 import { AllResults, initialResults, type ResultFilter, type ResultsState } from "./AllResults";
 import { ScrollPage, useJump } from "./ScrollPage";
+import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
+import { FactsSection } from "@/components/facts";
+import { useFactEntries } from "@/data/facts";
 
 type Season = ConstructorView["seasons"][number];
 
@@ -63,6 +66,8 @@ const SeasonRow = memo(function SeasonRow({ s, last, open }: { s: Season; last: 
 export function ConstructorScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const view = useView((db) => constructorView(db, id), [id]);
+	const facts = useFactEntries((db, index) => subjectFacts(db, index, "constructor", id), [id]);
+	const upcoming = useDeferredView((db) => upcomingAbout(db, { constructor: id }), [id]);
 	const open = useOpen();
 	const { scroll, onTargetLayout, jump } = useJump();
 	const [results, setResults] = useState<ResultsState>(initialResults);
@@ -102,6 +107,8 @@ export function ConstructorScreen() {
 					<Stat label="Races" value={num(t.entries)} onPress={show("all")} />
 					<Stat label="Points" value={num(t.points)} />
 				</StatGrid>
+
+				<FactsSection entries={facts} upcoming={upcoming} description="The team's standout moments" />
 
 				{allSeasons.length ? (
 					<Section title="Season by season" description="Drivers, engines and tyres each season. Position and points in the constructors' championship (from 1958).">

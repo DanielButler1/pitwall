@@ -17,6 +17,7 @@
 //   facts/notes.ts     weather, safety cars, red flags and tyres (race notes)
 //   facts/stewards.ts  penalties, track limits, penalty points, reprimands and engines (FIA documents)
 //   facts/upcoming.ts  what's at stake at the next race
+//   facts/collections.ts  every race's facts in one index, and the best of them per season, career or venue
 
 import type { Db } from "./dataset.ts";
 import { facts } from "./records/facts.ts";
@@ -30,6 +31,8 @@ import { noteFacts } from "./facts/notes.ts";
 import { stewardsFacts } from "./facts/stewards.ts";
 
 export { factText, type FactKind, type RaceFact } from "./facts/shared.ts";
+export { packFacts, seasonFacts, subjectFacts, unpackFacts, venueFacts, type FactEntry, type FactIndex, type PackedFacts } from "./facts/collections.ts";
+import { factIndex as indexWith, sprintFacts as sprintWith, type FactIndex } from "./facts/collections.ts";
 export { nextRace, upcomingFacts } from "./facts/upcoming.ts";
 import { upcomingFacts } from "./facts/upcoming.ts";
 
@@ -53,4 +56,25 @@ export function factsFor(db: Db, raceId: number, limit = 6): { upcoming: boolean
 	if (db.resultsByRace.has(raceId)) return { upcoming: false, facts: raceFacts(db, raceId, limit) };
 	const next = upcomingFacts(db, limit);
 	return { upcoming: true, facts: next?.race.id === raceId ? next.facts : [] };
+}
+
+/** Every completed race's facts, worked out once per Db (about ten seconds; the build saves it as facts.json). */
+export const factIndex = (db: Db): FactIndex => indexWith(db, raceFacts);
+
+/** A race's sprint facts: sprint wins, sprint and Grand Prix doubles. */
+export const sprintFacts = (db: Db, raceId: number, limit = 6) => sprintWith(db, raceId, raceFacts, limit);
+
+/**
+ * What's at stake at the next race for a driver or team, or at a Grand Prix or circuit when the next race is
+ * there (none otherwise).
+ */
+export function upcomingAbout(db: Db, about: { driver: string } | { constructor: string } | { grandPrixId: string } | { circuitId: string }, limit = 4): RaceFact[] {
+	const next = upcomingFacts(db, 30);
+	if (!next) return [];
+	if ("grandPrixId" in about || "circuitId" in about) {
+		const here = "grandPrixId" in about ? next.race.grandPrixId === about.grandPrixId : next.race.circuitId === about.circuitId;
+		return here ? next.facts.slice(0, limit) : [];
+	}
+	const who = "driver" in about ? `driver:${about.driver}` : `constructor:${about.constructor}`;
+	return next.facts.filter((f) => f.key.split(":").slice(1, 3).join(":") === who).slice(0, limit);
 }

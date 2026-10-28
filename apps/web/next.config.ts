@@ -4,8 +4,8 @@ import { SITE_URL } from "./src/lib/site";
 const host = new URL(SITE_URL).host;
 
 const nextConfig: NextConfig = {
-	// data/f1.json is read at runtime by src/lib/server.ts
-	outputFileTracingIncludes: { "/**": ["./data/f1.json"] },
+	// data/f1.json and data/facts.json are read at runtime by src/lib/server.ts
+	outputFileTracingIncludes: { "/**": ["./data/f1.json", "./data/facts.json"] },
 
 	// The production build answers on its *.vercel.app addresses too: send those to the real
 	// domain so search engines see one copy. Preview deployments keep their own addresses.

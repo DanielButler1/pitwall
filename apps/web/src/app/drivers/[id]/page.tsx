@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DriverPage } from "@/components/pages/profiles";
-import { getDb } from "@/lib/server";
+import { getDb, getFactIndex } from "@/lib/server";
+import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
 import { driverTeammatesView } from "@pitwall/core/f1/teammates";
 import { driverView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
@@ -20,5 +21,12 @@ export default async function Page({ params }: Props) {
 	const id = (await params).id;
 	const view = driverView(getDb(), id);
 	if (!view) notFound();
-	return <DriverPage view={view} teammates={driverTeammatesView(getDb(), id)} />;
+	return (
+		<DriverPage
+			view={view}
+			teammates={driverTeammatesView(getDb(), id)}
+			facts={subjectFacts(getDb(), getFactIndex(), "driver", id)}
+			upcoming={upcomingAbout(getDb(), { driver: id })}
+		/>
+	);
 }

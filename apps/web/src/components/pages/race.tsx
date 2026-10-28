@@ -301,7 +301,7 @@ export function RacePage({
 	view: RaceView;
 	labHref?: string;
 	laps?: RaceLapFile | null;
-	facts?: { upcoming: boolean; facts: RaceFact[] };
+	facts?: { upcoming: boolean; facts: RaceFact[]; sprint?: RaceFact[] };
 }) {
 	const winner = view.results.find((r) => r.position === "1");
 	const lapData = view.lapData && laps !== null ? view.lapData : null;
@@ -457,7 +457,14 @@ export function RacePage({
 						</div>
 					</TabsContent>
 					{view.sprint.length > 0 && (
-						<TabsContent value="sprint">
+						<TabsContent value="sprint" className="space-y-4">
+							{facts?.sprint && facts.sprint.length > 0 && (
+								<Card size="sm">
+									<CardHeader>
+										<FactList facts={facts.sprint} />
+									</CardHeader>
+								</Card>
+							)}
 							<ResultsTable rows={view.sprint} sprint />
 						</TabsContent>
 					)}

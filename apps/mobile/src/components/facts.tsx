@@ -3,9 +3,9 @@
 
 import { CalendarHeart, CloudRain, Crown, Flame, Gauge, Gavel, Hash, History, Medal, Sparkles, TrafficCone, Trophy, Users, type LucideIcon } from "lucide-react-native";
 import { View } from "react-native";
-import type { FactKind, RaceFact } from "@pitwall/core/f1/race-facts";
+import type { FactEntry, FactKind, RaceFact } from "@pitwall/core/f1/race-facts";
 import type { Cell } from "@pitwall/core/f1/records";
-import { Icon, Text } from "@/components/ui";
+import { Icon, Section, Text } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { href, useOpen } from "@/lib/links";
 
@@ -92,5 +92,50 @@ export function FactList({ facts }: { facts: RaceFact[] }) {
 				</View>
 			))}
 		</View>
+	);
+}
+
+/** Facts from several races, each with the race it's from (tap it to open the race). */
+export function FactEntryList({ entries }: { entries: FactEntry[] }) {
+	const open = useOpen();
+	return (
+		<View className="px-4">
+			{entries.map((e, i) => (
+				<View key={`${e.raceId}:${e.fact.key}`} className={cn("flex-row gap-3 py-2.5", i < entries.length - 1 && "border-b border-border")}>
+					<View className="pt-0.5">
+						<Icon icon={ICON[e.fact.kind] ?? Sparkles} tone="primary" size={16} />
+					</View>
+					<View className="flex-1">
+						<FactSentence cells={e.fact.cells} />
+						{e.race.t === "race" ? (
+							<Text variant="caption" className="mt-0.5" onPress={() => e.race.t === "race" && open(href.race(e.race.ref))}>
+								{`${e.race.ref.year} ${e.race.ref.name}`}
+							</Text>
+						) : null}
+					</View>
+				</View>
+			))}
+		</View>
+	);
+}
+
+/**
+ * "Did you know?" on a season, driver, team, Grand Prix or circuit screen: the best facts from its races,
+ * and what's at stake at the next race when it's involved. Nothing when there's neither.
+ */
+export function FactsSection({ entries, upcoming, description }: { entries?: FactEntry[] | null; upcoming?: RaceFact[] | null; description?: string }) {
+	if (!entries?.length && !upcoming?.length) return null;
+	return (
+		<Section title="Did you know?" description={description}>
+			{upcoming?.length ? (
+				<View className="border-b border-border pb-1">
+					<Text variant="caption" className="px-4 pt-2">
+						At the next race
+					</Text>
+					<FactList facts={upcoming} />
+				</View>
+			) : null}
+			{entries?.length ? <FactEntryList entries={entries} /> : null}
+		</Section>
 	);
 }

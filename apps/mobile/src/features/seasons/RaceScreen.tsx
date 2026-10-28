@@ -10,7 +10,7 @@ import { raceView, type RaceView, type ResultRow } from "@pitwall/core/f1/views"
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
 import { useDeferredView, useUniverseBase, useView } from "@/data/dataset";
-import { factsFor } from "@pitwall/core/f1/race-facts";
+import { factsFor, sprintFacts } from "@pitwall/core/f1/race-facts";
 import { FactList } from "@/components/facts";
 import { createUniverse } from "@/features/lab/engine/store";
 import { cn } from "@/lib/cn";
@@ -210,7 +210,7 @@ export function RaceScreen() {
 	const facts = useDeferredView(
 		(db) => {
 			const race = db.racesByYear.get(year)?.find((r) => r.round === round);
-			return race ? factsFor(db, race.id) : null;
+			return race ? { ...factsFor(db, race.id), sprint: race.hasSprint ? sprintFacts(db, race.id) : [] } : null;
 		},
 		[year, round, base],
 	);
@@ -308,7 +308,10 @@ export function RaceScreen() {
 								<RaceContext view={view} />
 							</>
 						) : current === "sprint" ? (
-							<ResultsList rows={view.sprint} fastest={null} />
+							<>
+								{facts?.sprint.length ? <FactList facts={facts.sprint} /> : null}
+								<ResultsList rows={view.sprint} fastest={null} />
+							</>
 						) : current === "qualifying" ? (
 							<Qualifying view={view} />
 						) : current === "laps" ? (
