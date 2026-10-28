@@ -1,0 +1,279 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 55,
+				"to": 57
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Bahrain_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_Chinese_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 40,
+				"to": 41
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Azerbaijan_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 46,
+				"to": 53
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 11,
+				"to": 16
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Monaco_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 50,
+				"to": 51
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_French_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_Austrian_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 20,
+				"to": 25
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_British_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "wet",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 5
+			},
+			{
+				"type": "VSC",
+				"from": 15,
+				"to": 16
+			},
+			{
+				"type": "VSC",
+				"from": 28,
+				"to": 28
+			},
+			{
+				"type": "SC",
+				"from": 29,
+				"to": 34
+			},
+			{
+				"type": "SC",
+				"from": 41,
+				"to": 46
+			},
+			{
+				"type": "SC",
+				"from": 57,
+				"to": 60
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_German_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_Hungarian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Belgian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 29,
+				"to": 29
+			},
+			{
+				"type": "VSC",
+				"from": 31,
+				"to": 31
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Italian_Grand_Prix"
+		]
+	},
+	"15": {
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 34,
+				"to": 41
+			},
+			{
+				"type": "SC",
+				"from": 44,
+				"to": 49
+			},
+			{
+				"type": "SC",
+				"from": 50,
+				"to": 53
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 5
+			},
+			{
+				"type": "VSC",
+				"from": 28,
+				"to": 29
+			},
+			{
+				"type": "SC",
+				"from": 30,
+				"to": 34
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Russian_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_Japanese_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Mexican_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_United_States_Grand_Prix"
+		]
+	},
+	"20": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 54,
+				"to": 60
+			},
+			{
+				"type": "SC",
+				"from": 66,
+				"to": 70
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2019_Brazilian_Grand_Prix"
+		]
+	},
+	"21": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2019_Abu_Dhabi_Grand_Prix"
+		]
+	}
+}

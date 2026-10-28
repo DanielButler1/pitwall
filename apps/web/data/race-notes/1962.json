@@ -1,0 +1,56 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_Dutch_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_Monaco_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_Belgian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_French_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_British_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_German_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_Italian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_United_States_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1962_South_African_Grand_Prix"
+		]
+	}
+}

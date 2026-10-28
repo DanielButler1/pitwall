@@ -1,0 +1,32 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1956_Argentine_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1956_Monaco_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1956_Belgian_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1956_British_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1956_Italian_Grand_Prix"
+		]
+	}
+}

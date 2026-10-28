@@ -1,0 +1,371 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 7
+			},
+			{
+				"type": "RF",
+				"lap": 33
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix"
+		]
+	},
+	"3": {
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 7
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 8,
+				"to": 11
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Spanish_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_Monaco_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 32,
+				"to": 36
+			},
+			{
+				"type": "SC",
+				"from": 47,
+				"to": 49
+			},
+			{
+				"type": "RF",
+				"lap": 48
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Azerbaijan_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_French_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_Styrian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Austrian_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 2
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2021_British_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 2
+			},
+			{
+				"type": "RF",
+				"lap": 2
+			}
+		],
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Hungarian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "wet",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			},
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 1
+			}
+		],
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Belgian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_Dutch_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 26,
+				"to": 32
+			},
+			{
+				"type": "VSC",
+				"from": 44,
+				"to": 44
+			}
+		],
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Italian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_Russian_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_Turkish_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 28,
+				"to": 28
+			}
+		],
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_United_States_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2021_Mexican_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 6,
+				"to": 10
+			},
+			{
+				"type": "VSC",
+				"from": 12,
+				"to": 14
+			},
+			{
+				"type": "VSC",
+				"from": 30,
+				"to": 31
+			}
+		],
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_S%C3%A3o_Paulo_Grand_Prix"
+		]
+	},
+	"20": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 55,
+				"to": 57
+			}
+		],
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Qatar_Grand_Prix"
+		]
+	},
+	"21": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 10,
+				"to": 15
+			},
+			{
+				"type": "RF",
+				"lap": 13
+			},
+			{
+				"type": "VSC",
+				"from": 23,
+				"to": 24
+			},
+			{
+				"type": "VSC",
+				"from": 28,
+				"to": 28
+			},
+			{
+				"type": "VSC",
+				"from": 29,
+				"to": 33
+			},
+			{
+				"type": "VSC",
+				"from": 36,
+				"to": 36
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Saudi_Arabian_Grand_Prix"
+		]
+	},
+	"22": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 36,
+				"to": 38
+			},
+			{
+				"type": "SC",
+				"from": 54,
+				"to": 58
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2021_Abu_Dhabi_Grand_Prix"
+		]
+	}
+}

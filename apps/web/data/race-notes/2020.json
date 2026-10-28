@@ -1,0 +1,280 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 26,
+				"to": 31
+			},
+			{
+				"type": "SC",
+				"from": 50,
+				"to": 55
+			},
+			{
+				"type": "SC",
+				"from": 55,
+				"to": 61
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Austrian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Styrian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2020_Hungarian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 6
+			},
+			{
+				"type": "SC",
+				"from": 13,
+				"to": 19
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_British_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2020_70th_Anniversary_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2020_Spanish_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 11,
+				"to": 16
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Belgian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 20,
+				"to": 24
+			},
+			{
+				"type": "SC",
+				"from": 25,
+				"to": 28
+			},
+			{
+				"type": "RF",
+				"lap": 27
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Italian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 7
+			},
+			{
+				"type": "SC",
+				"from": 7,
+				"to": 10
+			},
+			{
+				"type": "RF",
+				"lap": 9
+			},
+			{
+				"type": "SC",
+				"from": 45,
+				"to": 48
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Tuscan_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Russian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 16,
+				"to": 17
+			},
+			{
+				"type": "SC",
+				"from": 45,
+				"to": 51
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Eifel_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2020_Portuguese_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 30,
+				"to": 31
+			},
+			{
+				"type": "SC",
+				"from": 51,
+				"to": 57
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Emilia_Romagna_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2020_Turkish_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			},
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 9
+			},
+			{
+				"type": "SC",
+				"from": 54,
+				"to": 57
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Bahrain_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 7
+			},
+			{
+				"type": "VSC",
+				"from": 55,
+				"to": 56
+			},
+			{
+				"type": "VSC",
+				"from": 62,
+				"to": 62
+			},
+			{
+				"type": "SC",
+				"from": 64,
+				"to": 68
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Sakhir_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 12,
+				"to": 14
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2020_Abu_Dhabi_Grand_Prix"
+		]
+	}
+}

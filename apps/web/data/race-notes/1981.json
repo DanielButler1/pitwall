@@ -1,0 +1,106 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_United_States_Grand_Prix_West"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Brazilian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Argentine_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_San_Marino_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 2
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1981_Belgian_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Spanish_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 58
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1981_French_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_German_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Austrian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Dutch_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Canadian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1981_Caesars_Palace_Grand_Prix"
+		]
+	}
+}

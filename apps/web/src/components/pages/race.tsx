@@ -1,7 +1,7 @@
-import { ChevronLeft, ChevronRight, FlaskConical, History, MapPin, Sparkles, Timer } from "lucide-react";
+import { ChevronLeft, ChevronRight, CloudRain, CloudSunRain, FlaskConical, History, MapPin, Sparkles, Sun, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import type { RaceLapFile } from "@pitwall/core/f1/laps";
+import { NEUTRAL_LABEL, type RaceLapFile } from "@pitwall/core/f1/laps";
 import type { RaceView, ResultRow } from "@pitwall/core/f1/views";
 import {
 	CircuitLink,
@@ -30,7 +30,9 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { buttonVariants } from "../ui/button";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { LapChartPanel, PitStopsPanel } from "./race-laps";
+import { LapChartPanel, StrategyPanel } from "./race-laps";
+
+const WEATHER = { dry: { icon: Sun, label: "Dry" }, wet: { icon: CloudRain, label: "Wet" }, mixed: { icon: CloudSunRain, label: "Mixed conditions" } } as const;
 
 /** Fastest-lap marker; the hover card gives the time and lap when known. */
 function FastestLapMark({ lap, sprint }: { lap: RaceView["fastestLap"]; sprint?: boolean }) {
@@ -200,11 +202,35 @@ function LapsLed({ view }: { view: RaceView }) {
 	);
 }
 
-/** Context for the race result: who led, and the championships after the round. */
+/** Safety cars, virtual safety cars and red flags, from the race notes. */
+function Neutralised({ view }: { view: RaceView }) {
+	const list = view.notes?.neutralised ?? [];
+	if (!list.length) return null;
+	return (
+		<Section title="Safety cars and red flags">
+			<TableCard>
+				<TableBody>
+					{list.map(([type, from, to]) => (
+						<TableRow key={`${type}-${from}`}>
+							<TableCell className="flex items-center gap-2">
+								<span className={cn("inline-block size-2 rounded-full", type === "RF" ? "bg-f1" : "bg-gold")} />
+								{NEUTRAL_LABEL[type]}
+							</TableCell>
+							<TableCell className="text-muted-foreground text-right tabular-nums">{from === to ? `Lap ${from}` : `Laps ${from}–${to}`}</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</TableCard>
+		</Section>
+	);
+}
+
+/** Context for the race result: who led, safety cars, and the championships after the round. */
 function RaceSidebar({ view }: { view: RaceView }) {
 	return (
 		<div className="space-y-8">
 			<LapsLed view={view} />
+			<Neutralised view={view} />
 			<Section title="Drivers after this round">
 				<TableCard>
 					<TableBody>
@@ -267,6 +293,7 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 	const winner = view.results.find((r) => r.position === "1");
 	const lapData = view.lapData && laps !== null ? view.lapData : null;
 	const lapDrivers = view.results.map((r) => r.driver);
+	const strategy = (lapData?.pitStops && (laps === undefined || !!laps?.pitStops?.length)) || lapData?.tyres;
 	const classified = view.results.filter((r) => /^\d+$/.test(r.position)).length;
 	return (
 		<Page>
@@ -347,6 +374,16 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 							Tyres: <Join items={view.tyres} render={(t) => <TyreLink tyre={t} className="text-foreground" />} />
 						</span>
 					)}
+					{view.notes?.weather &&
+						(() => {
+							const w = WEATHER[view.notes.weather];
+							return (
+								<span className="inline-flex items-center gap-1.5">
+									<w.icon className="size-3.5" />
+									<span className="text-foreground">{w.label}</span>
+								</span>
+							);
+						})()}
 				</span>
 				<span className="mt-1 block text-xs">{view.officialName}</span>
 			</PageHeader>
@@ -388,12 +425,7 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 								<span className="hidden sm:inline">Lap chart</span>
 							</TabsTrigger>
 						)}
-						{lapData?.pitStops && (laps === undefined || !!laps?.pitStops?.length) && (
-							<TabsTrigger value="pits">
-								<span className="sm:hidden">Pits</span>
-								<span className="hidden sm:inline">Pit stops</span>
-							</TabsTrigger>
-						)}
+						{strategy && <TabsTrigger value="strategy">Strategy</TabsTrigger>}
 					</TabsList>
 					<TabsContent value="race">
 						<div className="grid grid-cols-1 items-start gap-12 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-8 2xl:grid-cols-[minmax(0,1fr)_380px]">
@@ -424,12 +456,20 @@ export function RacePage({ view, labHref, laps }: { view: RaceView; labHref?: st
 								sprintFinish={finishOf(view.sprint)}
 								sprintAvailable={lapData.sprintChart}
 								highlight={winner ? [winner.driver.id] : []}
+								neutralised={view.notes?.neutralised}
 							/>
 						</TabsContent>
 					)}
-					{lapData?.pitStops && (
-						<TabsContent value="pits">
-							<PitStopsPanel raceId={view.raceId} initial={laps && { raceId: laps.raceId, pitStops: laps.pitStops }} drivers={lapDrivers} />
+					{strategy && (
+						<TabsContent value="strategy">
+							<StrategyPanel
+								raceId={view.raceId}
+								initial={laps && { raceId: laps.raceId, drivers: laps.drivers, pitStops: laps.pitStops, tyres: laps.tyres, compounds: laps.compounds }}
+								drivers={lapDrivers}
+								laps={Object.fromEntries(view.results.filter((r) => r.laps).map((r) => [r.driver.id, r.laps!]))}
+								year={view.race.year}
+								neutralised={view.notes?.neutralised}
+							/>
 						</TabsContent>
 					)}
 				</Tabs>

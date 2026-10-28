@@ -1,0 +1,210 @@
+{
+	"1": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Chinese_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Japanese_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Miami_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Canadian_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 68
+			}
+		],
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2026_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Barcelona-Catalunya_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Austrian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Belgian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Hungarian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 2
+			}
+		],
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2026_Dutch_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 3
+			}
+		],
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2026_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Spanish_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Azerbaijan_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Bahrain_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2026_Singapore_Grand_Prix"
+		]
+	}
+}

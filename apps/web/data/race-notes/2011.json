@@ -1,0 +1,207 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Malaysian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Chinese_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Turkish_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 35,
+				"to": 39
+			},
+			{
+				"type": "RF",
+				"lap": 72
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			},
+			{
+				"type": "SC",
+				"from": 8,
+				"to": 13
+			},
+			{
+				"type": "SC",
+				"from": 20,
+				"to": 26
+			},
+			{
+				"type": "RF",
+				"lap": 25
+			},
+			{
+				"type": "SC",
+				"from": 26,
+				"to": 34
+			},
+			{
+				"type": "SC",
+				"from": 37,
+				"to": 40
+			},
+			{
+				"type": "SC",
+				"from": 56,
+				"to": 61
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Canadian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_European_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_German_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Hungarian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 13,
+				"to": 17
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Belgian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 30,
+				"to": 34
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Singapore_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 24,
+				"to": 28
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Japanese_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 17,
+				"to": 21
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2011_Korean_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Indian_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Abu_Dhabi_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2011_Brazilian_Grand_Prix"
+		]
+	}
+}

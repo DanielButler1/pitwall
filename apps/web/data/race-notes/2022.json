@@ -1,0 +1,260 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Bahrain_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Saudi_Arabian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Australian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Emilia_Romagna_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Miami_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Spanish_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 30
+			}
+		],
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2022_Monaco_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Azerbaijan_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Canadian_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			}
+		],
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2022_British_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Austrian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_French_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Hungarian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Belgian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Dutch_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Italian_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "mixed",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Singapore_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "wet",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 2
+			}
+		],
+		"compounds": {
+			"H": "C1",
+			"M": "C2",
+			"S": "C3"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2022_Japanese_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_United_States_Grand_Prix"
+		]
+	},
+	"20": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Mexican_Grand_Prix"
+		]
+	},
+	"21": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C2",
+			"M": "C3",
+			"S": "C4"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_S%C3%A3o_Paulo_Grand_Prix"
+		]
+	},
+	"22": {
+		"weather": "dry",
+		"compounds": {
+			"H": "C3",
+			"M": "C4",
+			"S": "C5"
+		},
+		"sources": [
+			"https://en.wikipedia.org/wiki/2022_Abu_Dhabi_Grand_Prix"
+		]
+	}
+}
