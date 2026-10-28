@@ -31,7 +31,7 @@ import { noteFacts } from "./facts/notes.ts";
 import { stewardsFacts } from "./facts/stewards.ts";
 
 export { factText, type FactKind, type RaceFact } from "./facts/shared.ts";
-export { packFacts, seasonFacts, subjectFacts, unpackFacts, venueFacts, type FactEntry, type FactIndex, type PackedFacts } from "./facts/collections.ts";
+export { onThisDayFacts, packFacts, raceEntries, seasonFacts, subjectFacts, unpackFacts, venueFacts, type FactEntry, type FactIndex, type PackedFacts } from "./facts/collections.ts";
 import { factIndex as indexWith, sprintFacts as sprintWith, type FactIndex } from "./facts/collections.ts";
 export { nextRace, upcomingFacts } from "./facts/upcoming.ts";
 import { upcomingFacts } from "./facts/upcoming.ts";

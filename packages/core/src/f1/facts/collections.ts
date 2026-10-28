@@ -95,3 +95,14 @@ export function sprintFacts(db: Db, raceId: number, raceFacts: RaceFactsFn, limi
 		.filter((f) => /:sprint(Win|Double)\b/.test(f.key))
 		.slice(0, limit);
 }
+
+/** The standout facts from races held on a day of the year, any year ("On this day"). */
+export function onThisDayFacts(db: Db, index: FactIndex, month: number, day: number, limit = 4): FactEntry[] {
+	const md = `${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+	return best(db, index, completed(db, (id) => db.raceById.get(id)?.date.slice(5) === md), limit);
+}
+
+/** A race's own best facts, as entries (the latest race on the home page). */
+export function raceEntries(db: Db, index: FactIndex, raceId: number, limit = 3): FactEntry[] {
+	return best(db, index, [raceId], limit);
+}
