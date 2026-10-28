@@ -6,11 +6,12 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 /**
- * @returns {{ races: any[], entrants: any[], errors: string[], warnings: string[], years: number[] }}
- *   races in f1.json's tuple shape, entrants as [year, constructorId, engineId, driverId]
+ * @returns {{ races: any[], entrants: any[], drivers: any[], errors: string[], warnings: string[], years: number[] }}
+ *   races in f1.json's tuple shape, entrants as [year, constructorId, engineId, driverId], and drivers F1DB doesn't
+ *   have yet in its own shape (a rookie confirmed before their first race)
  */
 export function buildCalendar(dir, f1db) {
-	const out = { races: [], entrants: [], errors: [], warnings: [], years: [] };
+	const out = { races: [], entrants: [], drivers: [], errors: [], warnings: [], years: [] };
 	if (!existsSync(dir)) return out;
 	const { races, circuits, grandsPrix, drivers, constructors, engines, entrants } = f1db;
 	const circuitIds = new Set(circuits.map((c) => c.id));
@@ -24,6 +25,16 @@ export function buildCalendar(dir, f1db) {
 		const year = Number(name.slice(0, 4));
 		const season = JSON.parse(readFileSync(join(dir, name), "utf8"));
 		const at = (what) => `${name}: ${what}`;
+		// rookies F1DB doesn't have yet; F1DB's own record wins once it has one
+		for (const d of season.drivers ?? []) {
+			if (driverIds.has(d.id)) continue;
+			if (!d.name || !d.firstName || !d.lastName || !d.nationalityCountryId) {
+				out.errors.push(at(`driver "${d.id}" needs name, firstName, lastName and nationalityCountryId`));
+				continue;
+			}
+			out.drivers.push(d);
+			driverIds.add(d.id);
+		}
 		if (!races.some((r) => r.year === year)) {
 			out.years.push(year);
 			for (const r of season.races ?? []) {

@@ -14,7 +14,7 @@ Announced seasons that F1DB doesn't have yet: one file per season (`2027.json`).
 - **`sprint`:** set it on sprint weekends.
 - **Laps and distance:** taken from the latest race at the circuit.
 - **Official name:** "Formula 1 <Grand Prix> <year>". The sponsors' titles come with F1DB.
-- **Drivers F1DB doesn't have yet** (someone who's never entered a race): they're left off the grid with a warning until F1DB adds them.
+- **Drivers F1DB doesn't have yet** (a rookie confirmed before their first race): add them under `drivers`, in F1DB's shape (`id`, `name`, `firstName`, `lastName`, `nationalityCountryId`, and optionally `abbreviation`, `permanentNumber`, `dateOfBirth`, `placeOfBirth` and `gender`). They get a driver page and a place on the grid. Once F1DB has the driver, its record is used instead. A driver in `entrants` who is in neither is left off with a warning.
 
 ## 2027
 
@@ -22,8 +22,10 @@ From the calendar announced on 16 September 2026: 24 rounds with 10 sprint weeke
 - Turkey still needed the FIA's circuit homologation when the calendar was published.
 - Las Vegas is Saturday 20 November.
 
+Rafael Câmara (Haas, #50, confirmed 15 October 2026) is under `drivers` until F1DB adds him.
+
 Seats still open when this was written:
 - Racing Bulls: both seats.
-- Haas: the seat beside Rafael Câmara. Câmara is listed but isn't in F1DB yet.
+- Haas: the seat beside Câmara.
 
 Fill these in as they're announced.

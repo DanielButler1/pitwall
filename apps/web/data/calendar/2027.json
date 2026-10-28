@@ -4,6 +4,21 @@
 		"https://en.wikipedia.org/wiki/2027_Formula_One_World_Championship",
 		"https://www.mclaren.com/racing/formula-1/2026/2027-calendar-announced/"
 	],
+	"drivers": [
+		{
+			"id": "rafael-camara",
+			"name": "Rafael Câmara",
+			"firstName": "Rafael",
+			"lastName": "Câmara",
+			"abbreviation": null,
+			"permanentNumber": "50",
+			"gender": "MALE",
+			"dateOfBirth": "2005-05-05",
+			"placeOfBirth": "Recife",
+			"nationalityCountryId": "brazil",
+			"$note": "Confirmed by Haas on 15 October 2026 (multi-year contract)."
+		}
+	],
 	"races": [
 		{ "round": 1, "date": "2027-03-14", "grandPrixId": "bahrain", "circuitId": "bahrain", "sprint": true },
 		{ "round": 2, "date": "2027-03-21", "grandPrixId": "saudi-arabia", "circuitId": "jeddah" },

@@ -93,7 +93,7 @@ const dataset = {
 	// [id, name, alpha2, demonym]
 	countries: countries.map((c) => [c.id, c.name, c.alpha2Code, nn(c.demonym)]),
 	// [id, name, firstName, lastName, abbreviation, permanentNumber, dateOfBirth, dateOfDeath, nationalityCountryId, placeOfBirth, gender]
-	drivers: drivers.map((d) => [
+	drivers: drivers.concat(calendar.drivers).map((d) => [
 		d.id, d.name, d.firstName, d.lastName, nn(d.abbreviation), nn(d.permanentNumber),
 		nn(d.dateOfBirth), nn(d.dateOfDeath), d.nationalityCountryId, nn(d.placeOfBirth), d.gender === "FEMALE" ? "F" : "M",
 	]),
@@ -204,7 +204,7 @@ for (const dir of [join(root, "data", "laps"), join(root, "public", "data", "lap
 	mkdirSync(dir, { recursive: true });
 	for (const [raceId, file] of raceFiles) writeFileSync(join(dir, `${raceId}.json`), JSON.stringify(file));
 }
-console.log(`Calendars: ${calendar.years.length ? `${calendar.years.join(", ")} (${calendar.races.length} races, ${calendar.entrants.length} drivers)` : "none needed"}`);
+console.log(`Calendars: ${calendar.years.length ? `${calendar.years.join(", ")} (${calendar.races.length} races, ${calendar.entrants.length} drivers, ${calendar.drivers.length} new to F1DB)` : "none needed"}`);
 console.log(`Stewards: ${stewards.count.races} races, ${stewards.count.decisions} decisions`);
 console.log(`Race notes: ${notes.count.races} races (${notes.count.neutralised} SC/VSC/red flag periods, tyres for ${notes.count.tyres})`);
 if (jolpica) {
