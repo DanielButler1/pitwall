@@ -185,3 +185,19 @@ test("season, career and venue facts are about them, from their races", () => {
 	assert.ok(unpackFacts(real, packed));
 	assert.equal(unpackFacts(real, { ...packed, generatedAt: "another" }), null);
 });
+
+test("venue pages keep to the place, and old facts on them are big ones", () => {
+	const index = factIndex(real);
+	const latest = done.at(-1)!.year;
+	const venue = new Set(["venue", "home", "weather", "neutral", "circuit", "title"]);
+	for (const gp of new Set(done.slice(-50).map((r) => r.grandPrixId)))
+		for (const e of venueFacts(real, index, { grandPrixId: gp })) {
+			const subject = e.fact.key.split(":")[1];
+			assert.ok((venue.has(e.fact.kind) && !e.fact.key.startsWith("title:constructor:")) || subject === "gp" || subject === "circuit", factText(e.fact.cells));
+		}
+	const team = real.resultsByRace.get(done.at(-1)!.id)![0].constructorId;
+	for (const e of subjectFacts(real, index, "constructor", team)) {
+		const old = latest - real.raceById.get(e.raceId)!.year > 20;
+		if (old) assert.ok(["title", "record", "first"].includes(e.fact.kind) || e.fact.score >= 9, factText(e.fact.cells));
+	}
+});
