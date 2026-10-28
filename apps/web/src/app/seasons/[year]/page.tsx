@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SeasonPage } from "@/components/pages/season";
 import { seasonProgression } from "@pitwall/core/f1/progression";
-import { getDb, getFactIndex } from "@/lib/server";
+import { describe, getDb, getFactIndex } from "@/lib/server";
 import { seasonFacts } from "@pitwall/core/f1/race-facts";
 import { seasonView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
@@ -14,7 +14,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	return { title: `${(await params).year} season` };
+	const { year } = await params;
+	return { title: `${year} season`, description: describe("season", year) };
 }
 
 export default async function Page({ params }: Props) {

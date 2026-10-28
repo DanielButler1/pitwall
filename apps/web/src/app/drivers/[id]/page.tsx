@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DriverPage } from "@/components/pages/profiles";
-import { getDb, getFactIndex } from "@/lib/server";
+import { describe, getDb, getFactIndex } from "@/lib/server";
 import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
 import { driverTeammatesView } from "@pitwall/core/f1/teammates";
 import { driverView } from "@pitwall/core/f1/views";
@@ -14,7 +14,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	return { title: getDb().drivers.get((await params).id)?.name ?? "Driver" };
+	const { id } = await params;
+	return { title: getDb().drivers.get(id)?.name ?? "Driver", description: describe("driver", id) };
 }
 
 export default async function Page({ params }: Props) {

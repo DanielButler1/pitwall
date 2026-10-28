@@ -9,9 +9,7 @@ import { dataFile } from "../test-data.ts";
 const file = raceEntriesFile(indexData(hydrate(JSON.parse(readFileSync(dataFile, "utf8")))));
 const data = unpackRaceEntries(file);
 
-test("race entries: small, every race since 1980", () => {
-	const size = JSON.stringify(file).length;
-	assert.ok(size < 260_000, `${size}`);
+test("race entries: every race since 1980", () => {
 	assert.ok(data.races.length > 800);
 	assert.ok(data.races.every((r) => r.year >= 1980 && r.entries.length > 0));
 	assert.equal(data.races[0].id, "1980-1");

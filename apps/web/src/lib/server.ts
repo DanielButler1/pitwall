@@ -1,6 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { entityCard, type CardKind } from "@pitwall/core/f1/cards";
 import { hydrate, indexData, type Db } from "@pitwall/core/f1/dataset";
+import { describeEntity } from "@pitwall/core/f1/describe";
 import type { RaceLapFile } from "@pitwall/core/f1/laps";
 import { factIndex, unpackFacts, type FactIndex, type PackedFacts } from "@pitwall/core/f1/race-facts";
 
@@ -27,4 +29,10 @@ export function getFactIndex(): FactIndex {
 	const file = join(process.cwd(), "data", "facts.json");
 	index = (existsSync(file) ? unpackFacts(getDb(), JSON.parse(readFileSync(file, "utf8")) as PackedFacts) : null) ?? factIndex(getDb());
 	return index;
+}
+
+/** A page's meta description from its entity's card, or undefined (the site-wide one) when there is none. */
+export function describe(kind: CardKind, id: string): string | undefined {
+	const card = entityCard(getDb(), kind, id);
+	return card ? describeEntity(card) : undefined;
 }

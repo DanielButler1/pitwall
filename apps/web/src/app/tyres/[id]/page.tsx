@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SupplierPage } from "@/components/pages/entities";
-import { getDb } from "@/lib/server";
+import { describe, getDb } from "@/lib/server";
 import { tyreView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
 
@@ -12,7 +12,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	return { title: getDb().tyres.get((await params).id)?.name ?? "Tyres" };
+	const { id } = await params;
+	return { title: getDb().tyres.get(id)?.name ?? "Tyres", description: describe("tyre", id) };
 }
 
 export default async function Page({ params }: Props) {
