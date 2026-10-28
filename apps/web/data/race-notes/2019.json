@@ -2,8 +2,31 @@
 	"1": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_Australian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Australian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Australian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "S M",
+			"lewis-hamilton": "S M",
+			"max-verstappen": "S M",
+			"sebastian-vettel": "S M",
+			"charles-leclerc": "S H",
+			"kevin-magnussen": "S M",
+			"nico-hulkenberg": "S H",
+			"kimi-raikkonen": "S M",
+			"lance-stroll": "M H",
+			"daniil-kvyat": "M H",
+			"pierre-gasly": "M S",
+			"lando-norris": "S H",
+			"sergio-perez": "S H",
+			"alexander-albon": "S M",
+			"antonio-giovinazzi": "M S",
+			"george-russell": "M S H",
+			"robert-kubica": "H M S S",
+			"romain-grosjean": "S M",
+			"daniel-ricciardo": "S H",
+			"carlos-sainz-jr": "S"
+		}
 	},
 	"2": {
 		"weather": "dry",
@@ -16,14 +39,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Bahrain_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Bahrain_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Bahrain%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S S M",
+			"valtteri-bottas": "S M S",
+			"charles-leclerc": "S M M",
+			"max-verstappen": "S M M",
+			"sebastian-vettel": "S M M S",
+			"lando-norris": "S M S",
+			"kimi-raikkonen": "S M S",
+			"pierre-gasly": "S S M",
+			"alexander-albon": "S S M",
+			"sergio-perez": "S M M",
+			"antonio-giovinazzi": "S M S",
+			"daniil-kvyat": "S M S",
+			"kevin-magnussen": "S M S",
+			"lance-stroll": "S M M",
+			"george-russell": "S M M",
+			"robert-kubica": "M S M",
+			"nico-hulkenberg": "S S M",
+			"daniel-ricciardo": "S M",
+			"carlos-sainz-jr": "S M H S",
+			"romain-grosjean": "S M"
+		}
 	},
 	"3": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_Chinese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Chinese_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Chinese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H M",
+			"valtteri-bottas": "M H M",
+			"sebastian-vettel": "M H M",
+			"max-verstappen": "M H M",
+			"charles-leclerc": "M H M",
+			"pierre-gasly": "S H M S",
+			"daniel-ricciardo": "S H",
+			"sergio-perez": "M H",
+			"kimi-raikkonen": "M H",
+			"alexander-albon": "S H",
+			"romain-grosjean": "S H M",
+			"lance-stroll": "M H S",
+			"kevin-magnussen": "S H M",
+			"carlos-sainz-jr": "M H S",
+			"antonio-giovinazzi": "S M M",
+			"george-russell": "M H S",
+			"robert-kubica": "M H",
+			"lando-norris": "M H M S",
+			"daniil-kvyat": "M H S",
+			"nico-hulkenberg": "S H"
+		}
 	},
 	"4": {
 		"weather": "dry",
@@ -36,8 +105,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Azerbaijan_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Azerbaijan_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Azerbaijan%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "S M",
+			"lewis-hamilton": "S M",
+			"sebastian-vettel": "S M",
+			"max-verstappen": "S M",
+			"charles-leclerc": "M S S",
+			"sergio-perez": "S M",
+			"carlos-sainz-jr": "S M",
+			"lando-norris": "S M S",
+			"lance-stroll": "S M",
+			"kimi-raikkonen": "S M",
+			"alexander-albon": "S M",
+			"antonio-giovinazzi": "S M",
+			"kevin-magnussen": "S M S",
+			"nico-hulkenberg": "S M S",
+			"george-russell": "M M S",
+			"robert-kubica": "M M S",
+			"pierre-gasly": "M",
+			"romain-grosjean": "M S",
+			"daniil-kvyat": "S M",
+			"daniel-ricciardo": "S M"
+		}
 	},
 	"5": {
 		"weather": "dry",
@@ -50,8 +142,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Spanish_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Spanish%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M S",
+			"valtteri-bottas": "S M S",
+			"max-verstappen": "S S M",
+			"sebastian-vettel": "S M M",
+			"charles-leclerc": "S H M",
+			"pierre-gasly": "S M S",
+			"kevin-magnussen": "S M S",
+			"carlos-sainz-jr": "S M S",
+			"daniil-kvyat": "S M M",
+			"romain-grosjean": "S M S",
+			"alexander-albon": "S M M",
+			"daniel-ricciardo": "S H M",
+			"nico-hulkenberg": "M S",
+			"kimi-raikkonen": "M H S",
+			"sergio-perez": "S M S",
+			"antonio-giovinazzi": "S H S",
+			"george-russell": "M S M",
+			"robert-kubica": "M S M",
+			"lance-stroll": "M S",
+			"lando-norris": "S M"
+		}
 	},
 	"6": {
 		"weather": "dry",
@@ -64,8 +179,59 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Monaco_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Monaco%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M",
+			"sebastian-vettel": "S H",
+			"valtteri-bottas": "S M H",
+			"max-verstappen": "S H",
+			"pierre-gasly": "S M S",
+			"carlos-sainz-jr": "S M",
+			"daniil-kvyat": "S M",
+			"alexander-albon": "S M",
+			"daniel-ricciardo": "S M",
+			"romain-grosjean": "S M",
+			"lando-norris": "M S",
+			"sergio-perez": "M H",
+			"nico-hulkenberg": "M H",
+			"kevin-magnussen": "S M",
+			"george-russell": "M H",
+			"lance-stroll": "M H",
+			"kimi-raikkonen": "S M",
+			"robert-kubica": "M H",
+			"antonio-giovinazzi": "S M",
+			"charles-leclerc": "M H S"
+		}
+	},
+	"7": {
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"sebastian-vettel": "M H",
+			"charles-leclerc": "M H",
+			"valtteri-bottas": "M H S",
+			"max-verstappen": "H M",
+			"daniel-ricciardo": "S H",
+			"nico-hulkenberg": "S H",
+			"pierre-gasly": "S H",
+			"lance-stroll": "H M",
+			"daniil-kvyat": "M H",
+			"carlos-sainz-jr": "S H",
+			"sergio-perez": "M H",
+			"antonio-giovinazzi": "H M",
+			"romain-grosjean": "M H",
+			"kimi-raikkonen": "M H S",
+			"george-russell": "M H",
+			"kevin-magnussen": "H M",
+			"robert-kubica": "M H H",
+			"alexander-albon": "M H",
+			"lando-norris": "S"
+		},
+		"sources": [
+			"https://github.com/TracingInsights/2019/tree/main/Canadian%20Grand%20Prix/Race"
+		],
+		"weather": "dry"
 	},
 	"8": {
 		"weather": "dry",
@@ -78,14 +244,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_French_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_French_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/French%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"valtteri-bottas": "M H",
+			"charles-leclerc": "M H",
+			"max-verstappen": "M H",
+			"sebastian-vettel": "M H S",
+			"carlos-sainz-jr": "M H",
+			"kimi-raikkonen": "H M",
+			"nico-hulkenberg": "H M",
+			"lando-norris": "M H",
+			"pierre-gasly": "S H",
+			"daniel-ricciardo": "M H",
+			"sergio-perez": "M H",
+			"lance-stroll": "H M",
+			"daniil-kvyat": "H M",
+			"alexander-albon": "M H",
+			"antonio-giovinazzi": "S H M",
+			"kevin-magnussen": "M H",
+			"robert-kubica": "M H",
+			"george-russell": "M H M",
+			"romain-grosjean": "H M"
+		}
 	},
 	"9": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_Austrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Austrian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Austrian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"charles-leclerc": "S H",
+			"valtteri-bottas": "M H",
+			"sebastian-vettel": "S H S",
+			"lewis-hamilton": "M H",
+			"lando-norris": "S M",
+			"pierre-gasly": "S H",
+			"carlos-sainz-jr": "M H",
+			"kimi-raikkonen": "S H",
+			"antonio-giovinazzi": "S H",
+			"sergio-perez": "M H",
+			"daniel-ricciardo": "M S",
+			"nico-hulkenberg": "M H",
+			"lance-stroll": "M H",
+			"alexander-albon": "M H",
+			"romain-grosjean": "M H",
+			"daniil-kvyat": "M H",
+			"george-russell": "M H",
+			"kevin-magnussen": "S H S",
+			"robert-kubica": "M H"
+		}
 	},
 	"10": {
 		"weather": "dry",
@@ -98,8 +310,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_British_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_British_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/British%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"valtteri-bottas": "M M S",
+			"charles-leclerc": "S M H",
+			"pierre-gasly": "M H",
+			"max-verstappen": "M M H",
+			"carlos-sainz-jr": "M H",
+			"daniel-ricciardo": "S M H",
+			"kimi-raikkonen": "M H",
+			"daniil-kvyat": "S M H",
+			"nico-hulkenberg": "S H",
+			"lando-norris": "S M H",
+			"alexander-albon": "S M",
+			"lance-stroll": "M H S",
+			"george-russell": "M H",
+			"robert-kubica": "M H",
+			"sebastian-vettel": "S H M",
+			"sergio-perez": "M H S S",
+			"antonio-giovinazzi": "M",
+			"romain-grosjean": "S H",
+			"kevin-magnussen": "S H"
+		}
 	},
 	"11": {
 		"weather": "wet",
@@ -137,14 +372,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_German_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_German_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/German%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "W I M I I S",
+			"sebastian-vettel": "W I S I I S",
+			"daniil-kvyat": "W I S I S",
+			"lance-stroll": "W I M I I S",
+			"carlos-sainz-jr": "W I I S",
+			"alexander-albon": "W I S I S",
+			"romain-grosjean": "W I S I I S",
+			"kevin-magnussen": "W I S I I S S",
+			"lewis-hamilton": "W I S I S S S",
+			"robert-kubica": "W I I I S S",
+			"george-russell": "W I I I S S",
+			"kimi-raikkonen": "W I M I S",
+			"antonio-giovinazzi": "W I M I S",
+			"pierre-gasly": "W I S I S",
+			"valtteri-bottas": "W I M I S",
+			"nico-hulkenberg": "W I I I",
+			"charles-leclerc": "W I I",
+			"lando-norris": "W I",
+			"daniel-ricciardo": "W I",
+			"sergio-perez": "W"
+		}
 	},
 	"12": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Hungarian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Hungarian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H M",
+			"max-verstappen": "M H S",
+			"sebastian-vettel": "M S",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "S H",
+			"pierre-gasly": "M H",
+			"kimi-raikkonen": "S M",
+			"valtteri-bottas": "M H M",
+			"lando-norris": "S H",
+			"alexander-albon": "M H",
+			"sergio-perez": "M H",
+			"nico-hulkenberg": "M S",
+			"kevin-magnussen": "M S",
+			"daniel-ricciardo": "H S",
+			"daniil-kvyat": "M H",
+			"george-russell": "M H",
+			"lance-stroll": "M H S",
+			"antonio-giovinazzi": "M H",
+			"robert-kubica": "M H",
+			"romain-grosjean": "S H"
+		}
 	},
 	"13": {
 		"weather": "dry",
@@ -157,8 +438,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Belgian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Belgian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"charles-leclerc": "S M",
+			"lewis-hamilton": "S M",
+			"valtteri-bottas": "S M",
+			"sebastian-vettel": "S M S",
+			"alexander-albon": "M S",
+			"sergio-perez": "S M",
+			"daniil-kvyat": "M S",
+			"nico-hulkenberg": "S M S",
+			"pierre-gasly": "S M",
+			"lance-stroll": "S M S",
+			"lando-norris": "S M",
+			"kevin-magnussen": "S M",
+			"romain-grosjean": "S M",
+			"daniel-ricciardo": "S",
+			"george-russell": "M S",
+			"kimi-raikkonen": "S M S",
+			"robert-kubica": "M S",
+			"antonio-giovinazzi": "M S",
+			"carlos-sainz-jr": "S",
+			"max-verstappen": "S"
+		}
 	},
 	"14": {
 		"weather": "dry",
@@ -176,8 +480,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Italian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Italian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"charles-leclerc": "S H",
+			"valtteri-bottas": "S M",
+			"lewis-hamilton": "S M S",
+			"daniel-ricciardo": "S M",
+			"nico-hulkenberg": "S M",
+			"alexander-albon": "S M",
+			"sergio-perez": "M S",
+			"max-verstappen": "M S M",
+			"antonio-giovinazzi": "S M",
+			"lando-norris": "M H",
+			"pierre-gasly": "M S",
+			"lance-stroll": "S M",
+			"sebastian-vettel": "S H M",
+			"george-russell": "M H",
+			"kimi-raikkonen": "M S",
+			"romain-grosjean": "S M S",
+			"robert-kubica": "M S M",
+			"kevin-magnussen": "S M S",
+			"daniil-kvyat": "M S",
+			"carlos-sainz-jr": "S"
+		}
 	},
 	"15": {
 		"neutralised": [
@@ -198,8 +525,32 @@
 			}
 		],
 		"sources": [
-			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
-		]
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://github.com/TracingInsights/2019/tree/main/Singapore%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sebastian-vettel": "S H",
+			"charles-leclerc": "S H",
+			"max-verstappen": "S H",
+			"lewis-hamilton": "S H",
+			"valtteri-bottas": "S H",
+			"alexander-albon": "S H",
+			"lando-norris": "S H",
+			"pierre-gasly": "H M",
+			"nico-hulkenberg": "S H M",
+			"antonio-giovinazzi": "M H S",
+			"romain-grosjean": "M H S",
+			"carlos-sainz-jr": "S H M",
+			"lance-stroll": "M H S S",
+			"daniel-ricciardo": "M H",
+			"daniil-kvyat": "M H S",
+			"robert-kubica": "M H M",
+			"kevin-magnussen": "M H S",
+			"kimi-raikkonen": "M H",
+			"sergio-perez": "M H",
+			"george-russell": "M H"
+		},
+		"weather": "dry"
 	},
 	"16": {
 		"weather": "dry",
@@ -222,14 +573,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Russian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Russian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Russian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M S",
+			"valtteri-bottas": "M S",
+			"charles-leclerc": "S M S",
+			"max-verstappen": "S M",
+			"alexander-albon": "M S",
+			"carlos-sainz-jr": "S M",
+			"sergio-perez": "S M",
+			"lando-norris": "S M",
+			"kevin-magnussen": "S M",
+			"nico-hulkenberg": "S M S",
+			"lance-stroll": "M S",
+			"daniil-kvyat": "H S S",
+			"kimi-raikkonen": "M S",
+			"pierre-gasly": "M S",
+			"antonio-giovinazzi": "S H M",
+			"robert-kubica": "M H M",
+			"george-russell": "M",
+			"sebastian-vettel": "S",
+			"daniel-ricciardo": "S M",
+			"romain-grosjean": "S"
+		}
 	},
 	"17": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_Japanese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Japanese_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Japanese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "S M S",
+			"sebastian-vettel": "S S M",
+			"lewis-hamilton": "S M S",
+			"alexander-albon": "S M S",
+			"carlos-sainz-jr": "S M",
+			"charles-leclerc": "S M S S",
+			"pierre-gasly": "S M",
+			"sergio-perez": "S M S",
+			"lance-stroll": "S M",
+			"daniil-kvyat": "S M",
+			"lando-norris": "S M H",
+			"kimi-raikkonen": "M H S",
+			"romain-grosjean": "S H",
+			"antonio-giovinazzi": "M H S",
+			"kevin-magnussen": "M H S",
+			"george-russell": "M H",
+			"robert-kubica": "M H M",
+			"max-verstappen": "S",
+			"daniel-ricciardo": "M S",
+			"nico-hulkenberg": "S M"
+		}
 	},
 	"18": {
 		"weather": "dry",
@@ -242,14 +639,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Mexican_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Mexican_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Mexican%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"sebastian-vettel": "M H",
+			"valtteri-bottas": "M H",
+			"charles-leclerc": "M M H",
+			"alexander-albon": "M M H",
+			"max-verstappen": "M H",
+			"sergio-perez": "M H",
+			"daniel-ricciardo": "H M",
+			"pierre-gasly": "S H M",
+			"nico-hulkenberg": "M H",
+			"daniil-kvyat": "S H M",
+			"lance-stroll": "M H",
+			"carlos-sainz-jr": "S H M",
+			"antonio-giovinazzi": "M H",
+			"kevin-magnussen": "M H",
+			"george-russell": "M H",
+			"romain-grosjean": "M H",
+			"robert-kubica": "M H M",
+			"kimi-raikkonen": "M H M",
+			"lando-norris": "S H"
+		}
 	},
 	"19": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_United_States_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_United_States_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/United%20States%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "M H M",
+			"lewis-hamilton": "M H",
+			"max-verstappen": "M H M",
+			"charles-leclerc": "M H S",
+			"alexander-albon": "S M M S",
+			"daniel-ricciardo": "S H",
+			"lando-norris": "S H M",
+			"carlos-sainz-jr": "S H",
+			"nico-hulkenberg": "H M S",
+			"sergio-perez": "M H",
+			"kimi-raikkonen": "S H S",
+			"daniil-kvyat": "H M S",
+			"lance-stroll": "M H S",
+			"antonio-giovinazzi": "M H S",
+			"romain-grosjean": "M H",
+			"pierre-gasly": "S H S",
+			"george-russell": "M H S",
+			"kevin-magnussen": "M H S",
+			"robert-kubica": "M H",
+			"sebastian-vettel": "M"
+		}
 	},
 	"20": {
 		"weather": "dry",
@@ -267,13 +710,59 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2019_Brazilian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Brazilian_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Brazilian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "S S M S",
+			"pierre-gasly": "S M S",
+			"carlos-sainz-jr": "S M",
+			"kimi-raikkonen": "S M S",
+			"antonio-giovinazzi": "S M S",
+			"daniel-ricciardo": "M S S",
+			"lewis-hamilton": "S S M S",
+			"lando-norris": "S H M",
+			"sergio-perez": "S M S",
+			"daniil-kvyat": "M S S",
+			"kevin-magnussen": "S M S",
+			"george-russell": "M M S S",
+			"romain-grosjean": "S M S",
+			"alexander-albon": "S M S",
+			"nico-hulkenberg": "M H S S",
+			"robert-kubica": "M M H S S",
+			"sebastian-vettel": "S M S",
+			"charles-leclerc": "M H S",
+			"lance-stroll": "S M S",
+			"valtteri-bottas": "S H M"
+		}
 	},
 	"21": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2019_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2019_Abu_Dhabi_Grand_Prix",
+			"https://github.com/TracingInsights/2019/tree/main/Abu%20Dhabi%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H S",
+			"valtteri-bottas": "M H",
+			"sebastian-vettel": "S H M",
+			"alexander-albon": "M H",
+			"sergio-perez": "M H",
+			"lando-norris": "S H",
+			"daniil-kvyat": "H M",
+			"carlos-sainz-jr": "S H M",
+			"daniel-ricciardo": "S H S",
+			"nico-hulkenberg": "S M",
+			"kimi-raikkonen": "M H",
+			"kevin-magnussen": "M H",
+			"romain-grosjean": "M H",
+			"antonio-giovinazzi": "S H M",
+			"george-russell": "H M",
+			"pierre-gasly": "M H",
+			"robert-kubica": "H M",
+			"lance-stroll": "M H S"
+		}
 	}
 }

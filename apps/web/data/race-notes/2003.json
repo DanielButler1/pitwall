@@ -72,7 +72,15 @@
 	"5": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2003_Spanish_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2003_Spanish_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			}
 		]
 	},
 	"6": {
@@ -92,7 +100,15 @@
 	"7": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2003_Monaco_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2003_Monaco_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
 		]
 	},
 	"8": {
@@ -135,7 +151,15 @@
 	"12": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2003_German_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2003_German_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
 		]
 	},
 	"13": {

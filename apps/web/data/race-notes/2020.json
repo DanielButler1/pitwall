@@ -20,8 +20,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Austrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Austrian_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Austrian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "S H",
+			"charles-leclerc": "S H M",
+			"lando-norris": "S H M",
+			"lewis-hamilton": "S H",
+			"carlos-sainz-jr": "S H M",
+			"sergio-perez": "S M",
+			"pierre-gasly": "M H",
+			"esteban-ocon": "M H",
+			"antonio-giovinazzi": "M H S",
+			"sebastian-vettel": "M H S",
+			"nicholas-latifi": "M H S",
+			"daniil-kvyat": "M H S",
+			"alexander-albon": "S H S",
+			"kimi-raikkonen": "M H S",
+			"george-russell": "M H",
+			"romain-grosjean": "M H",
+			"kevin-magnussen": "M",
+			"lance-stroll": "S",
+			"daniel-ricciardo": "S",
+			"max-verstappen": "M"
+		}
 	},
 	"2": {
 		"weather": "dry",
@@ -34,8 +57,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Styrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Styrian_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Styrian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M",
+			"valtteri-bottas": "S M",
+			"max-verstappen": "S M S",
+			"alexander-albon": "S M",
+			"lando-norris": "S M",
+			"sergio-perez": "S M",
+			"lance-stroll": "S M",
+			"daniel-ricciardo": "M S",
+			"carlos-sainz-jr": "S M S",
+			"daniil-kvyat": "M H",
+			"kimi-raikkonen": "M S",
+			"kevin-magnussen": "S M",
+			"romain-grosjean": "S M",
+			"antonio-giovinazzi": "M S",
+			"pierre-gasly": "S H S",
+			"george-russell": "S M",
+			"nicholas-latifi": "M S",
+			"esteban-ocon": "S",
+			"charles-leclerc": "S H",
+			"sebastian-vettel": "M"
+		}
 	},
 	"3": {
 		"weather": "mixed",
@@ -45,8 +91,31 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2020_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Hungarian_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Hungarian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "I M M S",
+			"max-verstappen": "I M H",
+			"valtteri-bottas": "I M M H",
+			"lance-stroll": "I M M H",
+			"alexander-albon": "I M H",
+			"sebastian-vettel": "I M H",
+			"sergio-perez": "I M H",
+			"daniel-ricciardo": "I M M",
+			"carlos-sainz-jr": "I M H",
+			"kevin-magnussen": "M H",
+			"charles-leclerc": "I S H",
+			"daniil-kvyat": "I S H",
+			"lando-norris": "I M H",
+			"esteban-ocon": "I M H",
+			"kimi-raikkonen": "I M H",
+			"romain-grosjean": "M H",
+			"antonio-giovinazzi": "I S M H",
+			"george-russell": "I S M M",
+			"nicholas-latifi": "I S M M S H",
+			"pierre-gasly": "I S"
+		}
 	},
 	"4": {
 		"weather": "dry",
@@ -64,20 +133,89 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_British_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_British_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/British%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"max-verstappen": "M H S",
+			"charles-leclerc": "M H",
+			"daniel-ricciardo": "S H",
+			"lando-norris": "S H",
+			"esteban-ocon": "S H",
+			"pierre-gasly": "M H",
+			"alexander-albon": "M H M",
+			"lance-stroll": "M H",
+			"sebastian-vettel": "S H",
+			"valtteri-bottas": "M H S",
+			"george-russell": "M H",
+			"carlos-sainz-jr": "S H M",
+			"antonio-giovinazzi": "M H",
+			"nicholas-latifi": "M H",
+			"romain-grosjean": "M H",
+			"kimi-raikkonen": "M H S",
+			"daniil-kvyat": "M",
+			"kevin-magnussen": "M",
+			"nico-hulkenberg": "H"
+		}
 	},
 	"5": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2020_70th_Anniversary_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_70th_Anniversary_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/70th%20Anniversary%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "H M H",
+			"lewis-hamilton": "M H H",
+			"valtteri-bottas": "M H H",
+			"charles-leclerc": "M H",
+			"alexander-albon": "M H H",
+			"lance-stroll": "M H H",
+			"nico-hulkenberg": "M H H S",
+			"esteban-ocon": "M H",
+			"lando-norris": "M H H",
+			"daniil-kvyat": "H H M",
+			"pierre-gasly": "M H H",
+			"sebastian-vettel": "H H M",
+			"carlos-sainz-jr": "H M H",
+			"daniel-ricciardo": "M M H M",
+			"kimi-raikkonen": "H M",
+			"romain-grosjean": "M H H",
+			"antonio-giovinazzi": "M H M",
+			"george-russell": "M H H M",
+			"nicholas-latifi": "M H H M",
+			"kevin-magnussen": "M H H"
+		}
 	},
 	"6": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2020_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Spanish_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Spanish%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M M",
+			"max-verstappen": "S M M",
+			"valtteri-bottas": "S M S M",
+			"lance-stroll": "S M S",
+			"sergio-perez": "S M",
+			"carlos-sainz-jr": "S S M",
+			"sebastian-vettel": "M S",
+			"alexander-albon": "S H M",
+			"pierre-gasly": "S M M",
+			"lando-norris": "S S M",
+			"daniel-ricciardo": "M S",
+			"daniil-kvyat": "S M M",
+			"esteban-ocon": "M S",
+			"kimi-raikkonen": "M M S",
+			"kevin-magnussen": "S M",
+			"antonio-giovinazzi": "M M S",
+			"george-russell": "S M M",
+			"nicholas-latifi": "M M S",
+			"romain-grosjean": "M S S",
+			"charles-leclerc": "S M"
+		}
 	},
 	"7": {
 		"weather": "dry",
@@ -90,8 +228,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Belgian_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Belgian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"valtteri-bottas": "M H",
+			"max-verstappen": "M S",
+			"daniel-ricciardo": "S H",
+			"esteban-ocon": "S H",
+			"alexander-albon": "S S",
+			"lando-norris": "S S",
+			"pierre-gasly": "H M",
+			"lance-stroll": "S H",
+			"sergio-perez": "S H",
+			"daniil-kvyat": "M H",
+			"kimi-raikkonen": "M S",
+			"sebastian-vettel": "M H",
+			"charles-leclerc": "S H M",
+			"romain-grosjean": "M H",
+			"nicholas-latifi": "M H M",
+			"kevin-magnussen": "M H S",
+			"antonio-giovinazzi": "M",
+			"george-russell": "M",
+			"carlos-sainz-jr": "S"
+		}
 	},
 	"8": {
 		"weather": "dry",
@@ -114,8 +275,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Italian_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Italian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"pierre-gasly": "S H M",
+			"carlos-sainz-jr": "S M",
+			"lance-stroll": "S M",
+			"lando-norris": "S M",
+			"valtteri-bottas": "S M",
+			"daniel-ricciardo": "S M",
+			"lewis-hamilton": "S M H",
+			"esteban-ocon": "S M S",
+			"daniil-kvyat": "H M",
+			"sergio-perez": "S M",
+			"nicholas-latifi": "M H M",
+			"romain-grosjean": "M H",
+			"kimi-raikkonen": "M H S",
+			"george-russell": "M H M",
+			"alexander-albon": "S M H",
+			"antonio-giovinazzi": "M H S",
+			"max-verstappen": "S M",
+			"charles-leclerc": "S H",
+			"kevin-magnussen": "M H",
+			"sebastian-vettel": "H"
+		}
 	},
 	"9": {
 		"weather": "dry",
@@ -143,8 +327,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Tuscan_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Tuscan_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Tuscan%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M H M S",
+			"valtteri-bottas": "S M H M S",
+			"alexander-albon": "S M S",
+			"daniel-ricciardo": "S M S S",
+			"sergio-perez": "S M S S",
+			"lando-norris": "S M S S",
+			"daniil-kvyat": "M S M S",
+			"charles-leclerc": "S H M S",
+			"kimi-raikkonen": "M H S",
+			"sebastian-vettel": "S M S H S S",
+			"george-russell": "M H S",
+			"romain-grosjean": "M H S H S S",
+			"lance-stroll": "S M",
+			"esteban-ocon": "S",
+			"nicholas-latifi": "M",
+			"kevin-magnussen": "S",
+			"antonio-giovinazzi": "S",
+			"carlos-sainz-jr": "S",
+			"max-verstappen": "S",
+			"pierre-gasly": "S"
+		}
 	},
 	"10": {
 		"weather": "dry",
@@ -153,12 +360,41 @@
 				"type": "SC",
 				"from": 1,
 				"to": 6
+			},
+			{
+				"type": "VSC",
+				"from": 41,
+				"to": 42
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Russian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Russian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2020/tree/main/Russian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"valtteri-bottas": "M H",
+			"max-verstappen": "M H",
+			"lewis-hamilton": "S H",
+			"sergio-perez": "S H",
+			"daniel-ricciardo": "S H",
+			"charles-leclerc": "M H",
+			"esteban-ocon": "S H",
+			"daniil-kvyat": "H M",
+			"pierre-gasly": "S H M",
+			"alexander-albon": "S H M",
+			"antonio-giovinazzi": "M H",
+			"kevin-magnussen": "M H",
+			"sebastian-vettel": "M H",
+			"kimi-raikkonen": "H M",
+			"lando-norris": "S H M",
+			"nicholas-latifi": "M H",
+			"romain-grosjean": "M H M",
+			"george-russell": "M H M S",
+			"carlos-sainz-jr": "S",
+			"lance-stroll": "M"
+		}
 	},
 	"11": {
 		"weather": "dry",
@@ -176,14 +412,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Eifel_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Eifel_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Eifel%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M S",
+			"max-verstappen": "S M S",
+			"daniel-ricciardo": "S M S",
+			"sergio-perez": "S M S",
+			"carlos-sainz-jr": "S M S",
+			"pierre-gasly": "M H S",
+			"charles-leclerc": "S M M",
+			"nico-hulkenberg": "S M S",
+			"romain-grosjean": "M H",
+			"antonio-giovinazzi": "S M M",
+			"sebastian-vettel": "M H S",
+			"kimi-raikkonen": "S M S",
+			"kevin-magnussen": "S M M",
+			"nicholas-latifi": "S M M",
+			"daniil-kvyat": "M H S",
+			"lando-norris": "S M",
+			"alexander-albon": "S M",
+			"esteban-ocon": "S",
+			"valtteri-bottas": "S M",
+			"george-russell": "S M"
+		}
 	},
 	"12": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2020_Portuguese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Portuguese_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Portuguese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H",
+			"valtteri-bottas": "M H",
+			"max-verstappen": "S M",
+			"charles-leclerc": "M H",
+			"pierre-gasly": "S M",
+			"carlos-sainz-jr": "S M",
+			"sergio-perez": "S M S",
+			"esteban-ocon": "M S",
+			"daniel-ricciardo": "S M",
+			"sebastian-vettel": "M H",
+			"kimi-raikkonen": "S M",
+			"alexander-albon": "S M S",
+			"lando-norris": "S H M",
+			"george-russell": "M H",
+			"antonio-giovinazzi": "M H",
+			"kevin-magnussen": "H M",
+			"romain-grosjean": "M H",
+			"nicholas-latifi": "M H",
+			"daniil-kvyat": "M H S",
+			"lance-stroll": "M H S"
+		}
 	},
 	"13": {
 		"weather": "dry",
@@ -201,14 +483,68 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Emilia_Romagna_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Emilia_Romagna_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Emilia%20Romagna%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M H S",
+			"valtteri-bottas": "M H S",
+			"daniel-ricciardo": "S H",
+			"daniil-kvyat": "S H S",
+			"charles-leclerc": "S H",
+			"sergio-perez": "M H S",
+			"carlos-sainz-jr": "S M S",
+			"lando-norris": "S M S",
+			"kimi-raikkonen": "M S",
+			"antonio-giovinazzi": "S M",
+			"nicholas-latifi": "M H",
+			"sebastian-vettel": "M H S",
+			"lance-stroll": "M H M S",
+			"romain-grosjean": "M H S",
+			"alexander-albon": "S H S",
+			"george-russell": "M H",
+			"max-verstappen": "M H",
+			"kevin-magnussen": "M H",
+			"esteban-ocon": "M H",
+			"pierre-gasly": "S"
+		}
 	},
 	"14": {
 		"weather": "mixed",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2020_Turkish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Turkish_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2020/tree/main/Turkish%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 12,
+				"to": 13
+			}
+		],
+		"tyres": {
+			"lewis-hamilton": "W I",
+			"sergio-perez": "W I",
+			"sebastian-vettel": "W I I",
+			"charles-leclerc": "W I I",
+			"carlos-sainz-jr": "W I I",
+			"max-verstappen": "W I I",
+			"alexander-albon": "W I I",
+			"lando-norris": "W I I",
+			"lance-stroll": "W I I",
+			"daniel-ricciardo": "W I I",
+			"esteban-ocon": "W I",
+			"daniil-kvyat": "W I",
+			"pierre-gasly": "W I I",
+			"valtteri-bottas": "W I I",
+			"kimi-raikkonen": "W I I I",
+			"george-russell": "I I I",
+			"kevin-magnussen": "W I I",
+			"romain-grosjean": "W I I",
+			"nicholas-latifi": "I I I",
+			"antonio-giovinazzi": "W I"
+		}
 	},
 	"15": {
 		"weather": "dry",
@@ -231,8 +567,31 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Bahrain_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Bahrain_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Bahrain%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "M M H",
+			"max-verstappen": "M H H M",
+			"alexander-albon": "M M H",
+			"lando-norris": "M M H",
+			"carlos-sainz-jr": "S M H",
+			"pierre-gasly": "M H H",
+			"daniel-ricciardo": "M H H",
+			"valtteri-bottas": "M H M",
+			"esteban-ocon": "M H",
+			"charles-leclerc": "H M H H",
+			"daniil-kvyat": "M S H H",
+			"george-russell": "M H M",
+			"sebastian-vettel": "M H M H",
+			"nicholas-latifi": "H M M H",
+			"kimi-raikkonen": "M H M",
+			"antonio-giovinazzi": "M H S",
+			"kevin-magnussen": "M H H H S",
+			"sergio-perez": "M H H",
+			"lance-stroll": "M",
+			"romain-grosjean": "H"
+		}
 	},
 	"16": {
 		"weather": "dry",
@@ -260,8 +619,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Sakhir_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Sakhir_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Sakhir%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sergio-perez": "S M H",
+			"esteban-ocon": "M H",
+			"lance-stroll": "S M",
+			"carlos-sainz-jr": "S M M",
+			"daniel-ricciardo": "S M H",
+			"alexander-albon": "M H S",
+			"daniil-kvyat": "S M H",
+			"valtteri-bottas": "M H",
+			"george-russell": "M H M S",
+			"lando-norris": "S M M",
+			"pierre-gasly": "S M H",
+			"sebastian-vettel": "M H S S",
+			"antonio-giovinazzi": "M H M",
+			"kimi-raikkonen": "M H M S",
+			"kevin-magnussen": "S M S",
+			"jack-aitken": "M H M S",
+			"pietro-fittipaldi": "S M S S",
+			"nicholas-latifi": "S M",
+			"max-verstappen": "S",
+			"charles-leclerc": "S"
+		}
 	},
 	"17": {
 		"weather": "dry",
@@ -274,7 +656,30 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2020_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2020_Abu_Dhabi_Grand_Prix",
+			"https://github.com/TracingInsights/2020/tree/main/Abu%20Dhabi%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"valtteri-bottas": "M H",
+			"lewis-hamilton": "M H",
+			"alexander-albon": "S H",
+			"lando-norris": "S H",
+			"carlos-sainz-jr": "M H",
+			"daniel-ricciardo": "H M",
+			"pierre-gasly": "S H",
+			"esteban-ocon": "M H",
+			"lance-stroll": "S H",
+			"daniil-kvyat": "S H",
+			"kimi-raikkonen": "M H",
+			"charles-leclerc": "M H",
+			"sebastian-vettel": "H M",
+			"george-russell": "M H",
+			"antonio-giovinazzi": "M H",
+			"nicholas-latifi": "M H M",
+			"kevin-magnussen": "H M M",
+			"pietro-fittipaldi": "M H M S",
+			"sergio-perez": "H"
+		}
 	}
 }

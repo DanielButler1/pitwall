@@ -16,6 +16,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildRaceNotes } from "./lib/race-notes.mjs";
+import { setsOf, weatherFromStints } from "./lib/stints.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = resolve(process.env.F1DB_DIR ?? join(root, "f1db"));
@@ -99,74 +100,18 @@ function neutralisations(messages, raceLaps) {
 	return out.sort((a, b) => (a.from ?? a.lap) - (b.from ?? b.lap) || (a.to ?? a.lap) - (b.to ?? b.lap));
 }
 
-const CODE = { SOFT: "S", MEDIUM: "M", HARD: "H", INTERMEDIATE: "I", WET: "W" };
+/** OpenF1's stints in the shape lib/stints.mjs takes. */
+const asStints = (list) => [...list].sort((a, b) => a.stint_number - b.stint_number).map((s) => ({ compound: s.compound, lapStart: s.lap_start, lapEnd: s.lap_end, age: s.tyre_age_at_start ?? 0 }));
 
-/**
- * Each driver's compounds ("M H"), keyed by F1DB id, for drivers in the race's results. OpenF1 splits one
- * set of tyres into several stints at times (the field led through the pit lane behind the safety car, a
- * red flag), so a stint on tyres as old as an earlier set's would be by then is that set, and "stops" on
- * the same compound a lap apart are passes through the pit lane, the first of them included.
- */
+/** Each driver's compounds, keyed by F1DB id, for drivers in the race's results. */
 function tyresOf(stints, results) {
 	const byNumber = new Map(results.map((r) => [String(r.driverNumber), r.driverId]));
 	const raw = new Map();
-	for (const s of [...stints].sort((a, b) => a.stint_number - b.stint_number)) {
+	for (const s of stints) {
 		const id = byNumber.get(String(s.driver_number));
 		if (id) (raw.get(id) ?? raw.set(id, []).get(id)).push(s);
 	}
-	const per = new Map();
-	for (const [id, list] of raw) {
-		const sets = [];
-		for (const s of list) {
-			const code = CODE[s.compound] ?? "?";
-			if (s.lap_start != null && s.tyre_age_at_start > 0) {
-				// the earliest set it continues, with only the same compound since
-				let j = Math.max(0, sets.length - 1);
-				while (j > 0 && sets[j - 1].code === code && sets.slice(j - 1).every((x) => x.code === code)) j--;
-				for (; j < sets.length; j++) {
-					const set = sets[j];
-					if (set.code === code && set.start != null && s.tyre_age_at_start >= set.age + (s.lap_start - set.start) - 1) break;
-				}
-				if (j < sets.length) {
-					sets.length = j + 1;
-					sets[j].end = Math.max(sets[j].end ?? 0, s.lap_end ?? 0);
-					sets[j].last = s.lap_start;
-					continue;
-				}
-			}
-			const prev = sets.at(-1);
-			if (prev && prev.code === code && s.lap_start != null && prev.last != null && s.lap_start - prev.last <= 1) {
-				prev.end = Math.max(prev.end ?? 0, s.lap_end ?? 0);
-				prev.last = s.lap_start;
-				// the run's first "stop" was a pass through the pit lane too
-				const before = sets.at(-2);
-				if (before && before.code === code && prev.start - (before.last ?? before.start) > 1) {
-					before.end = prev.end;
-					before.last = prev.last;
-					sets.pop();
-				}
-				continue;
-			}
-			sets.push({ code, start: s.lap_start, end: s.lap_end, age: s.tyre_age_at_start ?? 0, last: s.lap_start });
-		}
-		per.set(id, sets.map((x) => x.code));
-	}
-	return per;
-}
-
-/** dry / wet / mixed from the tyres the field used: wet tyres all race, for some of it, or not at all. */
-function weatherOf(stints) {
-	let wet = 0;
-	let all = 0;
-	for (const s of stints) {
-		if (s.lap_start == null || s.lap_end == null) continue;
-		const laps = s.lap_end - s.lap_start + 1;
-		all += laps;
-		if (s.compound === "INTERMEDIATE" || s.compound === "WET") wet += laps;
-	}
-	if (!all) return null;
-	if (wet === 0) return "dry";
-	return wet / all >= 0.9 ? "wet" : "mixed";
+	return new Map([...raw].map(([id, list]) => [id, setsOf(asStints(list))]));
 }
 
 /* --------------------------------------------------------------- merge --- */
@@ -229,7 +174,7 @@ for (const year of years) {
 		}
 
 		// weather
-		const weather = weatherOf(stints);
+		const weather = weatherFromStints(asStints(stints));
 		if (weather && note.weather == null) {
 			note.weather = weather;
 			added.weather++;

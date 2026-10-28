@@ -2,8 +2,39 @@
 	"1": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Bahrain_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Bahrain_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Bahrain%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 46,
+				"to": 51
+			}
+		],
+		"tyres": {
+			"charles-leclerc": "S S M S",
+			"carlos-sainz-jr": "S S M S",
+			"lewis-hamilton": "S H M S",
+			"george-russell": "S H M S",
+			"kevin-magnussen": "S S M S",
+			"valtteri-bottas": "S M M S",
+			"esteban-ocon": "S M H S",
+			"yuki-tsunoda": "S M S S",
+			"fernando-alonso": "S M H S",
+			"guanyu-zhou": "S M M S",
+			"mick-schumacher": "S M S",
+			"lance-stroll": "S S M S",
+			"alexander-albon": "S M M S",
+			"daniel-ricciardo": "M S H S",
+			"lando-norris": "M H S",
+			"nicholas-latifi": "S S M S",
+			"nico-hulkenberg": "S S M S",
+			"sergio-perez": "S M S S",
+			"max-verstappen": "S S M S",
+			"pierre-gasly": "S M H"
+		}
 	},
 	"2": {
 		"weather": "dry",
@@ -13,8 +44,42 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Saudi_Arabian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Saudi_Arabian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Saudi%20Arabian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 16,
+				"to": 21
+			},
+			{
+				"type": "VSC",
+				"from": 37,
+				"to": 39
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"sergio-perez": "M H",
+			"george-russell": "M H",
+			"esteban-ocon": "M H",
+			"lando-norris": "M H",
+			"pierre-gasly": "M H",
+			"kevin-magnussen": "H M",
+			"lewis-hamilton": "H M",
+			"guanyu-zhou": "M H",
+			"nico-hulkenberg": "H M",
+			"lance-stroll": "M H",
+			"alexander-albon": "M H",
+			"valtteri-bottas": "M H M",
+			"fernando-alonso": "M H",
+			"daniel-ricciardo": "M H",
+			"nicholas-latifi": "M"
+		}
 	},
 	"3": {
 		"weather": "dry",
@@ -24,8 +89,54 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Australian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Australian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Australian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 4,
+				"to": 7
+			},
+			{
+				"type": "VSC",
+				"from": 22,
+				"to": 22
+			},
+			{
+				"type": "SC",
+				"from": 24,
+				"to": 27
+			},
+			{
+				"type": "VSC",
+				"from": 38,
+				"to": 39
+			}
+		],
+		"tyres": {
+			"charles-leclerc": "M H",
+			"sergio-perez": "M H",
+			"george-russell": "M H",
+			"lewis-hamilton": "M H",
+			"lando-norris": "M H",
+			"daniel-ricciardo": "M H",
+			"esteban-ocon": "M H",
+			"valtteri-bottas": "M H",
+			"pierre-gasly": "M H",
+			"alexander-albon": "H S",
+			"guanyu-zhou": "M H",
+			"lance-stroll": "H M H H",
+			"mick-schumacher": "M H",
+			"kevin-magnussen": "H M",
+			"yuki-tsunoda": "M H",
+			"nicholas-latifi": "M H H",
+			"fernando-alonso": "H M M",
+			"max-verstappen": "M H",
+			"sebastian-vettel": "H",
+			"carlos-sainz-jr": "H"
+		}
 	},
 	"4": {
 		"weather": "mixed",
@@ -35,8 +146,39 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Emilia_Romagna_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Emilia_Romagna_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Emilia%20Romagna%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"tyres": {
+			"max-verstappen": "I M S",
+			"sergio-perez": "I M S",
+			"lando-norris": "I M",
+			"george-russell": "I M",
+			"valtteri-bottas": "I M",
+			"charles-leclerc": "I M S S",
+			"yuki-tsunoda": "I M",
+			"sebastian-vettel": "I M",
+			"kevin-magnussen": "I M",
+			"lance-stroll": "I M",
+			"alexander-albon": "I M",
+			"pierre-gasly": "I M",
+			"lewis-hamilton": "I M",
+			"esteban-ocon": "I M",
+			"guanyu-zhou": "I M",
+			"nicholas-latifi": "I M",
+			"mick-schumacher": "I M S",
+			"daniel-ricciardo": "I M H",
+			"fernando-alonso": "I",
+			"carlos-sainz-jr": "I"
+		}
 	},
 	"5": {
 		"weather": "mixed",
@@ -46,8 +188,44 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Miami_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Miami_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Miami%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 39,
+				"to": 39
+			},
+			{
+				"type": "SC",
+				"from": 40,
+				"to": 47
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M H",
+			"sergio-perez": "M H M",
+			"george-russell": "H M",
+			"lewis-hamilton": "M H",
+			"valtteri-bottas": "M H",
+			"esteban-ocon": "H S",
+			"alexander-albon": "M H",
+			"lance-stroll": "H M",
+			"fernando-alonso": "M H",
+			"yuki-tsunoda": "M H S",
+			"daniel-ricciardo": "M H S",
+			"nicholas-latifi": "H M",
+			"mick-schumacher": "M H M",
+			"kevin-magnussen": "M H M",
+			"sebastian-vettel": "H M",
+			"pierre-gasly": "M H S",
+			"lando-norris": "M H",
+			"guanyu-zhou": "M"
+		}
 	},
 	"6": {
 		"weather": "dry",
@@ -57,12 +235,50 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Spanish_Grand_Prix",
+			"https://github.com/TracingInsights/2022/tree/main/Spanish%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "S M S M",
+			"sergio-perez": "S M M S",
+			"george-russell": "S M M S",
+			"carlos-sainz-jr": "S M M S",
+			"lewis-hamilton": "M S M S",
+			"valtteri-bottas": "S M M",
+			"esteban-ocon": "S M S S",
+			"lando-norris": "S M S S",
+			"fernando-alonso": "S M S S",
+			"yuki-tsunoda": "S M S S",
+			"sebastian-vettel": "S S M",
+			"daniel-ricciardo": "S S M S",
+			"pierre-gasly": "S M S S",
+			"mick-schumacher": "S S M",
+			"lance-stroll": "S S M S",
+			"nicholas-latifi": "S M S S",
+			"kevin-magnussen": "S M H",
+			"alexander-albon": "S M S M S",
+			"guanyu-zhou": "S M",
+			"charles-leclerc": "S M"
+		}
 	},
 	"7": {
 		"weather": "mixed",
 		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			},
+			{
+				"type": "VSC",
+				"from": 25,
+				"to": 25
+			},
+			{
+				"type": "SC",
+				"from": 27,
+				"to": 33
+			},
 			{
 				"type": "RF",
 				"lap": 30
@@ -75,8 +291,32 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2022_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Monaco_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Monaco%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sergio-perez": "W I H M",
+			"carlos-sainz-jr": "W H",
+			"max-verstappen": "W I H M",
+			"charles-leclerc": "W I H",
+			"george-russell": "W H M",
+			"lando-norris": "W I H M",
+			"fernando-alonso": "W H M",
+			"lewis-hamilton": "W I H M",
+			"valtteri-bottas": "W H",
+			"sebastian-vettel": "W I H",
+			"pierre-gasly": "I H",
+			"esteban-ocon": "W H M",
+			"daniel-ricciardo": "W H",
+			"lance-stroll": "W I H",
+			"nicholas-latifi": "W I H M",
+			"guanyu-zhou": "W H M",
+			"yuki-tsunoda": "W I H M S",
+			"alexander-albon": "W H M",
+			"mick-schumacher": "W I H",
+			"kevin-magnussen": "W"
+		}
 	},
 	"8": {
 		"weather": "dry",
@@ -86,8 +326,44 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Azerbaijan_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Azerbaijan_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Azerbaijan%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 8,
+				"to": 9
+			},
+			{
+				"type": "VSC",
+				"from": 32,
+				"to": 34
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"sergio-perez": "M H H",
+			"george-russell": "M H H",
+			"lewis-hamilton": "M H H",
+			"pierre-gasly": "M H",
+			"sebastian-vettel": "M H",
+			"fernando-alonso": "M H",
+			"daniel-ricciardo": "H M",
+			"lando-norris": "M H",
+			"esteban-ocon": "H M",
+			"valtteri-bottas": "H M",
+			"alexander-albon": "M H H",
+			"yuki-tsunoda": "M H S",
+			"mick-schumacher": "H M H",
+			"nicholas-latifi": "M H",
+			"lance-stroll": "H M",
+			"kevin-magnussen": "M H",
+			"guanyu-zhou": "M H",
+			"charles-leclerc": "M H",
+			"carlos-sainz-jr": "M"
+		}
 	},
 	"9": {
 		"weather": "dry",
@@ -97,8 +373,49 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Canadian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Canadian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Canadian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 8,
+				"to": 9
+			},
+			{
+				"type": "VSC",
+				"from": 18,
+				"to": 19
+			},
+			{
+				"type": "SC",
+				"from": 49,
+				"to": 55
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H H",
+			"carlos-sainz-jr": "M H H",
+			"lewis-hamilton": "M H H",
+			"george-russell": "M H H",
+			"charles-leclerc": "H M",
+			"esteban-ocon": "M H M",
+			"valtteri-bottas": "H M",
+			"guanyu-zhou": "M H H",
+			"fernando-alonso": "M H M",
+			"lance-stroll": "H M",
+			"daniel-ricciardo": "M H H",
+			"sebastian-vettel": "M H H",
+			"alexander-albon": "M H H",
+			"pierre-gasly": "M H H",
+			"lando-norris": "H H M",
+			"nicholas-latifi": "M H H",
+			"kevin-magnussen": "M H",
+			"yuki-tsunoda": "M H",
+			"mick-schumacher": "M",
+			"sergio-perez": "H"
+		}
 	},
 	"10": {
 		"weather": "dry",
@@ -106,6 +423,11 @@
 			{
 				"type": "RF",
 				"lap": 1
+			},
+			{
+				"type": "SC",
+				"from": 39,
+				"to": 43
 			}
 		],
 		"compounds": {
@@ -115,8 +437,32 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2022_British_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_British_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/British%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"carlos-sainz-jr": "M H S",
+			"sergio-perez": "M M S",
+			"lewis-hamilton": "M H S",
+			"charles-leclerc": "M H",
+			"fernando-alonso": "M H S",
+			"lando-norris": "M H S",
+			"max-verstappen": "S M M H S",
+			"mick-schumacher": "M H S",
+			"sebastian-vettel": "S M M",
+			"kevin-magnussen": "S M M",
+			"lance-stroll": "M H M",
+			"nicholas-latifi": "S M S",
+			"daniel-ricciardo": "M H S S",
+			"yuki-tsunoda": "M S H S",
+			"esteban-ocon": "M S H",
+			"pierre-gasly": "M S H",
+			"valtteri-bottas": "M",
+			"george-russell": "H",
+			"guanyu-zhou": "M",
+			"alexander-albon": "S"
+		}
 	},
 	"11": {
 		"weather": "dry",
@@ -126,8 +472,39 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Austrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Austrian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Austrian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 56,
+				"to": 58
+			}
+		],
+		"tyres": {
+			"charles-leclerc": "M H H M",
+			"max-verstappen": "M H H M",
+			"lewis-hamilton": "M H M",
+			"george-russell": "M H",
+			"esteban-ocon": "M H",
+			"mick-schumacher": "M H",
+			"lando-norris": "M H",
+			"kevin-magnussen": "M H",
+			"daniel-ricciardo": "M H",
+			"fernando-alonso": "H H M",
+			"valtteri-bottas": "M H",
+			"alexander-albon": "M H",
+			"lance-stroll": "M H M",
+			"guanyu-zhou": "H H M",
+			"pierre-gasly": "M H",
+			"yuki-tsunoda": "H M H",
+			"sebastian-vettel": "H M",
+			"carlos-sainz-jr": "M H",
+			"nicholas-latifi": "M H",
+			"sergio-perez": "M H"
+		}
 	},
 	"12": {
 		"weather": "dry",
@@ -137,8 +514,44 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_French_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_French_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/French%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 18,
+				"to": 21
+			},
+			{
+				"type": "VSC",
+				"from": 48,
+				"to": 49
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"lewis-hamilton": "M H",
+			"george-russell": "M H",
+			"sergio-perez": "M H",
+			"carlos-sainz-jr": "H M M",
+			"fernando-alonso": "M H",
+			"lando-norris": "M H",
+			"esteban-ocon": "M H",
+			"daniel-ricciardo": "M H",
+			"lance-stroll": "M H",
+			"sebastian-vettel": "M H",
+			"pierre-gasly": "H M",
+			"alexander-albon": "M H",
+			"valtteri-bottas": "H H M",
+			"mick-schumacher": "M H H",
+			"guanyu-zhou": "M H H",
+			"nicholas-latifi": "M H M",
+			"kevin-magnussen": "M H H",
+			"charles-leclerc": "M",
+			"yuki-tsunoda": "M H"
+		}
 	},
 	"13": {
 		"weather": "mixed",
@@ -148,8 +561,44 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Hungarian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Hungarian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 1,
+				"to": 1
+			},
+			{
+				"type": "VSC",
+				"from": 66,
+				"to": 68
+			}
+		],
+		"tyres": {
+			"max-verstappen": "S M M",
+			"lewis-hamilton": "M M S",
+			"george-russell": "S M M",
+			"carlos-sainz-jr": "M M S",
+			"sergio-perez": "S M M",
+			"charles-leclerc": "M M H S",
+			"lando-norris": "S M H",
+			"fernando-alonso": "M H",
+			"esteban-ocon": "M H",
+			"sebastian-vettel": "S M M",
+			"lance-stroll": "S M S",
+			"pierre-gasly": "S M S",
+			"guanyu-zhou": "M H S",
+			"mick-schumacher": "M H M",
+			"daniel-ricciardo": "S M H",
+			"kevin-magnussen": "M H M S",
+			"alexander-albon": "S M M S",
+			"nicholas-latifi": "M M S S",
+			"yuki-tsunoda": "S M S S",
+			"valtteri-bottas": "M H"
+		}
 	},
 	"14": {
 		"weather": "dry",
@@ -159,8 +608,39 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Belgian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Belgian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 2,
+				"to": 5
+			}
+		],
+		"tyres": {
+			"max-verstappen": "S M M",
+			"sergio-perez": "M M H",
+			"carlos-sainz-jr": "S M H",
+			"george-russell": "M M H",
+			"fernando-alonso": "M M H",
+			"charles-leclerc": "S M M S",
+			"esteban-ocon": "M H M",
+			"sebastian-vettel": "M H M",
+			"pierre-gasly": "M H S",
+			"alexander-albon": "M H M",
+			"lance-stroll": "M M H",
+			"lando-norris": "M H M",
+			"yuki-tsunoda": "H M S",
+			"guanyu-zhou": "M M S",
+			"daniel-ricciardo": "M H M",
+			"kevin-magnussen": "M H M",
+			"mick-schumacher": "M H M",
+			"nicholas-latifi": "M M H S",
+			"valtteri-bottas": "S",
+			"lewis-hamilton": "M"
+		}
 	},
 	"15": {
 		"weather": "dry",
@@ -170,8 +650,44 @@
 			"S": "C3"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Dutch_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Dutch_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Dutch%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 46,
+				"to": 48
+			},
+			{
+				"type": "SC",
+				"from": 56,
+				"to": 61
+			}
+		],
+		"tyres": {
+			"max-verstappen": "S M H S",
+			"george-russell": "M H M S",
+			"charles-leclerc": "S M H S",
+			"lewis-hamilton": "M H M",
+			"sergio-perez": "S M H M",
+			"fernando-alonso": "S H S",
+			"lando-norris": "M H S S",
+			"carlos-sainz-jr": "S M H S",
+			"esteban-ocon": "S H S",
+			"lance-stroll": "S M H S",
+			"pierre-gasly": "S M H S",
+			"alexander-albon": "M M H S",
+			"mick-schumacher": "M M H S",
+			"sebastian-vettel": "S M H S",
+			"kevin-magnussen": "M M H S",
+			"guanyu-zhou": "S S M S",
+			"daniel-ricciardo": "S M H S S",
+			"nicholas-latifi": "S M H S",
+			"valtteri-bottas": "S S M",
+			"yuki-tsunoda": "S M H"
+		}
 	},
 	"16": {
 		"weather": "dry",
@@ -181,8 +697,44 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Italian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Italian%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 12,
+				"to": 12
+			},
+			{
+				"type": "SC",
+				"from": 47,
+				"to": 53
+			}
+		],
+		"tyres": {
+			"max-verstappen": "S M S",
+			"charles-leclerc": "S M S S",
+			"george-russell": "S H S",
+			"carlos-sainz-jr": "M S S",
+			"lewis-hamilton": "M S",
+			"sergio-perez": "M H S",
+			"lando-norris": "M S S",
+			"pierre-gasly": "M H",
+			"nyck-de-vries": "S M",
+			"guanyu-zhou": "M H",
+			"esteban-ocon": "S H",
+			"mick-schumacher": "M S",
+			"valtteri-bottas": "M S",
+			"yuki-tsunoda": "M H S",
+			"nicholas-latifi": "M H S",
+			"kevin-magnussen": "M H S",
+			"daniel-ricciardo": "M H",
+			"lance-stroll": "M H",
+			"fernando-alonso": "M",
+			"sebastian-vettel": "M"
+		}
 	},
 	"17": {
 		"weather": "mixed",
@@ -192,12 +744,63 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Singapore_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Singapore_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Singapore%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 8,
+				"to": 11
+			},
+			{
+				"type": "VSC",
+				"from": 20,
+				"to": 21
+			},
+			{
+				"type": "VSC",
+				"from": 25,
+				"to": 29
+			},
+			{
+				"type": "SC",
+				"from": 36,
+				"to": 40
+			}
+		],
+		"tyres": {
+			"sergio-perez": "I M",
+			"charles-leclerc": "I M",
+			"carlos-sainz-jr": "I M",
+			"lando-norris": "I M",
+			"daniel-ricciardo": "I S",
+			"lance-stroll": "I M",
+			"max-verstappen": "I M S",
+			"sebastian-vettel": "I M",
+			"lewis-hamilton": "I M",
+			"pierre-gasly": "I M",
+			"valtteri-bottas": "I S",
+			"kevin-magnussen": "I I M",
+			"mick-schumacher": "I M S",
+			"george-russell": "I M M S S",
+			"yuki-tsunoda": "I M",
+			"esteban-ocon": "I",
+			"alexander-albon": "I",
+			"fernando-alonso": "I",
+			"nicholas-latifi": "I",
+			"guanyu-zhou": "I"
+		}
 	},
 	"18": {
 		"weather": "wet",
 		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 6
+			},
 			{
 				"type": "RF",
 				"lap": 2
@@ -210,8 +813,32 @@
 		},
 		"sources": [
 			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
-			"https://en.wikipedia.org/wiki/2022_Japanese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Japanese_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Japanese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "I W I",
+			"sergio-perez": "I W I",
+			"charles-leclerc": "I W I",
+			"esteban-ocon": "I W I",
+			"lewis-hamilton": "I W I",
+			"sebastian-vettel": "I W I",
+			"fernando-alonso": "I W I I",
+			"george-russell": "I W I",
+			"nicholas-latifi": "I W I",
+			"lando-norris": "I W I",
+			"daniel-ricciardo": "I W I",
+			"lance-stroll": "I W I I",
+			"yuki-tsunoda": "I W I I",
+			"kevin-magnussen": "I W I",
+			"valtteri-bottas": "I W I",
+			"guanyu-zhou": "I W I I",
+			"mick-schumacher": "I W I",
+			"pierre-gasly": "I W I I",
+			"carlos-sainz-jr": "I",
+			"alexander-albon": "I"
+		}
 	},
 	"19": {
 		"weather": "dry",
@@ -221,8 +848,44 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_United_States_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_United_States_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/United%20States%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 18,
+				"to": 22
+			},
+			{
+				"type": "SC",
+				"from": 23,
+				"to": 26
+			}
+		],
+		"tyres": {
+			"max-verstappen": "M H M",
+			"lewis-hamilton": "M H H",
+			"charles-leclerc": "M H M",
+			"sergio-perez": "M H M",
+			"george-russell": "M H H S",
+			"lando-norris": "M H H",
+			"fernando-alonso": "H M H",
+			"sebastian-vettel": "M M H",
+			"kevin-magnussen": "H M",
+			"yuki-tsunoda": "M M H",
+			"esteban-ocon": "H H M",
+			"guanyu-zhou": "M H H",
+			"alexander-albon": "M M H",
+			"pierre-gasly": "M H H",
+			"mick-schumacher": "H M H",
+			"daniel-ricciardo": "M H H",
+			"nicholas-latifi": "M M H",
+			"lance-stroll": "M M",
+			"valtteri-bottas": "M H",
+			"carlos-sainz-jr": "M"
+		}
 	},
 	"20": {
 		"weather": "dry",
@@ -232,8 +895,39 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Mexican_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Mexican_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/Mexico%20City%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 63,
+				"to": 64
+			}
+		],
+		"tyres": {
+			"max-verstappen": "S M",
+			"lewis-hamilton": "M H",
+			"sergio-perez": "S M",
+			"george-russell": "M H S",
+			"carlos-sainz-jr": "S M",
+			"charles-leclerc": "S M",
+			"daniel-ricciardo": "M S",
+			"esteban-ocon": "M H",
+			"lando-norris": "M H",
+			"valtteri-bottas": "M H",
+			"pierre-gasly": "M S",
+			"alexander-albon": "M S",
+			"guanyu-zhou": "M S",
+			"sebastian-vettel": "S M",
+			"lance-stroll": "M S S",
+			"mick-schumacher": "S M",
+			"kevin-magnussen": "M S",
+			"nicholas-latifi": "S H S",
+			"fernando-alonso": "M H",
+			"yuki-tsunoda": "S M"
+		}
 	},
 	"21": {
 		"weather": "dry",
@@ -243,8 +937,49 @@
 			"S": "C4"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_S%C3%A3o_Paulo_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_S%C3%A3o_Paulo_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2022/tree/main/S%C3%A3o%20Paulo%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 7
+			},
+			{
+				"type": "VSC",
+				"from": 51,
+				"to": 53
+			},
+			{
+				"type": "SC",
+				"from": 55,
+				"to": 60
+			}
+		],
+		"tyres": {
+			"george-russell": "S M S",
+			"lewis-hamilton": "S M S",
+			"carlos-sainz-jr": "M S M S",
+			"charles-leclerc": "M M S S",
+			"fernando-alonso": "M M M S",
+			"max-verstappen": "S M S S",
+			"sergio-perez": "S M M",
+			"esteban-ocon": "S M S",
+			"valtteri-bottas": "S M S",
+			"lance-stroll": "M M S",
+			"sebastian-vettel": "S M M",
+			"guanyu-zhou": "S M S",
+			"mick-schumacher": "M S S",
+			"pierre-gasly": "S M S M",
+			"alexander-albon": "H M M M",
+			"nicholas-latifi": "M H M S",
+			"yuki-tsunoda": "M S S M",
+			"lando-norris": "S M S",
+			"kevin-magnussen": "M",
+			"daniel-ricciardo": "S"
+		}
 	},
 	"22": {
 		"weather": "dry",
@@ -254,7 +989,30 @@
 			"S": "C5"
 		},
 		"sources": [
-			"https://en.wikipedia.org/wiki/2022_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2022_Abu_Dhabi_Grand_Prix",
+			"https://github.com/TracingInsights/2022/tree/main/Abu%20Dhabi%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "M H",
+			"charles-leclerc": "M H",
+			"sergio-perez": "M H H",
+			"carlos-sainz-jr": "M H H",
+			"george-russell": "M H M",
+			"lando-norris": "M H M",
+			"esteban-ocon": "M H H",
+			"lance-stroll": "M H M",
+			"daniel-ricciardo": "M H",
+			"sebastian-vettel": "M H",
+			"yuki-tsunoda": "M H S",
+			"guanyu-zhou": "M H S",
+			"alexander-albon": "M H M",
+			"pierre-gasly": "S H",
+			"valtteri-bottas": "H M",
+			"mick-schumacher": "M H M",
+			"kevin-magnussen": "H M",
+			"lewis-hamilton": "M H",
+			"nicholas-latifi": "M H M",
+			"fernando-alonso": "M H"
+		}
 	}
 }

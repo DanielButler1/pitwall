@@ -73,6 +73,11 @@
 			},
 			{
 				"type": "VSC",
+				"from": 30,
+				"to": 31
+			},
+			{
+				"type": "VSC",
 				"from": 35,
 				"to": 37
 			},
@@ -89,7 +94,8 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2016_Monaco_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2016_Monaco_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"7": {
@@ -138,11 +144,17 @@
 				"type": "VSC",
 				"from": 7,
 				"to": 8
+			},
+			{
+				"type": "VSC",
+				"from": 17,
+				"to": 18
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2016_British_Grand_Prix"
+			"https://en.wikipedia.org/wiki/2016_British_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		]
 	},
 	"11": {

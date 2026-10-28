@@ -15,14 +15,67 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Australian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Australian_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Australian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sebastian-vettel": "US S",
+			"lewis-hamilton": "US S",
+			"kimi-raikkonen": "US S",
+			"daniel-ricciardo": "SS S",
+			"fernando-alonso": "US S",
+			"max-verstappen": "SS S",
+			"nico-hulkenberg": "US S",
+			"valtteri-bottas": "US SS",
+			"stoffel-vandoorne": "US SS",
+			"carlos-sainz-jr": "US S",
+			"sergio-perez": "US S",
+			"esteban-ocon": "US S",
+			"charles-leclerc": "SS S US",
+			"lance-stroll": "SS S US",
+			"brendon-hartley": "S US",
+			"romain-grosjean": "US",
+			"kevin-magnussen": "US",
+			"pierre-gasly": "US",
+			"marcus-ericsson": "SS",
+			"sergey-sirotkin": "SS"
+		}
 	},
 	"2": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2018_Bahrain_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Bahrain_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2018/tree/main/Bahrain%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 2,
+				"to": 3
+			}
+		],
+		"tyres": {
+			"sebastian-vettel": "SS S",
+			"valtteri-bottas": "SS M",
+			"lewis-hamilton": "S M",
+			"pierre-gasly": "SS S SS",
+			"kevin-magnussen": "SS SS S",
+			"nico-hulkenberg": "SS S SS",
+			"fernando-alonso": "S M SS",
+			"stoffel-vandoorne": "SS S M",
+			"marcus-ericsson": "S M",
+			"esteban-ocon": "SS M S",
+			"carlos-sainz-jr": "SS SS S",
+			"charles-leclerc": "S M SS",
+			"romain-grosjean": "SS S SS SS",
+			"lance-stroll": "S SS M",
+			"sergey-sirotkin": "S M SS",
+			"sergio-perez": "S M SS",
+			"brendon-hartley": "SS S SS",
+			"kimi-raikkonen": "SS S",
+			"max-verstappen": "S SS"
+		}
 	},
 	"3": {
 		"weather": "dry",
@@ -35,8 +88,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Chinese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Chinese_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Chinese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"daniel-ricciardo": "US S",
+			"valtteri-bottas": "S M",
+			"kimi-raikkonen": "S M",
+			"lewis-hamilton": "S M",
+			"max-verstappen": "US S",
+			"nico-hulkenberg": "US S",
+			"fernando-alonso": "S M",
+			"sebastian-vettel": "S M",
+			"carlos-sainz-jr": "US S",
+			"kevin-magnussen": "S M",
+			"esteban-ocon": "S US",
+			"sergio-perez": "US S",
+			"stoffel-vandoorne": "S M",
+			"lance-stroll": "S M",
+			"sergey-sirotkin": "S S",
+			"marcus-ericsson": "S M",
+			"romain-grosjean": "US US",
+			"pierre-gasly": "M US",
+			"charles-leclerc": "S M",
+			"brendon-hartley": "US S"
+		}
 	},
 	"4": {
 		"weather": "dry",
@@ -54,8 +130,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Azerbaijan_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Azerbaijan_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Azerbaijan%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "SS S US",
+			"kimi-raikkonen": "S US",
+			"sergio-perez": "US S SS",
+			"sebastian-vettel": "SS S US",
+			"carlos-sainz-jr": "US S US",
+			"charles-leclerc": "SS S US",
+			"fernando-alonso": "S US",
+			"lance-stroll": "SS S US",
+			"stoffel-vandoorne": "SS S US US US",
+			"brendon-hartley": "US SS US",
+			"marcus-ericsson": "S US US",
+			"pierre-gasly": "US S US",
+			"kevin-magnussen": "S US",
+			"valtteri-bottas": "SS US",
+			"romain-grosjean": "S SS US",
+			"max-verstappen": "SS US",
+			"daniel-ricciardo": "SS US",
+			"nico-hulkenberg": "US",
+			"esteban-ocon": "US",
+			"sergey-sirotkin": "SS"
+		}
 	},
 	"5": {
 		"weather": "dry",
@@ -73,8 +172,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Spanish_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Spanish_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Spanish%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M",
+			"valtteri-bottas": "S M",
+			"max-verstappen": "S M",
+			"sebastian-vettel": "S M M",
+			"daniel-ricciardo": "S M",
+			"kevin-magnussen": "S M",
+			"carlos-sainz-jr": "S M",
+			"fernando-alonso": "SS M",
+			"sergio-perez": "S M S",
+			"charles-leclerc": "S M",
+			"lance-stroll": "S M",
+			"brendon-hartley": "M M",
+			"marcus-ericsson": "M S",
+			"sergey-sirotkin": "M M SS",
+			"stoffel-vandoorne": "S M",
+			"esteban-ocon": "S M",
+			"kimi-raikkonen": "S",
+			"romain-grosjean": "S",
+			"pierre-gasly": "S",
+			"nico-hulkenberg": "S"
+		}
 	},
 	"6": {
 		"weather": "dry",
@@ -87,8 +209,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Monaco_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Monaco_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Monaco%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"daniel-ricciardo": "HS US",
+			"sebastian-vettel": "HS US",
+			"lewis-hamilton": "HS US",
+			"kimi-raikkonen": "HS US",
+			"valtteri-bottas": "HS SS",
+			"esteban-ocon": "HS SS",
+			"pierre-gasly": "HS SS",
+			"nico-hulkenberg": "US HS",
+			"max-verstappen": "US HS",
+			"carlos-sainz-jr": "HS US",
+			"marcus-ericsson": "US SS",
+			"sergio-perez": "HS SS",
+			"kevin-magnussen": "US SS",
+			"stoffel-vandoorne": "US SS HS",
+			"romain-grosjean": "US SS HS",
+			"sergey-sirotkin": "HS US SS",
+			"lance-stroll": "US SS HS HS",
+			"charles-leclerc": "US SS",
+			"brendon-hartley": "HS US",
+			"fernando-alonso": "HS SS"
+		}
 	},
 	"7": {
 		"neutralised": [
@@ -99,8 +244,32 @@
 			}
 		],
 		"sources": [
-			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350"
-		]
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://github.com/TracingInsights/2018/tree/main/Canadian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sebastian-vettel": "US SS",
+			"valtteri-bottas": "US SS",
+			"max-verstappen": "HS SS",
+			"daniel-ricciardo": "HS SS",
+			"lewis-hamilton": "US SS",
+			"kimi-raikkonen": "US SS",
+			"nico-hulkenberg": "HS SS",
+			"carlos-sainz-jr": "HS SS",
+			"esteban-ocon": "HS SS",
+			"charles-leclerc": "US SS",
+			"pierre-gasly": "HS SS",
+			"romain-grosjean": "US SS",
+			"kevin-magnussen": "US SS",
+			"sergio-perez": "HS SS SS",
+			"marcus-ericsson": "SS",
+			"stoffel-vandoorne": "SS HS",
+			"sergey-sirotkin": "SS US",
+			"fernando-alonso": "US SS",
+			"brendon-hartley": "HS",
+			"lance-stroll": "US"
+		},
+		"weather": "dry"
 	},
 	"8": {
 		"weather": "dry",
@@ -118,8 +287,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_French_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_French_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/French%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "SS S",
+			"max-verstappen": "SS S",
+			"kimi-raikkonen": "US SS",
+			"daniel-ricciardo": "SS S",
+			"sebastian-vettel": "S US",
+			"kevin-magnussen": "US S",
+			"valtteri-bottas": "S SS",
+			"carlos-sainz-jr": "US S",
+			"nico-hulkenberg": "S US",
+			"charles-leclerc": "US SS",
+			"romain-grosjean": "US SS",
+			"stoffel-vandoorne": "SS US",
+			"marcus-ericsson": "SS US",
+			"brendon-hartley": "US SS",
+			"sergey-sirotkin": "US",
+			"fernando-alonso": "S US",
+			"lance-stroll": "S",
+			"sergio-perez": "S",
+			"esteban-ocon": "US",
+			"pierre-gasly": "SS"
+		}
 	},
 	"9": {
 		"weather": "dry",
@@ -132,8 +324,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Austrian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Austrian_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Austrian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"max-verstappen": "SS S",
+			"kimi-raikkonen": "US S",
+			"sebastian-vettel": "US S",
+			"romain-grosjean": "US S",
+			"kevin-magnussen": "US S",
+			"esteban-ocon": "SS S",
+			"sergio-perez": "SS S",
+			"fernando-alonso": "SS S",
+			"charles-leclerc": "SS S",
+			"marcus-ericsson": "S SS",
+			"pierre-gasly": "SS S",
+			"carlos-sainz-jr": "US S SS",
+			"sergey-sirotkin": "SS S US",
+			"lance-stroll": "US S SS",
+			"stoffel-vandoorne": "S S",
+			"lewis-hamilton": "SS S SS",
+			"brendon-hartley": "SS",
+			"daniel-ricciardo": "SS S SS",
+			"valtteri-bottas": "SS",
+			"nico-hulkenberg": "US"
+		}
 	},
 	"10": {
 		"weather": "dry",
@@ -151,8 +366,30 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_British_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_British_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/British%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sebastian-vettel": "S M S",
+			"lewis-hamilton": "S M",
+			"kimi-raikkonen": "S M S",
+			"valtteri-bottas": "S M",
+			"daniel-ricciardo": "S M S",
+			"nico-hulkenberg": "M H",
+			"esteban-ocon": "S M",
+			"fernando-alonso": "S M S",
+			"kevin-magnussen": "S M",
+			"sergio-perez": "S M S",
+			"stoffel-vandoorne": "S M S",
+			"lance-stroll": "M S",
+			"pierre-gasly": "S M S",
+			"sergey-sirotkin": "S M",
+			"max-verstappen": "S M S",
+			"romain-grosjean": "S M",
+			"carlos-sainz-jr": "M H S",
+			"marcus-ericsson": "S M",
+			"charles-leclerc": "S"
+		}
 	},
 	"11": {
 		"weather": "mixed",
@@ -165,8 +402,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_German_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_German_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/German%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S US",
+			"valtteri-bottas": "US S US",
+			"kimi-raikkonen": "US S US",
+			"max-verstappen": "US S I US",
+			"nico-hulkenberg": "US M I US",
+			"romain-grosjean": "US M I US",
+			"sergio-perez": "US S",
+			"esteban-ocon": "US S",
+			"marcus-ericsson": "S US",
+			"brendon-hartley": "S M US",
+			"kevin-magnussen": "US M I US",
+			"carlos-sainz-jr": "US M I US",
+			"stoffel-vandoorne": "S M US",
+			"pierre-gasly": "S W US",
+			"charles-leclerc": "US S I US",
+			"fernando-alonso": "S M I S",
+			"lance-stroll": "S M I",
+			"sebastian-vettel": "US S",
+			"sergey-sirotkin": "S M",
+			"daniel-ricciardo": "M"
+		}
 	},
 	"12": {
 		"weather": "dry",
@@ -175,12 +435,41 @@
 				"type": "VSC",
 				"from": 6,
 				"to": 7
+			},
+			{
+				"type": "VSC",
+				"from": 49,
+				"to": 51
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Hungarian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Hungarian_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2018/tree/main/Hungarian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "US S",
+			"sebastian-vettel": "S US",
+			"kimi-raikkonen": "US S S",
+			"daniel-ricciardo": "S US",
+			"valtteri-bottas": "US S",
+			"pierre-gasly": "US S",
+			"kevin-magnussen": "US S",
+			"fernando-alonso": "S M",
+			"carlos-sainz-jr": "S M",
+			"romain-grosjean": "US S",
+			"brendon-hartley": "US M",
+			"nico-hulkenberg": "S M US",
+			"esteban-ocon": "S US",
+			"sergio-perez": "US S",
+			"marcus-ericsson": "US M",
+			"sergey-sirotkin": "S M",
+			"lance-stroll": "M US",
+			"stoffel-vandoorne": "S M",
+			"max-verstappen": "US",
+			"charles-leclerc": "S"
+		}
 	},
 	"13": {
 		"weather": "dry",
@@ -193,8 +482,31 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Belgian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Belgian_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Belgian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"sebastian-vettel": "SS S",
+			"lewis-hamilton": "SS S",
+			"max-verstappen": "SS S",
+			"valtteri-bottas": "S SS S",
+			"sergio-perez": "SS S",
+			"esteban-ocon": "SS S",
+			"romain-grosjean": "SS SS",
+			"kevin-magnussen": "SS SS",
+			"pierre-gasly": "SS S",
+			"marcus-ericsson": "S SS",
+			"carlos-sainz-jr": "M SS",
+			"sergey-sirotkin": "S SS",
+			"lance-stroll": "S SS",
+			"brendon-hartley": "S SS",
+			"stoffel-vandoorne": "S M SS",
+			"daniel-ricciardo": "S",
+			"kimi-raikkonen": "M",
+			"charles-leclerc": "S",
+			"fernando-alonso": "S",
+			"nico-hulkenberg": "S"
+		}
 	},
 	"14": {
 		"weather": "dry",
@@ -207,8 +519,30 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Italian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Italian_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Italian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "SS S",
+			"kimi-raikkonen": "SS S",
+			"valtteri-bottas": "SS S",
+			"sebastian-vettel": "S SS",
+			"max-verstappen": "SS S",
+			"esteban-ocon": "SS S",
+			"sergio-perez": "SS S",
+			"carlos-sainz-jr": "SS S",
+			"lance-stroll": "SS S",
+			"sergey-sirotkin": "SS S",
+			"charles-leclerc": "S SS",
+			"stoffel-vandoorne": "SS S",
+			"nico-hulkenberg": "S SS",
+			"pierre-gasly": "SS S",
+			"marcus-ericsson": "SS SS",
+			"kevin-magnussen": "S M",
+			"daniel-ricciardo": "SS",
+			"fernando-alonso": "SS",
+			"romain-grosjean": "SS S"
+		}
 	},
 	"15": {
 		"weather": "dry",
@@ -221,14 +555,60 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Singapore_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Singapore_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Singapore%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "HS S",
+			"max-verstappen": "HS S",
+			"sebastian-vettel": "HS US",
+			"valtteri-bottas": "HS S",
+			"kimi-raikkonen": "HS S",
+			"daniel-ricciardo": "HS US",
+			"fernando-alonso": "US S",
+			"carlos-sainz-jr": "US S",
+			"charles-leclerc": "US HS",
+			"nico-hulkenberg": "HS US",
+			"marcus-ericsson": "US HS",
+			"stoffel-vandoorne": "US S",
+			"pierre-gasly": "HS US",
+			"lance-stroll": "S US",
+			"romain-grosjean": "HS S",
+			"sergio-perez": "HS US S",
+			"brendon-hartley": "HS US HS",
+			"kevin-magnussen": "US S HS",
+			"sergey-sirotkin": "US S HS",
+			"esteban-ocon": "HS"
+		}
 	},
 	"16": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2018_Russian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Russian_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Russian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "US S",
+			"valtteri-bottas": "US S",
+			"sebastian-vettel": "US S",
+			"kimi-raikkonen": "US S",
+			"max-verstappen": "S US",
+			"daniel-ricciardo": "S US",
+			"charles-leclerc": "HS S",
+			"kevin-magnussen": "HS S",
+			"esteban-ocon": "HS S",
+			"sergio-perez": "HS S",
+			"romain-grosjean": "HS S",
+			"nico-hulkenberg": "S US",
+			"marcus-ericsson": "HS S US",
+			"fernando-alonso": "US S",
+			"lance-stroll": "US S",
+			"stoffel-vandoorne": "US S",
+			"carlos-sainz-jr": "S US",
+			"sergey-sirotkin": "US S",
+			"pierre-gasly": "S",
+			"brendon-hartley": "HS S"
+		}
 	},
 	"17": {
 		"weather": "dry",
@@ -237,30 +617,149 @@
 				"type": "SC",
 				"from": 3,
 				"to": 8
+			},
+			{
+				"type": "VSC",
+				"from": 39,
+				"to": 40
 			}
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Japanese_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Japanese_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2018/tree/main/Japanese%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "S M",
+			"valtteri-bottas": "S M",
+			"max-verstappen": "SS S",
+			"daniel-ricciardo": "S M",
+			"kimi-raikkonen": "SS M",
+			"sebastian-vettel": "SS S",
+			"sergio-perez": "SS S",
+			"romain-grosjean": "S M",
+			"esteban-ocon": "SS M",
+			"carlos-sainz-jr": "S M",
+			"pierre-gasly": "SS S",
+			"marcus-ericsson": "S M",
+			"brendon-hartley": "SS S",
+			"fernando-alonso": "S M",
+			"stoffel-vandoorne": "S M",
+			"sergey-sirotkin": "S M SS",
+			"lance-stroll": "S M SS",
+			"charles-leclerc": "S M S",
+			"nico-hulkenberg": "M S",
+			"kevin-magnussen": "S M"
+		}
 	},
 	"18": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2018_United_States_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_United_States_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2018/tree/main/United%20States%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 9,
+				"to": 11
+			}
+		],
+		"tyres": {
+			"kimi-raikkonen": "US S",
+			"max-verstappen": "S SS",
+			"lewis-hamilton": "SS S S",
+			"sebastian-vettel": "SS S",
+			"valtteri-bottas": "SS S",
+			"nico-hulkenberg": "US S",
+			"carlos-sainz-jr": "SS S",
+			"sergio-perez": "US S",
+			"brendon-hartley": "SS S",
+			"marcus-ericsson": "S SS",
+			"stoffel-vandoorne": "SS S S",
+			"pierre-gasly": "SS S US",
+			"sergey-sirotkin": "SS S SS",
+			"lance-stroll": "SS S US",
+			"charles-leclerc": "US S",
+			"daniel-ricciardo": "SS",
+			"romain-grosjean": "US",
+			"fernando-alonso": "SS",
+			"esteban-ocon": "US S",
+			"kevin-magnussen": "SS S"
+		}
 	},
 	"19": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2018_Mexican_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Mexican_Grand_Prix",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",
+			"https://github.com/TracingInsights/2018/tree/main/Mexican%20Grand%20Prix/Race"
+		],
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 29,
+				"to": 31
+			},
+			{
+				"type": "VSC",
+				"from": 59,
+				"to": 62
+			}
+		],
+		"tyres": {
+			"max-verstappen": "US SS SS",
+			"sebastian-vettel": "US SS US",
+			"kimi-raikkonen": "US SS",
+			"lewis-hamilton": "US SS US",
+			"valtteri-bottas": "US SS US HS",
+			"nico-hulkenberg": "HS SS",
+			"charles-leclerc": "HS SS",
+			"stoffel-vandoorne": "US SS",
+			"marcus-ericsson": "HS SS",
+			"pierre-gasly": "HS SS SS",
+			"esteban-ocon": "SS US",
+			"lance-stroll": "US US SS",
+			"sergey-sirotkin": "US SS",
+			"brendon-hartley": "SS US SS",
+			"kevin-magnussen": "SS US",
+			"romain-grosjean": "SS US HS",
+			"daniel-ricciardo": "US SS",
+			"sergio-perez": "SS US",
+			"carlos-sainz-jr": "HS SS",
+			"fernando-alonso": "US"
+		}
 	},
 	"20": {
 		"weather": "dry",
 		"sources": [
-			"https://en.wikipedia.org/wiki/2018_Brazilian_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Brazilian_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Brazilian%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "SS M",
+			"max-verstappen": "SS S",
+			"kimi-raikkonen": "S M",
+			"daniel-ricciardo": "SS S",
+			"valtteri-bottas": "SS M S",
+			"sebastian-vettel": "S M SS",
+			"charles-leclerc": "SS M",
+			"romain-grosjean": "SS M",
+			"kevin-magnussen": "S SS",
+			"sergio-perez": "SS S",
+			"brendon-hartley": "M SS",
+			"carlos-sainz-jr": "S M SS",
+			"pierre-gasly": "SS M",
+			"esteban-ocon": "S SS",
+			"stoffel-vandoorne": "S M",
+			"sergey-sirotkin": "S M",
+			"fernando-alonso": "S M SS",
+			"lance-stroll": "S M SS",
+			"nico-hulkenberg": "S",
+			"marcus-ericsson": "SS M"
+		}
 	},
 	"21": {
 		"weather": "dry",
@@ -273,7 +772,30 @@
 		],
 		"sources": [
 			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
-			"https://en.wikipedia.org/wiki/2018_Abu_Dhabi_Grand_Prix"
-		]
+			"https://en.wikipedia.org/wiki/2018_Abu_Dhabi_Grand_Prix",
+			"https://github.com/TracingInsights/2018/tree/main/Abu%20Dhabi%20Grand%20Prix/Race"
+		],
+		"tyres": {
+			"lewis-hamilton": "US SS",
+			"sebastian-vettel": "US SS",
+			"max-verstappen": "HS SS",
+			"daniel-ricciardo": "US SS",
+			"valtteri-bottas": "US SS US",
+			"carlos-sainz-jr": "US SS",
+			"charles-leclerc": "HS SS",
+			"sergio-perez": "US SS",
+			"romain-grosjean": "HS SS",
+			"kevin-magnussen": "SS US",
+			"fernando-alonso": "US SS",
+			"brendon-hartley": "US SS",
+			"lance-stroll": "SS US",
+			"stoffel-vandoorne": "SS US",
+			"sergey-sirotkin": "SS US",
+			"pierre-gasly": "SS US",
+			"esteban-ocon": "HS SS",
+			"marcus-ericsson": "SS",
+			"kimi-raikkonen": "US",
+			"nico-hulkenberg": "HS"
+		}
 	}
 }

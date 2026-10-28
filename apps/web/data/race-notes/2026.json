@@ -194,7 +194,8 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/2026_Canadian_Grand_Prix",
 			"https://api.openf1.org/v1/stints?session_key=11291",
-			"https://api.openf1.org/v1/race_control?session_key=11291"
+			"https://api.openf1.org/v1/race_control?session_key=11291",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		],
 		"tyres": {
 			"kimi-antonelli": "S M",
@@ -230,6 +231,11 @@
 				"type": "VSC",
 				"from": 46,
 				"to": 46
+			},
+			{
+				"type": "VSC",
+				"from": 50,
+				"to": 53
 			},
 			{
 				"type": "VSC",
@@ -758,7 +764,8 @@
 		"sources": [
 			"https://en.wikipedia.org/wiki/2026_Bahrain_Grand_Prix",
 			"https://api.openf1.org/v1/stints?session_key=11731",
-			"https://api.openf1.org/v1/race_control?session_key=11731"
+			"https://api.openf1.org/v1/race_control?session_key=11731",
+			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events"
 		],
 		"tyres": {
 			"max-verstappen": "I S S",
@@ -785,6 +792,11 @@
 			"valtteri-bottas": "S"
 		},
 		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
 			{
 				"type": "SC",
 				"from": 9,
