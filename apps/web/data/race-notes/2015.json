@@ -1,0 +1,240 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 4,
+				"to": 7
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Malaysian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 54,
+				"to": 56
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Chinese_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Bahrain_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Canadian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 7
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Austrian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
+			{
+				"type": "VSC",
+				"from": 34,
+				"to": 35
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 43,
+				"to": 43
+			},
+			{
+				"type": "SC",
+				"from": 43,
+				"to": 49
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Hungarian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 21,
+				"to": 22
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Belgian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Italian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 13,
+				"to": 15
+			},
+			{
+				"type": "SC",
+				"from": 37,
+				"to": 41
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Singapore_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Japanese_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
+			{
+				"type": "SC",
+				"from": 12,
+				"to": 18
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Russian_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "VSC",
+				"from": 5,
+				"to": 8
+			},
+			{
+				"type": "SC",
+				"from": 28,
+				"to": 33
+			},
+			{
+				"type": "VSC",
+				"from": 38,
+				"to": 39
+			},
+			{
+				"type": "SC",
+				"from": 43,
+				"to": 47
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_United_States_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 53,
+				"to": 58
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2015_Mexican_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Brazilian_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2015_Abu_Dhabi_Grand_Prix"
+		]
+	}
+}

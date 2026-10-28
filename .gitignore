@@ -12,6 +12,8 @@ apps/web/public/data/
 # apps/web: downloaded by scripts/update-f1db.mjs and scripts/update-jolpica.mjs
 apps/web/f1db/
 apps/web/jolpica/
+# apps/web: Wikipedia pages cached by scripts/import-race-notes.mjs
+apps/web/.cache/
 
 # apps/mobile: native projects are generated (expo prebuild), builds and Expo state
 apps/mobile/android/

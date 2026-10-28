@@ -39,7 +39,14 @@ export type RawDataset = {
 	sprintLapLeaders?: [number, LeadSpan[]][];
 	/** Jolpica: fastest lap of each sprint: [raceId, driverId, lap, timeMs]. */
 	sprintFastestLaps?: [number, string, N<number>, number][];
+	/** Hand-entered race notes (data/race-notes): [raceId, weather, neutralisations, has tyres (in the race file)]. */
+	raceNotes?: [number, N<Weather>, Neutralisation[], 0 | 1][];
 };
+
+export type Weather = "dry" | "wet" | "mixed";
+/** A safety car (SC), virtual safety car (VSC) or red flag (RF) over laps fromLap..toLap (a red flag: its lap twice). */
+export type Neutralisation = ["SC" | "VSC" | "RF", number, number];
+export type RaceNote = { raceId: number; weather: Weather | null; neutralised: Neutralisation[]; tyres: boolean };
 
 export type JolpicaMeta = {
 	source: string;
@@ -186,6 +193,9 @@ export type F1Data = {
 	/** Jolpica sprint fastest laps, with the signature of the sprint results they belong to. */
 	sprintFastestLaps?: Map<number, SprintFastestLap>;
 	sprintFastestSig?: Map<number, string>;
+	/** Hand-entered race notes, with the signature of the results they belong to (laps.ts raceNote). */
+	raceNotes?: Map<number, RaceNote>;
+	raceNotesSig?: Map<number, string>;
 	/** Set by universes that change a season's scoring; absent means historic era rules. */
 	rulesOverride?: Map<number, EraRules>;
 	/** Seasons a universe changed, for "differs from reality" markers. */
@@ -254,6 +264,10 @@ export function hydrate(raw: RawDataset): F1Data {
 		(raw.sprintFastestLaps ?? []).map(([raceId, driverId, lap, ms]) => [raceId, { raceId, driverId, lap, ms }]),
 		sprintResults,
 	);
+	const notes = lapIndex<RaceNote>(
+		(raw.raceNotes ?? []).map(([raceId, weather, neutralised, tyres]) => [raceId, { raceId, weather, neutralised, tyres: tyres === 1 }]),
+		results,
+	);
 	return {
 		meta: raw.meta,
 		countries: new Map(raw.countries.map(([id, name, alpha2, demonym]) => [id, { id, name, alpha2, demonym }])),
@@ -311,6 +325,8 @@ export function hydrate(raw: RawDataset): F1Data {
 		sprintLapSig: sprintLaps.sig,
 		sprintFastestLaps: sprintFl.leaders,
 		sprintFastestSig: sprintFl.sig,
+		raceNotes: notes.leaders,
+		raceNotesSig: notes.sig,
 	};
 }
 

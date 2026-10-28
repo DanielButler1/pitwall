@@ -1,10 +1,11 @@
 // One race: where and when, the summary, then the race, sprint and qualifying results, the lap
-// chart and the pit stops, one at a time. apps/web race.tsx in a phone form.
+// chart and the strategy, one at a time. apps/web race.tsx in a phone form.
 
 import { useLocalSearchParams, useRouter, type Href } from "expo-router";
-import { FlaskConical, History, MapPin, Share2, Timer } from "lucide-react-native";
+import { CloudRain, CloudSunRain, FlaskConical, History, MapPin, Share2, Sun, Timer } from "lucide-react-native";
 import { memo, useState } from "react";
 import { Pressable, View } from "react-native";
+import { NEUTRAL_LABEL } from "@pitwall/core/f1/laps";
 import { raceView, type RaceView, type ResultRow } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Icon, IconButton, Row, Section, Segmented, Text } from "@/components/ui";
@@ -14,12 +15,14 @@ import { cn } from "@/lib/cn";
 import { fmtDate, num } from "@/lib/format";
 import { haptic } from "@/lib/haptics";
 import { href, useOpen } from "@/lib/links";
-import { LapChartPanel, PitStopsPanel } from "./components/LapPanels";
+import { LapChartPanel, StrategyPanel } from "./components/LapPanels";
 import { PrevNext } from "./components/PrevNext";
 import { shareLink } from "./share";
 import { PosCell } from "./components/PosCell";
 
-type Tab = "race" | "sprint" | "qualifying" | "laps" | "pits";
+type Tab = "race" | "sprint" | "qualifying" | "laps" | "strategy";
+
+const WEATHER = { dry: { icon: Sun, label: "Dry race" }, wet: { icon: CloudRain, label: "Wet race" }, mixed: { icon: CloudSunRain, label: "Mixed conditions" } } as const;
 
 const ResultLine = memo(function ResultLine({ r, fastest, open }: { r: ResultRow; fastest: RaceView["fastestLap"] | null; open(path: string): void }) {
 	const pos = Number(r.position);
@@ -138,6 +141,22 @@ function RaceContext({ view }: { view: RaceView }) {
 					))}
 				</Section>
 			) : null}
+			{view.notes?.neutralised.length ? (
+				<Section title="Safety cars and red flags">
+					{view.notes.neutralised.map(([type, from, to], i, all) => (
+						<Row
+							key={`${type}-${from}`}
+							title={NEUTRAL_LABEL[type]}
+							trailing={
+								<Text variant="small" className="tabular-nums text-muted-foreground">
+									{from === to ? `Lap ${from}` : `Laps ${from}–${to}`}
+								</Text>
+							}
+							last={i === all.length - 1}
+						/>
+					))}
+				</Section>
+			) : null}
 			{view.standingsAfter.drivers.length ? (
 				<Section title="Drivers after this round">
 					{view.standingsAfter.drivers.map((s, i, all) => (
@@ -203,7 +222,7 @@ export function RaceScreen() {
 		...(view.sprint.length ? [{ value: "sprint" as const, label: "Sprint" }] : []),
 		...(view.qualifying.length ? [{ value: "qualifying" as const, label: "Quali" }] : []),
 		...(view.lapData?.chart ? [{ value: "laps" as const, label: "Laps" }] : []),
-		...(view.lapData?.pitStops ? [{ value: "pits" as const, label: "Pits" }] : []),
+		...(view.lapData?.pitStops || view.lapData?.tyres ? [{ value: "strategy" as const, label: "Strategy" }] : []),
 	];
 	const current = tabs.some((t) => t.value === tab) ? tab : "race";
 	return (
@@ -232,6 +251,7 @@ export function RaceScreen() {
 				<View className="mt-2">
 					<Row icon={MapPin} title={view.circuit.name} subtitle={[view.circuit.place, view.nation?.name].filter(Boolean).join(", ")} onPress={() => open(href.circuit(view.circuit.id))} />
 					<Row icon={History} title={`${view.grandPrix.name} history`} subtitle={`Every ${view.grandPrix.name}, year by year`} onPress={() => open(href.grandPrix(view.grandPrix.id))} last={!view.completed} />
+					{view.notes?.weather ? <Row icon={WEATHER[view.notes.weather].icon} title={WEATHER[view.notes.weather].label} last={!view.completed} /> : null}
 					{view.completed ? <RewriteRow view={view} /> : null}
 				</View>
 
@@ -277,9 +297,9 @@ export function RaceScreen() {
 						) : current === "qualifying" ? (
 							<Qualifying view={view} />
 						) : current === "laps" ? (
-							<LapChartPanel raceId={view.raceId} results={view.results} sprint={view.sprint} sprintAvailable={view.lapData?.sprintChart ?? false} highlight={winner ? [winner.driver.id] : []} />
+							<LapChartPanel raceId={view.raceId} results={view.results} sprint={view.sprint} sprintAvailable={view.lapData?.sprintChart ?? false} highlight={winner ? [winner.driver.id] : []} neutralised={view.notes?.neutralised} />
 						) : (
-							<PitStopsPanel raceId={view.raceId} drivers={view.results.map((r) => r.driver)} />
+							<StrategyPanel raceId={view.raceId} results={view.results} year={view.race.year} neutralised={view.notes?.neutralised} />
 						)}
 					</View>
 				)}

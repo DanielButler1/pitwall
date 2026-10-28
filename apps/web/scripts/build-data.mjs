@@ -12,12 +12,15 @@
 // When ./jolpica (or JOLPICA_DIR) holds a Jolpica CSV dump, it supplements F1DB
 // (see scripts/lib/jolpica.mjs): lap leaders go into f1.json, and per-race lap
 // charts and pit stops into data/laps/<raceId>.json and public/data/laps/.
+// Hand-entered race notes in data/race-notes/ (safety cars, tyres, weather) are
+// checked and merged in too (see scripts/lib/race-notes.mjs).
 
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, rmSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildJolpica } from "./lib/jolpica.mjs";
+import { buildRaceNotes } from "./lib/race-notes.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = resolve(process.env.F1DB_DIR ?? join(root, "f1db"));
@@ -58,6 +61,11 @@ if (existsSync(releaseFile)) {
 
 const jolpicaDir = resolve(process.env.JOLPICA_DIR ?? join(root, "jolpica"));
 const jolpica = buildJolpica(jolpicaDir, { races, drivers, grandsPrix, raceResults, sprintResults });
+
+// hand-entered race notes (safety cars, tyres, weather): see data/race-notes/README.md
+const notes = buildRaceNotes(join(root, "data", "race-notes"), { races, drivers, raceResults }, jolpica?.files);
+for (const w of notes.warnings) console.log(`  race notes: ${w}`);
+if (notes.errors.length) throw new Error(`Race notes (data/race-notes) need fixing:\n  ${notes.errors.join("\n  ")}`);
 
 const resultYears = raceResults.map((r) => r.year);
 const lastCompletedYear = Math.max(...resultYears);
@@ -162,6 +170,8 @@ const dataset = {
 	sprintLapLeaders: jolpica?.sprintLapLeaders ?? [],
 	// Jolpica: fastest lap of each sprint race: [raceId, driverId, lap, timeMs]
 	sprintFastestLaps: jolpica?.sprintFastestLaps ?? [],
+	// race notes: [raceId, weather, [[SC|VSC|RF, fromLap, toLap], ...], has tyres (in the race's lap file)]
+	raceNotes: notes.rows,
 };
 
 const json = JSON.stringify(dataset);
@@ -169,13 +179,16 @@ for (const out of [join(root, "data", "f1.json"), join(root, "public", "data", "
 	mkdirSync(dirname(out), { recursive: true });
 	writeFileSync(out, json);
 }
-// per-race lap charts and pit stops, loaded on demand by the race page
+// per-race lap charts, pit stops and tyres, loaded on demand by the race page
+const raceFiles = new Map(jolpica?.files ?? []);
+for (const [raceId, extra] of notes.files) raceFiles.set(raceId, { raceId, ...raceFiles.get(raceId), ...extra });
 for (const dir of [join(root, "data", "laps"), join(root, "public", "data", "laps")]) {
 	rmSync(dir, { recursive: true, force: true });
-	if (!jolpica) continue;
+	if (!raceFiles.size) continue;
 	mkdirSync(dir, { recursive: true });
-	for (const [raceId, file] of jolpica.files) writeFileSync(join(dir, `${raceId}.json`), JSON.stringify(file));
+	for (const [raceId, file] of raceFiles) writeFileSync(join(dir, `${raceId}.json`), JSON.stringify(file));
 }
+console.log(`Race notes: ${notes.count.races} races (${notes.count.neutralised} SC/VSC/red flag periods, tyres for ${notes.count.tyres})`);
 if (jolpica) {
 	const sizes = [...jolpica.files.values()].map((f) => JSON.stringify(f).length).sort((a, b) => a - b);
 	const r = jolpica.report;
