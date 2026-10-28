@@ -120,7 +120,7 @@ for (const year of YEARS) {
 				touched = true;
 			}
 		}
-		const weather = weatherFromStints([...stints.values()].flat());
+		const weather = weatherFromStints(stints);
 		if (weather && note.weather == null) {
 			note.weather = weather;
 			added.weather++;

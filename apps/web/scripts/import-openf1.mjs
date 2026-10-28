@@ -174,7 +174,9 @@ for (const year of years) {
 		}
 
 		// weather
-		const weather = weatherFromStints(asStints(stints));
+		const byDriver = new Map();
+		for (const s of stints) (byDriver.get(s.driver_number) ?? byDriver.set(s.driver_number, []).get(s.driver_number)).push(s);
+		const weather = weatherFromStints(new Map([...byDriver].map(([d, l]) => [d, asStints(l)])));
 		if (weather && note.weather == null) {
 			note.weather = weather;
 			added.weather++;

@@ -59,17 +59,35 @@ export function setsOf(stints) {
 	return sets.map((x) => x.code);
 }
 
-/** dry / wet / mixed from the tyres the field used: wet tyres all race, for some of it, or not at all. */
-export function weatherFromStints(stints) {
+/**
+ * dry / wet / mixed from the tyres the field used (each driver's stints): wet tyres all race is wet, for part
+ * of it mixed, none dry. A few cars trying wet tyres is a gamble, not a change in the weather: it takes a
+ * quarter of the field. Null without enough tyre data to say.
+ * @param {Map<string, { compound: string, lapStart: number | null, lapEnd: number | null }[]>} byDriver
+ */
+export function weatherFromStints(byDriver) {
 	let wet = 0;
 	let all = 0;
-	for (const s of stints) {
-		if (s.lapStart == null || s.lapEnd == null) continue;
-		const laps = s.lapEnd - s.lapStart + 1;
-		all += laps;
-		if (s.compound === "INTERMEDIATE" || s.compound === "WET") wet += laps;
+	let wetCars = 0;
+	let cars = 0;
+	for (const stints of byDriver.values()) {
+		let mine = 0;
+		let any = false;
+		for (const s of stints) {
+			if (s.lapStart == null || s.lapEnd == null || !(s.compound in COMPOUND)) continue;
+			const laps = s.lapEnd - s.lapStart + 1;
+			mine += laps;
+			if (s.compound === "INTERMEDIATE" || s.compound === "WET") {
+				wet += laps;
+				any = true;
+			}
+		}
+		if (!mine) continue;
+		all += mine;
+		cars++;
+		if (any) wetCars++;
 	}
-	if (!all) return null;
-	if (wet === 0) return "dry";
-	return wet / all >= 0.9 ? "wet" : "mixed";
+	if (cars < 10) return null;
+	if (wet / all >= 0.9) return "wet";
+	return wetCars * 4 >= cars ? "mixed" : "dry";
 }
