@@ -213,6 +213,48 @@ export function deepFacts(db: Db, f: RaceFacts, add: Add) {
 			const prev = lapRaces((_, sp) => new Set(sp.map(([d]) => d)).size >= leaders);
 			if (prev < 0 || f.idx - prev >= 30) add("laps", "race:leaders", prev < 0 ? 7 : gapScore(f.idx - prev), sentence(`${leaders} different drivers led the race, the most `, prev < 0 ? `in the lap charts (from ${LAPS_FROM})` : ["since the ", since(prev)]));
 		}
+		// lead changes (spans are run-length encoded, so each new span is a change)
+		const changes = spans.length - 1;
+		if (changes >= 8) {
+			const prev = lapRaces((_, sp) => sp.length - 1 >= changes);
+			if (prev < 0 || f.idx - prev >= 30) add("laps", "race:lead-changes", prev < 0 ? 7 : gapScore(f.idx - prev), sentence(`The lead changed hands ${changes} times, the most `, prev < 0 ? `in the lap charts (from ${LAPS_FROM})` : ["since the ", since(prev)]));
+		}
+		// lights to flag: every lap led, without the pole and fastest lap of a grand slam
+		const allLed = (sp: typeof spans, id: string) => sp.length === 1 && sp[0][0] === id && sp[0][1] === 1;
+		if (allLed(spans, w.driverId) && !w.grandSlam) {
+			const n = upTo(lightsToFlag(db).get(w.driverId) ?? [], f.idx);
+			let best = 0;
+			for (const [id, l] of lightsToFlag(db)) if (id !== w.driverId) best = Math.max(best, upTo(l, f.idx));
+			const head = sentence(cDriver(db, w.driverId), ` led every lap, for the ${ordinal(n)} time`);
+			if (n >= 5 && n === best + 1) add("laps", `driver:${w.driverId}:all-led`, 6, sentence(head, `, the most in the lap charts (from ${LAPS_FROM})`));
+			else if (n >= 5 && n === best) add("laps", `driver:${w.driverId}:all-led`, 5, sentence(head, `, level for the most in the lap charts (from ${LAPS_FROM})`));
+			else if (n % 5 === 0) add("laps", `driver:${w.driverId}:all-led`, 3, head);
+		}
+		// led the most laps and didn't finish
+		const led = new Map<string, number>();
+		for (const [d, a, b] of spans) led.set(d, (led.get(d) ?? 0) + b - a + 1);
+		const [top, most] = [...led].sort((a, b) => b[1] - a[1])[0];
+		const res = f.results.find((r) => r.driverId === top);
+		const dnf = (sp: typeof spans, rf: RaceFacts) => {
+			const l = new Map<string, number>();
+			for (const [d, a, b] of sp) l.set(d, (l.get(d) ?? 0) + b - a + 1);
+			const [t, m] = [...l].sort((a, b) => b[1] - a[1])[0];
+			return m >= 20 && !rf.results.some((r) => r.driverId === t && isClassified(r));
+		};
+		if (res && most >= 20 && !isClassified(res)) {
+			const prev = lapRaces((rf, sp) => dnf(sp, rf));
+			if (prev >= 0 && f.idx - prev >= 20) add("laps", `driver:${top}:led-out`, gapScore(f.idx - prev, 20), sentence(cDriver(db, top), ` led ${most} laps, more than anyone, and didn't finish: the first time that's happened since the `, since(prev)));
+		}
+	}
+
+	// how many finished on the lead lap
+	if (w && started.length >= 15 && f.winnerLaps > 0) {
+		const onLead = (rf: RaceFacts) => rf.results.filter((r) => isClassified(r) && r.laps === rf.winnerLaps).length;
+		const n = onLead(f);
+		if (n >= 2 && n <= 3) {
+			const prev = lastWhere(F, f.idx, (rf) => rf.results.filter(isStart).length >= 15 && onLead(rf) <= n);
+			if (prev >= 0 && f.idx - prev >= 30) add("shape", "race:lead-lap", gapScore(f.idx - prev), sentence(`Only ${n} cars finished on the lead lap, the fewest since the `, since(prev)));
+		}
 	}
 
 	// grand slams: pole, win, fastest lap and every lap led
@@ -420,6 +462,19 @@ function occurrencesOf(db: Db, name: string, test: (r: Result) => boolean): Map<
 				list.push(f.idx);
 				out.set(id, list);
 			}
+		return out;
+	});
+}
+
+/** Races (by index) each driver won having led every lap, in the lap charts. */
+function lightsToFlag(db: Db): Map<string, number[]> {
+	return cached(db, "race-facts:lights-to-flag", () => {
+		const out = new Map<string, number[]>();
+		for (const f of facts(db).races) {
+			const sp = lapLeaders(db, f.race.id);
+			if (sp?.length !== 1 || sp[0][1] !== 1 || sp[0][0] !== f.winner?.driverId) continue;
+			out.set(sp[0][0], [...(out.get(sp[0][0]) ?? []), f.idx]);
+		}
 		return out;
 	});
 }

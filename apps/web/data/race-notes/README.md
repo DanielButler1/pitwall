@@ -36,6 +36,7 @@ What neither F1DB nor Jolpica records, entered by hand: safety car, virtual safe
   - The codes are `HS` hypersoft, `US` ultrasoft, `SS` supersoft, `S` soft, `M` medium, `H` hard, `SH` superhard, `I` intermediate and `W` wet. `?` means a stint you don't know.
   - Use the 2011–18 names as they were (e.g. 2018 Abu Dhabi had `HS`/`US`/`SS`); since 2019 it's just `S`/`M`/`H`.
   - Name drivers by their three-letter code (`VER`), car number (`"33"`) or F1DB id (`max-verstappen`).
+  - The race facts use them too: a win without a stop, with three or more, from a start on hards, on wets or on one compound. "The first since" is only said when every race in between has tyres, so they come as you fill in whole stretches.
 - **`sources`**: where it came from, for checking later. It's not shown on the site.
 
 ## Commands

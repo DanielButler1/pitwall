@@ -65,12 +65,13 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 				const gap = (prev: number) => (perRace ? f.idx - prev : upTo(starts.get(id) ?? [], f.idx) - upTo(starts.get(id) ?? [], prev));
 
 				// firsts
-				if (def.runsOnly) {
-					// only runs below
+				if (def.runsOnly || def.noFirst) {
+					// only runs (or totals) below
 				} else if (n === 1 && ev !== "start" && ev !== "points" && (settled || !perRace)) {
 					const tries = kind === "driver" ? upTo(starts.get(id) ?? [], f.idx) : 0;
 					const attempt = tries > 1 ? `, at the ${ordinal(tries)} attempt` : "";
-					add("first", tag, (perRace ? 7 : 4) + def.weight * 1.5 + (tries > 100 ? 1 : 0), sentence(owned(db, kind, id, `first ${def.one}`), attempt));
+					const score = def.minor ? 1.5 + def.weight : (perRace ? 7 : 4) + def.weight * 1.5 + (tries > 100 ? 1 : 0);
+					add("first", tag, score, sentence(owned(db, kind, id, `first ${def.one}`), def.minor ? "" : attempt));
 				} else if (n === 1 && ev === "points") {
 					add("first", tag, kind === "constructor" ? 5 : 3.5, sentence(owned(db, kind, id, "first points")));
 				} else if (n === 1 && ev === "start" && kind === "constructor") {
@@ -91,7 +92,7 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 
 				// round numbers
 				const sameAsMaker = kind === "nation" && makers.length === 1 && upTo(occurrences(db, "driver", ev).get(makers[0]) ?? [], f.idx) === n;
-				if (n > 1 && isMark(ev, kind, n) && !sameAsMaker && !def.runsOnly) {
+				if (n > 1 && isMark(ev, kind, n) && !sameAsMaker && !def.runsOnly && !def.noFirst) {
 					const what = ev === "start" ? (kind === "driver" ? "Grand Prix start" : "Grand Prix") : def.one;
 					add("nth", tag, markScore(ev, n), sentence(owned(db, kind, id, `${ordinal(n)} ${what}`)));
 				}
@@ -109,7 +110,7 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 						add("record", tag, 5 + def.weight, sentence(owned(db, kind, id, `${ordinal(n)} ${def.one}`), ", breaking ", prior ? [...possessive(subject(db, kind, prior)), " record"] : "the record", ` of ${best}`));
 					} else if (n === best) {
 						add("record", tag, 4 + def.weight, sentence(owned(db, kind, id, `${ordinal(n)} ${def.one}`), ", equalling the record held by ", subject(db, kind, holder(best)!)));
-					} else if (n < best && ev !== "start") {
+					} else if (n < best && ev !== "start" && !def.noFirst && !def.minor) {
 						const rank = others.filter(([, c]) => c >= n).length + 1;
 						const passed = others.filter(([, c]) => c === n - 1).map(([k]) => k);
 						const level = others.filter(([, c]) => c === n).map(([k]) => k);

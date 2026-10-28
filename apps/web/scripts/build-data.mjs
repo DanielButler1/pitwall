@@ -102,19 +102,20 @@ const dataset = {
 	]),
 	// [id, name, fullName, shortName, countryId]
 	grandsPrix: grandsPrix.map((g) => [g.id, g.name, g.fullName, g.shortName, g.countryId]),
-	// [id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qualifyingFormat]
+	// [id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qualifyingFormat, scheduledLaps]
 	races: races.map((r) => [
 		r.id, r.year, r.round, r.date, r.grandPrixId, r.circuitId, r.officialName,
-		r.laps, r.distance, r.courseLength, flag(r.sprintRaceDate), r.qualifyingFormat,
+		r.laps, r.distance, r.courseLength, flag(r.sprintRaceDate), r.qualifyingFormat, nn(r.scheduledLaps),
 	]),
 	// [raceId, positionNumber, positionText, driverId, constructorId, engineId, number,
-	//  grid, laps, time, gap, reasonRetired, points, fastestLap, pole, sharedCar, qualifyingPosition, tyreId, grandSlam]
+	//  grid, laps, time, gap, reasonRetired, points, fastestLap, pole, sharedCar, qualifyingPosition, tyreId, grandSlam,
+	//  driverOfTheDay]
 	results: raceResults.map((r) => [
 		r.raceId, nn(r.positionNumber), r.positionText, r.driverId, r.constructorId,
 		r.engineManufacturerId, nn(r.driverNumber), nn(r.gridPositionNumber), nn(r.laps),
 		nn(r.time), nn(r.gap), nn(r.reasonRetired), nn(r.points), flag(r.fastestLap),
 		flag(r.polePosition), flag(r.sharedCar), nn(r.qualificationPositionNumber),
-		nn(r.tyreManufacturerId), flag(r.grandSlam),
+		nn(r.tyreManufacturerId), flag(r.grandSlam), flag(r.driverOfTheDay),
 	]),
 	// same tuple shape as results
 	sprintResults: sprintResults.map((r) => [
@@ -122,7 +123,7 @@ const dataset = {
 		r.engineManufacturerId, nn(r.driverNumber), nn(r.gridPositionNumber), nn(r.laps),
 		nn(r.time), nn(r.gap), nn(r.reasonRetired), nn(r.points), flag(r.fastestLap),
 		flag(r.polePosition), flag(r.sharedCar), nn(r.qualificationPositionNumber),
-		nn(r.tyreManufacturerId), flag(r.grandSlam),
+		nn(r.tyreManufacturerId), flag(r.grandSlam), flag(r.driverOfTheDay),
 	]),
 	// [raceId, positionNumber, positionText, driverId, constructorId, time, q1, q2, q3]
 	qualifying: qualifying.map((q) => [
@@ -170,7 +171,8 @@ const dataset = {
 	sprintLapLeaders: jolpica?.sprintLapLeaders ?? [],
 	// Jolpica: fastest lap of each sprint race: [raceId, driverId, lap, timeMs]
 	sprintFastestLaps: jolpica?.sprintFastestLaps ?? [],
-	// race notes: [raceId, weather, [[SC|VSC|RF, fromLap, toLap], ...], has tyres (in the race's lap file)]
+	// race notes: [raceId, weather, [[SC|VSC|RF, fromLap, toLap], ...], has tyres (in the race's lap file),
+	//  [[driverId, [compound, ...]], ...] where tyres were entered, for the race facts]
 	raceNotes: notes.rows,
 };
 

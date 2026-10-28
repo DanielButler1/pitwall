@@ -24,7 +24,8 @@ export type RawDataset = {
 	tyres: [string, string, string][];
 	circuits: [string, string, string, string, string, number, number, string, string, number, number][];
 	grandsPrix: [string, string, string, string, string][];
-	races: [number, number, number, string, string, string, string, number, number, number, 0 | 1, string][];
+	/** The last, scheduled laps, is absent from data built before it was added. */
+	races: [number, number, number, string, string, string, string, number, number, number, 0 | 1, string, N<number>?][];
 	results: RawResult[];
 	sprintResults: RawResult[];
 	qualifying: [number, N<number>, string, string, string, N<string>, N<string>, N<string>, N<string>][];
@@ -39,14 +40,24 @@ export type RawDataset = {
 	sprintLapLeaders?: [number, LeadSpan[]][];
 	/** Jolpica: fastest lap of each sprint: [raceId, driverId, lap, timeMs]. */
 	sprintFastestLaps?: [number, string, N<number>, number][];
-	/** Hand-entered race notes (data/race-notes): [raceId, weather, neutralisations, has tyres (in the race file)]. */
-	raceNotes?: [number, N<Weather>, Neutralisation[], 0 | 1][];
+	/**
+	 * Hand-entered race notes (data/race-notes): [raceId, weather, neutralisations, has tyres (in the race file),
+	 * each driver's compounds stint by stint (where entered)].
+	 */
+	raceNotes?: [number, N<Weather>, Neutralisation[], 0 | 1, [string, string[]][]?][];
 };
 
 export type Weather = "dry" | "wet" | "mixed";
 /** A safety car (SC), virtual safety car (VSC) or red flag (RF) over laps fromLap..toLap (a red flag: its lap twice). */
 export type Neutralisation = ["SC" | "VSC" | "RF", number, number];
-export type RaceNote = { raceId: number; weather: Weather | null; neutralised: Neutralisation[]; tyres: boolean };
+export type RaceNote = {
+	raceId: number;
+	weather: Weather | null;
+	neutralised: Neutralisation[];
+	tyres: boolean;
+	/** Each driver's compound codes (laps.ts TyreCode), stint by stint, where entered. */
+	stints?: Map<string, string[]>;
+};
 
 export type JolpicaMeta = {
 	source: string;
@@ -70,6 +81,8 @@ export type LeadSpan = [string, number, number];
 type RawResult = [
 	number, N<number>, string, string, string, string, N<string>, N<number>, N<number>,
 	N<string>, N<string>, N<string>, N<number>, 0 | 1, 0 | 1, 0 | 1, N<number>, N<string>, 0 | 1,
+	// Driver of the Day: absent from data built before it was added
+	(0 | 1)?,
 ];
 
 export type Country = { id: string; name: string; alpha2: string; demonym: string | null };
@@ -118,6 +131,8 @@ export type Race = {
 	courseLength: number;
 	hasSprint: boolean;
 	qualifyingFormat: string;
+	/** The laps it was meant to run, when it was stopped short of them. */
+	scheduledLaps?: number;
 };
 export type Result = {
 	raceId: number;
@@ -140,6 +155,8 @@ export type Result = {
 	tyreId: string | null;
 	/** Pole, win, fastest lap and led every lap (from F1DB). */
 	grandSlam: boolean;
+	/** Voted Driver of the Day (from 2016). */
+	driverOfTheDay?: boolean;
 };
 export type QualifyingRow = {
 	raceId: number;
@@ -223,6 +240,7 @@ function hydrateResult(r: RawResult): Result {
 		qualifying: r[16],
 		tyreId: r[17] ?? null,
 		grandSlam: r[18] === 1,
+		...(r[19] === 1 ? { driverOfTheDay: true } : {}),
 	};
 }
 
@@ -265,7 +283,10 @@ export function hydrate(raw: RawDataset): F1Data {
 		sprintResults,
 	);
 	const notes = lapIndex<RaceNote>(
-		(raw.raceNotes ?? []).map(([raceId, weather, neutralised, tyres]) => [raceId, { raceId, weather, neutralised, tyres: tyres === 1 }]),
+		(raw.raceNotes ?? []).map(([raceId, weather, neutralised, tyres, stints]) => [
+			raceId,
+			{ raceId, weather, neutralised, tyres: tyres === 1, ...(stints?.length ? { stints: new Map(stints) } : {}) },
+		]),
 		results,
 	);
 	return {
@@ -291,10 +312,11 @@ export function hydrate(raw: RawDataset): F1Data {
 			raw.grandsPrix.map(([id, name, fullName, shortName, country]) => [id, { id, name, fullName, shortName, country }]),
 		),
 		races: raw.races
-			.map(([id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qf]) => ({
+			.map(([id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength, hasSprint, qf, scheduled]) => ({
 				id, year, round, date, grandPrixId, circuitId, officialName, laps, distance, courseLength,
 				hasSprint: hasSprint === 1 || sprinted.has(id),
 				qualifyingFormat: qf,
+				...(scheduled != null && scheduled !== laps ? { scheduledLaps: scheduled } : {}),
 			}))
 			.sort((a, b) => a.year - b.year || a.round - b.round),
 		results,

@@ -2,10 +2,13 @@
 // teams who've been getting those results lately), droughts, first wins still waited for, runs on
 // the line, records at the Grand Prix and whether the title can be decided there.
 
-import type { Db, Race } from "../dataset.ts";
+import type { Db, Race, Result } from "../dataset.ts";
 import { completedRaces } from "../dataset.ts";
-import { facts } from "../records/facts.ts";
-import { cGp } from "../records/cells.ts";
+import { ageDaysAt, facts } from "../records/facts.ts";
+import { cGp, cSeason } from "../records/cells.ts";
+import { sharedRaces } from "../teammates.ts";
+import { venueNews } from "./venue.ts";
+import { safetyCarEvery } from "./notes.ts";
 import { standingsAfter } from "../stats.ts";
 import { activeGrid, latestSeason, recentRates } from "../milestones.ts";
 import { pointsLeft } from "../views.ts";
@@ -14,6 +17,7 @@ import { leaderAfter } from "./titles.ts";
 import {
 	EVENTS,
 	STREAK,
+	cDemonym,
 	collector,
 	compareRuns,
 	countsAt,
@@ -24,6 +28,7 @@ import {
 	occurrences,
 	owned,
 	pick,
+	possessive,
 	runAt,
 	sentence,
 	subject,
@@ -96,6 +101,7 @@ export function upcomingFacts(db: Db, limit = 8): { race: Race; facts: RaceFact[
 
 		// runs on the line
 		for (const [ev, limits] of Object.entries(STREAK[kind] ?? {}) as [keyof typeof EVENTS, [number, number]][]) {
+			if (EVENTS[ev].sprint && !race.hasSprint) continue;
 			const L = runAt(db, kind, ev, id, last);
 			if (L < limits[0]) continue;
 			const def = EVENTS[ev];
@@ -117,6 +123,81 @@ export function upcomingFacts(db: Db, limit = 8): { race: Race; facts: RaceFact[
 			const q = Math.min(1, 0.4 + rates.wins * 2);
 			if (c >= 2 && rival && c + 1 === best) add("venue", `${kind}:${id}:gp`, 4 * q, sentence("A win would put ", S, " level with ", subject(db, kind, rival), ` for the most wins at the `, cGp(db, gp), ` (${best})`));
 			else if (c >= 2 && rival && c === best) add("venue", `${kind}:${id}:gp`, 5 * q, sentence("A win would give ", S, " the most wins at the ", cGp(db, gp), ` outright (${c + 1})`));
+		}
+	}
+
+	// the venue: a new circuit, one back after years away, a round-number running
+	for (const [key, score, cells] of venueNews(db, race, F.races, true)) add("circuit", key, score, sentence(cells, " is up next"));
+	const sc = safetyCarEvery(db, race.grandPrixId, last);
+	if (sc >= 5) add("neutral", `gp:${race.grandPrixId}:sc-every`, 3 + log2(sc / 5), sentence("There has been a safety car at every running of the ", cGp(db, race.grandPrixId), ` (${sc})`));
+
+	// first races: a season's rookies and new teams, from its entry list
+	if (race.round === 1) {
+		const entrants = db.upcomingEntrants.filter((e) => e.year === race.year);
+		const drivers = occurrences(db, "driver", "start");
+		const teams = occurrences(db, "constructor", "start");
+		for (const id of new Set(entrants.map((e) => e.driverId))) if (!drivers.has(id) && db.drivers.has(id)) add("debut", `driver:${id}:debut`, 3, sentence(...possessive(subject(db, "driver", id)), " first Grand Prix is up next"));
+		for (const id of new Set(entrants.map((e) => e.constructorId))) if (!teams.has(id) && db.constructors.has(id)) add("debut", `constructor:${id}:debut`, 5, sentence(...possessive(subject(db, "constructor", id)), " first Grand Prix is up next"));
+	}
+
+	// home drivers, and how long their country has waited for a home win
+	const gp = db.grandsPrix.get(race.grandPrixId);
+	const editions = F.races.filter((rf) => rf.race.grandPrixId === race.grandPrixId);
+	if (gp && editions.length >= 5) {
+		const home = [...grid.drivers].filter((id) => db.drivers.get(id)?.nationality === gp.country);
+		if (home.length) {
+			const won = editions.filter((rf) => rf.winner && db.drivers.get(rf.winner.driverId)?.nationality === gp.country).at(-1);
+			const who = home.length === 1 ? sentence(subject(db, "driver", home[0]), " races at home") : sentence(`${home.length} `, cDemonym(db, gp.country), " drivers race at home");
+			if (!won) add("home", `nation:${gp.country}:home`, 3 + log2(editions.length / 10), sentence(who, ": no ", cDemonym(db, gp.country), " driver has won the ", cGp(db, gp.id), ` in ${editions.length} runnings`));
+			else if (race.year - won.race.year >= 10) add("home", `nation:${gp.country}:home`, 2 + log2((race.year - won.race.year) / 5), sentence(who, ": the last ", cDemonym(db, gp.country), " winner here was ", subject(db, "driver", won.winner!.driverId), " in ", cSeason(won.race.year)));
+		}
+	}
+
+	// a winning run at this Grand Prix, on the line
+	const holder = editions.at(-1)?.winner?.driverId;
+	if (holder && grid.drivers.has(holder)) {
+		let L = 0;
+		for (let i = editions.length - 1; i >= 0 && editions[i].winner?.driverId === holder; i--) L++;
+		// the longest run of wins in a row at this Grand Prix by anyone
+		let best = 0;
+		for (let i = 0, run = 0; i < editions.length - L; i++) {
+			const prev = editions[i - 1]?.winner?.driverId;
+			run = editions[i].winner && editions[i].winner!.driverId === prev ? run + 1 : 1;
+			best = Math.max(best, run);
+		}
+		const q = Math.min(1, 0.4 + recentRates(db, holder, false).wins * 2);
+		const head = sentence(subject(db, "driver", holder), " has won the ", cGp(db, race.grandPrixId), ` ${L} times in a row`);
+		if (L >= 2 && L + 1 > best) add("venue", `driver:${holder}:gp-row`, (4 + L * 0.5) * q, sentence(head, ": no one has won it more times in a row"));
+		else if (L >= 3) add("venue", `driver:${holder}:gp-row`, (2.5 + L * 0.5) * q, head);
+	}
+
+	// the youngest ever, within reach
+	for (const [ev, noun, test] of [
+		["win", "winner", (r: Result) => r.position === 1],
+		["pole", "polesitter", (r: Result) => r.pole],
+	] as const) {
+		let young = Infinity;
+		for (const rf of F.races) for (const r of rf.results) if (test(r)) young = Math.min(young, ageDaysAt(db, r.driverId, rf.race.date) ?? Infinity);
+		for (const id of grid.drivers) {
+			const age = ageDaysAt(db, id, race.date);
+			const rate = recentRates(db, id, false)[ev === "win" ? "wins" : "poles"];
+			if (age != null && age < young && rate > 0) add("chance", `driver:${id}:young-${ev}`, 6 * Math.min(1, 0.4 + rate * 2), sentence(subject(db, "driver", id), ` would be the youngest ${noun} ever`));
+		}
+	}
+
+	// team-mates: a run of finishing or qualifying ahead, on the line
+	for (const team of grid.teams) {
+		const pair = [...new Set(F.races[last].results.filter((r) => r.constructorId === team && !r.sharedCar).map((r) => r.driverId))];
+		if (pair.length !== 2 || !pair.every((d) => grid.drivers.has(d))) continue;
+		const rows = sharedRaces(db, pair[0], pair[1]);
+		for (const [what, field] of [["finished ahead of", "finish"], ["out-qualified", "quali"]] as const) {
+			const decided = rows.filter((s) => s[field] != null);
+			const top = decided.at(-1)?.[field];
+			if (!top) continue;
+			let L = 0;
+			for (let i = decided.length - 1; i >= 0 && decided[i][field] === top; i--) L++;
+			const [x, y] = top === "a" ? pair : [pair[1], pair[0]];
+			if (L >= 10) add("teammate", `driver:${x}:mate-${field}`, 1.5 + log2(L / 5), sentence(subject(db, "driver", x), ` has ${what} `, subject(db, "driver", y), ` in each of their last ${L} races together`));
 		}
 	}
 

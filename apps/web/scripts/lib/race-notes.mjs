@@ -4,7 +4,8 @@
 //
 // Everything is checked against F1DB (and Jolpica's pit stops where there are some) and the build fails
 // on anything that can't be right, so a typo never reaches the site. Notes come out in two places:
-//   - f1.json, small and always loaded: [raceId, weather, [[type, fromLap, toLap], ...], hasTyres]
+//   - f1.json, small and always loaded: [raceId, weather, [[type, fromLap, toLap], ...], hasTyres, tyres?]
+//     (each driver's compounds: short, and the race facts need them)
 //   - the race's file in data/laps/: tyres and compounds, fetched with the race's pit stops
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -151,7 +152,7 @@ export function buildRaceNotes(dir, f1db, lapFiles) {
 			count.races++;
 			count.neutralised += neutralised.length;
 			if (tyres.length) count.tyres++;
-			rows.push([race.id, weather, neutralised, tyres.length ? 1 : 0]);
+			rows.push([race.id, weather, neutralised, ...(tyres.length ? [1, tyres] : [0])]);
 			if (tyres.length || compounds) files.set(race.id, { ...(tyres.length ? { tyres } : {}), ...(compounds ? { compounds } : {}) });
 		}
 	}

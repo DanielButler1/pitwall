@@ -33,7 +33,14 @@ export type FactKind =
 	| "home"
 	| "debut"
 	| "family"
-	| "teammate";
+	| "teammate"
+	| "weather"
+	| "neutral"
+	| "tyres"
+	| "circuit"
+	| "rival"
+	| "team"
+	| "nation";
 
 export type RaceFact = {
 	/** Stable identity, e.g. "since:constructor:ferrari:win". */
@@ -46,7 +53,21 @@ export type RaceFact = {
 };
 
 export type SubjectKind = "driver" | "constructor" | "nation" | "engine";
-export type EventId = "win" | "pole" | "podium" | "points" | "start" | "oneTwo" | "sprintWin" | "sprintStart" | "finish";
+export type EventId =
+	| "win"
+	| "pole"
+	| "podium"
+	| "points"
+	| "start"
+	| "oneTwo"
+	| "frontRow"
+	| "fastestLap"
+	| "hatTrick"
+	| "driverOfTheDay"
+	| "sprintWin"
+	| "sprintDouble"
+	| "sprintStart"
+	| "finish";
 
 export type EventDef = {
 	one: string;
@@ -61,6 +82,10 @@ export type EventDef = {
 	quiet?: boolean;
 	/** Only its runs are news (a run of classified finishes), not firsts, gaps or totals. */
 	runsOnly?: boolean;
+	/** A first isn't news (everyone gets a Driver of the Day vote eventually), only totals and records. */
+	noFirst?: boolean;
+	/** A first is smaller news than a first win or pole. */
+	minor?: boolean;
 	race?: (f: RaceFacts) => string[];
 };
 
@@ -80,7 +105,35 @@ export const EVENTS: Record<EventId, EventDef> = {
 			return a && b && a.constructorId === b.constructorId ? [a.constructorId] : [];
 		},
 	},
+	frontRow: {
+		one: "front-row lockout",
+		many: "front-row lockouts",
+		weight: 1.6,
+		kinds: ["constructor"],
+		minor: true,
+		race: (f) => {
+			const [a, b] = [f.results.find((r) => r.grid === 1), f.results.find((r) => r.grid === 2)];
+			return a && b && a.constructorId === b.constructorId ? [a.constructorId] : [];
+		},
+	},
+	fastestLap: { one: "fastest lap", many: "fastest laps", weight: 1.4, kinds: ["driver", "constructor"], test: (r) => r.fastestLap, minor: true },
+	// pole, win and fastest lap
+	hatTrick: { one: "hat-trick", many: "hat-tricks", weight: 2.4, kinds: ["driver"], test: (r) => r.pole && isWin(r) && r.fastestLap, minor: true },
+	driverOfTheDay: { one: "Driver of the Day award", many: "Driver of the Day awards", weight: 0.8, kinds: ["driver"], test: (r) => !!r.driverOfTheDay, noFirst: true },
 	sprintWin: { one: "sprint win", many: "sprint wins", weight: 1.6, kinds: ["driver", "constructor"], test: isWin, sprint: true },
+	// the sprint and the Grand Prix on the same weekend
+	sprintDouble: {
+		one: "sprint and Grand Prix double",
+		many: "sprint and Grand Prix doubles",
+		weight: 1.8,
+		kinds: ["driver"],
+		sprint: true,
+		minor: true,
+		race: (f) => {
+			const s = f.sprint.find(isWin);
+			return s && f.winner && s.driverId === f.winner.driverId ? [s.driverId] : [];
+		},
+	},
 	finish: { one: "classified finish", many: "classified finishes", weight: 1, kinds: ["driver"], test: isClassified, runsOnly: true },
 	sprintStart: { one: "sprint", many: "sprints", weight: 0, kinds: ["driver", "constructor"], test: isStart, sprint: true, quiet: true },
 };
@@ -144,10 +197,13 @@ export function countsAt(occ: Map<string, number[]>, idx: number, except: string
 
 export type Run = { key: string; idxs: number[] };
 
+/** What a run is counted in: Grand Prix starts, or sprints for sprint events. */
+const startsFor = (ev: EventId): EventId => (EVENTS[ev].sprint ? "sprintStart" : "start");
+
 /** Every run of two or more consecutive starts with the event, per subject. */
 export function runs(db: Db, kind: SubjectKind, ev: EventId): Run[] {
 	return cached(db, `race-facts:runs:${kind}:${ev}`, () => {
-		const starts = occurrences(db, kind, "start");
+		const starts = occurrences(db, kind, startsFor(ev));
 		const had = occurrences(db, kind, ev);
 		const out: Run[] = [];
 		for (const [key, list] of starts) {
@@ -167,7 +223,7 @@ export function runs(db: Db, kind: SubjectKind, ev: EventId): Run[] {
 
 /** The run a subject is on after race idx (its starts up to then that all had the event). */
 export function runAt(db: Db, kind: SubjectKind, ev: EventId, id: string, idx: number): number {
-	const s = occurrences(db, kind, "start").get(id) ?? [];
+	const s = occurrences(db, kind, startsFor(ev)).get(id) ?? [];
 	const yes = new Set(occurrences(db, kind, ev).get(id));
 	let pos = upTo(s, idx) - 1;
 	let L = 0;
@@ -181,7 +237,7 @@ export function compareRuns(db: Db, kind: SubjectKind, ev: EventId, id: string, 
 	let since: { key: string; at: number } | null = null;
 	for (const run of runs(db, kind, ev)) {
 		// the subject's own current run isn't something to compare with
-		if (run.idxs[0] > idx || (run.key === id && isCurrent(db, kind, id, run, idx))) continue;
+		if (run.idxs[0] > idx || (run.key === id && isCurrent(db, kind, ev, id, run, idx))) continue;
 		const n = upTo(run.idxs, idx);
 		longest = Math.max(longest, n);
 		const at = run.idxs[n - 1];
@@ -190,8 +246,8 @@ export function compareRuns(db: Db, kind: SubjectKind, ev: EventId, id: string, 
 	return { longest, since };
 }
 /** Whether a run is the one the subject is on at race idx (it reaches their latest start by then). */
-function isCurrent(db: Db, kind: SubjectKind, id: string, run: Run, idx: number): boolean {
-	const s = occurrences(db, kind, "start").get(id) ?? [];
+function isCurrent(db: Db, kind: SubjectKind, ev: EventId, id: string, run: Run, idx: number): boolean {
+	const s = occurrences(db, kind, startsFor(ev)).get(id) ?? [];
 	const last = s[upTo(s, idx) - 1];
 	return run.idxs.includes(last);
 }
@@ -293,12 +349,12 @@ export const markScore = (ev: EventId, n: number) => 1.5 + EVENTS[ev].weight * M
 
 /** Shortest run worth a mention, and the shortest whose end is. */
 export const STREAK: Partial<Record<SubjectKind, Partial<Record<EventId, [number, number]>>>> = {
-	driver: { win: [3, 4], pole: [3, 4], podium: [5, 8], points: [10, 15], finish: [25, 30] },
-	constructor: { win: [4, 6], pole: [4, 6], podium: [12, 20], points: [25, 40], oneTwo: [3, 4] },
+	driver: { win: [3, 4], pole: [3, 4], podium: [5, 8], points: [10, 15], finish: [25, 30], fastestLap: [3, 4], sprintDouble: [3, 4] },
+	constructor: { win: [4, 6], pole: [4, 6], podium: [12, 20], points: [25, 40], oneTwo: [3, 4], frontRow: [4, 6], fastestLap: [5, 8] },
 };
 
 /** Gaps (in the subject's starts, or races for nations and engines) shorter than this aren't news. */
-export const SINCE_MIN: Partial<Record<EventId, number>> = { win: 10, pole: 10, podium: 15, points: 15, oneTwo: 15, sprintWin: 6 };
+export const SINCE_MIN: Partial<Record<EventId, number>> = { win: 10, pole: 10, podium: 15, points: 15, oneTwo: 15, frontRow: 15, fastestLap: 20, hatTrick: 20, sprintWin: 6 };
 
 /** Ages in days: "youngest since" is only news for the young, "oldest since" for the old. */
 export const years = (n: number) => Math.round(n * 365.25);

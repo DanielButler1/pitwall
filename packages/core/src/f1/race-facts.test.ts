@@ -4,7 +4,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { hydrate, indexData, type Db } from "./dataset.ts";
+import { hydrate, indexData, resultsSig, type Db } from "./dataset.ts";
+import { raceNote } from "./laps.ts";
 import { factText, raceFacts, upcomingFacts } from "./race-facts.ts";
 import { champions } from "./records/facts.ts";
 import { dataFile } from "../test-data.ts";
@@ -100,6 +101,56 @@ test("an all-nation podium is three drivers of that nation", () => {
 			if (!m) continue;
 			const top = [1, 2, 3].map((p) => real.resultsByRace.get(race.id)!.find((r) => r.position === p)!);
 			for (const r of top) assert.equal(real.drivers.get(r.driverId)!.nationality, m[1]);
+		}
+	}
+});
+
+test("weather and red-flag facts come from the race's notes", () => {
+	let checked = 0;
+	for (const race of done.slice(-500)) {
+		for (const f of raceFacts(real, race.id, 40)) {
+			const note = raceNote(real, race.id);
+			if (f.kind === "weather") {
+				assert.ok(note?.weather === "wet" || note?.weather === "mixed", factText(f.cells));
+				checked++;
+			}
+			if (/^neutral:(race:red|gp:[^:]+:red$)/.test(f.key)) {
+				assert.ok(note?.neutralised.some((n) => n[0] === "RF"), factText(f.cells));
+				checked++;
+			}
+		}
+	}
+	// without notes in the data there's nothing to check
+	if (real.raceNotes?.size) assert.ok(checked > 0);
+});
+
+test("tyre facts read the stints entered for a race", () => {
+	const race = done.at(-1)!;
+	const data = raw();
+	const winner = data.results.find((r) => r.raceId === race.id && r.position === 1)!;
+	const tag = `tyres:driver:${winner.driverId}:one-compound`;
+	assert.ok(!raceFacts(indexData(data), race.id, 40).some((f) => f.key === tag));
+	const notes = data.raceNotes ?? new Map();
+	const note = notes.get(race.id);
+	notes.set(race.id, { raceId: race.id, weather: note?.weather ?? null, neutralised: [], tyres: true, stints: new Map([[winner.driverId, ["H", "H"]]]) });
+	data.raceNotes = notes;
+	// the notes belong to these results (laps.ts raceNote checks)
+	data.raceNotesSig = new Map([...(data.raceNotesSig ?? []), [race.id, resultsSig(data.results.filter((r) => r.raceId === race.id))]]);
+	assert.ok(raceFacts(indexData(data), race.id, 40).some((f) => f.key === tag));
+});
+
+test("a first hat-trick or a new circuit really is the first", () => {
+	for (const race of done.slice(-300)) {
+		const at = done.indexOf(race);
+		for (const f of raceFacts(real, race.id, 40)) {
+			let m = /^first:driver:(.+):hatTrick$/.exec(f.key);
+			if (m) {
+				const id = m[1];
+				const before = done.slice(0, at).some((r) => real.resultsByRace.get(r.id)!.some((x) => x.driverId === id && x.pole && x.position === 1 && x.fastestLap));
+				assert.ok(!before, factText(f.cells));
+			}
+			m = /^circuit:circuit:(.+):first$/.exec(f.key);
+			if (m) assert.ok(!done.slice(0, at).some((r) => r.circuitId === m![1]), factText(f.cells));
 		}
 	}
 });
