@@ -332,9 +332,22 @@ export function mergeDiff(base: Db, diff: UniverseDiff): F1Data & { sim: SimSumm
 
 /** Index universe data and compute the standings of every season it changed. */
 export function finishUniverse(data: F1Data & { sim?: SimSummary }): UniverseDb {
+	const steps = finishUniverseSteps(data);
+	for (;;) {
+		const step = steps.next();
+		if (step.done) return step.value;
+	}
+}
+
+/**
+ * `finishUniverse` one season at a time: yields after indexing and before each
+ * season's standings, so a caller without threads can pause in between.
+ */
+export function* finishUniverseSteps(data: F1Data & { sim?: SimSummary }): Generator<number, UniverseDb> {
 	const db: UniverseDb = indexData(data);
 	const simYears = new Set(data.sim?.years ?? []);
 	for (const year of data.modifiedYears ?? []) {
+		yield year;
 		const races = (db.racesByYear.get(year) ?? []).filter((r) => db.resultsByRace.has(r.id));
 		if (!races.length) continue;
 		const rules = data.rulesOverride?.get(year) ?? eraRules(year);
