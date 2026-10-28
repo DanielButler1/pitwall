@@ -510,7 +510,7 @@
 		}
 	},
 	"14": {
-		"weather": "mixed",
+		"weather": "wet",
 		"sources": [
 			"https://en.wikipedia.org/wiki/2020_Turkish_Grand_Prix",
 			"https://www.kaggle.com/datasets/jtrotman/formula-1-race-events",

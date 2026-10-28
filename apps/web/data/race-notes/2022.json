@@ -181,7 +181,7 @@
 		}
 	},
 	"5": {
-		"weather": "mixed",
+		"weather": "dry",
 		"compounds": {
 			"H": "C2",
 			"M": "C3",
@@ -554,7 +554,7 @@
 		}
 	},
 	"13": {
-		"weather": "mixed",
+		"weather": "dry",
 		"compounds": {
 			"H": "C2",
 			"M": "C3",

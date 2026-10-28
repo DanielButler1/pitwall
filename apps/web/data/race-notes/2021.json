@@ -573,7 +573,7 @@
 		}
 	},
 	"16": {
-		"weather": "mixed",
+		"weather": "wet",
 		"sources": [
 			"https://en.wikipedia.org/wiki/2021_Turkish_Grand_Prix",
 			"https://github.com/TracingInsights/2021/tree/main/Turkish%20Grand%20Prix/Race"

@@ -1,6 +1,6 @@
 {
 	"1": {
-		"weather": "wet",
+		"weather": "mixed",
 		"compounds": {
 			"H": "C3",
 			"M": "C4",
@@ -474,7 +474,7 @@
 		]
 	},
 	"12": {
-		"weather": "wet",
+		"weather": "mixed",
 		"compounds": {
 			"H": "C2",
 			"M": "C3",
@@ -531,7 +531,7 @@
 		]
 	},
 	"13": {
-		"weather": "dry",
+		"weather": "mixed",
 		"compounds": {
 			"H": "C1",
 			"M": "C3",
