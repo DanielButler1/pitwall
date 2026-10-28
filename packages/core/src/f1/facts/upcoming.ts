@@ -120,6 +120,12 @@ export function upcomingFacts(db: Db, limit = 8): { race: Race; facts: RaceFact[
 		}
 	}
 
+	// a birthday on race day
+	for (const id of grid.drivers) {
+		const dob = db.drivers.get(id)?.dateOfBirth;
+		if (dob && dob.slice(5, 10) === race.date.slice(5, 10)) add("birthday", `driver:${id}:birthday`, 4, sentence(subject(db, "driver", id), ` turns ${race.year - Number(dob.slice(0, 4))} on race day`));
+	}
+
 	// can the title be decided here?
 	if (race.year === F.races[last].race.year) {
 		const toRun = (db.racesByYear.get(race.year) ?? []).filter((r) => r.round >= race.round);

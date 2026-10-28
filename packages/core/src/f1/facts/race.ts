@@ -65,7 +65,9 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 				const gap = (prev: number) => (perRace ? f.idx - prev : upTo(starts.get(id) ?? [], f.idx) - upTo(starts.get(id) ?? [], prev));
 
 				// firsts
-				if (n === 1 && ev !== "start" && ev !== "points" && (settled || !perRace)) {
+				if (def.runsOnly) {
+					// only runs below
+				} else if (n === 1 && ev !== "start" && ev !== "points" && (settled || !perRace)) {
 					const tries = kind === "driver" ? upTo(starts.get(id) ?? [], f.idx) : 0;
 					const attempt = tries > 1 ? `, at the ${ordinal(tries)} attempt` : "";
 					add("first", tag, (perRace ? 7 : 4) + def.weight * 1.5 + (tries > 100 ? 1 : 0), sentence(owned(db, kind, id, `first ${def.one}`), attempt));
@@ -89,13 +91,13 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 
 				// round numbers
 				const sameAsMaker = kind === "nation" && makers.length === 1 && upTo(occurrences(db, "driver", ev).get(makers[0]) ?? [], f.idx) === n;
-				if (n > 1 && isMark(ev, kind, n) && !sameAsMaker) {
+				if (n > 1 && isMark(ev, kind, n) && !sameAsMaker && !def.runsOnly) {
 					const what = ev === "start" ? (kind === "driver" ? "Grand Prix start" : "Grand Prix") : def.one;
 					add("nth", tag, markScore(ev, n), sentence(owned(db, kind, id, `${ordinal(n)} ${what}`)));
 				}
 
 				// the all-time list
-				if (!perRace && ev !== "points" && n > 1 && settled) {
+				if (!perRace && ev !== "points" && !def.runsOnly && n > 1 && settled) {
 					const others = countsAt(occ, f.idx, id);
 					const best = Math.max(0, ...others.map(([, c]) => c));
 					// the latest to reach a count
@@ -127,7 +129,8 @@ export function resultFacts(db: Db, f: RaceFacts, add: Add) {
 						// "the longest since" is news when it reaches further back than last time
 						const news = since?.at !== compareRuns(db, kind, ev, id, f.idx, L - 1).since?.at || L % 5 === 0;
 						const head = owned(db, kind, id, `${ordinal(L)} ${def.one} in a row`);
-						if (L > longest && settled) add("streak", tag, 5 + def.weight * 1.5, sentence(head, ", the longest run ever"));
+						// a record run is news when it's set, and on round numbers after
+						if (L > longest && settled && (L === longest + 1 || L % 5 === 0)) add("streak", tag, 5 + def.weight * 1.5, sentence(head, ", the longest run ever"));
 						else if (L === longest && since && settled) add("streak", tag, 4 + def.weight, sentence(head, ", equalling the record set by ", subject(db, kind, since.key)));
 						else if (since && f.idx - since.at >= 20 && news)
 							add("streak", tag, def.weight * log2((f.idx - since.at) / 10), sentence(head, ", the longest run since ", ...possessive(subject(db, kind, since.key)), " in ", cSeason(raceAt(since.at).year)));

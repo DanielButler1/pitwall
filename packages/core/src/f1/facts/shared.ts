@@ -3,7 +3,7 @@
 
 import type { Db, Race, Result } from "../dataset.ts";
 import { isStart } from "../dataset.ts";
-import { cached, facts, isPodium, isWin, type RaceFacts } from "../records/facts.ts";
+import { cached, facts, isClassified, isPodium, isWin, type RaceFacts } from "../records/facts.ts";
 import { cDriver, cEngine, cRace, cTeam, cText } from "../records/cells.ts";
 import type { Cell } from "../records/types.ts";
 import { nationRef } from "../views.ts";
@@ -24,7 +24,16 @@ export type FactKind =
 	| "podium"
 	| "season"
 	| "drought"
-	| "chance";
+	| "chance"
+	| "shape"
+	| "margin"
+	| "quali"
+	| "laps"
+	| "birthday"
+	| "home"
+	| "debut"
+	| "family"
+	| "teammate";
 
 export type RaceFact = {
 	/** Stable identity, e.g. "since:constructor:ferrari:win". */
@@ -37,7 +46,7 @@ export type RaceFact = {
 };
 
 export type SubjectKind = "driver" | "constructor" | "nation" | "engine";
-export type EventId = "win" | "pole" | "podium" | "points" | "start" | "oneTwo" | "sprintWin" | "sprintStart";
+export type EventId = "win" | "pole" | "podium" | "points" | "start" | "oneTwo" | "sprintWin" | "sprintStart" | "finish";
 
 export type EventDef = {
 	one: string;
@@ -50,6 +59,8 @@ export type EventDef = {
 	sprint?: boolean;
 	/** Only counted (sprint starts, to measure gaps between sprint wins), never a fact itself. */
 	quiet?: boolean;
+	/** Only its runs are news (a run of classified finishes), not firsts, gaps or totals. */
+	runsOnly?: boolean;
 	race?: (f: RaceFacts) => string[];
 };
 
@@ -70,6 +81,7 @@ export const EVENTS: Record<EventId, EventDef> = {
 		},
 	},
 	sprintWin: { one: "sprint win", many: "sprint wins", weight: 1.6, kinds: ["driver", "constructor"], test: isWin, sprint: true },
+	finish: { one: "classified finish", many: "classified finishes", weight: 1, kinds: ["driver"], test: isClassified, runsOnly: true },
 	sprintStart: { one: "sprint", many: "sprints", weight: 0, kinds: ["driver", "constructor"], test: isStart, sprint: true, quiet: true },
 };
 
@@ -281,7 +293,7 @@ export const markScore = (ev: EventId, n: number) => 1.5 + EVENTS[ev].weight * M
 
 /** Shortest run worth a mention, and the shortest whose end is. */
 export const STREAK: Partial<Record<SubjectKind, Partial<Record<EventId, [number, number]>>>> = {
-	driver: { win: [3, 4], pole: [3, 4], podium: [5, 8], points: [10, 15] },
+	driver: { win: [3, 4], pole: [3, 4], podium: [5, 8], points: [10, 15], finish: [25, 30] },
 	constructor: { win: [4, 6], pole: [4, 6], podium: [12, 20], points: [25, 40], oneTwo: [3, 4] },
 };
 

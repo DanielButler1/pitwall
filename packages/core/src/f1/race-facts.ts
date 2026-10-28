@@ -11,6 +11,7 @@
 //   facts/shared.ts    the events, per-subject indexes, sentence builders and scoring
 //   facts/race.ts      the result: firsts, gaps, round numbers, records, runs, ages, grid slots
 //   facts/titles.ts    titles decided and changes of championship lead
+//   facts/deep.ts      the buried ones: margins, finishers, podiums, birthdays, families, team-mates
 //   facts/upcoming.ts  what's at stake at the next race
 
 import type { Db } from "./dataset.ts";
@@ -18,6 +19,7 @@ import { facts } from "./records/facts.ts";
 import { collector, pick, type RaceFact } from "./facts/shared.ts";
 import { resultFacts } from "./facts/race.ts";
 import { titleFacts } from "./facts/titles.ts";
+import { deepFacts } from "./facts/deep.ts";
 
 export { factText, type FactKind, type RaceFact } from "./facts/shared.ts";
 export { nextRace, upcomingFacts } from "./facts/upcoming.ts";
@@ -29,5 +31,6 @@ export function raceFacts(db: Db, raceId: number, limit = 8): RaceFact[] {
 	const { out, add } = collector();
 	titleFacts(db, f, add);
 	resultFacts(db, f, add);
+	deepFacts(db, f, add);
 	return pick(out, limit);
 }

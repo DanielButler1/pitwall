@@ -92,3 +92,14 @@ test("what's at stake next comes capped and readable", () => {
 test("a race with sprint results is a sprint weekend", () => {
 	for (const id of new Set(real.sprintResults.map((r) => r.raceId))) assert.ok(real.raceById.get(id)!.hasSprint, String(id));
 });
+
+test("an all-nation podium is three drivers of that nation", () => {
+	for (const race of done.slice(-400)) {
+		for (const f of raceFacts(real, race.id, 40)) {
+			const m = /^podium:nation:([^:]+):podium$/.exec(f.key);
+			if (!m) continue;
+			const top = [1, 2, 3].map((p) => real.resultsByRace.get(race.id)!.find((r) => r.position === p)!);
+			for (const r of top) assert.equal(real.drivers.get(r.driverId)!.nationality, m[1]);
+		}
+	}
+});
