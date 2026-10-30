@@ -5,7 +5,15 @@ const host = new URL(SITE_URL).host;
 
 const nextConfig: NextConfig = {
 	// data/f1.json and data/facts.json are read at runtime by src/lib/server.ts
-	outputFileTracingIncludes: { "/**": ["./data/f1.json", "./data/facts.json"] },
+	outputFileTracingIncludes: {
+		"/**": ["./data/f1.json", "./data/facts.json"],
+		// and the share pictures (src/lib/og-image.tsx) read their font, the logo and the flags
+		"/**/opengraph-image": [
+			"./assets/fonts/*.ttf",
+			"./src/app/icon.svg",
+			"../../node_modules/.pnpm/flag-icons@*/node_modules/flag-icons/flags/4x3/*.svg",
+		],
+	},
 
 	// The production build answers on its *.vercel.app addresses too: send those to the real
 	// domain so search engines see one copy. Preview deployments keep their own addresses.
