@@ -73,7 +73,7 @@ export function ogImage({
 					display: "flex",
 					flexDirection: "column",
 					padding: "60px 72px",
-					background: "linear-gradient(135deg, #ffffff 0%, #ffffff 52%, #fee2e2 100%)",
+					background: "#ffffff",
 					color: "#09090b",
 					fontFamily: "Montserrat",
 				}}
