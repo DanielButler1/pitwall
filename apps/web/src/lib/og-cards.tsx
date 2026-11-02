@@ -135,7 +135,7 @@ export function entityOgImage(kind: CardKind, id: string) {
 }
 
 /** How much history there is, along the bottom of the site's and the lists' pictures. */
-function totals(): OgStat[] {
+export function ogTotals(): OgStat[] {
 	const db = getDb();
 	// races run so far, not the ones announced
 	const run = db.races.filter((r) => db.resultsByRace.has(r.id));
@@ -152,7 +152,7 @@ export const siteOgImage = () =>
 	ogImage({
 		title: "Every Formula 1 season, race, driver and team",
 		detail: "Since 1950, with their records and facts, plus a lab to rewrite history.",
-		stats: totals(),
+		stats: ogTotals(),
 	});
 
 /** The lists and tools, by their address. */
@@ -171,9 +171,10 @@ const SECTIONS: Record<string, { title: string; detail: string }> = {
 	points: { title: "Points systems", detail: "Every season's scoring, and how the titles would have gone under another." },
 	lab: { title: "Rewrite Formula 1 history", detail: "Change the rules or the results and browse the history that follows." },
 	play: { title: "Formula 1 games", detail: "Daily puzzles and games built on seventy-odd years of results." },
+	u: { title: "An alternate Formula 1 history", detail: "A universe made in the Pitwall lab: real seasons with the rules or results changed." },
 };
 
 /** The share picture for a list or tool page ("drivers", "records"…). */
 export function sectionOgImage(path: keyof typeof SECTIONS) {
-	return ogImage({ ...SECTIONS[path], stats: path === "lab" || path === "play" ? [] : totals() });
+	return ogImage({ ...SECTIONS[path], stats: path === "lab" || path === "play" || path === "u" ? [] : ogTotals() });
 }
