@@ -63,7 +63,6 @@ export function HomeScreen() {
 	const seasonSoFar = useFactEntries((db, index) => (view.titleFight ? seasonFacts(db, index, view.lastYear, 4) : []), [view]);
 	const dayFacts = useFactEntries((db, index) => onThisDayFacts(db, index, month, day, 3), [month, day]);
 
-	const leader = view.inProgress ? "leader" : "champion";
 	return (
 		<TabScreen title="Pitwall" subtitle={`Formula 1 statistics, 1950–${view.lastYear}`}>
 			<Page>
@@ -76,9 +75,9 @@ export function HomeScreen() {
 				</View>
 
 				<StatGrid className="mt-3">
-					<Stat label={`${view.lastYear} drivers' ${leader}`} value={view.champion?.driver.name ?? "–"} detail={view.champion ? `${num(view.champion.points)} points` : null} onPress={view.champion ? () => go(href.driver(view.champion!.driver.id)) : undefined} />
+					<Stat label={`${view.lastYear} drivers' ${view.driversDecided ? "champion" : "leader"}`} value={view.champion?.driver.name ?? "–"} detail={view.champion ? `${num(view.champion.points)} points` : null} onPress={view.champion ? () => go(href.driver(view.champion!.driver.id)) : undefined} />
 					<Stat
-						label={`${view.lastYear} constructors' ${leader}`}
+						label={`${view.lastYear} constructors' ${view.constructorsDecided ? "champion" : "leader"}`}
 						value={view.constructorChampion?.team.name ?? "–"}
 						detail={view.constructorChampion ? `${num(view.constructorChampion.points)} points` : null}
 						onPress={view.constructorChampion ? () => go(href.team(view.constructorChampion!.team.id)) : undefined}
