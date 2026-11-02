@@ -72,7 +72,7 @@ test("a universe's history makes its own facts", () => {
 	assert.notDeepEqual(raceFacts(universe, race.id, 20), raceFacts(real, race.id, 20));
 });
 
-test("every finished season has one race that made its champion", () => {
+test("every decided title has one race that made its champion", () => {
 	for (const { year, id } of champions(real, "driver").slice(-12)) {
 		const races = done.filter((r) => r.year === year);
 		const titled = races.flatMap((r) => raceFacts(real, r.id, 20).filter((f) => f.key.startsWith("title:driver:") && f.key.endsWith(":title")));
