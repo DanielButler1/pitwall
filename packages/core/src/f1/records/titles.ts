@@ -37,7 +37,8 @@ export function deciders(db: Db, type: "driver" | "constructor"): Map<number, nu
 		const out = new Map<number, number>();
 		for (const t of champions(db, type)) {
 			const season = f.seasons.get(t.year) ?? [];
-			let decided = season[season.length - 1];
+			// a finished season's title was decided by its last race at the latest; an open one's maybe not yet
+			let decided: number | undefined = upcoming(db, t.year).length ? undefined : season[season.length - 1];
 			for (let k = 0; k < season.length; k++) {
 				const after = standingsAfter(db, f.races[season[k]].race);
 				const table: StandingRow[] = type === "driver" ? after.drivers : merge(after.constructors);
@@ -49,7 +50,7 @@ export function deciders(db: Db, type: "driver" | "constructor"): Map<number, nu
 					break;
 				}
 			}
-			out.set(t.year, decided);
+			if (decided != null) out.set(t.year, decided);
 		}
 		return out;
 	});
@@ -157,20 +158,16 @@ export function titles(db: Db, kind: Kind | "driver-of-constructor" | "driver-of
 	return cached(db, `titles:${kind}`, () => {
 		const dec = deciders(db, "driver");
 		const cdec = deciders(db, "constructor");
-		const lastIdx = (year: number) => {
-			const s = facts(db).seasons.get(year)!;
-			return s[s.length - 1];
-		};
-		const drivers = champions(db, "driver").map((t) => ({ ...t, decider: dec.get(t.year) ?? lastIdx(t.year) }));
+		// only titles with a deciding race (one flagged in a season still open, but not out of reach yet, waits)
+		const decided = (type: "driver" | "constructor", d: Map<number, number>) => champions(db, type).filter((t) => d.has(t.year)).map((t) => ({ ...t, decider: d.get(t.year)! }));
+		const drivers = decided("driver", dec);
 		switch (kind) {
 			case "driver":
 				return drivers.map((t) => ({ year: t.year, id: t.id, decider: t.decider, points: t.points }));
 			case "constructor":
-				return dedupe(champions(db, "constructor").map((t) => ({ year: t.year, id: t.id, decider: cdec.get(t.year) ?? lastIdx(t.year), points: t.points })));
+				return dedupe(decided("constructor", cdec).map((t) => ({ year: t.year, id: t.id, decider: t.decider, points: t.points })));
 			case "engine":
-				return dedupe(
-					champions(db, "constructor").map((t) => ({ year: t.year, id: t.engineId ?? "", decider: cdec.get(t.year) ?? lastIdx(t.year), points: t.points })),
-				).filter((t) => t.id);
+				return dedupe(decided("constructor", cdec).map((t) => ({ year: t.year, id: t.engineId ?? "", decider: t.decider, points: t.points }))).filter((t) => t.id);
 			case "driver-of-constructor":
 				return drivers.map((t) => ({ ...t, id: seasonConstructor(db, t.id, t.year) ?? "" })).filter((t) => t.id);
 			case "driver-of-engine":
