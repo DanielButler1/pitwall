@@ -12,6 +12,9 @@ import { setGameStorage } from "@pitwall/core/game/daily";
 import { BootScreen } from "@/components/shell/BootScreen";
 import { FeedbackHost, toast } from "@/components/ui";
 import { bootDataset, datasetStore, refreshDataset } from "@/data/dataset";
+import { startAds } from "@/features/ads/ads";
+import { startPurchases } from "@/features/ads/purchases";
+import { RemoveAdsSheet } from "@/features/ads/RemoveAdsSheet";
 import { gameStorage } from "@/lib/storage";
 import { AppearanceProvider, useAppearance } from "@/providers/AppearanceProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
@@ -20,6 +23,8 @@ void SplashScreen.preventAutoHideAsync().catch(() => undefined);
 // the games keep their saves in the app's SQLite store rather than the web's localStorage
 setGameStorage(gameStorage);
 void bootDataset();
+// whether this phone has bought ad-free, before any ad is asked for
+void startPurchases();
 
 export default function RootLayout() {
 	return (
@@ -68,6 +73,12 @@ function RootNavigator() {
 		shown.current = built;
 	}, [built]);
 
+	// Ads (and their consent form) wait until the app is open: not over the splash or the first download.
+	const open = dataset.status === "ready";
+	useEffect(() => {
+		if (open) void startAds();
+	}, [open]);
+
 	// Back in the foreground after a while: there may be new results.
 	useEffect(() => {
 		const sub = AppState.addEventListener("change", (state) => {
@@ -90,6 +101,7 @@ function RootNavigator() {
 					<Stack.Screen name="settings" />
 				</Stack>
 			)}
+			<RemoveAdsSheet />
 			<FeedbackHost />
 		</ThemeProvider>
 	);

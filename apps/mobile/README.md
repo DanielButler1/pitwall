@@ -23,7 +23,8 @@ src/components/ui            the design system's primitives (from Phaseo mobile)
 src/components/f1.tsx        Pitwall's: flags, position badges, stat tiles, page shells
 src/components/charts.tsx    hold-to-read SVG charts (from Solar)
 src/features/<area>/         screens and their parts: home, browse, people, places,
-                             seasons, records, play (kit/ + games), lab, search, settings
+                             seasons, records, play (kit/ + games), lab, search, settings,
+                             ads (native ads, consent, Remove ads)
 src/data/dataset.ts          the dataset on the device, useDb/useView, universe mode
 src/lib/                     links (website-style paths, useOpen), format, haptics,
                              storage, store, config
@@ -32,7 +33,19 @@ modules/haptics              Android touch pulses for motors that can't play sys
 
 ## Design rules
 
-Shared with Phaseo and Solar: sentence-case bold headings, flat rows and dividers rather than cards, `rounded-md`, borders not shadows, Montserrat, tokens from `global.css` (mirroring the website's theme: F1 red, podium and universe colours). Wide web tables become rows with the few numbers that matter; detail goes one tap deeper. Haptics mark choices, switches, scrubs and outcomes, never plain taps (`haptic(kind)` in `src/lib/haptics.ts`). No system dialogs or toasts: ask with `confirm()`, tell with `alert()` and report outcomes with `toast()` from `@/components/ui` (drawn by `FeedbackHost` in the app's design). Spinners are the kit's `Spinner`, sheets its `Sheet`, and there's no pull-to-refresh (its spinner is the system's; the app checks for new data on launch and on return, and says so with a toast). The share sheet is the one system surface, for sending to other apps.
+Shared with Phaseo and Solar: sentence-case bold headings, flat rows and dividers rather than cards, `rounded-md`, borders not shadows, Montserrat, tokens from `global.css` (mirroring the website's theme: F1 red, podium and universe colours). Wide web tables become rows with the few numbers that matter; detail goes one tap deeper. Haptics mark choices, switches, scrubs and outcomes, never plain taps (`haptic(kind)` in `src/lib/haptics.ts`). No system dialogs or toasts: ask with `confirm()`, tell with `alert()` and report outcomes with `toast()` from `@/components/ui` (drawn by `FeedbackHost` in the app's design). Spinners are the kit's `Spinner`, sheets its `Sheet`, and there's no pull-to-refresh (its spinner is the system's; the app checks for new data on launch and on return, and says so with a toast). The share sheet is the one system surface, for sending to other apps, besides Google's ad consent form and the store's payment screen (below).
+
+## Ads and Remove ads
+
+No banners or interstitials. `NativeAdSlot` (`src/features/ads`) draws an AdMob native ad as one of the app's rows, with an "Ad" badge and a "Remove ads" link under it, and draws nothing until one has loaded. One per screen at most: Home (after the latest race), driver, team, circuit, race and season pages, never in the games, the Lab, search or Settings. A one-off purchase through RevenueCat (`purchases.ts`) unlocks the `no_ads` entitlement for good; a paid phone never loads the ads SDK or sees the consent form. Everyone else gets Google's consent form (UMP) first where the law requires one, and Settings → Ads has "Ad privacy choices" for them.
+
+The IDs live in `app.json`; none of them is secret:
+
+- `plugins` → `react-native-google-mobile-ads` → `androidAppId` / `iosAppId`: the AdMob app IDs. They're Google's sample IDs now; replace them with the app's own, then `pnpm apk --clean`.
+- `extra.admobNativeUnit` (or `EXPO_PUBLIC_ADMOB_NATIVE_UNIT`): the native ad unit. Unset, development builds show Google's test ads and release builds show none.
+- `extra.revenueCatAndroidKey` / `revenueCatIosKey` (or `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` / `_IOS_KEY`): RevenueCat's public SDK keys. Unset, "Remove ads" isn't offered. RevenueCat's Test Store key works in a development build before the app is on Google Play.
+
+In RevenueCat: a non-consumable product (£1.99 in Google Play), an entitlement `no_ads` attached to it, and a current offering with it as the Lifetime package. The price shown comes from the store.
 
 ## Running it
 

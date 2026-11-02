@@ -7,6 +7,7 @@ import { View } from "react-native";
 import { Page, Stat, StatGrid, TabScreen } from "@/components/f1";
 import { Button, Text } from "@/components/ui";
 import { useDb, useDeferredView, useView } from "@/data/dataset";
+import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
 import { onThisDayFacts, raceEntries, seasonFacts, upcomingFacts } from "@pitwall/core/f1/race-facts";
 import { useFactEntries } from "@/data/facts";
 import { num } from "@/lib/format";
@@ -90,6 +91,7 @@ export function HomeScreen() {
 
 				<Standings view={view} go={go} />
 				{view.latestRace ? <LatestRace race={view.latestRace} go={go} facts={latestFacts} /> : null}
+				<NativeAdSlot />
 				{view.nextRace ? (
 					<NextRace
 						next={view.nextRace}
