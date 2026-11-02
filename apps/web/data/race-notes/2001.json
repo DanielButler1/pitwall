@@ -1,0 +1,164 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 5,
+				"to": 15
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2001_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 4,
+				"to": 11
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2001_Malaysian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2001_Brazilian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_San_Marino_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2001_Austrian_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_Monaco_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 21,
+				"to": 24
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2001_Canadian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_European_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_French_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_British_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 2
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/2001_German_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_Hungarian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 5
+			},
+			{
+				"type": "SC",
+				"from": 6,
+				"to": 7
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2001_Belgian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_Italian_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_United_States_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2001_Japanese_Grand_Prix"
+		]
+	}
+}

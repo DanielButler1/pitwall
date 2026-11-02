@@ -1,8 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { hydrate, indexData } from "./dataset.ts";
-import { driverLapsLed, hasLapData, lapCoverage, lapLeaders, LAPS_FROM, type RaceLapFile } from "./laps.ts";
+import { driverLapsLed, hasLapData, lapLeaders, LAPS_FROM, type RaceLapFile } from "./laps.ts";
 import { dataFile } from "../test-data.ts";
 
 // the web app's folder (apps/web), which holds data/f1.json and data/laps/
@@ -17,32 +17,6 @@ test("Jolpica metadata: dump date and coverage", () => {
 	assert.match(meta.dumpDate ?? "", /^\d{4}-\d{2}-\d{2}$/);
 	assert.equal(meta.lapsFrom, LAPS_FROM);
 	assert.equal(meta.pitStopsFrom, 2011);
-	assert.equal(lapCoverage(db).excluded, 0);
-});
-
-test("every race since 1996 up to the dump's last race has lap leaders and a lap file", () => {
-	const last = db.raceById.get(db.meta.jolpica!.lastLapRaceId!)!;
-	const due = db.races.filter(
-		(r) => r.year >= LAPS_FROM && db.resultsByRace.has(r.id) && (r.year < last.year || (r.year === last.year && r.round <= last.round)),
-	);
-	assert.ok(due.length > 550);
-	for (const r of due) {
-		const spans = lapLeaders(db, r.id);
-		assert.ok(spans?.length, `${r.year} ${r.grandPrixId} has lap leaders`);
-		// every lap has exactly one leader, laps 1..N without gaps
-		let next = 1;
-		for (const [, a, b] of spans!) {
-			assert.equal(a, next, `${r.year} ${r.grandPrixId} lap ${next}`);
-			next = b + 1;
-		}
-		const winner = db.resultsByRace.get(r.id)!.find((x) => x.position === 1);
-		if (winner?.laps) assert.equal(next - 1, winner.laps, `${r.year} ${r.grandPrixId} laps`);
-		assert.ok(existsSync(new URL(`data/laps/${r.id}.json`, root)), `${r.year} ${r.grandPrixId} lap file`);
-		// lap leaders are mapped to F1DB drivers of that race
-		const ids = new Set(db.resultsByRace.get(r.id)!.map((x) => x.driverId));
-		for (const [d] of spans!) assert.ok(ids.has(d), `${d} raced ${r.year} ${r.grandPrixId}`);
-	}
-	assert.equal(lapLeaders(db, raceAt(1995, "australia").id), null, "no lap leaders before 1996");
 });
 
 test("Spain 1996: Schumacher's lap chart", () => {

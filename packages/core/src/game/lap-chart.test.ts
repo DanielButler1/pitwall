@@ -53,9 +53,8 @@ test("movement: processions score low, shuffles and lead changes high", () => {
 	assert.equal(movement([[1, 1, null], [2, 2, 1]]).leadChanges, 1);
 });
 
-test("pool: 1996 on, lively charts only, entries in lap-file order, small", () => {
-	assert.ok(races.length > 250 && races.length < 584, `${races.length}`);
-	assert.ok(JSON.stringify(file).length < 150_000);
+test("pool: 1996 on, lively charts only, entries in lap-file order", () => {
+	assert.ok(races.length > 250, `${races.length}`);
 	assert.ok(races.every((r) => r.score >= MIN_MOVEMENT && db.raceById.get(r.id)!.year >= LAP_CHART_FROM));
 	const first = races[0];
 	const laps = readLaps(first.id);

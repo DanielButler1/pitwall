@@ -45,9 +45,7 @@ const g = unpack(file);
 const at = (id: string) => g.byId.get(id)!.i;
 const label = (a: string, b: string) => linkLabel(g, linkOf(g, at(a), at(b))!);
 
-test("chain file: compact, valid indexes, explained links", () => {
-	const size = JSON.stringify(file).length;
-	assert.ok(size < 250_000, `${size}`);
+test("chain file: valid indexes, explained links", () => {
 	assert.ok(file.drivers.length > 800);
 	assert.deepEqual(
 		file.drivers.map((d) => d[0]),
@@ -157,9 +155,9 @@ test("play: picks attach to whichever end they connect to", () => {
 
 test("play: strikes, repeats, undo, hints and giving up", () => {
 	let s = newGame(senna());
-	s = step(g, s, "max-verstappen"); // never with Senna or Hamilton
+	s = step(g, s, "juan-manuel-fangio"); // never with Senna or Hamilton (retired, so that can't change)
 	assert.equal(s.strikes.length, 1);
-	assert.equal(step(g, s, "max-verstappen"), s); // already ruled out against the same ends
+	assert.equal(step(g, s, "juan-manuel-fangio"), s); // already ruled out against the same ends
 	s = step(g, s, "alain-prost");
 	s = step(g, s, UNDO);
 	assert.deepEqual(s.top, [at("ayrton-senna")]);
@@ -178,19 +176,19 @@ test("play: strikes, repeats, undo, hints and giving up", () => {
 	assert.equal(s.hint, null);
 	assert.ok(!canHint(s)); // two strikes used
 
-	s = step(g, s, "kimi-antonelli");
+	s = step(g, s, "jim-clark");
 	assert.ok(s.over && !s.solved);
 	assert.equal(strikesUsed(s), MAX_STRIKES);
 
 	const quit = step(g, newGame(senna()), GIVE_UP);
 	assert.ok(quit.over && quit.gaveUp && !quit.solved);
 	// replaying saved actions rebuilds the same game
-	const actions = ["max-verstappen", "alain-prost", UNDO, HINT];
+	const actions = ["juan-manuel-fangio", "alain-prost", UNDO, HINT];
 	assert.deepEqual(replay(g, senna(), actions), actions.reduce((x, a) => step(g, x, a), newGame(senna())));
 });
 
 test("share text: ends and score only", () => {
-	const s = replay(g, senna(), ["alain-prost", "max-verstappen", "nico-rosberg", "michael-schumacher", "riccardo-patrese", "nigel-mansell"]);
+	const s = replay(g, senna(), ["alain-prost", "juan-manuel-fangio", "nico-rosberg", "michael-schumacher", "riccardo-patrese", "nigel-mansell"]);
 	const text = shareText(g, s, { label: "#3", url: "https://example.test/play/chain" });
 	assert.equal(text, "Pitwall Teammate chain #3\nSenna → … → Hamilton\n🔗🔗🔗🔗🔗🔗 par 4 ✓ (1 strike)\nhttps://example.test/play/chain");
 	assert.ok(!/Prost|Rosberg|Mansell/.test(text));

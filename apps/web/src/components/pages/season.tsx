@@ -31,6 +31,8 @@ import { buttonVariants } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { FactsSection } from "../facts";
+import type { FactEntry } from "@pitwall/core/f1/race-facts";
 
 export function SeasonsPage({ view }: { view: SeasonsView }) {
 	return (
@@ -282,7 +284,7 @@ function GridCell({ cell, race }: { cell: MatrixCell; race: RaceRef }) {
 	);
 }
 
-export function SeasonPage({ view, progression }: { view: SeasonView; progression?: SeasonProgression | null }) {
+export function SeasonPage({ view, progression, facts }: { view: SeasonView; progression?: SeasonProgression | null; facts?: FactEntry[] | null }) {
 	const done = view.races.filter((r) => r.completed);
 	// Mid-season, show the current leaders in place of champions.
 	const champion = view.driverStandings.find((d) => d.champion) ?? (view.inProgress ? view.driverStandings[0] : undefined);
@@ -373,6 +375,8 @@ export function SeasonPage({ view, progression }: { view: SeasonView; progressio
 					)}
 				</div>
 			)}
+
+			<FactsSection entries={facts} upcoming={null} description="What stood out in the season, race by race" />
 
 			{view.completed && (
 				<Section

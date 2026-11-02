@@ -1,0 +1,107 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Argentine_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Brazilian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_South_African_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 29
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1975_Spanish_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Monaco_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Belgian_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Swedish_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Dutch_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_French_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 56
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1975_British_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_German_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "wet",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 29
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1975_Austrian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1975_United_States_Grand_Prix"
+		]
+	}
+}

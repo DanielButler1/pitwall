@@ -362,7 +362,9 @@ function* dynamicSteps(base: Db, p: HistorySim, mods: Modifiers, onYear?: Progre
 		const real = Y <= lastReal;
 		const plan = real ? plans.get(Y) : undefined;
 		if (real && !plan) continue;
-		const calendar = real ? plan!.races : template.map((t) => futureRace(t, Y, base));
+		// a future season with a calendar announced is run on it; later ones repeat the last real season's
+		const scheduled = real ? [] : (base.racesByYear.get(Y) ?? []).filter((r) => r.grandPrixId !== INDY && !base.resultsByRace.has(r.id));
+		const calendar = real ? plan!.races : scheduled.length ? [...scheduled].sort((a, b) => a.round - b.round) : template.map((t) => futureRace(t, Y, base));
 		if (!calendar.length) continue;
 		const first = calendar[0];
 		const last = calendar[calendar.length - 1];

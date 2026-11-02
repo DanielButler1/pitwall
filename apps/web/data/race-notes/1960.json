@@ -1,0 +1,26 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1960_Argentine_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1960_French_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1960_British_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1960_Italian_Grand_Prix"
+		]
+	}
+}

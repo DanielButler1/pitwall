@@ -30,6 +30,7 @@ import { seasonProgression } from "@pitwall/core/f1/progression";
 import { driverTeammatesView, teammatePairView } from "@pitwall/core/f1/teammates";
 import { compareQuery, compareView } from "@pitwall/core/f1/compare";
 import { entityResults, unpackResults } from "@pitwall/core/f1/entity-results";
+import { factsFor, upcomingFacts } from "@pitwall/core/f1/race-facts";
 import { copyShareLink, saveShared, ShareButton, SharedActions } from "@/components/lab/share-button";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -46,7 +47,7 @@ function render(db: Db, base: Db, path: string[], uid: string, name: string, sea
 	const [section, a, b] = path;
 	switch (section) {
 		case undefined:
-			return <HomePage view={v.homeView(db)} universeName={name} milestones={milestoneWatch(db)} onThisDay={onThisDayView(db, new Date().getMonth() + 1, new Date().getDate())} />;
+			return <HomePage view={v.homeView(db)} universeName={name} milestones={milestoneWatch(db)} onThisDay={onThisDayView(db, new Date().getMonth() + 1, new Date().getDate())} upcoming={upcomingFacts(db, 4)} />;
 		case "seasons": {
 			if (!a) return <SeasonsPage view={v.seasonsView(db, base)} />;
 			const view = v.seasonView(db, Number(a), base);
@@ -54,7 +55,7 @@ function render(db: Db, base: Db, path: string[], uid: string, name: string, sea
 		}
 		case "races": {
 			const view = v.raceView(db, Number(a), Number(b), base);
-			return view && <RacePage view={view} labHref={`/lab?u=${uid}&race=${view.raceId}`} />;
+			return view && <RacePage view={view} labHref={`/lab?u=${uid}&race=${view.raceId}`} facts={factsFor(db, view.raceId)} />;
 		}
 		case "drivers": {
 			if (!a) return <DriversPage view={v.driversView(db)} />;

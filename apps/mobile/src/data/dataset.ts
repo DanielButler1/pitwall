@@ -6,7 +6,7 @@
 // (If-None-Match on the file's ETag): after a race weekend that brings in the new results.
 
 import { File, Paths } from "expo-file-system";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { hydrate, indexData, type Db, type RawDataset } from "@pitwall/core/f1/dataset";
 import { dataUrl } from "@/lib/config";
 import { kv } from "@/lib/storage";
@@ -154,4 +154,20 @@ export function useView<T>(build: (db: Db) => T, deps: readonly unknown[]): T {
 	// the caller's deps are the point: this is useMemo keyed on the dataset plus them
 	// eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/use-memo
 	return useMemo(() => build(db), [db, ...deps]);
+}
+
+/**
+ * Like useView, for views slow enough to hold up a screen (race facts: up to a second or two the first
+ * time on a phone): worked out just after the screen first draws, null until then.
+ */
+export function useDeferredView<T>(build: (db: Db) => T, deps: readonly unknown[], delay = 250): T | null {
+	const db = useDb();
+	const key = JSON.stringify(deps);
+	const [state, setState] = useState<{ db: Db; key: string; value: T } | null>(null);
+	useEffect(() => {
+		const t = setTimeout(() => setState({ db, key, value: build(db) }), delay);
+		return () => clearTimeout(t);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [db, key, delay]);
+	return state?.db === db && state.key === key ? state.value : null;
 }

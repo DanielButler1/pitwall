@@ -1,0 +1,99 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_United_States_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Brazilian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_San_Marino_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Monaco_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Canadian_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Mexican_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_British_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_German_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Hungarian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Belgian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Italian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Portuguese_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Spanish_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1991_Japanese_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "wet",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 14
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1991_Australian_Grand_Prix"
+		]
+	}
+}

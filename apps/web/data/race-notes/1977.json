@@ -1,0 +1,86 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Argentine_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Brazilian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_South_African_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Belgian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Swedish_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_French_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_British_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_German_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Austrian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Dutch_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Italian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_United_States_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1977_Japanese_Grand_Prix"
+		]
+	}
+}

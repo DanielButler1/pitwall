@@ -4,13 +4,18 @@ import { grandPrixView } from "@pitwall/core/f1/views";
 import { DetailScreen, Flag, Page, Stat, StatGrid } from "@/components/f1";
 import { Badge, EmptyState, Row, Section, Text } from "@/components/ui";
 import { InlineLink, MoreButton, Ranked, useMore } from "@/features/browse/kit";
-import { useView } from "@/data/dataset";
+import { useDeferredView, useView } from "@/data/dataset";
 import { plural, yearRange } from "@/lib/format";
 import { href, useOpen } from "@/lib/links";
+import { upcomingAbout, venueFacts } from "@pitwall/core/f1/race-facts";
+import { FactsSection } from "@/components/facts";
+import { useFactEntries } from "@/data/facts";
 
 export function GrandPrixScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const view = useView((db) => grandPrixView(db, id), [id]);
+	const facts = useFactEntries((db, index) => venueFacts(db, index, { grandPrixId: id }), [id]);
+	const upcoming = useDeferredView((db) => upcomingAbout(db, { grandPrixId: id }), [id]);
 	const open = useOpen();
 	const editions = useMore(20, 50);
 	if (!view) {
@@ -41,6 +46,7 @@ export function GrandPrixScreen() {
 					<Stat label="Different winners" value={t.winners} />
 					<Stat label={top ? `Most wins (${top.wins})` : "Most wins"} value={top ? top.driver.name : "–"} onPress={top ? () => open(href.driver(top.driver.id)) : undefined} />
 				</StatGrid>
+				<FactsSection entries={facts} upcoming={upcoming} description="Standout moments from its runnings" />
 				<Section title="Every edition" description="Newest first.">
 					{view.editions.slice(0, editions.count).map((e, i, shown) => (
 						<Row

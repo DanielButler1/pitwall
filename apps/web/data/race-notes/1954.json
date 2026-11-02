@@ -1,0 +1,50 @@
+{
+	"1": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_Argentine_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_Belgian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_French_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_British_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_German_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_Swiss_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_Italian_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1954_Spanish_Grand_Prix"
+		]
+	}
+}

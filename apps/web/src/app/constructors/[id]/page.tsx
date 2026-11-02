@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ConstructorPage } from "@/components/pages/profiles";
-import { getDb } from "@/lib/server";
+import { describe, getDb, getFactIndex } from "@/lib/server";
+import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
 import { constructorView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
 
@@ -12,11 +13,12 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	return { title: getDb().constructors.get((await params).id)?.name ?? "Constructor" };
+	const { id } = await params;
+	return { title: getDb().constructors.get(id)?.name ?? "Constructor", description: describe("team", id) };
 }
 
 export default async function Page({ params }: Props) {
 	const view = constructorView(getDb(), (await params).id);
 	if (!view) notFound();
-	return <ConstructorPage view={view} />;
+	return <ConstructorPage view={view} facts={subjectFacts(getDb(), getFactIndex(), "constructor", view.team.id)} upcoming={upcomingAbout(getDb(), { constructor: view.team.id })} />;
 }

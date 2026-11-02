@@ -1,0 +1,207 @@
+{
+	"1": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			},
+			{
+				"type": "SC",
+				"from": 26,
+				"to": 30
+			},
+			{
+				"type": "SC",
+				"from": 44,
+				"to": 47
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_Malaysian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_Bahrain_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			},
+			{
+				"type": "SC",
+				"from": 22,
+				"to": 29
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Spanish_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Turkish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 8,
+				"to": 11
+			},
+			{
+				"type": "SC",
+				"from": 62,
+				"to": 67
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 16,
+				"to": 22
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Canadian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_French_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 36,
+				"to": 42
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_German_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_Hungarian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_European_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_Belgian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 3
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Italian_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 14,
+				"to": 20
+			},
+			{
+				"type": "SC",
+				"from": 46,
+				"to": 53
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Singapore_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_Japanese_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2008_Chinese_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 4
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2008_Brazilian_Grand_Prix"
+		]
+	}
+}

@@ -16,7 +16,7 @@ import {
 	winnerOf,
 	type Career,
 } from "./stats.ts";
-import { driverLapsLed, hasLapData, lapCoverage, lapLeaders, sprintLapLeaders } from "./laps.ts";
+import { driverLapsLed, hasLapData, lapCoverage, lapLeaders, raceNote, sprintLapLeaders, type Neutralisation, type Weather } from "./laps.ts";
 
 export type DriverRef = { id: string; name: string; country: string | null; countryName: string | null };
 export type TeamRef = { id: string; name: string; country: string | null };
@@ -128,6 +128,9 @@ export type HomeView = {
 	totals: { seasons: number; races: number; drivers: number; winners: number; constructors: number };
 	champion: { driver: DriverRef; points: number } | null;
 	constructorChampion: { team: TeamRef; points: number } | null;
+	/** The title is won: the season is over, or no one can catch the leader any more. */
+	driversDecided: boolean;
+	constructorsDecided: boolean;
 	standings: SeasonView["driverStandings"];
 	/** The latest race: its top ten (the winner's race time, then gaps), pole and fastest lap. */
 	latestRace: { race: RaceRef; circuit: CircuitRef; top: HomeResult[]; pole: DriverRef | null; fastestLap: { driver: DriverRef; time: string | null } | null } | null;
@@ -175,7 +178,7 @@ export type TitleFight<R> = {
  * Most points one driver (or, with `team`, one two-car constructor) can still score in these
  * races under the season's rules; null when dropped results or best-car-only scoring make it unclear.
  */
-function pointsLeft(db: Db, year: number, races: Race[], team = false): number | null {
+export function pointsLeft(db: Db, year: number, races: Race[], team = false): number | null {
 	const rules = rulesFor(db, year);
 	const s = rules.system;
 	if (s.bestResults || (team ? rules.constructorDrop.type !== "all" || rules.constructorBestCarOnly || !rules.hasConstructorsChampionship : rules.driverDrop.type !== "all")) return null;
@@ -292,6 +295,8 @@ export function homeView(db: Db): HomeView {
 		},
 		champion: champion ? { driver: champion.driver, points: champion.points } : null,
 		constructorChampion: cChampion ? { team: cChampion.team, points: cChampion.points } : null,
+		driversDecided: !inProgress || fight?.drivers.contenders.length === 1,
+		constructorsDecided: !inProgress || fight?.constructors?.contenders.length === 1,
 		standings: season.driverStandings.slice(0, 10),
 		latestRace: last
 			? {
@@ -572,8 +577,10 @@ export type RaceView = {
 	standingsAfter: { drivers: { position: string; driver: DriverRef; points: number }[]; constructors: { position: string; team: TeamRef; points: number }[] };
 	/** Who led which laps (Jolpica, since 1996); null without lap data or when a universe changed the race. */
 	lapsLed: { driver: DriverRef; laps: number; spans: [number, number][] }[] | null;
-	/** Lap-by-lap data available for this race (lap chart, and pit stops from 2011): loaded separately per race. */
-	lapData: { chart: boolean; pitStops: boolean; sprintChart: boolean; dumpDate: string | null } | null;
+	/** Lap-by-lap data available for this race (lap chart, pit stops from 2011, tyres from the race notes): loaded separately per race. */
+	lapData: { chart: boolean; pitStops: boolean; sprintChart: boolean; tyres: boolean; dumpDate: string | null } | null;
+	/** Hand-entered race notes: weather, and safety cars, virtual safety cars and red flags (null when there are none). */
+	notes: { weather: Weather | null; neutralised: Neutralisation[] } | null;
 };
 
 function resultRows(db: Db, results: Result[], real?: Result[]): ResultRow[] {
@@ -641,6 +648,7 @@ export function raceView(db: Db, year: number, round: number, base?: Db): RaceVi
 		fastestLap: fl ? { driver: driverRef(db, fl.driverId), lap: fl.lap, time: fl.time } : null,
 		lapsLed: lapsLedSummary(db, race.id),
 		lapData: lapDataFlags(db, race),
+		notes: notesOf(db, race.id),
 		standingsAfter: {
 			drivers: after.drivers.slice(0, 10).map((s) => ({ position: s.positionText, driver: driverRef(db, s.id), points: r2(s.points) })),
 			constructors: after.constructors.slice(0, 10).map((s) => ({ position: s.positionText, team: teamRef(db, s.id), points: r2(s.points) })),
@@ -659,14 +667,22 @@ function lapsLedSummary(db: Db, raceId: number): RaceView["lapsLed"] {
 }
 
 function lapDataFlags(db: Db, race: Race): RaceView["lapData"] {
-	if (!hasLapData(db, race.id)) return null;
+	const tyres = raceNote(db, race.id)?.tyres ?? false;
+	// tyres can be entered before Jolpica has the race: its file then holds only them
+	if (!hasLapData(db, race.id)) return tyres ? { chart: false, pitStops: false, sprintChart: false, tyres, dumpDate: null } : null;
 	const meta = db.meta.jolpica;
 	return {
 		chart: true,
 		pitStops: meta?.pitStopsFrom != null && race.year >= meta.pitStopsFrom,
 		sprintChart: sprintLapLeaders(db, race.id) != null,
+		tyres,
 		dumpDate: meta?.dumpDate ?? null,
 	};
+}
+
+function notesOf(db: Db, raceId: number): RaceView["notes"] {
+	const note = raceNote(db, raceId);
+	return note && (note.weather || note.neutralised.length) ? { weather: note.weather, neutralised: note.neutralised } : null;
 }
 
 /* -------------------------------------------------------------- drivers --- */

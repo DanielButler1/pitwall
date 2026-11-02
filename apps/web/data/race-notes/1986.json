@@ -1,0 +1,99 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Brazilian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Spanish_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_San_Marino_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Monaco_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Belgian_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Canadian_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Detroit_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_French_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1986_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_German_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Austrian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Portuguese_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Mexican_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1986_Australian_Grand_Prix"
+		]
+	}
+}

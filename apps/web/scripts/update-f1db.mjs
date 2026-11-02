@@ -15,6 +15,8 @@ const tag = process.argv[2];
 const ASSET = "f1db-json-splitted.zip";
 
 const headers = { "User-Agent": "pitwall-f1db-updater", Accept: "application/vnd.github+json" };
+// Anonymous API calls share a small hourly limit per IP, which CI runners often exhaust
+if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 const api = tag
 	? `https://api.github.com/repos/f1db/f1db/releases/tags/${tag}`
 	: "https://api.github.com/repos/f1db/f1db/releases/latest";

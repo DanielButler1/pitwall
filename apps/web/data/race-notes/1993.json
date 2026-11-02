@@ -1,0 +1,96 @@
+{
+	"1": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_South_African_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 29,
+				"to": 38
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/1993_Brazilian_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_European_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_San_Marino_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Monaco_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 38,
+				"to": 40
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/1993_British_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_German_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Belgian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Italian_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Portuguese_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Japanese_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1993_Australian_Grand_Prix"
+		]
+	}
+}

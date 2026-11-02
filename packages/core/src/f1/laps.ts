@@ -9,9 +9,9 @@
 // here checks the race's results against the fingerprint of the real ones and
 // treats changed races as having no lap data.
 
-import { resultsSig, type Db, type JolpicaMeta, type LeadSpan, type SprintFastestLap } from "./dataset.ts";
+import { resultsSig, type Db, type JolpicaMeta, type LeadSpan, type Neutralisation, type RaceNote, type SprintFastestLap } from "./dataset.ts";
 
-export type { LeadSpan } from "./dataset.ts";
+export type { LeadSpan, Neutralisation, RaceNote, Weather } from "./dataset.ts";
 
 /** First season with lap-by-lap race data (neither F1DB nor Jolpica has earlier lap leaders). */
 export const LAPS_FROM = 1996;
@@ -28,6 +28,10 @@ export type RaceLapFile = {
 	/** [driverId, stop number, lap, duration ms] */
 	pitStops?: [string, number, number | null, number | null][];
 	sprint?: { drivers: string[]; positions: (number | null)[][]; times: (number | null)[][] };
+	/** Race notes: each driver's compounds, stint by stint ("?" where unknown), in finishing order. */
+	tyres?: [string, TyreCode[]][];
+	/** Race notes: Pirelli's compound for each code that weekend, e.g. { H: "C1", M: "C2", S: "C3" }. */
+	compounds?: Partial<Record<TyreCode, string>>;
 };
 
 const memo = new WeakMap<Db, Map<string, unknown>>();
@@ -132,6 +136,88 @@ export function driverLapsLed(db: Db, driverId: string): { laps: number; races: 
 		return m;
 	});
 	return all.get(driverId) ?? { laps: 0, races: 0 };
+}
+
+/* --------------------------------------------------------- race notes --- */
+// Hand-entered (data/race-notes): safety cars, red flags, weather, and tyres in the race file.
+
+/** The race's notes, or null when there are none or a universe changed the race. */
+export function raceNote(db: Db, raceId: number): RaceNote | null {
+	const note = db.raceNotes?.get(raceId);
+	if (!note) return null;
+	return db.raceNotesSig?.get(raceId) === resultsSig(db.resultsByRace.get(raceId)) ? note : null;
+}
+
+export const NEUTRAL_LABEL: Record<Neutralisation[0], string> = { SC: "Safety car", VSC: "Virtual safety car", RF: "Red flag" };
+
+/** "Safety car laps 23-26", "Red flag lap 33". */
+export function neutralText([type, from, to]: Neutralisation): string {
+	return `${NEUTRAL_LABEL[type]} ${from === to ? `lap ${from}` : `laps ${from}–${to}`}`;
+}
+
+export type TyreCode = "HS" | "US" | "SS" | "S" | "M" | "H" | "SH" | "I" | "W" | "?";
+
+const TYRE_NAME: Record<TyreCode, string> = { HS: "Hypersoft", US: "Ultrasoft", SS: "Supersoft", S: "Soft", M: "Medium", H: "Hard", SH: "Superhard", I: "Intermediate", W: "Wet", "?": "Unknown" };
+
+export const tyreName = (code: TyreCode) => TYRE_NAME[code] ?? code;
+
+/** The sidewall colour of a compound in that season (Pirelli's colours; they moved around until 2019). */
+export function tyreColour(code: TyreCode, year: number): string | null {
+	switch (code) {
+		case "HS":
+			return "#f4a6c8";
+		case "US":
+			return "#9b4dca";
+		case "SS":
+			return "#e10600";
+		case "S":
+			return year >= 2019 ? "#e10600" : "#f5c518";
+		case "M":
+			return year >= 2019 ? "#f5c518" : "#f2f2f2";
+		case "H":
+			return year >= 2019 ? "#f2f2f2" : year === 2018 ? "#7fd0f0" : "#f08c1e";
+		case "SH":
+			return "#f08c1e";
+		case "I":
+			return "#3aa335";
+		case "W":
+			return "#1e6fd9";
+		default:
+			return null;
+	}
+}
+
+export type Stint = { from: number; to: number; compound: TyreCode | null };
+
+/**
+ * Each driver's stints: split at their pit stops (and at red flags where the notes have more compounds than
+ * stops, as tyres can be changed during the stoppage), with the compounds from the notes where entered.
+ * `laps` is each driver's laps completed; drivers come in the file's (finishing) order.
+ */
+export function raceStints(file: RaceLapFile, laps: Map<string, number>, neutralised: Neutralisation[] = []): { driverId: string; stints: Stint[] }[] {
+	const tyres = new Map(file.tyres ?? []);
+	const pits = new Map<string, number[]>();
+	for (const [d, , lap] of file.pitStops ?? []) if (lap != null) pits.set(d, [...(pits.get(d) ?? []), lap]);
+	const reds = neutralised.filter((n) => n[0] === "RF").map((n) => n[1]);
+	const order = [...(file.drivers ?? []), ...[...tyres.keys()].filter((d) => !file.drivers?.includes(d))];
+	const out: { driverId: string; stints: Stint[] }[] = [];
+	for (const driverId of order) {
+		const total = laps.get(driverId) ?? 0;
+		if (!total) continue;
+		const codes = tyres.get(driverId) ?? [];
+		const ends = [...new Set((pits.get(driverId) ?? []).filter((l) => l >= 1 && l < total))];
+		for (const r of reds) if (codes.length > ends.length + 1 && r < total && !ends.includes(r)) ends.push(r);
+		ends.sort((a, b) => a - b);
+		const stints: Stint[] = [];
+		let from = 1;
+		for (const [i, end] of [...ends, total].entries()) {
+			const code = codes[i];
+			stints.push({ from, to: end, compound: code && code !== "?" ? code : null });
+			from = end + 1;
+		}
+		out.push({ driverId, stints });
+	}
+	return out;
 }
 
 /** "1:23.456" from milliseconds. */

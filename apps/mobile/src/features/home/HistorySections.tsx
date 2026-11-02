@@ -10,6 +10,8 @@ import { Icon, Row, Section, Text } from "@/components/ui";
 import { num, ordinal, plural } from "@/lib/format";
 import { href } from "@/lib/links";
 import { MoreLink, SubHeading } from "./kit";
+import type { FactEntry } from "@pitwall/core/f1/race-facts";
+import { FactEntryList } from "@/components/facts";
 
 type Go = (path: string) => void;
 
@@ -43,7 +45,7 @@ function YearBox({ year }: { year: number }) {
 	);
 }
 
-export const OnThisDay = memo(function OnThisDay({ day, go }: { day: OnThisDayView; go: Go }) {
+export const OnThisDay = memo(function OnThisDay({ day, go, facts }: { day: OnThisDayView; go: Go; facts?: FactEntry[] | null }) {
 	return (
 		<Section title="On this day" description={`${day.label} in Formula 1 history`} action={<MoreLink label="More" onPress={() => go(href.diary(day.slug))} />}>
 			{day.items.length ? (
@@ -67,6 +69,14 @@ export const OnThisDay = memo(function OnThisDay({ day, go }: { day: OnThisDayVi
 					A quiet day in the history books: no races, titles or maiden wins.
 				</Text>
 			)}
+			{facts?.length ? (
+				<View className="pt-2">
+					<Text variant="caption" className="px-4">
+						Did you know?
+					</Text>
+					<FactEntryList entries={facts} />
+				</View>
+			) : null}
 		</Section>
 	);
 });

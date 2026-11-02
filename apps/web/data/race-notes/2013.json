@@ -1,0 +1,183 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Australian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Malaysian_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Bahrain_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Spanish_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 31,
+				"to": 39
+			},
+			{
+				"type": "RF",
+				"lap": 46
+			},
+			{
+				"type": "SC",
+				"from": 47,
+				"to": 48
+			},
+			{
+				"type": "SC",
+				"from": 62,
+				"to": 67
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2013_Monaco_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Canadian_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 14,
+				"to": 22
+			},
+			{
+				"type": "SC",
+				"from": 41,
+				"to": 46
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2013_British_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 23,
+				"to": 30
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2013_German_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Hungarian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Belgian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Italian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 25,
+				"to": 31
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2013_Singapore_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 31,
+				"to": 37
+			},
+			{
+				"type": "SC",
+				"from": 38,
+				"to": 41
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2013_Korean_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Japanese_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Indian_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Abu_Dhabi_Grand_Prix"
+		]
+	},
+	"18": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 1,
+				"to": 5
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/2013_United_States_Grand_Prix"
+		]
+	},
+	"19": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/2013_Brazilian_Grand_Prix"
+		]
+	}
+}

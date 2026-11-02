@@ -1,0 +1,14 @@
+{
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1958_Belgian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1958_Moroccan_Grand_Prix"
+		]
+	}
+}

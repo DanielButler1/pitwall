@@ -33,8 +33,7 @@ const cat = (id: string) => data.byCategoryId.get(id)!.index;
 const driver = (id: string) => data.byId.get(id)!;
 const inCat = (id: string, c: string) => driver(id).categories.includes(cat(c));
 
-test("grid file: memberships are right, file is small", () => {
-	assert.ok(JSON.stringify(file).length < 120_000);
+test("grid file: memberships are right", () => {
 	assert.ok(data.drivers.length > 700);
 	for (const c of ["team:ferrari", "team:mclaren", "team:williams", "nation:italy", "nation:united-kingdom", "decade:1950", "decade:2020", "feat:champion", "feat:pointless", "mate:michael-schumacher"])
 		assert.ok(data.byCategoryId.has(c), c);

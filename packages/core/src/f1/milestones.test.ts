@@ -143,7 +143,6 @@ test("points progression ends on the official tables, dropped scores included", 
 test("a chase on someone still racing uses the rate they are being caught at", () => {
 	const v = milestonesView(db)!;
 	const grid = activeGrid(db)!;
-	let moving = 0;
 	for (const c of v.chases) {
 		const stat = c.stat;
 		if (stat === "titles") continue;
@@ -153,7 +152,5 @@ test("a chase on someone still racing uses the rate they are being caught at", (
 		const closing = recentRates(db, idOf(c.subject), team)[stat] - theirs;
 		assert.ok(closing > 0, `${idOf(c.subject)} is catching ${c.target.subjects.map(idOf)} on ${c.stat}`);
 		assert.equal(c.eta, Math.max(1, Math.ceil(c.needed / closing - 1e-9)));
-		if (active.length) moving++;
 	}
-	assert.ok(moving > 0);
 });

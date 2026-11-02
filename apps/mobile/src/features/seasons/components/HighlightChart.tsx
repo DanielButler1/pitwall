@@ -8,7 +8,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { type AccessibilityActionEvent, View } from "react-native";
 import { GestureDetector, usePanGesture } from "react-native-gesture-handler";
-import Svg, { Circle, Line, Path, Text as SvgText } from "react-native-svg";
+import Svg, { Circle, G, Line, Path, Rect, Text as SvgText } from "react-native-svg";
 import { useCSSVariable } from "uniwind";
 import { useToneColor } from "@/components/ui";
 import { INSPECT_HOLD_MS } from "@/components/charts";
@@ -47,6 +47,8 @@ export type ChartLine = {
 	label?: string;
 };
 
+export type ChartBand = { key: string; from: number; to: number; colour: string; opacity: number; label?: string };
+
 const A11Y_READOUT_MS = 5_000;
 const LABEL_GAP = 13;
 
@@ -64,6 +66,7 @@ export function HighlightChart({
 	readout,
 	label,
 	describe,
+	bands = [],
 }: {
 	/** Number of x points (rounds, laps). */
 	count: number;
@@ -82,6 +85,8 @@ export function HighlightChart({
 	readout: (index: number) => ReactNode;
 	label: string;
 	describe: (index: number) => string;
+	/** Shaded spans behind the lines, in x indices (the lap chart's safety cars and red flags). */
+	bands?: ChartBand[];
 }) {
 	const [width, setWidth] = useState(0);
 	const [active, setActive] = useState<number | null>(null);
@@ -189,6 +194,20 @@ export function HighlightChart({
 			>
 				{width > 0 ? (
 					<Svg width={width} height={height}>
+						{bands.map((b) => {
+							const x1 = scaleX(Math.max(0, b.from));
+							const x2 = scaleX(Math.min(count - 1, b.to));
+							return (
+								<G key={b.key}>
+									<Rect x={x1} y={8} width={Math.max(2, x2 - x1)} height={plotH} fill={b.colour} opacity={b.opacity} />
+									{b.label ? (
+										<SvgText x={(x1 + x2) / 2} y={18} fontSize={9} fill={muted} textAnchor="middle">
+											{b.label}
+										</SvgText>
+									) : null}
+								</G>
+							);
+						})}
 						{ticks.map((t) => (
 							<Line key={`g${t}`} x1={left} x2={left + plotW} y1={scaleY(t)} y2={scaleY(t)} stroke={grid} strokeWidth={1} />
 						))}

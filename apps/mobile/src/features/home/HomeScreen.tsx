@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Page, Stat, StatGrid, TabScreen } from "@/components/f1";
 import { Button, Text } from "@/components/ui";
-import { useDb, useView } from "@/data/dataset";
+import { useDb, useDeferredView, useView } from "@/data/dataset";
 import { NativeAdSlot } from "@/features/ads/NativeAdSlot";
+import { onThisDayFacts, raceEntries, seasonFacts, upcomingFacts } from "@pitwall/core/f1/race-facts";
+import { useFactEntries } from "@/data/facts";
 import { num } from "@/lib/format";
 import { href } from "@/lib/links";
 import { watchDataChecks } from "@/features/settings/data";
@@ -54,8 +56,14 @@ export function HomeScreen() {
 	const { month, day } = useToday();
 	const onThisDay = useView((db) => onThisDayView(db, month, day), [month, day]);
 	const go = useGo();
+	const upcoming = useDeferredView((db) => upcomingFacts(db, 4), []);
+	const latestFacts = useFactEntries((db, index) => {
+		const r = view.latestRace && db.racesByYear.get(view.latestRace.race.year)?.find((x) => x.round === view.latestRace!.race.round);
+		return r ? raceEntries(db, index, r.id) : [];
+	}, [view]);
+	const seasonSoFar = useFactEntries((db, index) => (view.titleFight ? seasonFacts(db, index, view.lastYear, 4) : []), [view]);
+	const dayFacts = useFactEntries((db, index) => onThisDayFacts(db, index, month, day, 3), [month, day]);
 
-	const leader = view.inProgress ? "leader" : "champion";
 	return (
 		<TabScreen title="Pitwall" subtitle={`Formula 1 statistics, 1950–${view.lastYear}`}>
 			<Page>
@@ -68,9 +76,9 @@ export function HomeScreen() {
 				</View>
 
 				<StatGrid className="mt-3">
-					<Stat label={`${view.lastYear} drivers' ${leader}`} value={view.champion?.driver.name ?? "–"} detail={view.champion ? `${num(view.champion.points)} points` : null} onPress={view.champion ? () => go(href.driver(view.champion!.driver.id)) : undefined} />
+					<Stat label={`${view.lastYear} drivers' ${view.driversDecided ? "champion" : "leader"}`} value={view.champion?.driver.name ?? "–"} detail={view.champion ? `${num(view.champion.points)} points` : null} onPress={view.champion ? () => go(href.driver(view.champion!.driver.id)) : undefined} />
 					<Stat
-						label={`${view.lastYear} constructors' ${leader}`}
+						label={`${view.lastYear} constructors' ${view.constructorsDecided ? "champion" : "leader"}`}
 						value={view.constructorChampion?.team.name ?? "–"}
 						detail={view.constructorChampion ? `${num(view.constructorChampion.points)} points` : null}
 						onPress={view.constructorChampion ? () => go(href.team(view.constructorChampion!.team.id)) : undefined}
@@ -82,12 +90,18 @@ export function HomeScreen() {
 				</StatGrid>
 
 				<Standings view={view} go={go} />
-				{view.latestRace ? <LatestRace race={view.latestRace} go={go} /> : null}
+				{view.latestRace ? <LatestRace race={view.latestRace} go={go} facts={latestFacts} /> : null}
 				<NativeAdSlot />
-				{view.nextRace ? <NextRace next={view.nextRace} go={go} /> : null}
-				{view.titleFight ? <TitleFightSection fight={view.titleFight} year={view.lastYear} go={go} /> : null}
+				{view.nextRace ? (
+					<NextRace
+						next={view.nextRace}
+						go={go}
+						facts={upcoming && upcoming.race.year === view.nextRace.race.year && upcoming.race.round === view.nextRace.race.round ? upcoming.facts : null}
+					/>
+				) : null}
+				{view.titleFight ? <TitleFightSection fight={view.titleFight} year={view.lastYear} go={go} facts={seasonSoFar} /> : null}
 				<Puzzles go={go} />
-				<OnThisDay day={onThisDay} go={go} />
+				<OnThisDay day={onThisDay} go={go} facts={dayFacts} />
 				<MostWins view={view} go={go} />
 				<MostTitles view={view} go={go} />
 				{watch ? <MilestoneWatchSection watch={watch} go={go} /> : null}

@@ -1,7 +1,7 @@
 // Championship records: titles per driver / constructor / engine / nation /
 // car number, title deciders, championship leaders after each round.
 
-import type { Db, StandingRow } from "../dataset.ts";
+import { seasonInProgress, type Db, type Race, type StandingRow } from "../dataset.ts";
 import { constructorAdjustment, topPoints } from "../points.ts";
 import { rulesFor, standingsAfter } from "../stats.ts";
 import { cDriver, cEngine, cEntity, cGp, cCircuit, cNation, cRace, cSeason, cTeam, cText, cDate, fmt, ranked, sequence, type Draft } from "./cells.ts";
@@ -11,17 +11,20 @@ import type { RecordRow } from "./types.ts";
 export type Title = { year: number; id: string; decider: number; points: number };
 
 /** Max points one driver can still score in a race weekend. */
-function maxPerRace(db: Db, idx: number, constructor: boolean) {
-	const f = facts(db).races[idx];
-	const rules = rulesFor(db, f.race.year);
+function maxPerRace(db: Db, race: Race, constructor: boolean) {
+	const rules = rulesFor(db, race.year);
 	const s = rules.system;
 	const cars = constructor ? 2 : 1;
 	let p = topPoints(s.race, cars) + (s.fastestLap?.points ?? 0) + (s.pole ?? 0) + (s.finishing ?? 0) * cars;
-	if (f.race.hasSprint && s.sprint) p += topPoints(s.sprint, cars);
-	const season = facts(db).seasons.get(f.race.year)!;
-	if (rules.doublePointsFinalRace && idx === season[season.length - 1]) p *= 2;
+	if (race.hasSprint && s.sprint) p += topPoints(s.sprint, cars);
+	if (rules.doublePointsFinalRace && isFinalRound(db, race)) p *= 2;
 	return p;
 }
+
+const isFinalRound = (db: Db, race: Race) => db.racesByYear.get(race.year)?.at(-1)?.id === race.id;
+
+/** Races of a season still to be run (a title can be decided before the season ends). */
+const upcoming = (db: Db, year: number) => (db.racesByYear.get(year) ?? []).filter((r) => !facts(db).byId.has(r.id));
 
 /**
  * Race (index) at which each season's title was mathematically decided: the
@@ -34,22 +37,20 @@ export function deciders(db: Db, type: "driver" | "constructor"): Map<number, nu
 		const out = new Map<number, number>();
 		for (const t of champions(db, type)) {
 			const season = f.seasons.get(t.year) ?? [];
-			let decided = season[season.length - 1];
+			// a finished season's title was decided by its last race at the latest; an open one's maybe not yet
+			let decided: number | undefined = upcoming(db, t.year).length ? undefined : season[season.length - 1];
 			for (let k = 0; k < season.length; k++) {
 				const after = standingsAfter(db, f.races[season[k]].race);
 				const table: StandingRow[] = type === "driver" ? after.drivers : merge(after.constructors);
 				const champ = table.find((r) => r.id === t.id);
 				if (!champ) continue;
-				let remaining = 0;
-				for (let j = k + 1; j < season.length; j++) remaining += maxPerRace(db, season[j], type === "constructor");
-				void remaining;
 				const contested = type === "driver" ? driverContested(db, t.year, k, champ.points, t.id) : constructorContested(db, t.year, k, champ.points, t.id);
 				if (!contested) {
 					decided = season[k];
 					break;
 				}
 			}
-			out.set(t.year, decided);
+			if (decided != null) out.set(t.year, decided);
 		}
 		return out;
 	});
@@ -80,25 +81,23 @@ function driverContested(db: Db, year: number, k: number, champPoints: number, c
 		}
 	}
 	for (const arr of per.values()) {
-		const full = arr.map((p, j) => (j > k ? maxPerRace(db, season[j], false) : p));
+		const full = [...arr.map((p, j) => (j > k ? maxPerRace(db, f.races[season[j]].race, false) : p)), ...upcoming(db, year).map((r) => maxPerRace(db, r, false))];
 		if (counted(full, rules.driverDrop) > champPoints) return true;
 	}
 	return false;
 }
 
 /** Max points one constructor can still score in a race weekend under its era's rules. */
-function constructorMaxPerRace(db: Db, idx: number): number {
-	const f = facts(db).races[idx];
-	const rules = rulesFor(db, f.race.year);
+function constructorMaxPerRace(db: Db, race: Race): number {
+	const rules = rulesFor(db, race.year);
 	const s = rules.system;
-	if (f.race.grandPrixId === "indianapolis" && rules.constructorExcludesIndy) return 0;
+	if (race.grandPrixId === "indianapolis" && rules.constructorExcludesIndy) return 0;
 	// best-car-only seasons (1958-1978): a constructor scores with one car per race
 	const cars = rules.constructorBestCarOnly ? 1 : 2;
 	let p = topPoints(s.race, cars) + (s.pole ?? 0) + (s.finishing ?? 0) * cars;
 	if (rules.constructorFastestLap && s.fastestLap) p += s.fastestLap.points;
-	if (f.race.hasSprint && s.sprint) p += topPoints(s.sprint, 2);
-	const season = facts(db).seasons.get(f.race.year)!;
-	if (rules.doublePointsFinalRace && idx === season[season.length - 1]) p *= 2;
+	if (race.hasSprint && s.sprint) p += topPoints(s.sprint, 2);
+	if (rules.doublePointsFinalRace && isFinalRound(db, race)) p *= 2;
 	return p;
 }
 
@@ -139,7 +138,7 @@ function constructorContested(db: Db, year: number, k: number, champPoints: numb
 	}
 	// a possible tie still counts as undecided
 	for (const arr of per.values()) {
-		const full = arr.map((p, j) => (j > k ? constructorMaxPerRace(db, season[j]) : p));
+		const full = [...arr.map((p, j) => (j > k ? constructorMaxPerRace(db, f.races[season[j]].race) : p)), ...upcoming(db, year).map((r) => constructorMaxPerRace(db, r))];
 		if (counted(full, rules.constructorDrop) >= champPoints) return true;
 	}
 	return false;
@@ -159,20 +158,16 @@ export function titles(db: Db, kind: Kind | "driver-of-constructor" | "driver-of
 	return cached(db, `titles:${kind}`, () => {
 		const dec = deciders(db, "driver");
 		const cdec = deciders(db, "constructor");
-		const lastIdx = (year: number) => {
-			const s = facts(db).seasons.get(year)!;
-			return s[s.length - 1];
-		};
-		const drivers = champions(db, "driver").map((t) => ({ ...t, decider: dec.get(t.year) ?? lastIdx(t.year) }));
+		// only titles with a deciding race (one flagged in a season still open, but not out of reach yet, waits)
+		const decided = (type: "driver" | "constructor", d: Map<number, number>) => champions(db, type).filter((t) => d.has(t.year)).map((t) => ({ ...t, decider: d.get(t.year)! }));
+		const drivers = decided("driver", dec);
 		switch (kind) {
 			case "driver":
 				return drivers.map((t) => ({ year: t.year, id: t.id, decider: t.decider, points: t.points }));
 			case "constructor":
-				return dedupe(champions(db, "constructor").map((t) => ({ year: t.year, id: t.id, decider: cdec.get(t.year) ?? lastIdx(t.year), points: t.points })));
+				return dedupe(decided("constructor", cdec).map((t) => ({ year: t.year, id: t.id, decider: t.decider, points: t.points })));
 			case "engine":
-				return dedupe(
-					champions(db, "constructor").map((t) => ({ year: t.year, id: t.engineId ?? "", decider: cdec.get(t.year) ?? lastIdx(t.year), points: t.points })),
-				).filter((t) => t.id);
+				return dedupe(decided("constructor", cdec).map((t) => ({ year: t.year, id: t.engineId ?? "", decider: t.decider, points: t.points }))).filter((t) => t.id);
 			case "driver-of-constructor":
 				return drivers.map((t) => ({ ...t, id: seasonConstructor(db, t.id, t.year) ?? "" })).filter((t) => t.id);
 			case "driver-of-engine":
@@ -395,7 +390,7 @@ export function championshipPlaces(db: Db, type: "driver" | "constructor", posit
 	const map = type === "driver" ? db.driverStandings : db.constructorStandings;
 	const counts = new Map<string, number[]>();
 	for (const year of map.keys()) {
-		if (!champions(db, type).some((c) => c.year === year)) continue;
+		if (!champions(db, type).some((c) => c.year === year) || seasonInProgress(db, year)) continue;
 		const table = type === "driver" ? map.get(year)! : merge(map.get(year)!);
 		const seen = new Set<string>();
 		for (const r of table) {
@@ -413,7 +408,7 @@ export function championshipPlaces(db: Db, type: "driver" | "constructor", posit
 export function bestRanking(db: Db): RecordRow[] {
 	const best = new Map<string, { pos: number; years: number[] }>();
 	for (const [year, rows] of db.driverStandings) {
-		if (!champions(db, "driver").some((c) => c.year === year)) continue;
+		if (!champions(db, "driver").some((c) => c.year === year) || seasonInProgress(db, year)) continue;
 		for (const r of rows) {
 			if (r.position == null || r.points <= 0) continue;
 			const b = best.get(r.id);
@@ -452,7 +447,7 @@ export function deciderChronology(db: Db, type: "driver" | "constructor"): Recor
 	return sequence(
 		titles(db, type).map((t) => {
 			const season = f.seasons.get(t.year)!;
-			const left = season.length - 1 - season.indexOf(t.decider);
+			const left = season.length - 1 - season.indexOf(t.decider) + upcoming(db, t.year).length;
 			return {
 				key: String(t.year),
 				subject: [cRace(db, raceAt(db, t.decider))],

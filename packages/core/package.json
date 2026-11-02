@@ -11,6 +11,7 @@
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",
+		"facts": "node --experimental-strip-types --no-warnings scripts/race-facts.ts",
 		"test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
 	},
 	"devDependencies": {

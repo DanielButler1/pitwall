@@ -1,0 +1,14 @@
+{
+	"5": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1957_British_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1957_Pescara_Grand_Prix"
+		]
+	}
+}

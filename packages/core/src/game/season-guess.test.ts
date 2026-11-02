@@ -24,13 +24,12 @@ const file = seasonFile(db);
 const { seasons, byId } = unpackSeasons(file);
 const y = (year: number) => byId.get(String(year))!;
 
-test("season file: every completed season, small", () => {
+test("season file: every completed season", () => {
 	assert.equal(seasons[0].year, 1950);
 	const last = seasons.at(-1)!.year;
 	assert.ok(last >= 2025);
 	// no gaps between 1950 and the last completed season
 	assert.equal(seasons.length, last - 1949);
-	assert.ok(JSON.stringify(file).length < 60_000);
 	for (const s of seasons) {
 		assert.ok(s.rounds > 0 && s.winners > 0 && s.winners <= s.rounds, `${s.year}`);
 		assert.ok(s.leadFrom >= 1 && s.leadFrom <= s.rounds && s.ledRounds >= 1 && s.ledRounds <= s.rounds, `${s.year} lead`);

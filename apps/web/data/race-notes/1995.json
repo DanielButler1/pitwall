@@ -1,0 +1,140 @@
+{
+	"1": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Brazilian_Grand_Prix"
+		]
+	},
+	"2": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1995_Argentine_Grand_Prix"
+		]
+	},
+	"3": {
+		"weather": "wet",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_San_Marino_Grand_Prix"
+		]
+	},
+	"4": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Spanish_Grand_Prix"
+		]
+	},
+	"5": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1995_Monaco_Grand_Prix"
+		]
+	},
+	"6": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Canadian_Grand_Prix"
+		]
+	},
+	"7": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_French_Grand_Prix"
+		]
+	},
+	"8": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_British_Grand_Prix"
+		]
+	},
+	"9": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_German_Grand_Prix"
+		]
+	},
+	"10": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Hungarian_Grand_Prix"
+		]
+	},
+	"11": {
+		"weather": "mixed",
+		"neutralised": [
+			{
+				"type": "SC",
+				"from": 28,
+				"to": 33
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/w/index.php?title=Safety_car&oldid=1072024350",
+			"https://en.wikipedia.org/wiki/1995_Belgian_Grand_Prix"
+		]
+	},
+	"12": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1995_Italian_Grand_Prix"
+		]
+	},
+	"13": {
+		"weather": "dry",
+		"neutralised": [
+			{
+				"type": "RF",
+				"lap": 1
+			}
+		],
+		"sources": [
+			"https://en.wikipedia.org/wiki/List_of_red-flagged_Formula_One_races",
+			"https://en.wikipedia.org/wiki/1995_Portuguese_Grand_Prix"
+		]
+	},
+	"14": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_European_Grand_Prix"
+		]
+	},
+	"15": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Pacific_Grand_Prix"
+		]
+	},
+	"16": {
+		"weather": "mixed",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Japanese_Grand_Prix"
+		]
+	},
+	"17": {
+		"weather": "dry",
+		"sources": [
+			"https://en.wikipedia.org/wiki/1995_Australian_Grand_Prix"
+		]
+	}
+}

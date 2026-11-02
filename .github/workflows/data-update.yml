@@ -38,6 +38,8 @@ jobs:
       - name: Build the dataset
         if: steps.check.outputs.changed == 'true'
         run: node apps/web/scripts/prepare-data.mjs --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - if: steps.check.outputs.changed == 'true'
         run: pnpm typecheck
       - if: steps.check.outputs.changed == 'true'
