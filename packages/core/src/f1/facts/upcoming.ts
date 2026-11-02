@@ -222,7 +222,8 @@ export function upcomingFacts(db: Db, limit = 8): { race: Race; facts: RaceFact[
 			const left = pointsLeft(db, race.year, toRun, team);
 			const nextLeft = pointsLeft(db, race.year, toRun.slice(0, 1), team);
 			const lead = leaderAfter(db, last, type);
-			if (left == null || nextLeft == null || !lead || toRun.length < 2) continue;
+			// already out of reach: nothing left to clinch
+			if (left == null || nextLeft == null || !lead || toRun.length < 2 || lead.gap > left) continue;
 			const after = standingsAfter(db, F.races[last].race);
 			const second = [...(team ? after.constructors : after.drivers)].filter((r) => r.id !== lead.id).sort((a, b) => b.points - a.points)[0];
 			// after this race the runner-up could still score everything that remains

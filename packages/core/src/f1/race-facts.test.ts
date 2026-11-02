@@ -9,7 +9,8 @@ import { raceNote } from "./laps.ts";
 import { stewardsOf } from "./stewards.ts";
 import { pointsAt, pointsAwards } from "./facts/stewards.ts";
 import { factIndex, factText, packFacts, raceFacts, seasonFacts, subjectFacts, unpackFacts, upcomingFacts, venueFacts } from "./race-facts.ts";
-import { champions } from "./records/facts.ts";
+import { champions, facts } from "./records/facts.ts";
+import { deciders } from "./records/titles.ts";
 import { dataFile } from "../test-data.ts";
 
 const raw = () => hydrate(JSON.parse(readFileSync(dataFile, "utf8")));
@@ -93,6 +94,22 @@ test("what's at stake next comes capped and readable", () => {
 	const kinds = new Map<string, number>();
 	for (const f of next.facts) kinds.set(f.kind, (kinds.get(f.kind) ?? 0) + 1);
 	for (const n of kinds.values()) assert.ok(n <= 3);
+});
+
+test("a title already out of reach isn't offered to be clinched at the next race", () => {
+	// the latest title decided with at least two races to go, seen straight after its deciding race
+	const F = facts(real);
+	const [year, idx] = [...deciders(real, "driver")]
+		.filter(([y, i]) => y >= 2003 && F.seasons.get(y)!.length - F.seasons.get(y)!.indexOf(i) > 2)
+		.sort((a, b) => b[0] - a[0])[0];
+	const decider = F.races[idx].race;
+	const data = raw();
+	const later = new Set(data.races.filter((r) => r.year > year || (r.year === year && r.round > decider.round)).map((r) => r.id));
+	data.results = data.results.filter((r) => !later.has(r.raceId));
+	data.sprintResults = data.sprintResults.filter((r) => !later.has(r.raceId));
+	const next = upcomingFacts(indexData(data), 100)!;
+	assert.equal(next.race.year, year);
+	assert.deepEqual(next.facts.filter((f) => f.key.includes("driver:") && f.key.endsWith(":clinch")), []);
 });
 
 test("a race with sprint results is a sprint weekend", () => {

@@ -93,12 +93,12 @@ export function HomePage({
 
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
 				<StatCard
-					label={`${view.lastYear} ${view.inProgress ? "drivers' leader" : "drivers' champion"}`}
+					label={`${view.lastYear} ${view.driversDecided ? "drivers' champion" : "drivers' leader"}`}
 					value={view.champion ? <DriverLink driver={view.champion.driver} /> : "–"}
 					className="max-sm:col-span-2"
 				/>
 				<StatCard
-					label={`${view.lastYear} ${view.inProgress ? "constructors' leader" : "constructors' champion"}`}
+					label={`${view.lastYear} ${view.constructorsDecided ? "constructors' champion" : "constructors' leader"}`}
 					value={view.constructorChampion ? <TeamLink team={view.constructorChampion.team} flag /> : "–"}
 					className="max-sm:col-span-2"
 				/>

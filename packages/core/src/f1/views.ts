@@ -128,6 +128,9 @@ export type HomeView = {
 	totals: { seasons: number; races: number; drivers: number; winners: number; constructors: number };
 	champion: { driver: DriverRef; points: number } | null;
 	constructorChampion: { team: TeamRef; points: number } | null;
+	/** The title is won: the season is over, or no one can catch the leader any more. */
+	driversDecided: boolean;
+	constructorsDecided: boolean;
 	standings: SeasonView["driverStandings"];
 	/** The latest race: its top ten (the winner's race time, then gaps), pole and fastest lap. */
 	latestRace: { race: RaceRef; circuit: CircuitRef; top: HomeResult[]; pole: DriverRef | null; fastestLap: { driver: DriverRef; time: string | null } | null } | null;
@@ -292,6 +295,8 @@ export function homeView(db: Db): HomeView {
 		},
 		champion: champion ? { driver: champion.driver, points: champion.points } : null,
 		constructorChampion: cChampion ? { team: cChampion.team, points: cChampion.points } : null,
+		driversDecided: !inProgress || fight?.drivers.contenders.length === 1,
+		constructorsDecided: !inProgress || fight?.constructors?.contenders.length === 1,
 		standings: season.driverStandings.slice(0, 10),
 		latestRace: last
 			? {
