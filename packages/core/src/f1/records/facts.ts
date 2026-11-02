@@ -427,14 +427,15 @@ function seasonMain(db: Db, driverId: string, year: number, pick: (r: Result) =>
 	return best;
 }
 
-/** Champions per season. Seasons still in progress have no champion. */
+/**
+ * Champions per season. A season still in progress has one once the title is
+ * mathematically decided (F1DB flags it; universes clear it until the last round).
+ */
 export function champions(db: Db, type: "driver" | "constructor"): { year: number; id: string; engineId?: string; points: number }[] {
 	return cached(db, `champions:${type}`, () => {
 		const out: { year: number; id: string; engineId?: string; points: number }[] = [];
 		const map = type === "driver" ? db.driverStandings : db.constructorStandings;
 		for (const year of [...map.keys()].sort((a, b) => a - b)) {
-			const done = facts(db).seasons.get(year)?.length ?? 0;
-			if (done < (db.racesByYear.get(year)?.length ?? 0)) continue;
 			for (const r of map.get(year)!) if (r.champion) out.push({ year, id: r.id, engineId: r.engineId, points: r.points });
 		}
 		return out;

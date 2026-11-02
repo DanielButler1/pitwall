@@ -41,6 +41,9 @@ test("a race's facts don't depend on the races after it", () => {
 	const later = new Set(data.races.filter((r) => r.year > race.year || (r.year === race.year && r.round > race.round)).map((r) => r.id));
 	data.results = data.results.filter((r) => !later.has(r.raceId));
 	data.sprintResults = data.sprintResults.filter((r) => !later.has(r.raceId));
+	// and nobody was champion yet: the title was decided later
+	for (const standings of [data.driverStandings, data.constructorStandings])
+		for (const [year, rows] of standings) if (year >= race.year) standings.set(year, rows.map((r) => ({ ...r, champion: false })));
 	const cut: Db = indexData(data);
 	assert.deepEqual(raceFacts(cut, race.id, 20), raceFacts(real, race.id, 20));
 });
@@ -72,7 +75,7 @@ test("a universe's history makes its own facts", () => {
 	assert.notDeepEqual(raceFacts(universe, race.id, 20), raceFacts(real, race.id, 20));
 });
 
-test("every finished season has one race that made its champion", () => {
+test("every decided title has one race that made its champion", () => {
 	for (const { year, id } of champions(real, "driver").slice(-12)) {
 		const races = done.filter((r) => r.year === year);
 		const titled = races.flatMap((r) => raceFacts(real, r.id, 20).filter((f) => f.key.startsWith("title:driver:") && f.key.endsWith(":title")));

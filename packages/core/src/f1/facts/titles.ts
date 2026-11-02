@@ -34,7 +34,7 @@ export function leaderAfter(db: Db, idx: number, type: Type = "driver") {
 export function decidedAt(db: Db, type: Type, f: RaceFacts): string | null {
 	const year = f.race.year;
 	if (type === "constructor" && !rulesFor(db, year).hasConstructorsChampionship) return null;
-	const done = champions(db, type).find((c) => c.year === year);
+	const done = champions(db, type).find((c) => c.year === year && deciders(db, type).has(year));
 	if (done) return deciders(db, type).get(year) === f.idx ? done.id : null;
 	// still being run: out of reach after this race, and not already after the one before
 	const all = db.racesByYear.get(year) ?? [];
@@ -53,7 +53,7 @@ export function decidedAt(db: Db, type: Type, f: RaceFacts): string | null {
 function titleHistory(db: Db, type: Type): (Champion & { decider: number })[] {
 	return cached(db, `race-facts:titles:${type}`, () => {
 		const dec = deciders(db, type);
-		return champions(db, type).map((c) => ({ year: c.year, id: c.id, decider: dec.get(c.year)! }));
+		return champions(db, type).filter((c) => dec.has(c.year)).map((c) => ({ year: c.year, id: c.id, decider: dec.get(c.year)! }));
 	});
 }
 
