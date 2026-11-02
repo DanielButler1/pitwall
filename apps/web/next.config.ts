@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
 		"/**/opengraph-image": [
 			"./assets/fonts/*.ttf",
 			"./src/app/icon.svg",
+			"../../node_modules/.pnpm/flag-icons@*/node_modules/flag-icons/package.json",
 			"../../node_modules/.pnpm/flag-icons@*/node_modules/flag-icons/flags/4x3/*.svg",
 		],
 	},

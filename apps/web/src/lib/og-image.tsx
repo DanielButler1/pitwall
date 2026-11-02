@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
@@ -27,13 +27,30 @@ let fonts: ReturnType<typeof font>[] | undefined;
 const svg = (text: string) => `data:image/svg+xml;base64,${Buffer.from(text).toString("base64")}`;
 const logo = () => svg(readFileSync(join(process.cwd(), "src", "app", "icon.svg"), "utf8"));
 
-// Resolved like an import, so it works however node_modules is laid out.
-const flags = join(createRequire(join(process.cwd(), "package.json")).resolve("flag-icons/package.json"), "..", "flags", "4x3");
+// Found on first use, never when this module loads: pages import it too (for their share picture's address), and a
+// page rendered on demand must not fail because a flag folder isn't where it was at build time.
+let flags: string | null | undefined;
+function flagsDir(): string | null {
+	if (flags !== undefined) return flags;
+	flags = null;
+	try {
+		// resolved like an import, so it works however node_modules is laid out
+		flags = join(createRequire(join(process.cwd(), "package.json")).resolve("flag-icons/package.json"), "..", "flags", "4x3");
+	} catch {
+		// a deployment keeps only the traced files (next.config.ts), under pnpm's store, without the package link
+		const store = join(process.cwd(), "..", "..", "node_modules", ".pnpm");
+		const dir = existsSync(store) ? readdirSync(store).find((d) => d.startsWith("flag-icons@")) : undefined;
+		if (dir) flags = join(store, dir, "node_modules", "flag-icons", "flags", "4x3");
+	}
+	return flags;
+}
+
 /** A country's flag (ISO alpha-2) as an image, or undefined when there's none. */
 function flag(iso: string | null | undefined): string | undefined {
-	if (!iso) return undefined;
+	const dir = flagsDir();
+	if (!iso || !dir) return undefined;
 	try {
-		return svg(readFileSync(join(flags, `${iso.toLowerCase()}.svg`), "utf8"));
+		return svg(readFileSync(join(dir, `${iso.toLowerCase()}.svg`), "utf8"));
 	} catch {
 		return undefined;
 	}
