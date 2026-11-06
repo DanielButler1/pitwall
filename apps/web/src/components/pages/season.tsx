@@ -284,8 +284,15 @@ function GridCell({ cell, race }: { cell: MatrixCell; race: RaceRef }) {
 	);
 }
 
+// Every round column in the drivers' grid is the same width, as are Pts and Wins, so the driver column takes the spare
+// room; otherwise the table, stretched to the page, shares it out unevenly. 34px keeps a 24-round calendar on a 1280px
+// screen. The last column also carries the table's 16px edge padding, hence its 14px more.
+const roundCol = "w-[2.125rem] min-w-[2.125rem] px-0.5 text-center last:w-12 last:min-w-12";
+
 export function SeasonPage({ view, progression, facts }: { view: SeasonView; progression?: SeasonProgression | null; facts?: FactEntry[] | null }) {
 	const done = view.races.filter((r) => r.completed);
+	// the rounds still to come get a faded column each, so the grid shows the whole calendar
+	const upcoming = view.races.filter((r) => !r.completed);
 	// Mid-season, show the current leaders in place of champions.
 	const champion = view.driverStandings.find((d) => d.champion) ?? (view.inProgress ? view.driverStandings[0] : undefined);
 	const cChampion = view.constructorStandings.find((c) => c.champion) ?? (view.inProgress ? view.constructorStandings[0] : undefined);
@@ -381,17 +388,22 @@ export function SeasonPage({ view, progression, facts }: { view: SeasonView; pro
 			{view.completed && (
 				<Section
 					title="Drivers' championship"
-					description={`${view.inProgress ? `After ${done.length} of ${view.races.length} rounds. ` : ""}Each round's result. Underlined: pole position. Italic: fastest lap. Hover a cell for details, or tap it to open the race.`}
+					description={`${view.inProgress ? `After ${done.length} of ${view.races.length} rounds; the faded ones are still to come. ` : ""}Each round's result. Underlined: pole position. Italic: fastest lap. Hover a cell for details, or tap it to open the race.`}
 				>
 					<TableCard tableClassName="[&_td]:py-1.5 max-sm:[&_td:nth-child(n+5)]:px-0 max-sm:[&_th:nth-child(n+5)]:px-0">
 						<TableHeader>
 							<TableRow>
 								<TableHead className="w-12">Pos</TableHead>
 								<TableHead className="max-sm:bg-card max-sm:sticky max-sm:left-0 max-sm:z-10 max-sm:shadow-[1px_0_0_var(--border)]">Driver</TableHead>
-								<TableHead className="text-right">Pts</TableHead>
-								<TableHead className="hidden text-right sm:table-cell">Wins</TableHead>
+								<TableHead className="text-right sm:w-14">Pts</TableHead>
+								<TableHead className="hidden w-14 text-right sm:table-cell">Wins</TableHead>
 								{done.map((r) => (
-									<TableHead key={r.race.round} className="px-0.5 text-center max-sm:w-9 max-sm:min-w-9">
+									<TableHead key={r.race.round} className={roundCol}>
+										<RoundHeader round={r} />
+									</TableHead>
+								))}
+								{upcoming.map((r) => (
+									<TableHead key={r.race.round} className={cn(roundCol, "opacity-40")}>
 										<RoundHeader round={r} />
 									</TableHead>
 								))}
@@ -424,6 +436,9 @@ export function SeasonPage({ view, progression, facts }: { view: SeasonView; pro
 									<TableCell className="hidden text-right tabular-nums sm:table-cell">{d.wins || ""}</TableCell>
 									{d.cells.map((c, i) => (
 										<GridCell key={i} cell={c} race={done[i].race} />
+									))}
+									{upcoming.map((r) => (
+										<TableCell key={r.race.round} />
 									))}
 								</TableRow>
 							))}
