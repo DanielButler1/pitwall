@@ -226,6 +226,8 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 	);
 }
 
+// The links inside a card don't prefetch: a card opens on every hover, and each page they'd fetch is drawn (and
+// cached, an ISR write) on its first visit. See ULink in universe-link.tsx.
 const linkCls = "font-medium underline-offset-4 hover:underline";
 const subtle = "underline decoration-dotted decoration-muted-foreground/50 underline-offset-4 hover:text-foreground hover:decoration-solid";
 
@@ -233,7 +235,7 @@ const subtle = "underline decoration-dotted decoration-muted-foreground/50 under
 function Day({ iso, prefix, className }: { iso: string; prefix: string; className?: string }) {
 	const d = new Date(iso + "T00:00:00Z");
 	return (
-		<Link href={`${prefix}/diary/${diarySlug(d.getUTCMonth() + 1, d.getUTCDate())}`} className={className ?? subtle}>
+		<Link prefetch={false} href={`${prefix}/diary/${diarySlug(d.getUTCMonth() + 1, d.getUTCDate())}`} className={className ?? subtle}>
 			{fmtDate(iso)}
 		</Link>
 	);
@@ -242,7 +244,7 @@ function Day({ iso, prefix, className }: { iso: string; prefix: string; classNam
 function NationRef({ id, name, prefix }: { id: string | null; name: string | null; prefix: string }) {
 	if (!name) return null;
 	return id ? (
-		<Link href={`${prefix}/nations/${id}`} className={subtle}>
+		<Link prefetch={false} href={`${prefix}/nations/${id}`} className={subtle}>
 			{name}
 		</Link>
 	) : (
@@ -252,7 +254,7 @@ function NationRef({ id, name, prefix }: { id: string | null; name: string | nul
 
 function SeasonRef({ year, prefix }: { year: number; prefix: string }) {
 	return (
-		<Link href={`${prefix}/seasons/${year}`} className={subtle}>
+		<Link prefetch={false} href={`${prefix}/seasons/${year}`} className={subtle}>
 			{year}
 		</Link>
 	);
@@ -290,7 +292,7 @@ function Refs({ items, path, prefix }: { items: (CardRef & { n?: number })[]; pa
 			{items.map((r, i) => (
 				<span key={r.id}>
 					{i > 0 && ", "}
-					<Link href={`${prefix}${path}${r.id}`} className={linkCls}>
+					<Link prefetch={false} href={`${prefix}${path}${r.id}`} className={linkCls}>
 						{r.name}
 					</Link>
 					{r.n != null && <span className="text-muted-foreground"> ({r.n})</span>}
