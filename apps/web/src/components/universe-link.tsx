@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { createContext, useContext, useSyncExternalStore, type ComponentProps } from "react";
+import { createContext, useContext, useState, useSyncExternalStore, type ComponentProps } from "react";
 import type { Db } from "@pitwall/core/f1/dataset";
 
 export type UniverseInfo = { id: string; name: string };
@@ -21,9 +21,32 @@ export function useSiteHref(href: string) {
 	return `/u/${u.id}${href === "/" ? "" : href}`;
 }
 
-/** Drop-in for next/link for internal site pages. */
-export function ULink({ href, ...props }: ComponentProps<typeof Link> & { href: string }) {
-	return <Link href={useSiteHref(href)} {...props} />;
+/**
+ * Drop-in for next/link for internal site pages. It prefetches when the link is hovered, focused or touched rather
+ * than when it scrolls into view: most pages are drawn on their first visit and then cached, so a table of hundreds
+ * of links would otherwise draw (and cache, an ISR write each) every page it points to. A `prefetch` prop still wins.
+ */
+export function ULink({ href, prefetch, onMouseEnter, onFocus, onTouchStart, ...props }: ComponentProps<typeof Link> & { href: string }) {
+	const [intent, setIntent] = useState(false);
+	return (
+		<Link
+			href={useSiteHref(href)}
+			prefetch={prefetch !== undefined ? prefetch : intent ? null : false}
+			onMouseEnter={(e) => {
+				setIntent(true);
+				onMouseEnter?.(e);
+			}}
+			onFocus={(e) => {
+				setIntent(true);
+				onFocus?.(e);
+			}}
+			onTouchStart={(e) => {
+				setIntent(true);
+				onTouchStart?.(e);
+			}}
+			{...props}
+		/>
+	);
 }
 
 /* ------------------------------------------------------- active universe --- */

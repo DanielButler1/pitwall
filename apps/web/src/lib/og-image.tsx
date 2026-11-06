@@ -152,7 +152,14 @@ export function ogImage({
 				)}
 			</div>
 		),
-		{ ...OG_SIZE, fonts },
+		{
+			...OG_SIZE,
+			fonts,
+			// ImageResponse defaults to "max-age=0, must-revalidate", which the cached picture keeps: Vercel's edge then
+			// treats it as stale at once and draws it again (an ISR write) every few seconds while it's being asked for.
+			// Like the pages, a picture only changes with a new deployment, so the edge may keep it until then.
+			headers: { "cache-control": "public, max-age=0, s-maxage=31536000" },
+		},
 	);
 }
 
