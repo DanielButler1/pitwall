@@ -3,15 +3,14 @@ import { createRequire } from "node:module";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { SITE_URL } from "./site";
+import { OG_SIZE } from "./static-og";
+export { OG_SIZE, OG_CONTENT_TYPE } from "./static-og";
 
 /**
  * The picture shown when a page is shared (WhatsApp, Discord, iMessage, X) or in some search results: the logo,
- * what the page is, and a row of its numbers. Each page folder has an opengraph-image.tsx that calls this; like the
- * pages, the current season's are built at deploy time and the rest the first time they're asked for.
+ * what the page is, and a row of its numbers. Race, driver and season images are written to public/social at build
+ * time. The remaining opengraph-image.tsx files and /og routes use this renderer through Next.js.
  */
-
-export const OG_SIZE = { width: 1200, height: 630 };
-export const OG_CONTENT_TYPE = "image/png";
 
 const RED = "#dc2626";
 const MUTED = "#71717a";
