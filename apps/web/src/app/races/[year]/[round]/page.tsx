@@ -5,6 +5,7 @@ import { describe, getDb } from "@/lib/server";
 import { raceView } from "@pitwall/core/f1/views";
 import { factsFor, sprintFacts } from "@pitwall/core/f1/race-facts";
 import { prebuild } from "@/lib/static-params";
+import { staticOgMetadata } from "@/lib/static-og";
 
 type Props = { params: Promise<{ year: string; round: string }> };
 
@@ -15,7 +16,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { year, round } = await params;
 	const view = raceView(getDb(), Number(year), Number(round));
-	return { title: view ? `${year} ${view.race.name} Grand Prix` : "Race", description: describe("race", `${year}-${round}`) };
+	return {
+		title: view ? `${year} ${view.race.name} Grand Prix` : "Race",
+		description: describe("race", `${year}-${round}`),
+		...staticOgMetadata("race", `${Number(year)}-${Number(round)}`, "A Formula 1 race's result on Pitwall"),
+	};
 }
 
 export default async function Page({ params }: Props) {

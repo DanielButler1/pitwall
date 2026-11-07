@@ -11,6 +11,13 @@ const OG_FILES = [
 	"../../node_modules/.pnpm/flag-icons@*/node_modules/flag-icons/flags/4x3/*.svg",
 ];
 
+// Keep existing shared image URLs working without invoking an image function.
+const staticSocialRewrites = [
+	{ source: "/races/:year/:round/opengraph-image", destination: "/social/race/:year-:round.png" },
+	{ source: "/drivers/:id/opengraph-image", destination: "/social/driver/:id.png" },
+	{ source: "/seasons/:year/opengraph-image", destination: "/social/season/:year.png" },
+];
+
 const nextConfig: NextConfig = {
 	// data/f1.json and data/facts.json are read at runtime by src/lib/server.ts
 	outputFileTracingIncludes: {
@@ -29,7 +36,17 @@ const nextConfig: NextConfig = {
 
 	// Every page names its address on the real domain as the canonical one (without any query).
 	async headers() {
-		return [{ source: "/:path((?!_next/|data/).*)", headers: [{ key: "Link", value: `<${SITE_URL}/:path>; rel="canonical"` }] }];
+		return [
+			{ source: "/:path((?!_next/|data/).*)", headers: [{ key: "Link", value: `<${SITE_URL}/:path>; rel="canonical"` }] },
+			...["/social/:path*", ...staticSocialRewrites.map(({ source }) => source)].map((source) => ({
+				source,
+				// Browsers revalidate across releases; Vercel's deployment-scoped CDN can keep the file.
+				headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=31536000" }],
+			})),
+		];
+	},
+	async rewrites() {
+		return staticSocialRewrites;
 	},
 };
 
