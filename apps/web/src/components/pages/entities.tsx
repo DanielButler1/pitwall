@@ -1,5 +1,6 @@
+"use client";
+
 // Grands Prix, engine and tyre suppliers, and nations: index + profile pages.
-// Server-safe; every entity reference links through ULink so universes stay inside themselves.
 
 import { Fragment } from "react";
 import { ChevronsDown, Flag as FlagIcon, Globe, Trophy } from "lucide-react";

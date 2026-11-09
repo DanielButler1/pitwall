@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { NationPage } from "@/components/pages/entities";
 import { describe, getDb } from "@/lib/server";
 import { nationView } from "@pitwall/core/f1/views";
-import { prebuild } from "@/lib/static-params";
+import { staticParams } from "@/lib/static-params";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-	return prebuild.none();
+	return staticParams.nations();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

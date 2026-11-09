@@ -4,13 +4,13 @@ import { RacePage } from "@/components/pages/race";
 import { describe, getDb } from "@/lib/server";
 import { raceView } from "@pitwall/core/f1/views";
 import { factsFor, sprintFacts } from "@pitwall/core/f1/race-facts";
-import { prebuild } from "@/lib/static-params";
+import { staticParams } from "@/lib/static-params";
 import { staticOgMetadata } from "@/lib/static-og";
 
 type Props = { params: Promise<{ year: string; round: string }> };
 
 export function generateStaticParams() {
-	return prebuild.races();
+	return staticParams.races();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

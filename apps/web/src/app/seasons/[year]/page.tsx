@@ -5,13 +5,13 @@ import { seasonProgression } from "@pitwall/core/f1/progression";
 import { describe, getDb, getFactIndex } from "@/lib/server";
 import { seasonFacts } from "@pitwall/core/f1/race-facts";
 import { seasonView } from "@pitwall/core/f1/views";
-import { prebuild } from "@/lib/static-params";
+import { staticParams } from "@/lib/static-params";
 import { staticOgMetadata } from "@/lib/static-og";
 
 type Props = { params: Promise<{ year: string }> };
 
 export function generateStaticParams() {
-	return prebuild.seasons();
+	return staticParams.seasons();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

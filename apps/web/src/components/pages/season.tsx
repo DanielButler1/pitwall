@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronLeft, ChevronRight, Sparkles, Timer, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { DriverRef, MatrixCell, RaceRef, SeasonView, SeasonsView } from "@pitwall/core/f1/views";

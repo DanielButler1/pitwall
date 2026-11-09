@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronRight, Sparkles, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Duel, DriverTeammatesView, PairSide, PairTotals, TeammatePairView } from "@pitwall/core/f1/teammates";

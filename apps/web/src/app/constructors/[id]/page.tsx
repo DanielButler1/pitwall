@@ -4,12 +4,12 @@ import { ConstructorPage } from "@/components/pages/profiles";
 import { describe, getDb, getFactIndex } from "@/lib/server";
 import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
 import { constructorView } from "@pitwall/core/f1/views";
-import { prebuild } from "@/lib/static-params";
+import { staticParams } from "@/lib/static-params";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-	return prebuild.constructors();
+	return staticParams.constructors();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
