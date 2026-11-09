@@ -4,12 +4,12 @@ import { RecordCategoryPage } from "@/components/pages/records";
 import { findRecord, recordCategoryView } from "@pitwall/core/f1/records";
 import { OG_SIZE } from "@/lib/og-image";
 import { getDb } from "@/lib/server";
-import { prebuild } from "@/lib/static-params";
+import { staticParams } from "@/lib/static-params";
 
 type Props = { params: Promise<{ slug: string[] }> };
 
 export function generateStaticParams() {
-	return prebuild.none();
+	return staticParams.records();
 }
 
 const idOf = (slug: string[]) => slug.map(decodeURIComponent).join("/");

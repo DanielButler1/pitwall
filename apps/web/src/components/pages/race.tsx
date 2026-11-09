@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronLeft, ChevronRight, CloudRain, CloudSunRain, FlaskConical, History, MapPin, Sparkles, Sun, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

@@ -1,3 +1,5 @@
+"use client";
+
 import { Cake, CalendarDays, ChevronLeft, ChevronRight, Flag as FlagIcon, Flower2, Medal, Rocket, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MONTHS, allDiaryDays, diaryKey, diarySlug, type DiaryDaySummary, type DiaryIndexView, type DiaryPerson, type DiaryView } from "@pitwall/core/f1/diary";

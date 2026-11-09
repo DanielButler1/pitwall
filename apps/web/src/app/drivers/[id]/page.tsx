@@ -5,13 +5,13 @@ import { describe, getDb, getFactIndex } from "@/lib/server";
 import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
 import { driverTeammatesView } from "@pitwall/core/f1/teammates";
 import { driverView } from "@pitwall/core/f1/views";
-import { prebuild } from "@/lib/static-params";
+import { staticParams } from "@/lib/static-params";
 import { staticOgMetadata } from "@/lib/static-og";
 
 type Props = { params: Promise<{ id: string }> };
 
 export function generateStaticParams() {
-	return prebuild.drivers();
+	return staticParams.drivers();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -30,6 +30,7 @@ export default async function Page({ params }: Props) {
 	return (
 		<DriverPage
 			view={view}
+			asOf={new Date().toISOString().slice(0, 10)}
 			teammates={driverTeammatesView(getDb(), id)}
 			facts={subjectFacts(getDb(), getFactIndex(), "driver", id)}
 			upcoming={upcomingAbout(getDb(), { driver: id })}

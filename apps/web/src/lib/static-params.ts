@@ -1,5 +1,5 @@
-// Every page that exists, for the sitemap, and (prebuild, below) the few built at deploy time.
-// The data only changes when the site is rebuilt, so each page is rendered once and then served as a file.
+// Every indexed historical page, for both the sitemap and build-time rendering.
+// Data changes only at deploy: crawlers should not have to generate the archive after every release.
 
 import { allDiaryDays, diarySlug } from "@pitwall/core/f1/diary-dates";
 import { recordIndex } from "@pitwall/core/f1/records";
@@ -22,18 +22,12 @@ export const staticParams = {
 };
 
 /**
- * The pages built at deploy time: only the current season, its races and the current grid.
- * Everything else in `staticParams` (thousands of pages) is rendered the first time it is
- * visited and then cached, which keeps each deployment small (a full prerender was ~1.7 GB).
- * `staticParams` itself still lists every page, for the sitemap.
+ * Share-image routes still prebuild only the current constructors. Other image routes
+ * generate on first request; race, driver and season images are built into public/social.
+ * Pages use staticParams above. Keep their compact view models at a client boundary so
+ * the build does not serialize the full table markup into every RSC artifact.
  */
 export const prebuild = {
-	seasons: () => staticParams.seasons().filter((s) => Number(s.year) === getDb().meta.lastCompletedYear),
-	races: () => staticParams.races().filter((r) => Number(r.year) === getDb().meta.lastCompletedYear),
-	drivers: () => {
-		const grid = activeGrid(getDb());
-		return grid ? [...grid.drivers].map((id) => ({ id })) : [];
-	},
 	constructors: () => {
 		const grid = activeGrid(getDb());
 		return grid ? [...grid.teams].map((id) => ({ id })) : [];

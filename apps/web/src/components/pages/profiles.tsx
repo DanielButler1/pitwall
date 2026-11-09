@@ -1,3 +1,5 @@
+"use client";
+
 import { CalendarDays, Flag as FlagIcon, GitCompareArrows, MapPin, Sparkles, Trophy } from "lucide-react";
 import { Fragment } from "react";
 import { cn } from "@/lib/utils";
@@ -61,18 +63,21 @@ export function DriverPage({
 	results,
 	facts,
 	upcoming,
+	asOf,
 }: {
 	view: DriverView;
 	teammates?: DriverTeammatesView | null;
 	results?: EntityResult[];
 	facts?: FactEntry[] | null;
 	upcoming?: RaceFact[] | null;
+	/** Keep the build's age reference stable through hydration; universes use today's date. */
+	asOf?: string;
 }) {
 	const d = view.driver;
 	const t = view.totals;
 	const r = view.realTotals;
 	// Simulated careers can run past today; measure age at their last race in that case.
-	const today = new Date().toISOString().slice(0, 10);
+	const today = asOf ?? new Date().toISOString().slice(0, 10);
 	const lastRaceDate = view.lastRace?.date;
 	const age = ageOn(d.dateOfBirth, d.dateOfDeath ?? (lastRaceDate && lastRaceDate > today ? lastRaceDate : today));
 	const side = (!teammates && view.teammates.length > 0) || view.relatives.length > 0;
