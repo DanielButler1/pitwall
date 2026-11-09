@@ -10,6 +10,7 @@ apps/web/data/f1.json
 apps/web/data/facts.json
 apps/web/data/laps/
 apps/web/public/data/
+apps/web/public/social/
 # apps/web: downloaded by scripts/update-f1db.mjs and scripts/update-jolpica.mjs
 apps/web/f1db/
 apps/web/jolpica/

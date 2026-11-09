@@ -37,4 +37,4 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - name: Build the site
-        run: pnpm --filter @pitwall/web exec next build
+        run: pnpm --filter @pitwall/web social:build && pnpm --filter @pitwall/web exec next build

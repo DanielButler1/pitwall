@@ -6,6 +6,7 @@ import { subjectFacts, upcomingAbout } from "@pitwall/core/f1/race-facts";
 import { driverTeammatesView } from "@pitwall/core/f1/teammates";
 import { driverView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
+import { staticOgMetadata } from "@/lib/static-og";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -15,7 +16,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { id } = await params;
-	return { title: getDb().drivers.get(id)?.name ?? "Driver", description: describe("driver", id) };
+	return {
+		title: getDb().drivers.get(id)?.name ?? "Driver",
+		description: describe("driver", id),
+		...staticOgMetadata("driver", id, "A Formula 1 driver's career on Pitwall"),
+	};
 }
 
 export default async function Page({ params }: Props) {

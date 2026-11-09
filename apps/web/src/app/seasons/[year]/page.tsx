@@ -6,6 +6,7 @@ import { describe, getDb, getFactIndex } from "@/lib/server";
 import { seasonFacts } from "@pitwall/core/f1/race-facts";
 import { seasonView } from "@pitwall/core/f1/views";
 import { prebuild } from "@/lib/static-params";
+import { staticOgMetadata } from "@/lib/static-og";
 
 type Props = { params: Promise<{ year: string }> };
 
@@ -15,7 +16,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { year } = await params;
-	return { title: `${year} season`, description: describe("season", year) };
+	return { title: `${year} season`, description: describe("season", year), ...staticOgMetadata("season", String(Number(year)), "A Formula 1 season on Pitwall") };
 }
 
 export default async function Page({ params }: Props) {
