@@ -38,6 +38,12 @@ const nextConfig: NextConfig = {
 	async headers() {
 		return [
 			{ source: "/:path((?!_next/|data/).*)", headers: [{ key: "Link", value: `<${SITE_URL}/:path>; rel="canonical"` }] },
+			{
+				source: "/compare",
+				// Public HTML/metadata depend only on the query and deployed data. Vercel keeps
+				// query/RSC variants separate; browsers still use Next's normal cache policy.
+				headers: [{ key: "Vercel-CDN-Cache-Control", value: "public, max-age=31536000" }],
+			},
 			...["/social/:path*", ...staticSocialRewrites.map(({ source }) => source)].map((source) => ({
 				source,
 				// Browsers revalidate across releases; Vercel's deployment-scoped CDN can keep the file.

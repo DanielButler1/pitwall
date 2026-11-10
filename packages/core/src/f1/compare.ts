@@ -27,6 +27,16 @@ export function compareQuery(sp: Params): { kind: "driver" | "team"; ids: string
 	return { kind, ids: parseCompareIds(kind === "team" ? t : d) };
 }
 
+/** Metadata needs names, not career progressions, same-age snapshots or head-to-heads. */
+export function compareNames(db: Db, kind: "driver" | "team", ids: string[]): string[] {
+	const entities = kind === "driver" ? db.drivers : db.constructors;
+	const results = kind === "driver" ? db.resultsByDriver : db.resultsByConstructor;
+	return ids.slice(0, COMPARE_MAX).flatMap((id) => {
+		const entity = entities.get(id);
+		return entity && results.has(id) ? [entity.name] : [];
+	});
+}
+
 export type CompareTotals = {
 	entries: number;
 	starts: number;
@@ -286,6 +296,25 @@ function h2hTeams(db: Db, a: string, b: string): CompareH2H {
 		if (w === "b") out.bAhead++;
 	}
 	return out;
+}
+
+/** Only the totals and two-way head-to-head used by share pictures. */
+export function compareSummary(db: Db, kind: "driver" | "team", ids: string[]) {
+	const careers = kind === "driver" ? driverCareers(db) : constructorCareers(db);
+	const records = kind === "driver" ? db.drivers : db.constructors;
+	const entities = ids.slice(0, COMPARE_MAX).flatMap((id) => {
+		const record = records.get(id);
+		const career = careers.get(id);
+		return record && career ? [{
+			id, name: record.name, wins: career.wins, titles: career.titles,
+			starts: kind === "driver" ? career.starts : career.entries,
+			firstYear: career.firstYear, lastYear: career.lastYear,
+		}] : [];
+	});
+	const head = entities.length === 2
+		? (kind === "driver" ? h2hDrivers : h2hTeams)(db, entities[0].id, entities[1].id)
+		: null;
+	return { kind, entities, h2h: head?.races ? head : null };
 }
 
 /**

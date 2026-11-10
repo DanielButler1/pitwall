@@ -5,6 +5,7 @@ import { allDiaryDays, diarySlug } from "@pitwall/core/f1/diary-dates";
 import { recordIndex } from "@pitwall/core/f1/records";
 import { getDb } from "./server.ts";
 import { activeGrid } from "@pitwall/core/f1/milestones";
+import { teammatePairs } from "@pitwall/core/f1/teammates";
 import * as v from "@pitwall/core/f1/views";
 
 export const staticParams = {
@@ -19,6 +20,8 @@ export const staticParams = {
 	nations: () => v.nationsView(getDb()).rows.map((r) => ({ id: r.nation.id })),
 	diary: () => allDiaryDays().map((d) => ({ date: diarySlug(d.month, d.day) })),
 	records: () => recordIndex().map((r) => ({ slug: r.id.split("/") })),
+	// Both orders are linked from driver profiles and put that driver on the left.
+	teammates: () => teammatePairs(getDb()).flatMap(({ a, b }) => [{ a, b }, { a: b, b: a }]),
 };
 
 /**

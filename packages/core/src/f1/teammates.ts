@@ -61,6 +61,25 @@ export function finishedAhead(a: Pick<Side, "position" | "started">, b: Pick<Sid
 /** Rows of one driver in one race, best classification first (resultsByRace is display-sorted). */
 const rowsOf = (db: Db, raceId: number, driverId: string) => (db.resultsByRace.get(raceId) ?? []).filter((r) => r.driverId === driverId);
 
+/** Every real team-mate pairing, once, with stable alphabetical IDs. */
+export function teammatePairs(db: Db): { a: string; b: string }[] {
+	const pairs = new Map<string, { a: string; b: string }>();
+	for (const rows of db.resultsByRace.values()) {
+		const teams = new Map<string, Set<string>>();
+		for (const row of rows) {
+			const drivers = teams.get(row.constructorId) ?? new Set<string>();
+			drivers.add(row.driverId);
+			teams.set(row.constructorId, drivers);
+		}
+		for (const drivers of teams.values()) {
+			const ids = [...drivers].sort();
+			for (let i = 0; i < ids.length; i++)
+				for (let j = i + 1; j < ids.length; j++) pairs.set(`${ids[i]}/${ids[j]}`, { a: ids[i], b: ids[j] });
+		}
+	}
+	return [...pairs.values()].sort((x, y) => x.a.localeCompare(y.a) || x.b.localeCompare(y.b));
+}
+
 /** Every race in which `a` and `b` drove for the same constructor, in order. */
 export function sharedRaces(db: Db, a: string, b: string): SharedRace[] {
 	const out: SharedRace[] = [];

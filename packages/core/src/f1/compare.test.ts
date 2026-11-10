@@ -2,11 +2,34 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { hydrate, indexData } from "./dataset.ts";
-import { compareQuery, compareView, parseCompareIds } from "./compare.ts";
+import { compareNames, compareQuery, compareSummary, compareView, parseCompareIds } from "./compare.ts";
 import { driverCareers } from "./stats.ts";
 import { dataFile } from "../test-data.ts";
 
 const db = indexData(hydrate(JSON.parse(readFileSync(dataFile, "utf8"))));
+
+test("metadata names and share summaries match full comparisons without chart data", () => {
+	const cases: ["driver" | "team", string[]][] = [
+		["driver", ["lewis-hamilton", "nico-rosberg"]],
+		["driver", ["ayrton-senna", "max-verstappen"]],
+		["team", ["ferrari", "mclaren"]],
+		["driver", ["lewis-hamilton", "nobody", "max-verstappen", "alain-prost"]],
+		["driver", [...db.drivers.keys()].filter((id) => !db.resultsByDriver.has(id)).slice(0, 4)],
+		["team", ["nobody"]],
+		["driver", []],
+	];
+	for (const [kind, ids] of cases) {
+		const full = compareView(db, kind, ids);
+		assert.deepEqual(compareNames(db, kind, ids), full.entities.map((e) => e.driver?.name ?? e.team!.name));
+		assert.deepEqual(compareSummary(db, kind, ids), {
+			kind,
+			entities: full.entities.map((e) => ({ id: e.id, name: e.driver?.name ?? e.team!.name,
+				wins: e.totals.wins, titles: e.totals.titles, starts: e.totals.starts,
+				firstYear: e.totals.firstYear, lastYear: e.totals.lastYear })),
+			h2h: full.entities.length === 2 ? full.h2h[0] ?? null : null,
+		});
+	}
+});
 
 test("query ids are trimmed, deduped and capped at four", () => {
 	assert.deepEqual(parseCompareIds(" a, b,a,,c,d,e "), ["a", "b", "c", "d"]);

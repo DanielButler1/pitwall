@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TeammatePairPage } from "@/components/pages/teammates";
 import { getDb } from "@/lib/server";
+import { staticParams } from "@/lib/static-params";
 import { teammatePairView } from "@pitwall/core/f1/teammates";
 
 type Props = { params: Promise<{ a: string; b: string }> };
 
-// 5,000-odd pairings: each is rendered on its first visit and cached from then on
+// Real team-mates are a finite archive, just like the races and driver profiles.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-	return [];
+	return staticParams.teammates();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
