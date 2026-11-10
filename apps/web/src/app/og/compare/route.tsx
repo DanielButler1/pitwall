@@ -7,7 +7,7 @@ import { compareOgImage } from "@/lib/og-pages";
 export function GET(request: NextRequest) {
 	const { kind, ids } = compareQuery(request.nextUrl.searchParams);
 	const image = compareOgImage(kind, ids);
-	// one picture per query: keep it at the edge for a day (a new deployment starts afresh)
-	image.headers.set("Cache-Control", "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800");
+	// Data and images change only on deployment; each deployment gets a fresh CDN cache.
+	image.headers.set("Cache-Control", "public, max-age=3600, s-maxage=31536000");
 	return image;
 }

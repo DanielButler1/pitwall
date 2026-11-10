@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { CompareRoute } from "@/components/pages/compare-route";
-import { compareQuery, compareView } from "@pitwall/core/f1/compare";
+import { compareNames, compareQuery } from "@pitwall/core/f1/compare";
 import { OG_SIZE } from "@/lib/og-image";
 import { getDb } from "@/lib/server";
 
@@ -11,7 +11,7 @@ type Props = { searchParams: Promise<Record<string, string | string[] | undefine
 // compared, and point at a share picture of them (src/app/og/compare).
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
 	const { kind, ids } = compareQuery(await searchParams);
-	const names = compareView(getDb(), kind, ids).entities.map((e) => e.driver?.name ?? e.team?.name ?? e.id);
+	const names = compareNames(getDb(), kind, ids);
 	const title = names.length >= 2 ? names.join(" vs ") : "Compare";
 	const query = ids.length ? `?${kind === "team" ? "t" : "d"}=${ids.map(encodeURIComponent).join(",")}` : "";
 	return {

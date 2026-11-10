@@ -2,7 +2,7 @@
 // team-mates, a comparison and the games. Like og-cards.tsx, each says what the page itself leads with.
 
 import { DAILY, MORE } from "@/components/play/games";
-import { compareView } from "@pitwall/core/f1/compare";
+import { compareSummary } from "@pitwall/core/f1/compare";
 import { diaryView } from "@pitwall/core/f1/diary";
 import { parseDiarySlug } from "@pitwall/core/f1/diary-dates";
 import { recordCategoryView } from "@pitwall/core/f1/records";
@@ -127,8 +127,8 @@ export function teammatesOgImage(a: string, b: string) {
 
 /** Two to four drivers or teams side by side, from /compare's query (d= or t=). */
 export function compareOgImage(kind: "driver" | "team", ids: string[]) {
-	const view = compareView(getDb(), kind, ids);
-	const names = view.entities.map((e) => e.driver?.name ?? e.team?.name ?? e.id);
+	const view = compareSummary(getDb(), kind, ids);
+	const names = view.entities.map((e) => e.name);
 	if (view.entities.length < 2)
 		return ogImage({
 			section: "Compare",
@@ -137,18 +137,18 @@ export function compareOgImage(kind: "driver" | "team", ids: string[]) {
 			stats: ogTotals(),
 		});
 	// who finished ahead in the races both started, when there are two
-	const h2h = view.entities.length === 2 ? view.h2h[0] : undefined;
+	const h2h = view.h2h;
 	const ahead = (id: string) => (h2h?.a === id ? h2h.aAhead : (h2h?.bAhead ?? 0));
 	return ogImage({
 		section: kind === "driver" ? "Compare drivers" : "Compare constructors",
 		title: names.join(" vs "),
 		detail: h2h?.races
 			? `Head to head in ${h2h.races} ${plural(h2h.races, "race")}: ${view.entities.map((e, i) => `${surname(names[i])} ${ahead(e.id)}`).join(", ")}`
-			: join(...view.entities.map((e) => `${surname(e.driver?.name ?? e.team?.name ?? e.id)} ${span([e.totals.firstYear, e.totals.lastYear])}`)),
+			: join(...view.entities.map((e) => `${surname(e.name)} ${span([e.firstYear, e.lastYear])}`)),
 		stats: view.entities.map((e, i) => ({
 			label: names[i],
-			value: `${num(e.totals.wins)} ${plural(e.totals.wins, "win")}`,
-			note: join(e.totals.titles ? `${e.totals.titles} ${plural(e.totals.titles, "title")}` : null, `${num(e.totals.starts)} ${kind === "driver" ? "starts" : "races"}`),
+			value: `${num(e.wins)} ${plural(e.wins, "win")}`,
+			note: join(e.titles ? `${e.titles} ${plural(e.titles, "title")}` : null, `${num(e.starts)} ${kind === "driver" ? "starts" : "races"}`),
 		})),
 	});
 }

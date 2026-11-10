@@ -2,10 +2,23 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { hydrate, indexData } from "./dataset.ts";
-import { driverTeammatesView, finishedAhead, sharedRaces, teammatePairView } from "./teammates.ts";
+import { driverTeammatesView, finishedAhead, sharedRaces, teammatePairs, teammatePairView } from "./teammates.ts";
 import { dataFile } from "../test-data.ts";
 
 const db = indexData(hydrate(JSON.parse(readFileSync(dataFile, "utf8"))));
+
+test("the build catalogue includes every pairing linked from a driver, once", () => {
+	const keys = teammatePairs(db).map(({ a, b }) => {
+		assert.ok(a < b);
+		assert.ok(sharedRaces(db, a, b).length > 0);
+		return `${a}/${b}`;
+	});
+	assert.equal(new Set(keys).size, keys.length);
+	const linked = new Set<string>();
+	for (const id of db.drivers.keys())
+		for (const row of driverTeammatesView(db, id)!.rows) linked.add([id, row.driver.id].sort().join("/"));
+	assert.deepEqual(new Set(keys), linked);
+});
 
 test("finished ahead: classified beats unclassified, neither classified doesn't count", () => {
 	assert.equal(finishedAhead({ position: 3, started: true }, { position: 5, started: true }), "a");
