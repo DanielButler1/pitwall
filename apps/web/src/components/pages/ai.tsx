@@ -3,6 +3,7 @@
 import {
 	CalendarDays, Database, Flag, GitCompareArrows, Gauge, ListOrdered, Lock, Medal, Search, ShieldCheck, Sparkles, Timer, Trophy, User, Users, Zap,
 } from "lucide-react";
+import Link from "next/link";
 import { Page, PageHeader, Section, StatCard, num } from "../f1";
 import { Badge } from "../ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
@@ -225,6 +226,17 @@ export function AiPage({ view }: { view: AiView }) {
 						</p>
 						<p>
 							The figures come from Pitwall, but the AI writes the answer. For anything important, follow the links it gives to the Pitwall pages it used.
+						</p>
+						<p>
+							Pitwall only receives the lookups your assistant makes, never your conversation, and keeps nothing beyond standard hosting logs. See the{" "}
+							<Link className="text-foreground underline" href="/privacy">
+								privacy policy
+							</Link>{" "}
+							and{" "}
+							<Link className="text-foreground underline" href="/terms">
+								terms
+							</Link>
+							.
 						</p>
 						<p>
 							Data: <a className="text-foreground underline" href="https://github.com/f1db/f1db">F1DB</a>

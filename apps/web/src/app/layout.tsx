@@ -44,7 +44,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						<Link className="underline" href="/ai">
 							Use Pitwall with ChatGPT or Claude
 						</Link>
-						.
+						.{" "}
+						<Link className="underline" href="/privacy">
+							Privacy
+						</Link>{" "}
+						·{" "}
+						<Link className="underline" href="/terms">
+							Terms
+						</Link>
 					</footer>
 				</ThemeProvider>
 			</body>
