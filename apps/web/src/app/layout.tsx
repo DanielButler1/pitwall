@@ -2,6 +2,7 @@ import "./globals.css";
 import "flag-icons/css/flag-icons.min.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import Link from "next/link";
 import { ThemeProvider } from "next-themes";
 import { EntityCards } from "@/components/entity-cards";
 import { SiteHeader } from "@/components/site-header";
@@ -39,7 +40,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 								since {meta.jolpica.pitStopsFrom}).
 							</>
 						)}{" "}
-						Not affiliated with Formula 1.
+						Not affiliated with Formula 1.{" "}
+						<Link className="underline" href="/ai">
+							Use Pitwall with ChatGPT or Claude
+						</Link>
+						.{" "}
+						<Link className="underline" href="/privacy">
+							Privacy
+						</Link>{" "}
+						·{" "}
+						<Link className="underline" href="/terms">
+							Terms
+						</Link>
 					</footer>
 				</ThemeProvider>
 			</body>

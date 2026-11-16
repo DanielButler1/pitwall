@@ -21,6 +21,7 @@ import {
 	Menu,
 	Moon,
 	Route,
+	Sparkles,
 	Sun,
 	Trophy,
 	User,
@@ -65,6 +66,7 @@ const MORE_GROUPS = [
 			{ href: "/compare", label: "Compare", icon: GitCompareArrows },
 			{ href: "/points", label: "Points systems", icon: ListOrdered },
 			{ href: "/milestones", label: "Milestones", icon: CalendarClock },
+			{ href: "/ai", label: "Use with AI", icon: Sparkles },
 		],
 	},
 ];

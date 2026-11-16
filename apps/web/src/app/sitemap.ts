@@ -23,6 +23,9 @@ const SECTIONS = [
 	"/points",
 	"/lab",
 	"/play",
+	"/ai",
+	"/privacy",
+	"/terms",
 ];
 const GAMES = ["guess", "career", "grid", "chain", "constructor", "circuit", "race", "lap-chart", "name-the-grid", "predict", "higher-lower", "season", "fantasy"];
 

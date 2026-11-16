@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
 	// data/f1.json and data/facts.json are read at runtime by src/lib/server.ts
 	outputFileTracingIncludes: {
 		"/**": ["./data/f1.json", "./data/facts.json"],
+		// the MCP server's get_race reads each race's lap file (src/app/mcp)
+		"/mcp": ["./data/laps/*.json"],
 		// and the share pictures read OG_FILES, including the ones drawn by a route under /og (src/app/og)
 		"/**/opengraph-image": OG_FILES,
 		"/og/**": OG_FILES,

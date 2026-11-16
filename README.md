@@ -51,6 +51,10 @@ No data is stored in this repository. `apps/web/data/sources.json` pins the vers
 
 Pitwall is not affiliated with Formula 1, the FIA or any team. F1, Formula 1 and related marks belong to their owners.
 
+## Use it from an AI assistant (MCP)
+
+`https://pitwall.phaseo.app/mcp` is a public, read-only [Model Context Protocol](https://modelcontextprotocol.io) server, so ChatGPT, Claude, Cursor or any MCP client can answer F1 questions from Pitwall's data. Add it as a remote MCP server or custom connector (Streamable HTTP, no sign-in). It offers search, one tool per kind of page (seasons, races with lap charts and pit stops, drivers, constructors, circuits, Grands Prix, nations, engines, tyres, records, comparisons, team-mates, the diary, re-scoring, milestones), and read-only SQL over the whole dataset for anything niche. Its instructions ask the assistant to credit F1DB and Jolpica F1. Locally it runs at `http://localhost:3000/mcp`.
+
 ## Deploying
 
 The website is a Next.js app. Index pages, the current season and the current grid are prerendered at build time; every other page renders on its first visit and is then cached, which keeps each deployment small. On Vercel, import the repository with **Root Directory** set to `apps/web` and keep the other defaults; each push to `main`, including the daily data commits, redeploys it.

@@ -170,6 +170,7 @@ const SECTIONS: Record<string, { title: string; detail: string }> = {
 	diary: { title: "On this day in Formula 1", detail: "Races, birthdays and moments from every day of the year." },
 	points: { title: "Points systems", detail: "Every season's scoring, and how the titles would have gone under another." },
 	lab: { title: "Rewrite Formula 1 history", detail: "Change the rules or the results and browse the history that follows." },
+	ai: { title: "Ask your AI about Formula 1", detail: "Connect ChatGPT, Claude or any AI assistant to every result since 1950." },
 	play: { title: "Formula 1 games", detail: "Daily puzzles and games built on seventy-odd years of results." },
 	u: { title: "An alternate Formula 1 history", detail: "A universe made in the Pitwall lab: real seasons with the rules or results changed." },
 };
