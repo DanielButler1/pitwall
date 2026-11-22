@@ -10,6 +10,8 @@ import { stewardsOf } from "./stewards.ts";
 import { pointsAt, pointsAwards } from "./facts/stewards.ts";
 import { factIndex, factText, packFacts, raceFacts, seasonFacts, subjectFacts, unpackFacts, upcomingFacts, venueFacts } from "./race-facts.ts";
 import { champions, facts } from "./records/facts.ts";
+import { collector } from "./facts/shared.ts";
+import { noteFacts } from "./facts/notes.ts";
 import { deciders } from "./records/titles.ts";
 import { dataFile } from "../test-data.ts";
 
@@ -151,14 +153,21 @@ test("tyre facts read the stints entered for a race", () => {
 	const data = raw();
 	const winner = data.results.find((r) => r.raceId === race.id && r.position === 1)!;
 	const tag = `tyres:driver:${winner.driverId}:one-compound`;
-	assert.ok(!raceFacts(indexData(data), race.id, 40).some((f) => f.key === tag));
+	// the notes' own facts, before pick() trims them: a winner who already has two stronger facts
+	// hits the per-driver cap, so raceFacts would hide this one (Las Vegas 2026 did)
+	const noteKeys = (db: Db) => {
+		const { out, add } = collector();
+		noteFacts(db, facts(db).byId.get(race.id)!, add);
+		return out.map((f) => f.key);
+	};
+	assert.ok(!noteKeys(indexData(data)).includes(tag));
 	const notes = data.raceNotes ?? new Map();
 	const note = notes.get(race.id);
 	notes.set(race.id, { raceId: race.id, weather: note?.weather ?? null, neutralised: [], tyres: true, stints: new Map([[winner.driverId, ["H", "H"]]]) });
 	data.raceNotes = notes;
 	// the notes belong to these results (laps.ts raceNote checks)
 	data.raceNotesSig = new Map([...(data.raceNotesSig ?? []), [race.id, resultsSig(data.results.filter((r) => r.raceId === race.id))]]);
-	assert.ok(raceFacts(indexData(data), race.id, 40).some((f) => f.key === tag));
+	assert.ok(noteKeys(indexData(data)).includes(tag));
 });
 
 test("a first hat-trick or a new circuit really is the first", () => {
